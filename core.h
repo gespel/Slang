@@ -19,7 +19,7 @@ typedef struct t {
     char* value;
 } Token;
 
-Token* tokenize(char* input);
+Token* tokenize(char* input, int* length);
 
 TokenType checkTokenString(char* input);
 
