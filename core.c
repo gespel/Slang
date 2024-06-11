@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "core.h"
 
 //
@@ -21,16 +22,25 @@ Token* tokenize(char* input, int* length) {
   int i = 0;
   t = strtok(input, " ");
   while(t != NULL) {
-    Token temp;
-    temp.tt = IDENTIFIER;
-    temp.value = t;
-    out[i] = temp;
+    if(isdigit(t[0])) {
+      Token temp;
+      temp.tt = NUMBER;
+      temp.value = t;
+      out[i] = temp;
+    }
+    /*else {
+      Token temp;
+      temp.tt = IDENTIFIER;
+      temp.value = t;
+      out[i] = temp;
+    }*/
+
     i++;
     t = strtok(NULL, " ");
   }
 
   for(int x = 0; x < i; x++) {
-    if(strcmp(out[x].value, "fn") == 0) {
+    if(strcmp(out[x].value, "fn") == 0 && out[x].value == IDENTIFIER) {
       out[x].tt = FUNCTION;
     }
   }
@@ -39,13 +49,23 @@ Token* tokenize(char* input, int* length) {
 }
 
 char* tokenTypeToString(TokenType input) {
-  char* out = malloc(sizeof(char)*64);
-
-  if(input == FUNCTION) {
-    out = "Function";
-  }
-  else if(input == IDENTIFIER) {
-    out = "Identifier";
+  char* out;
+  switch (input) {
+    case IDENTIFIER:
+      out = "Identifier";
+      break;
+    case NUMBER:
+      out = "Number";
+      break;
+    case FUNCTION:
+      out = "Function";
+      break;
+    case SEMICOLON:
+      out = "Semicolon";
+      break;
+    default:
+      out = "Unknown";
+      break;
   }
 
   return out;
