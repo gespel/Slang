@@ -42,8 +42,10 @@ Token* tokenize(char* input, int* length) {
   }
 
   for(int x = 0; x < i; x++) {
-    if(strcmp(out[x].value, "fn") == 0 && out[x].value == IDENTIFIER) {
-      out[x].tt = FUNCTION;
+    if(out[x].tt == IDENTIFIER) {
+      if(strcmp(out[x].value, "fn") == 0) {
+        out[x].tt = FUNCTION;
+      }
     }
   }
   *length = i;
