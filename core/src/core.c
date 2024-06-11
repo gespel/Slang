@@ -1,20 +1,9 @@
 #include <ctype.h>
-#include "core.h"
+#include "../include/core.h"
 
 //
 // Created by sten on 11.06.24.
 //
-int main() {
-  char a[] = "Sten ist fn 33";
-  int length = 0;
-  Token* out = tokenize(a, &length);
-  printf("%d tokens!\n", length);
-
-  for(int j = 0; j < length; j++) {
-    printf("%s %s\n", out[j].value, tokenTypeToString(out[j].tt));
-  }
-  free(out);
-}
 
 Token* tokenize(char* input, int* length) {
   Token* out = malloc(1024*sizeof(Token));
