@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.9)
 
-project(slang-lib VERSION 1.0.1 DESCRIPTION "slang lib description")
+project(slang-lib VERSION 0.0.1 DESCRIPTION "slang lib description")
+
+set(CMAKE_BUILD_TYPE Release)
+
+include_directories(core/include)
 
 add_library(slang-lib SHARED
         core/sources/core.c
