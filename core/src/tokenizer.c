@@ -7,46 +7,102 @@
 
 Token* tokenize(char* input, int* length) {
   Token* out = malloc(1024*sizeof(Token));
-  char* t;
-  int i = 0;
-  t = strtok(input, " ");
-  while(t != NULL) {
-    if(!isdigit(t[0])) {
-      Token temp;
-      temp.tt = IDENTIFIER;
-      temp.value = t;
-      out[i] = temp;
-    }
-    else {
-      char* ns = malloc(sizeof(char)*128);
-      for(int k = 0; k < strlen(t); k++) {
-        if(isdigit(t[k])) {
-          ns[k] = t[k];
-        }
-        else {
-          printf("Unexpected token!\n");
-          exit(-1);
-        }
-      }
-      ns[strlen(t)] = '\0';
-      Token temp;
-      temp.tt = NUMBER;
-      temp.value = t;
-      out[i] = temp;
-    }
+  char* tokenString;
+  int tokenCount = 0;
+  tokenString = strtok(input, " ");
+  while(tokenString != NULL) {
+    for(int j = 0; j < strlen(tokenString); j++) {
+        //printf("lexing char: %c\n", tokenString[j]);
+        if(isalpha(tokenString[j])) {
+            char* ns = malloc(sizeof(char)*128);
+            while(isalpha(tokenString[j])) {
+                ns[j] = tokenString[j];
+                j++;
+            }
+            j--;
 
-    i++;
-    t = strtok(NULL, " ");
+            Token temp;
+            temp.tt = IDENTIFIER;
+            temp.value = ns;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(tokenString[j] == ';') {
+            Token temp;
+            temp.tt = SEMICOLON;
+            char *tmpString = malloc(sizeof(char) * 2);
+            tmpString[0] = tokenString[j];
+            tmpString[1] = '\0';
+            temp.value = tmpString;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(tokenString[j] == '(') {
+            Token temp;
+            temp.tt = PARANTHESISLEFT;
+            char *tmpString = malloc(sizeof(char) * 2);
+            tmpString[0] = tokenString[j];
+            tmpString[1] = '\0';
+            temp.value = tmpString;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(tokenString[j] == ')') {
+            Token temp;
+            temp.tt = PARANTHESISRIGHT;
+            char *tmpString = malloc(sizeof(char) * 2);
+            tmpString[0] = tokenString[j];
+            tmpString[1] = '\0';
+            temp.value = tmpString;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(tokenString[j] == '{') {
+            Token temp;
+            temp.tt = BRACKETLEFT;
+            char *tmpString = malloc(sizeof(char) * 2);
+            tmpString[0] = tokenString[j];
+            tmpString[1] = '\0';
+            temp.value = tmpString;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(tokenString[j] == '}') {
+            Token temp;
+            temp.tt = BRACKETRIGHT;
+            char *tmpString = malloc(sizeof(char) * 2);
+            tmpString[0] = tokenString[j];
+            tmpString[1] = '\0';
+            temp.value = tmpString;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+        else if(isdigit(tokenString[j])) {
+            char* ns = malloc(sizeof(char)*128);
+            while(isdigit(tokenString[j])) {
+                ns[j] = tokenString[j];
+                j++;
+            }
+            j--;
+
+            Token temp;
+            temp.tt = NUMBER;
+            temp.value = ns;
+            out[tokenCount] = temp;
+            tokenCount++;
+        }
+    }
+    tokenString = strtok(NULL, " ");
   }
 
-  for(int x = 0; x < i; x++) {
+  for(int x = 0; x < tokenCount; x++) {
     if(out[x].tt == IDENTIFIER) {
       if(strcmp(out[x].value, "fn") == 0) {
         out[x].tt = FUNCTION;
       }
     }
   }
-  *length = i;
+  *length = tokenCount;
   return out;
 }
 
