@@ -1,5 +1,5 @@
 //
-// Created by stenh on 11.06.2024.
+// Created by stenh
 //
 #include "slang-lib.h"
 
