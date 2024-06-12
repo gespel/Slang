@@ -4,7 +4,7 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "Sten ist fn 33";
+    char a[] = "Sten ist fn 3341 a1";
     int length = 0;
     Token* out = tokenize(a, &length);
     printf("%d tokens!\n", length);
