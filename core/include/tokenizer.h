@@ -16,6 +16,7 @@ typedef enum TokenType {
   BRACKETRIGHT,
   PARANTHESISLEFT,
   PARANTHESISRIGHT,
+  ASSIGN,
 } TokenType;
 
 typedef struct t {

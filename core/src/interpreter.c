@@ -6,7 +6,16 @@ int interpret(Token* tokens, int numTokens) {
     printf("\n\n");*/
     for(int i = 0; i < numTokens; i++) {
         if(tokens[i].tt == IDENTIFIER) {
-
+            i++;
+            if(tokens[i].tt == ASSIGN) {
+                i++;
+                if(tokens[i].tt == NUMBER) {
+                    i++;
+                    if(tokens[i].tt == SEMICOLON) {
+                        printf("Full assignment!!\n");
+                    }
+                }
+            }
         }
         else if(tokens[i].tt == FUNCTION) {
             i++;
