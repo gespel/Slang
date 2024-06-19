@@ -4,12 +4,14 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "x = 3;";
+    char a[] = "fn sten() { a = 3; }";
+
     int length = 0;
     Token* out = tokenize(a, &length);
+
     printf("%d tokens!\n", length);
     interpret(out, length);
-    printTokens(out, length);
+    printAllFunctions();
     free(out);
 
     return 0;

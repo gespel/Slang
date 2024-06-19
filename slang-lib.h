@@ -8,5 +8,6 @@
 #include "core/include/interpreter.h"
 #include "core/include/tokenizer.h"
 #include "core/include/tools.h"
+#include "core/include/function.h"
 
 #endif //SLANG_SLANG_LIB_H

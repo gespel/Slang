@@ -37,9 +37,15 @@ int interpret(Token* tokens, int numTokens) {
                                 i++;
                                 numFunctionTokens++;
                             }
-                            printf("====================\nParsed %d function tokens for function %s!\n", numFunctionTokens, fnName);
-                            printTokens(fntokens, numFunctionTokens);
-                            printf("====================\n");
+                            //printf("====================\nParsed %d function tokens for function %s!\n", numFunctionTokens, fnName);
+                            //printTokens(fntokens, numFunctionTokens);
+                            Function temp = {
+                                .name = fnName,
+                                .function_tokens = fntokens,
+                                .function_tokens_length = numFunctionTokens
+                            };
+                            addFunction(temp);
+                            //printf("====================\n");
                         }
                     }
                 }
