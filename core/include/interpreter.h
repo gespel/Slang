@@ -7,6 +7,7 @@
 #include "tokenizer.h"
 #include "tools.h"
 #include "function.h"
+#include "variable.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
 
@@ -14,6 +15,9 @@ int interpret(Token* tokens, int numTokens);
 
 int functions_length = 0;
 Function functions[8192];
+
+int vars_length = 0;
+Variable variables[8192];
 
 void addFunction(Function input) {
     functions[functions_length] = input;
@@ -26,6 +30,17 @@ void printAllFunctions() {
         for(int j = 0; j < functions[i].function_tokens_length; j++) {
             printf("\t%s\n", functions[i].function_tokens[j].value);
         }
+    }
+}
+
+void addVariable(Variable input) {
+    variables[vars_length] = input;
+    vars_length++;
+}
+
+void printAllVars() {
+    for(int i = 0; i < vars_length; i++) {
+        printf("%s:%lf\n", variables[i].name, variables[i].value);
     }
 }
 
