@@ -38,9 +38,9 @@ void addVariable(Variable input) {
     vars_length++;
 }
 
-void printAllVars() {
+void printAllVariables() {
     for(int i = 0; i < vars_length; i++) {
-        printf("%s:%lf\n", variables[i].name, variables[i].value);
+        printf("%s: %lf\n", variables[i].name, variables[i].value);
     }
 }
 

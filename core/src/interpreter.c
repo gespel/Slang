@@ -6,10 +6,18 @@ int interpret(Token* tokens, int numTokens) {
     printf("\n\n");*/
     for(int i = 0; i < numTokens; i++) {
         if(tokens[i].tt == IDENTIFIER) {
+            char* var_name = tokens[i].value;
             i++;
             if(tokens[i].tt == ASSIGN) {
                 i++;
                 if(tokens[i].tt == NUMBER) {
+                    double var_value;
+                    sscanf(tokens[i].value, "%lf", &var_value);
+                    Variable temp_var = {
+                        .name = var_name,
+                        .value = var_value
+                    };
+                    addVariable(temp_var);
                     i++;
                     if(tokens[i].tt == SEMICOLON) {
                         printf("Full assignment!!\n");
