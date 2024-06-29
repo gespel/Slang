@@ -23,6 +23,9 @@ int interpret(Token* tokens, int numTokens) {
                         printf("Full assignment!!\n");
                     }
                 }
+                else {
+                    tokenError(NUMBER, tokens[i].tt);
+                }
             }
         }
         else if(tokens[i].tt == FUNCTION) {

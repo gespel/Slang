@@ -9,4 +9,9 @@ void printTokens(Token* tokens, int length) {
     }
 }
 
+void tokenError(TokenType expected, TokenType got) {
+    printf("Unexpected token! Expected '%s' but got '%s'\n", tokenTypeToString(expected), tokenTypeToString(got));
+    exit(1);
+}
+
 #endif
