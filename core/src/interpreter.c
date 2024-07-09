@@ -22,10 +22,16 @@ int interpret(Token* tokens, int numTokens) {
                     if(tokens[i].tt == SEMICOLON) {
                         printf("Full assignment!!\n");
                     }
+                    else {
+                        tokenError(SEMICOLON, tokens[i].tt);
+                    }
                 }
                 else {
                     tokenError(NUMBER, tokens[i].tt);
                 }
+            }
+            else {
+                tokenError(ASSIGN, tokens[i].tt);
             }
         }
         else if(tokens[i].tt == FUNCTION) {
@@ -58,8 +64,20 @@ int interpret(Token* tokens, int numTokens) {
                             addFunction(temp);
                             //printf("====================\n");
                         }
+                        else {
+                            tokenError(BRACKETLEFT, tokens[i].tt);
+                        }
+                    }
+                    else {
+                        tokenError(PARANTHESISRIGHT, tokens[i].tt);
                     }
                 }
+                else {
+                    tokenError(PARANTHESISLEFT, tokens[i].tt);
+                }
+            }
+            else {
+                tokenError(IDENTIFIER, tokens[i].tt);
             }
         }
     }
