@@ -30,5 +30,6 @@ TokenType checkTokenString(char* input);
 
 char* tokenTypeToString(TokenType input);
 
+void tokenizeStrings(Token* out, int numTokens);
 
 #endif //SLANG_TOKENIZER_H
