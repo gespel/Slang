@@ -123,8 +123,8 @@ void tokenizeStrings(Token* out, int numTokens) {
 }
 
 char* tokenTypeToString(TokenType input) {
-  char* out;
-  switch (input) {
+    char* out;
+    switch (input) {
     case IDENTIFIER:
         out = "Identifier";
         break;
@@ -155,7 +155,7 @@ char* tokenTypeToString(TokenType input) {
     default:
         out = "Unknown";
         break;
-  }
+    }
 
-  return out;
+    return out;
 }
