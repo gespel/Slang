@@ -10,6 +10,8 @@
 #include "variable.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
+#define DEBUG
+
 
 int interpret(Token* tokens, int numTokens);
 
@@ -19,8 +21,12 @@ Function* functions[8192];
 int vars_length = 0;
 Variable* variables[8192];
 
+
+
 int consume(int* i, Token token, TokenType expected) {
+#ifdef DEBUG
     printf("[DEBUG] Consuming %s now. (Expecting %s)\n", tokenTypeToString(token.tt), tokenTypeToString(expected));
+#endif
     if(token.tt == expected) {
         (*i)++;
         return 1;
@@ -49,12 +55,14 @@ void addFunction(Function* input) {
 }
 
 void printAllFunctions() {
+#ifdef DEBUG
     for(int i = 0; i < functions_length; i++) {
-        printf("%s:\n", functions[i]->name);
+        printf("[DEBUG] %s:\n", functions[i]->name);
         for(int j = 0; j < functions[i]->function_tokens_length; j++) {
-            printf("\t%s\n", functions[i]->function_tokens[j].value);
+            printf("[DEBUG] \t%s\n", functions[i]->function_tokens[j].value);
         }
     }
+#endif
 }
 
 void addVariable(Variable* input) {
@@ -63,9 +71,11 @@ void addVariable(Variable* input) {
 }
 
 void printAllVariables() {
+#ifdef DEBUG
     for(int i = 0; i < vars_length; i++) {
-        printf("%s: %lf\n", variables[i]->name, variables[i]->value);
+        printf("[DEBUG] %s: %lf\n", variables[i]->name, variables[i]->value);
     }
+#endif
 }
 
 #endif //SLANG_INTERPRETER_H

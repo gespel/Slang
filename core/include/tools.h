@@ -2,6 +2,7 @@
 #define SLANG_TOOLS_H
 #include <stdio.h>
 #include "tokenizer.h"
+#include "interpreter.h"
 
 void printTokens(Token* tokens, int length) {
     for(int j = 0; j < length; j++) {

@@ -25,12 +25,16 @@ int interpret(Token* tokens, int numTokens) {
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);
-            printf("Function definition found!\n");
-
+#ifdef DEBUG
+                printf("[DEBUG] Function definition found!\n");
+#endif
+            
             char* fnName = NULL;
 
             if(peek(tokens[i], IDENTIFIER)) {
-                printf("Function name: %s\n", tokens[i].value);
+#ifdef DEBUG
+                    printf("[DEBUG] Function name: %s\n", tokens[i].value);
+#endif
                 fnName = tokens[i].value;
             }
             
