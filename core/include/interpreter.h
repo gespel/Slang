@@ -40,7 +40,7 @@ int consume(int* i, Token token, TokenType expected) {
         return 1;
     }
     else {
-        printf("\nERROR! WRONG TOKEN! EXPECTED %s GOT %s INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
+        printf("\nERROR! WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
         exit(-1);
         return 0;
     }
@@ -51,7 +51,7 @@ int peek(Token token, TokenType expected) {
         return 1;
     }
     else {
-        printf("\nERROR! WRONG TOKEN! EXPECTED %s GOT %s INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
+        printf("\nERROR! WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
         exit(-1);
         return 0;
     }
