@@ -12,7 +12,15 @@
 #define SLANG_INTERPRETER_H
 #define DEBUG
 
+typedef struct SlangInterpreter {
+    int functions_length;
+    Function* functions[8192];
+    int vars_length;
+    Variable* variables[8192];
+} SlangInterpreter;
 
+
+//int interpret(SlangInterpreter* s, Token* tokens, int numTokens);
 int interpret(Token* tokens, int numTokens);
 
 int functions_length = 0;
