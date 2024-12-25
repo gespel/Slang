@@ -11,7 +11,7 @@ Token* tokenize(char* input, int* length) {
   	int tokenCount = 0;
   	tokenString = strtok(input, " ");
   	while(tokenString != NULL) {
-        for(int j = 0; j < strlen(tokenString); j++) {
+        for(size_t j = 0; j < strlen(tokenString); j++) {
             //printf("lexing char: %c\n", tokenString[j]);
             if(isalpha(tokenString[j])) {
                 char* ns = malloc(sizeof(char)*128);

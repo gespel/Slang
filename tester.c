@@ -4,16 +4,19 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "fn sten() { a = 2; asd = 123; } \n x = 3; y = 5;";
+    char a[] = "fn sten() { a = 2; asd = 123; } \n x = 3; y = 5; sten();";
 
     int length = 0;
-    Token* out = tokenize(a, &length);
+    Token* tokens = tokenize(a, &length);
 
     printf("%d tokens!\n", length);
-    interpret(out, length);
-    printAllFunctions();
-    printAllVariables();
-    free(out);
+    SlangInterpreter* main_interpreter = malloc(sizeof(SlangInterpreter));
+    main_interpreter->tokens = tokens;
+    main_interpreter->numTokens = length;
+    interpret(main_interpreter);
+    printAllFunctions(main_interpreter);
+    printAllVariables(main_interpreter);
+    free(main_interpreter);
 
     return 0;
 }
