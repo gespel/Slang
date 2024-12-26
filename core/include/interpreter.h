@@ -13,12 +13,12 @@
 #define DEBUG
 
 typedef struct SlangInterpreter {
-    int functions_length;
+    size_t functions_length;
     Function* functions[8192];
-    int vars_length;
+    size_t vars_length;
     Variable* variables[8192];
     Token* tokens;
-    int numTokens;
+    size_t numTokens;
 } SlangInterpreter;
 
 
@@ -69,9 +69,9 @@ Function* getFunctionByName(SlangInterpreter* si, char* name);
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
     printf("[DEBUG] =======================================================\n");
-    for(int i = 0; i < si->functions_length; i++) {
+    for(size_t i = 0; i < si->functions_length; i++) {
         printf("[DEBUG] functionname: %s\n", si->functions[i]->name);
-        for(int j = 0; j < si->functions[i]->function_tokens_length; j++) {
+        for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             printf("[DEBUG] \t%s -> %s\n", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }

@@ -1,7 +1,7 @@
 #include "../include/interpreter.h"
 
 Function* getFunctionByName(SlangInterpreter* si, char* name) {
-    for(int i = 0; i < si->functions_length; i++) {
+    for(size_t i = 0; i < si->functions_length; i++) {
         if(strcmp(si->functions[i]->name, name) == 0) {
             return si->functions[i];
         }
@@ -44,6 +44,16 @@ int interpret(SlangInterpreter* si) {
                     
                     function_interpreter->tokens = f->function_tokens;
                     function_interpreter->numTokens = f->function_tokens_length;
+
+                    for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
+                        function_interpreter->variables[variable_index] = si->variables[variable_index];
+                    }
+                    function_interpreter->vars_length = si->vars_length;
+
+                    for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
+                        function_interpreter->functions[function_index] = si->functions[function_index];
+                    }
+                    function_interpreter->functions_length = si->functions_length;
 
                     interpret(function_interpreter);
                     printAllVariables(function_interpreter);
