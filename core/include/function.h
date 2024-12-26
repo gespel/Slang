@@ -5,7 +5,7 @@
 typedef struct Function {
     char* name;
     Token* function_tokens;
-    int function_tokens_length;
+    size_t function_tokens_length;
 } Function;
 
 #endif

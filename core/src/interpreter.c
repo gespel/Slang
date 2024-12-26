@@ -6,6 +6,9 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
             return si->functions[i];
         }
     }
+#ifdef DEBUG
+    printf("[DEBUG] Function %s was not found!\n", name);
+#endif
     return NULL;
 }
 
@@ -35,11 +38,12 @@ int interpret(SlangInterpreter* si) {
             else if(tokens[i].tt == PARANTHESISLEFT) {
                 consume(&i, tokens[i], PARANTHESISLEFT);
                 consume(&i, tokens[i], PARANTHESISRIGHT);
-                consume(&i, tokens[i], SEMICOLON);
+                peek(tokens[i], SEMICOLON);
 
                 Function* f = getFunctionByName(si, name);
 
                 if(f) {
+                    printf("[DEBUG] Calling function %s now!\n", name);
                     SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
                     
                     function_interpreter->tokens = f->function_tokens;
@@ -56,9 +60,13 @@ int interpret(SlangInterpreter* si) {
                     function_interpreter->functions_length = si->functions_length;
 
                     interpret(function_interpreter);
-                    //printAllVariables(function_interpreter);
-                    //printAllFunctions(function_interpreter);
+                    printAllVariables(function_interpreter);
+                    printAllFunctions(function_interpreter);
                     //interpret(f->function_tokens, f->function_tokens_length);
+                }
+                else {
+                    printf("[ERROR] Function not found! Exiting...\n");
+                    exit(-1);
                 }
             }
             

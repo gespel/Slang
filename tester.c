@@ -4,7 +4,7 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "fn sten() { a = 2; asd = 123; } \n x = 3; y = 5; sten();";
+    char a[] = "fn sten() { a = 2; asd = 123; } \n x = 3; sten(); y = 15;";
 
     int length = 0;
     Token* tokens = tokenize(a, &length);
