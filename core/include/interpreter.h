@@ -88,7 +88,7 @@ void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
     printf("[DEBUG] =======================================================\n");
     printf("[DEBUG] Variables:\n");
-    for(int i = 0; i < si->vars_length; i++) {
+    for(size_t i = 0; i < si->vars_length; i++) {
         printf("[DEBUG] %s: %lf\n", si->variables[i]->name, si->variables[i]->value);
     }
     printf("[DEBUG] =======================================================\n");

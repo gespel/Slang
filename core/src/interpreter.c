@@ -56,7 +56,8 @@ int interpret(SlangInterpreter* si) {
                     function_interpreter->functions_length = si->functions_length;
 
                     interpret(function_interpreter);
-                    printAllVariables(function_interpreter);
+                    //printAllVariables(function_interpreter);
+                    //printAllFunctions(function_interpreter);
                     //interpret(f->function_tokens, f->function_tokens_length);
                 }
             }
