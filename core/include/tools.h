@@ -4,6 +4,10 @@
 #include "tokenizer.h"
 #include "interpreter.h"
 
+void printDebugMessage(char* message) {
+    printf("%s\n", message);
+}
+
 void printTokens(Token* tokens, int length) {
     for(int j = 0; j < length; j++) {
         printf("%s with value %s\n", tokenTypeToString(tokens[j].tt), tokens[j].value);
