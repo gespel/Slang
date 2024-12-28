@@ -86,6 +86,15 @@ void addVariable(SlangInterpreter* si, Variable* input) {
     si->vars_length++;
 }
 
+Variable* getVariableByName(SlangInterpreter* si, char* name) {
+    for(size_t variableIndex = 0; variableIndex < si->vars_length; variableIndex++) {
+        if(strcmp(si->variables[variableIndex]->name, name) == 0) {
+            return si->variables[variableIndex];
+        }
+    }
+    return NULL;
+}
+
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
     printf("[DEBUG] =======================================================\n");

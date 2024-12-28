@@ -22,10 +22,11 @@ int interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], IDENTIFIER);
             if(tokens[i].tt == ASSIGN) {
                 consume(&i, tokens[i], ASSIGN);
-                peek(tokens[i], NUMBER);
+                //peek(tokens[i], NUMBER);
 
-                double var_value;
-                sscanf(tokens[i].value, "%lf", &var_value);
+                double var_value = terminal(si, &i);
+                i++;
+                //sscanf(tokens[i].value, "%lf", &var_value);
 
                 Variable* temp_var = malloc(sizeof(Variable));
                 temp_var->name = name;
@@ -33,7 +34,7 @@ int interpret(SlangInterpreter* si) {
 
                 addVariable(si, temp_var);
 
-                consume(&i, tokens[i], NUMBER);
+                //consume(&i, tokens[i], NUMBER);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
                 consume(&i, tokens[i], PARANTHESISLEFT);
@@ -117,8 +118,9 @@ double terminal(SlangInterpreter* s, int* i) {
         return atof(s->tokens[*i].value);
     }
     else if(s->tokens[*i].tt == IDENTIFIER) {
-        return NULL;
+        return getVariableByName(s, s->tokens[*i].value)->value;
     }
+    return 0;
 }
 
 /*int interpret(Token* tokens, int numTokens) {
