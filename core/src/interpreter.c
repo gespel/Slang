@@ -112,6 +112,15 @@ int interpret(SlangInterpreter* si) {
     return 1;
 }
 
+double terminal(SlangInterpreter* s, int* i) {
+    if(s->tokens[*i].tt == NUMBER) {
+        return atof(s->tokens[*i].value);
+    }
+    else if(s->tokens[*i].tt == IDENTIFIER) {
+        return NULL;
+    }
+}
+
 /*int interpret(Token* tokens, int numTokens) {
     printf("Interpreting:\n");
     printTokens(tokens, numTokens);
