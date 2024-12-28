@@ -145,11 +145,13 @@ double l1_expression(SlangInterpreter* s, int* i) {
             return left - right;
             break;
         case MULTIPLY:
+            printDebugMessage("Doing multiplication now!");
             (*i)++;
             right = terminal(s, i);
             return left * right;
             break;
         case DIVIDE:
+            printDebugMessage("Doing division now!");
             (*i)++;
             right = terminal(s, i);
             return left / right;
