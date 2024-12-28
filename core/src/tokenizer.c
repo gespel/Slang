@@ -97,6 +97,36 @@ Token* tokenize(char* input, int* length) {
                 out[tokenCount] = temp;
                 tokenCount++;
             }
+            else if(tokenString[j] == '-') {
+                Token temp;
+                temp.tt = MINUS;
+                char *tmpString = malloc(sizeof(char) * 2);
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+                out[tokenCount] = temp;
+                tokenCount++;
+            }
+            else if(tokenString[j] == '*') {
+                Token temp;
+                temp.tt = MULTIPLY;
+                char *tmpString = malloc(sizeof(char) * 2);
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+                out[tokenCount] = temp;
+                tokenCount++;
+            }
+            else if(tokenString[j] == '/') {
+                Token temp;
+                temp.tt = DIVIDE;
+                char *tmpString = malloc(sizeof(char) * 2);
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+                out[tokenCount] = temp;
+                tokenCount++;
+            }
             else if(isdigit(tokenString[j])) {
                 char* ns = malloc(sizeof(char)*128);
                 while(isdigit(tokenString[j])) {

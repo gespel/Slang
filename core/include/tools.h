@@ -5,7 +5,7 @@
 #include "interpreter.h"
 
 void printDebugMessage(char* message) {
-    printf("%s\n", message);
+    printf("[DEBUG] %s\n", message);
 }
 
 void printTokens(Token* tokens, int length) {

@@ -133,24 +133,30 @@ double l1_expression(SlangInterpreter* s, int* i) {
 
     switch(s->tokens[*i].tt) {
         case PLUS:
+            printDebugMessage("Doing addition now!");
             (*i)++;
             right = terminal(s, i);
             return left + right;
-
+            break;
         case MINUS:
+            printDebugMessage("Doing subtraction now!");
             (*i)++;
             right = terminal(s, i);
             return left - right;
+            break;
         case MULTIPLY:
             (*i)++;
             right = terminal(s, i);
             return left * right;
+            break;
         case DIVIDE:
             (*i)++;
             right = terminal(s, i);
             return left / right;
+            break;
         default:
             return 0;
+            break;
     }
 
     return 0;
