@@ -75,11 +75,21 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
                 out[tokenCount] = temp;
-            tokenCount++;
+                tokenCount++;
             }
             else if(tokenString[j] == '}') {
                 Token temp;
                 temp.tt = BRACKETRIGHT;
+                char *tmpString = malloc(sizeof(char) * 2);
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+                out[tokenCount] = temp;
+                tokenCount++;
+            }
+            else if(tokenString[j] == '+') {
+                Token temp;
+                temp.tt = PLUS;
                 char *tmpString = malloc(sizeof(char) * 2);
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';

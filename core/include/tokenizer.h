@@ -17,6 +17,10 @@ typedef enum TokenType {
   PARANTHESISLEFT,
   PARANTHESISRIGHT,
   ASSIGN,
+  PLUS,
+  MINUS,
+  MULTIPLY,
+  DIVIDE,
 } TokenType;
 
 typedef struct t {

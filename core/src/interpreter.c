@@ -23,18 +23,20 @@ int interpret(SlangInterpreter* si) {
             if(tokens[i].tt == ASSIGN) {
                 consume(&i, tokens[i], ASSIGN);
                 //peek(tokens[i], NUMBER);
-
-                double var_value = terminal(si, &i);
+                double var_value;
+                if(tokens[i+1].tt == SEMICOLON) {
+                    var_value = terminal(si, &i);
+                }
+                else {
+                    var_value = l1_expression(si, &i);
+                }
                 i++;
-                //sscanf(tokens[i].value, "%lf", &var_value);
 
                 Variable* temp_var = malloc(sizeof(Variable));
                 temp_var->name = name;
                 temp_var->value = var_value;
 
                 addVariable(si, temp_var);
-
-                //consume(&i, tokens[i], NUMBER);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
                 consume(&i, tokens[i], PARANTHESISLEFT);
@@ -120,6 +122,37 @@ double terminal(SlangInterpreter* s, int* i) {
     else if(s->tokens[*i].tt == IDENTIFIER) {
         return getVariableByName(s, s->tokens[*i].value)->value;
     }
+    return 0;
+}
+
+double l1_expression(SlangInterpreter* s, int* i) {
+    double left = terminal(s, i);
+    double right;
+
+    (*i)++;
+
+    switch(s->tokens[*i].tt) {
+        case PLUS:
+            (*i)++;
+            right = terminal(s, i);
+            return left + right;
+
+        case MINUS:
+            (*i)++;
+            right = terminal(s, i);
+            return left - right;
+        case MULTIPLY:
+            (*i)++;
+            right = terminal(s, i);
+            return left * right;
+        case DIVIDE:
+            (*i)++;
+            right = terminal(s, i);
+            return left / right;
+        default:
+            return 0;
+    }
+
     return 0;
 }
 
