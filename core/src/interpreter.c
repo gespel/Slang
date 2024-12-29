@@ -88,8 +88,7 @@ double interpret(SlangInterpreter* si) {
                     printf("[DEBUG] Function name: %s\n", tokens[i].value);
 #endif
                 fnName = tokens[i].value;
-            }
-            
+            }           
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], PARANTHESISLEFT);
             consume(&i, tokens[i], PARANTHESISRIGHT);
@@ -117,10 +116,14 @@ double interpret(SlangInterpreter* si) {
 
 double terminal(SlangInterpreter* s, int* i) {
     if(s->tokens[*i].tt == NUMBER) {
-        return atof(s->tokens[*i].value);
+        double out = atof(s->tokens[*i].value);
+        (*i)++;
+        return out;
     }
     else if(s->tokens[*i].tt == IDENTIFIER) {
-        return getVariableByName(s, s->tokens[*i].value)->value;
+        double out = getVariableByName(s, s->tokens[*i].value)->value;
+        (*i)++;
+        return out;
     }
     return 0;
 }
@@ -129,29 +132,29 @@ double l1_expression(SlangInterpreter* s, int* i) {
     double left = terminal(s, i);
     double right;
 	
-    (*i)++;
     switch(s->tokens[*i].tt) {
         case PLUS:
             printDebugMessage("Doing addition now!");
             consume(i, s->tokens[*i], PLUS);
             right = l1_expression(s, i);
+            printf("%f\n", right);
             return left + right;
             break;
         case MINUS:
             printDebugMessage("Doing subtraction now!");
-            (*i)++;
+            consume(i, s->tokens[*i], MINUS);
             right = l1_expression(s, i);
             return left - right;
             break;
         case MULTIPLY:
             printDebugMessage("Doing multiplication now!");
-            (*i)++;
+            consume(i, s->tokens[*i], MULTIPLY); 
             right = l1_expression(s, i);
             return left * right;
             break;
         case DIVIDE:
             printDebugMessage("Doing division now!");
-            (*i)++;
+            consume(i, s->tokens[*i], DIVIDE); 
             right = l1_expression(s, i);
             return left / right;
             break;
@@ -163,7 +166,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             return 0;
             break;
     }
-
+    (*i)++;
     return 0;
 }
 
