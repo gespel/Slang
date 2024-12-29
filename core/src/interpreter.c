@@ -130,7 +130,6 @@ double l1_expression(SlangInterpreter* s, int* i) {
     double right;
 
     (*i)++;
-
     switch(s->tokens[*i].tt) {
         case PLUS:
             printDebugMessage("Doing addition now!");
