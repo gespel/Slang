@@ -23,14 +23,7 @@ double interpret(SlangInterpreter* si) {
             if(tokens[i].tt == ASSIGN) {
                 consume(&i, tokens[i], ASSIGN);
                 //peek(tokens[i], NUMBER);
-                double var_value;
-                if(tokens[i+1].tt == SEMICOLON) {
-                    var_value = terminal(si, &i);
-                }
-                else {
-                    var_value = l1_expression(si, &i);
-                }
-                i++;
+                double var_value = l1_expression(si, &i);
 
                 Variable* temp_var = malloc(sizeof(Variable));
                 temp_var->name = name;
@@ -166,7 +159,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             return 0;
             break;
     }
-    (*i)++;
+    //(*i)++;
     return 0;
 }
 

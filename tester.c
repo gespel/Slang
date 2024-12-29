@@ -4,7 +4,7 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "x = 1; y = 2; z = x; xx = 1 + 2; xy = x + y; xz = x + 1;";
+    char a[] = "x = 1; y = 2; z = 14; a = 3; b = 4; xy = x + y;";
 
     int length = 0;
     Token* tokens = tokenize(a, &length);
