@@ -22,20 +22,11 @@ typedef struct SlangInterpreter {
 } SlangInterpreter;
 
 
-int interpret(SlangInterpreter* s);
+double interpret(SlangInterpreter* s);
 
 double terminal(SlangInterpreter* s, int* i);
 
 double l1_expression(SlangInterpreter* s, int* i);
-//int interpret(Token* tokens, int numTokens);
-
-//int functions_length = 0;
-//Function* functions[8192];
-
-//int vars_length = 0;
-//Variable* variables[8192];
-
-
 
 int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
