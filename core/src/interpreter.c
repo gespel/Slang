@@ -122,9 +122,15 @@ double terminal(SlangInterpreter* s, int* i) {
 }
 
 double l1_expression(SlangInterpreter* s, int* i) {
-    double left = terminal(s, i);
-    double right;
-	
+    double left, right;
+    if(s->tokens[*i].tt == PARANTHESISLEFT) {
+        consume(i, s->tokens[*i], PARANTHESISLEFT);
+        left = l1_expression(s, i);
+    }
+    else {
+        left = terminal(s, i);
+    }
+   	
     switch(s->tokens[*i].tt) {
         case PLUS:
             printDebugMessage("Doing addition now!");
@@ -165,3 +171,8 @@ double l1_expression(SlangInterpreter* s, int* i) {
     return 0;
 }
 
+double l2_expression(SlangInterpreter* s, int* i) {
+
+
+    return 0;
+}
