@@ -30,6 +30,10 @@ double l1_expression(SlangInterpreter* s, int* i);
 
 double l2_expression(SlangInterpreter* s, int* i);
 
+void increase(int* i) {
+    (*i)++;
+}
+
 int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
     printf("[DEBUG] Consuming %s now. (Expecting %s): %s\n", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
