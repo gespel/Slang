@@ -122,13 +122,18 @@ double terminal(SlangInterpreter* s, int* i) {
 }
 
 double l1_expression(SlangInterpreter* s, int* i) {
+    printDebugMessage("Called L1 expression");
+    printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     double left, right;
     if(s->tokens[*i].tt == PARANTHESISLEFT) {
         consume(i, s->tokens[*i], PARANTHESISLEFT);
         left = l1_expression(s, i);
     }
     else {
+        printf("%d\n", *i);
+        printDebugMessage("Resolving terminal symbol!");
         left = terminal(s, i);
+        printf("%d\n%s\n", *i, tokenTypeToString(s->tokens[*i].tt));
     }
    	
     switch(s->tokens[*i].tt) {
@@ -158,10 +163,12 @@ double l1_expression(SlangInterpreter* s, int* i) {
             break;
         case SEMICOLON:
             printDebugMessage("End of expression!");
+            //(*i)--;
             //(*i)++;
             return left;
-        case PARANTHESISLEFT:
+        case PARANTHESISRIGHT:
             printDebugMessage("End of paranthesis expression!");
+            (*i)++;
             return left;
         default:
             return 0;
