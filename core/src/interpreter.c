@@ -130,7 +130,6 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("Doing addition now!");
             consume(i, s->tokens[*i], PLUS);
             right = l1_expression(s, i);
-            printf("%f\n", right);
             return left + right;
             break;
         case MINUS:
