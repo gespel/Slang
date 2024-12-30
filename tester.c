@@ -4,10 +4,11 @@
 #include "slang-lib.h"
 
 int main() {
-    char a[] = "x = 1; y = 2; xy = (x + y) * 3;";
+    char a[] = "x = 3; y = 2; xy = (x + y) * 3;";
 
     int length = 0;
     Token* tokens = tokenize(a, &length);
+    printTokens(tokens, length);
 
     printf("%d tokens!\n", length);
     SlangInterpreter* main_interpreter = malloc(sizeof(SlangInterpreter));

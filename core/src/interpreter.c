@@ -23,7 +23,7 @@ double interpret(SlangInterpreter* si) {
             if(tokens[i].tt == ASSIGN) {
                 consume(&i, tokens[i], ASSIGN);
                 //peek(tokens[i], NUMBER);
-                double var_value = l2_expression(si, &i);
+                double var_value = l1_expression(si, &i);
 
                 Variable* temp_var = malloc(sizeof(Variable));
                 temp_var->name = name;
@@ -123,34 +123,44 @@ double terminal(SlangInterpreter* s, int* i) {
 
 double l1_expression(SlangInterpreter* s, int* i) {
     printDebugMessage("Called L1 expression");
+    printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     printDebugMessage(s->tokens[*i].value);
     double left, right;
-    
-    left = terminal(s, i);
+    if(s->tokens[*i].tt == PARANTHESISLEFT) {
+        printDebugMessage("Hit parantheses!");
+        consume(i, s->tokens[*i], PARANTHESISLEFT);
+        left = l1_expression(s, i);
+        printf("From parantheses %f\n", left);
+        consume(i, s->tokens[*i], PARANTHESISRIGHT);
+    }
+    else {
+        printDebugMessage("No parantheses. Regular left...");
+        left = terminal(s, i);
+    }
    	
     switch(s->tokens[*i].tt) {
         case PLUS:
             printDebugMessage("Doing addition now!");
             consume(i, s->tokens[*i], PLUS);
-            right = l2_expression(s, i);
+            right = l1_expression(s, i);
             return left + right;
             break;
         case MINUS:
             printDebugMessage("Doing subtraction now!");
             consume(i, s->tokens[*i], MINUS);
-            right = l2_expression(s, i);
+            right = l1_expression(s, i);
             return left - right;
             break;
         case MULTIPLY:
             printDebugMessage("Doing multiplication now!");
             consume(i, s->tokens[*i], MULTIPLY); 
-            right = l2_expression(s, i);
+            right = l1_expression(s, i);
             return left * right;
             break;
         case DIVIDE:
             printDebugMessage("Doing division now!");
             consume(i, s->tokens[*i], DIVIDE); 
-            right = l2_expression(s, i);
+            right = l1_expression(s, i);
             return left / right;
             break;
         case SEMICOLON:
@@ -176,7 +186,7 @@ double l2_expression(SlangInterpreter* s, int* i) {
         consume(i, s->tokens[*i], PARANTHESISLEFT);
         left = l2_expression(s, i);
         if(s->tokens[*i].tt == PARANTHESISRIGHT) {
-            consume(i, s->tokens[*i].tt, PARANTHESISRIGHT);
+            consume(i, s->tokens[*i], PARANTHESISRIGHT);
             return left;
         }
         else {

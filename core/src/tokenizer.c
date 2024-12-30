@@ -18,9 +18,11 @@ Token* tokenize(char* input, int* length) {
             //printf("lexing char: %c\n", tokenString[j]);
             if(isalpha(tokenString[j])) {
                 char* ns = malloc(sizeof(char)*128);
+                int nsc = 0;
                 while(isalpha(tokenString[j])) {
-                    ns[j] = tokenString[j];
+                    ns[nsc] = tokenString[j];
                     j++;
+                    nsc++;
                 }
                 j--;
 
@@ -40,6 +42,7 @@ Token* tokenize(char* input, int* length) {
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '(') {
+                printf("Opening PARANTHESISLEFT found!\n");
                 temp.tt = PARANTHESISLEFT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
@@ -88,15 +91,20 @@ Token* tokenize(char* input, int* length) {
                 temp.value = tmpString;
             }
             else if(isdigit(tokenString[j])) {
+                printf("DIGIT found! %c\n", tokenString[j]);
                 char* ns = malloc(sizeof(char)*128);
+                int nsc = 0;
                 while(isdigit(tokenString[j])) {
-                    ns[j] = tokenString[j];
+                    printf("%c is a digit\n", tokenString[j]);
+                    ns[nsc] = tokenString[j];
                     j++;
+                    nsc++;
                 }
                 j--;
 
                 temp.tt = NUMBER;
                 temp.value = ns;
+                printf("Parsed number: %s\n", ns);
             }
             out[tokenCount] = temp;
             tokenCount++;
