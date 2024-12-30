@@ -154,6 +154,9 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("End of expression!");
             //(*i)++;
             return left;
+        case PARANTHESISLEFT:
+            printDebugMessage("End of paranthesis expression!");
+            return left;
         default:
             return 0;
             break;

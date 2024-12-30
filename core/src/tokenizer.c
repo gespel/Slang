@@ -114,7 +114,7 @@ Token* tokenize(char* input, int* length) {
 void tokenizeStrings(Token* out, int numTokens) {
     for(int x = 0; x < numTokens; x++) {
         if(out[x].tt == IDENTIFIER) {
-            if(strcmp(out[x].value, "fn") == 0) {
+    if(strcmp(out[x].value, "fn") == 0) {
                 out[x].tt = FUNCTION;
             }
         }
@@ -150,6 +150,18 @@ char* tokenTypeToString(TokenType input) {
         break;
     case ASSIGN:
         out = "Assign";
+        break;
+    case PLUS:
+        out = "Plus";
+        break;
+    case MINUS:
+        out = "Minus";
+        break;
+    case MULTIPLY:
+        out = "Multiply";
+        break;
+    case DIVIDE:
+        out = "Divide";
         break;
     default:
         out = "Unknown";
