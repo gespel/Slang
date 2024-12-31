@@ -122,19 +122,18 @@ double terminal(SlangInterpreter* s, int* i) {
 }
 
 double l1_expression(SlangInterpreter* s, int* i) {
-    printDebugMessage("Called L1 expression");
-    printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
-    printDebugMessage(s->tokens[*i].value);
+    //printDebugMessage("Called expression");
+    //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
+    //printDebugMessage(s->tokens[*i].value);
     double left, right;
     if(s->tokens[*i].tt == PARANTHESISLEFT) {
-        printDebugMessage("Hit parantheses!");
+        //printDebugMessage("Hit parantheses!");
         consume(i, s->tokens[*i], PARANTHESISLEFT);
         left = l1_expression(s, i);
-        printf("From parantheses %f\n", left);
         consume(i, s->tokens[*i], PARANTHESISRIGHT);
     }
     else {
-        printDebugMessage("No parantheses. Regular left...");
+        //printDebugMessage("No parantheses. Regular left...");
         left = terminal(s, i);
     }
    	
@@ -195,7 +194,7 @@ double l2_expression(SlangInterpreter* s, int* i) {
         return left;
     }
     else {
-        printDebugMessage("Going to l1_expression because it seems to be no parantheses!");
+        //printDebugMessage("Going to l1_expression because it seems to be no parantheses!");
         //(*i)++;
         left = l1_expression(s, i);
         return left;

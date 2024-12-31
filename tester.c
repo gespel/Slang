@@ -8,7 +8,7 @@ int main() {
 
     int length = 0;
     Token* tokens = tokenize(a, &length);
-    printTokens(tokens, length);
+    //printTokens(tokens, length);
 
     printf("%d tokens!\n", length);
     SlangInterpreter* main_interpreter = malloc(sizeof(SlangInterpreter));
