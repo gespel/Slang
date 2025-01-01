@@ -122,7 +122,7 @@ double terminal(SlangInterpreter* s, int* i) {
 }
 
 double l1_expression(SlangInterpreter* s, int* i) {
-    //printDebugMessage("Called expression");
+    printDebugMessage("Called expression");
     //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     //printDebugMessage(s->tokens[*i].value);
     double left, right;
@@ -131,6 +131,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
         consume(i, s->tokens[*i], PARANTHESISLEFT);
         left = l1_expression(s, i);
         consume(i, s->tokens[*i], PARANTHESISRIGHT);
+        printf("%f\n", left);
     }
     else {
         //printDebugMessage("No parantheses. Regular left...");
@@ -142,6 +143,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("Doing addition now!");
             consume(i, s->tokens[*i], PLUS);
             right = l1_expression(s, i);
+            printf("%f + %f\n", left, right);
             return left + right;
             break;
         case MINUS:
@@ -154,6 +156,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("Doing multiplication now!");
             consume(i, s->tokens[*i], MULTIPLY); 
             right = l1_expression(s, i);
+            printf("%f * %f\n", left, right);
             return left * right;
             break;
         case DIVIDE:
@@ -169,38 +172,35 @@ double l1_expression(SlangInterpreter* s, int* i) {
             return left;
         case PARANTHESISRIGHT:
             printDebugMessage("Hit parantheses right!");
-
+            printf("%f\n", left);
             return left;
         default:
-            return 0;
+            printf("[ERROR] Unexpected token! %s, %s\n", tokenTypeToString(s->tokens[*i].tt), s->tokens[*i].value);
+            exit(EXIT_FAILURE);
             break;
     }
     //(*i)++;
     return 0;
 }
 
-double l2_expression(SlangInterpreter* s, int* i) {
-    double left, right;
-    if(s->tokens[*i].tt == PARANTHESISLEFT) {
-        consume(i, s->tokens[*i], PARANTHESISLEFT);
-        left = l2_expression(s, i);
-        if(s->tokens[*i].tt == PARANTHESISRIGHT) {
-            consume(i, s->tokens[*i], PARANTHESISRIGHT);
-            return left;
-        }
-        else {
-            return l2_expression(s, i);
-        }
-        return left;
-    }
-    else {
-        //printDebugMessage("Going to l1_expression because it seems to be no parantheses!");
-        //(*i)++;
-        left = l1_expression(s, i);
-        return left;
-    }
-    
 
 
-    return 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
