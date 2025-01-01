@@ -130,8 +130,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
         //printDebugMessage("Hit parantheses!");
         consume(i, s->tokens[*i], PARANTHESISLEFT);
         left = l1_expression(s, i);
-        consume(i, s->tokens[*i], PARANTHESISRIGHT);
-        printf("%f\n", left);
+        consume(i, s->tokens[*i], PARANTHESISRIGHT); 
     }
     else {
         //printDebugMessage("No parantheses. Regular left...");
@@ -143,7 +142,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("Doing addition now!");
             consume(i, s->tokens[*i], PLUS);
             right = l1_expression(s, i);
-            printf("%f + %f\n", left, right);
+            printf("\t%f + %f\n", left, right);
             return left + right;
             break;
         case MINUS:
@@ -156,7 +155,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             printDebugMessage("Doing multiplication now!");
             consume(i, s->tokens[*i], MULTIPLY); 
             right = l1_expression(s, i);
-            printf("%f * %f\n", left, right);
+            printf("\t%f * %f\n", left, right);
             return left * right;
             break;
         case DIVIDE:
@@ -172,7 +171,7 @@ double l1_expression(SlangInterpreter* s, int* i) {
             return left;
         case PARANTHESISRIGHT:
             printDebugMessage("Hit parantheses right!");
-            printf("%f\n", left);
+            printf("\treturning %f\n", left);
             return left;
         default:
             printf("[ERROR] Unexpected token! %s, %s\n", tokenTypeToString(s->tokens[*i].tt), s->tokens[*i].value);
