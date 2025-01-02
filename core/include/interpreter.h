@@ -94,6 +94,10 @@ Variable* getVariableByName(SlangInterpreter* si, char* name) {
     return NULL;
 }
 
+void inc(int* i) {
+    (*i)++;
+}
+
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
     printf("[DEBUG] =======================================================\n");

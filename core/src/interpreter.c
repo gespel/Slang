@@ -65,8 +65,8 @@ double interpret(SlangInterpreter* si) {
                     exit(-1);
                 }
             }
-            
-            //consume(&i, tokens[i], SEMICOLON);
+            inc(&i);  
+            consume(&i, tokens[i], SEMICOLON);
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);
@@ -103,6 +103,13 @@ double interpret(SlangInterpreter* si) {
 
             addFunction(si, temp);
         }
+        else if(tokens[i].tt == SEMICOLON) {
+            printDebugMessage("End of line.");
+        }
+        else {
+            printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
+        }
+        i--;
     }
     return 1;
 }
