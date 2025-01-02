@@ -103,8 +103,9 @@ double interpret(SlangInterpreter* si) {
 
             addFunction(si, temp);
         }
-        else if(tokens[i].tt == SEMICOLON) {
-            printDebugMessage("End of line.");
+        else if(getToken(si, i).tt == SEMICOLON) {
+            consume(&i, tokens[i], SEMICOLON);
+            printDebugMessage("Empty line.");
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);

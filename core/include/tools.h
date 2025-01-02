@@ -16,6 +16,10 @@ void printTokens(Token* tokens, int length) {
     }
 }
 
+Token getToken(SlangInterpreter* si, int i) {
+    return si->tokens[i];
+}
+
 void tokenError(TokenType expected, TokenType got) {
     printf("Unexpected token! Expected '%s' but got '%s'\n", tokenTypeToString(expected), tokenTypeToString(got));
     exit(1);
