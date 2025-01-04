@@ -43,7 +43,7 @@ int consume(int* i, Token token, TokenType expected) {
         return 1;
     }
     else {
-        printf("\nERROR! WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
+        printf("\n[ERROR] WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD (Value: %s)\n", tokenTypeToString(expected), tokenTypeToString(token.tt), token.value);
         exit(-1);
         return 0;
     }

@@ -30,11 +30,13 @@ double interpret(SlangInterpreter* si) {
                 temp_var->value = var_value;
 
                 addVariable(si, temp_var);
+                inc(&i);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
+                printDebugMessage("Function call!");
                 consume(&i, tokens[i], PARANTHESISLEFT);
                 consume(&i, tokens[i], PARANTHESISRIGHT);
-                peek(tokens[i], SEMICOLON);
+                //peek(tokens[i], SEMICOLON);
 
                 Function* f = getFunctionByName(si, name);
 
@@ -64,8 +66,7 @@ double interpret(SlangInterpreter* si) {
                     printf("[ERROR] Function not found! Exiting...\n");
                     exit(-1);
                 }
-            }
-            inc(&i);  
+            }  
             consume(&i, tokens[i], SEMICOLON);
         }
         else if(tokens[i].tt == FUNCTION) {
