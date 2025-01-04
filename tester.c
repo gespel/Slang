@@ -11,9 +11,7 @@ int main() {
     //printTokens(tokens, length);
 
     printf("%d tokens!\n", length);
-    SlangInterpreter* main_interpreter = malloc(sizeof(SlangInterpreter));
-    main_interpreter->tokens = tokens;
-    main_interpreter->numTokens = length;
+    SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
     interpret(main_interpreter);
     printAllFunctions(main_interpreter);
     printAllVariables(main_interpreter);

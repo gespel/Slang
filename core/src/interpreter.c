@@ -1,5 +1,12 @@
 #include "../include/interpreter.h"
 
+SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
+    SlangInterpreter* out = malloc(sizeof(SlangInterpreter));
+    out->tokens = tokens;
+    out->numTokens = numTokens;
+    return out;
+}
+
 Function* getFunctionByName(SlangInterpreter* si, char* name) {
     for(size_t i = 0; i < si->functions_length; i++) {
         if(strcmp(si->functions[i]->name, name) == 0) {
