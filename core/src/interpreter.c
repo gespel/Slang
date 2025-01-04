@@ -70,16 +70,13 @@ double interpret(SlangInterpreter* si) {
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);
-#ifdef DEBUG
-                printf("[DEBUG] Function definition found!\n");
-#endif
+            printDebugMessage("Function definition found!");
             
             char* fnName = NULL;
 
             if(peek(tokens[i], IDENTIFIER)) {
-#ifdef DEBUG
-                    printf("[DEBUG] Function name: %s\n", tokens[i].value);
-#endif
+                printDebugMessage("Function name:");
+                printDebugMessage(tokens[i].value);
                 fnName = tokens[i].value;
             }           
             consume(&i, tokens[i], IDENTIFIER);
@@ -92,21 +89,17 @@ double interpret(SlangInterpreter* si) {
 
             while(tokens[i].tt != BRACKETRIGHT) {
                 fntokens[numFunctionTokens] = tokens[i];
-                i++;
+                inc(&i);
                 numFunctionTokens++;
             }
 
-            Function* temp = malloc(sizeof(Function));
-            temp->name = fnName;
-            temp->function_tokens = fntokens;
-            temp->function_tokens_length = numFunctionTokens;
-
-            addFunction(si, temp);
+            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens));
+            consume(&i, tokens[i], BRACKETRIGHT);
         }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
             printDebugMessage("Empty line.");
-        }
+        } 
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
         }
@@ -118,12 +111,12 @@ double interpret(SlangInterpreter* si) {
 double terminal(SlangInterpreter* s, int* i) {
     if(s->tokens[*i].tt == NUMBER) {
         double out = atof(s->tokens[*i].value);
-        (*i)++;
+        inc(i);
         return out;
     }
     else if(s->tokens[*i].tt == IDENTIFIER) {
         double out = getVariableByName(s, s->tokens[*i].value)->value;
-        (*i)++;
+        inc(i);
         return out;
     }
     return 0;
@@ -189,25 +182,4 @@ double l1_expression(SlangInterpreter* s, int* i) {
     //(*i)++;
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

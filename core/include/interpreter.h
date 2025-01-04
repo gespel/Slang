@@ -98,6 +98,10 @@ void inc(int* i) {
     (*i)++;
 }
 
+void dec(int* i) {
+    (*i)--;
+}
+
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
     printf("[DEBUG] =======================================================\n");
