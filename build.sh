@@ -1,3 +1,4 @@
+rm core/src/*.o
 cd build
 make
 cd ..

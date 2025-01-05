@@ -4,25 +4,12 @@
 #include "tokenizer.h"
 #include "interpreter.h"
 
-void printDebugMessage(char* message) {
-#ifdef DEBUG
-    printf("[DEBUG] %s\n", message);
-#endif
-}
+void printDebugMessage(char* message);
 
-void printTokens(Token* tokens, int length) {
-    for(int j = 0; j < length; j++) {
-        printf("%s with value %s\n", tokenTypeToString(tokens[j].tt), tokens[j].value);
-    }
-}
+void printTokens(Token* tokens, int length);
 
-Token getToken(SlangInterpreter* si, int i) {
-    return si->tokens[i];
-}
+Token getToken(SlangInterpreter* si, int i);
 
-void tokenError(TokenType expected, TokenType got) {
-    printf("Unexpected token! Expected '%s' but got '%s'\n", tokenTypeToString(expected), tokenTypeToString(got));
-    exit(1);
-}
+void tokenError(TokenType expected, TokenType got);
 
 #endif
