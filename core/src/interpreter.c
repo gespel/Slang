@@ -1,4 +1,85 @@
-#include "../include/interpreter.h"
+#include "interpreter.h"
+
+void increase(int* i) {
+    (*i)++;
+}
+
+int consume(int* i, Token token, TokenType expected) {
+#ifdef DEBUG
+    printf("[DEBUG] Consuming %s now. (Expecting %s): %s\n", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
+#endif
+    if(token.tt == expected) {
+        (*i)++;
+        return 1;
+    }
+    else {
+        printf("\n[ERROR] WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD (Value: %s)\n", tokenTypeToString(expected), tokenTypeToString(token.tt), token.value);
+        exit(-1);
+        return 0;
+    }
+}
+
+int peek(Token token, TokenType expected) {
+    if(token.tt == expected) {
+        return 1;
+    }
+    else {
+        printf("\nERROR! WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
+        exit(-1);
+        return 0;
+    }
+}
+
+void addFunction(SlangInterpreter* si, Function* input) {
+    si->functions[si->functions_length] = input;
+    si->functions_length++;
+}
+
+void printAllFunctions(SlangInterpreter* si) {
+#ifdef DEBUG
+    printf("[DEBUG] =======================================================\n");
+    for(size_t i = 0; i < si->functions_length; i++) {
+        printf("[DEBUG] functionname: %s\n", si->functions[i]->name);
+        for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
+            printf("[DEBUG] \t%s -> %s\n", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
+        }
+    }
+    printf("[DEBUG] =======================================================\n");
+#endif
+}
+
+void addVariable(SlangInterpreter* si, Variable* input) {
+    si->variables[si->vars_length] = input;
+    si->vars_length++;
+}
+
+Variable* getVariableByName(SlangInterpreter* si, char* name) {
+    for(size_t variableIndex = 0; variableIndex < si->vars_length; variableIndex++) {
+        if(strcmp(si->variables[variableIndex]->name, name) == 0) {
+            return si->variables[variableIndex];
+        }
+    }
+    return NULL;
+}
+
+void inc(int* i) {
+    (*i)++;
+}
+
+void dec(int* i) {
+    (*i)--;
+}
+
+void printAllVariables(SlangInterpreter* si) {
+#ifdef DEBUG
+    printf("[DEBUG] =======================================================\n");
+    printf("[DEBUG] Variables:\n");
+    for(size_t i = 0; i < si->vars_length; i++) {
+        printf("[DEBUG] %s: %lf\n", si->variables[i]->name, si->variables[i]->value);
+    }
+    printf("[DEBUG] =======================================================\n");
+#endif
+}
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     SlangInterpreter* out = malloc(sizeof(SlangInterpreter));
