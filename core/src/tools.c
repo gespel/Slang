@@ -1,4 +1,4 @@
-#include "tools.h"
+#include "../include/tools.h"
 
 void printDebugMessage(char* message) {
 #ifdef DEBUG
