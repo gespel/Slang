@@ -178,6 +178,12 @@ char* tokenTypeToString(TokenType input) {
     case DIVIDE:
         out = "Divide";
         break;
+    case FOR:
+        out = "For";
+        break;
+    case IF:
+        out = "If";
+        break;
     default:
         out = "Unknown";
         break;
