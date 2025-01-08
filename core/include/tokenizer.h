@@ -22,6 +22,8 @@ typedef enum TokenType {
     MULTIPLY,
     DIVIDE,
     RETURN,
+    FOR,
+    IF,
 } TokenType;
 
 typedef struct t {

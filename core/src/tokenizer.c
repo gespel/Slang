@@ -122,11 +122,18 @@ Token* tokenize(char* input, int* length) {
 void tokenizeStrings(Token* out, int numTokens) {
     for(int x = 0; x < numTokens; x++) {
         if(out[x].tt == IDENTIFIER) {
-    if(strcmp(out[x].value, "fn") == 0) {
+            char* value = out[x].value;
+            if(strcmp(value, "fn") == 0) {
                 out[x].tt = FUNCTION;
             }
+            else if(strcmp(value, "for") == 0) {
+                out[x].tt = FOR;
+            }
+            else if(strcmp(value, "if") == 0) {
+                out[x].tt = IF;
+            }
         }
-    }
+    } 
 }
 
 char* tokenTypeToString(TokenType input) {
