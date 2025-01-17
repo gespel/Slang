@@ -101,6 +101,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 }
 
 double interpret(SlangInterpreter* si) {
+    double out = 0.0;
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
 
@@ -185,6 +186,11 @@ double interpret(SlangInterpreter* si) {
             addFunction(si, createFunction(fnName, fntokens, numFunctionTokens));
             consume(&i, tokens[i], BRACKETRIGHT);
         }
+        else if(getToken(si, i).tt == RETURN) {
+            consume(&i, tokens[i], RETURN);
+            printDebugMessage("Returning now!");
+            return l1_expression(si, &i);
+        }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
             printDebugMessage("Empty line.");
@@ -194,7 +200,7 @@ double interpret(SlangInterpreter* si) {
         }
         i--;
     }
-    return 1;
+    return 0;
 }
 
 double terminal(SlangInterpreter* s, int* i) {
