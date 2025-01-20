@@ -112,14 +112,14 @@ double interpret(SlangInterpreter* si) {
             if(tokens[i].tt == ASSIGN) {
                 consume(&i, tokens[i], ASSIGN);
                 //peek(tokens[i], NUMBER);
-                double var_value = l1_expression(si, &i);
+                double var_value = l3_expression(si, &i);
 
                 Variable* temp_var = malloc(sizeof(Variable));
                 temp_var->name = name;
                 temp_var->value = var_value;
 
                 addVariable(si, temp_var);
-                inc(&i);
+                //inc(&i);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
                 printDebugMessage("Function call!");
@@ -189,7 +189,7 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
             printDebugMessage("Returning now!");
-            return l1_expression(si, &i);
+            return l3_expression(si, &i);
         }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
@@ -217,64 +217,55 @@ double terminal(SlangInterpreter* s, int* i) {
     return 0;
 }
 
-double l1_expression(SlangInterpreter* s, int* i) {
+double l3_expression(SlangInterpreter* si, int* i) {
+    double left = l2_expression(si, i);
+    double right;
+
+    switch(getToken(si, *i).tt) {
+        case PLUS:
+            consume(i, si->tokens[*i], PLUS);
+            right = l3_expression(si, i);
+            return left + right;
+        case MINUS:
+            consume(i, si->tokens[*i], MINUS);
+            right = l3_expression(si, i);
+            return left - right; 
+    }
+    return left;
+}
+
+double l2_expression(SlangInterpreter* si, int* i) {
+    double left, right;
+    left = l1_expression(si, i);
+
+    switch(getToken(si, *i).tt) {
+        case MULTIPLY:
+            consume(i, si->tokens[*i], MULTIPLY);
+            right = l3_expression(si, i);
+            return left * right;
+        case DIVIDE:
+            consume(i, si->tokens[*i], DIVIDE);
+            right = l3_expression(si, i);
+            return left / right;
+    }
+    return left;
+}
+
+double l1_expression(SlangInterpreter* si, int* i) {
     printDebugMessage("Called expression");
     //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     //printDebugMessage(s->tokens[*i].value);
     double left, right;
-    if(s->tokens[*i].tt == PARANTHESISLEFT) {
+    if(si->tokens[*i].tt == PARANTHESISLEFT) {
         //printDebugMessage("Hit parantheses!");
-        consume(i, s->tokens[*i], PARANTHESISLEFT);
-        left = l1_expression(s, i);
-        consume(i, s->tokens[*i], PARANTHESISRIGHT); 
+        consume(i, si->tokens[*i], PARANTHESISLEFT);
+        left = l3_expression(si, i);
+        consume(i, si->tokens[*i], PARANTHESISRIGHT); 
     }
     else {
         //printDebugMessage("No parantheses. Regular left...");
-        left = terminal(s, i);
+        left = terminal(si, i);
     }
-   	
-    switch(s->tokens[*i].tt) {
-        case PLUS:
-            printDebugMessage("Doing addition now!");
-            consume(i, s->tokens[*i], PLUS);
-            right = l1_expression(s, i);
-            printf("\t%f + %f\n", left, right);
-            return left + right;
-            break;
-        case MINUS:
-            printDebugMessage("Doing subtraction now!");
-            consume(i, s->tokens[*i], MINUS);
-            right = l1_expression(s, i);
-            return left - right;
-            break;
-        case MULTIPLY:
-            printDebugMessage("Doing multiplication now!");
-            consume(i, s->tokens[*i], MULTIPLY); 
-            right = l1_expression(s, i);
-            printf("\t%f * %f\n", left, right);
-            return left * right;
-            break;
-        case DIVIDE:
-            printDebugMessage("Doing division now!");
-            consume(i, s->tokens[*i], DIVIDE); 
-            right = l1_expression(s, i);
-            return left / right;
-            break;
-        case SEMICOLON:
-            printDebugMessage("End of expression!");
-            (*i)--;
-            //(*i)++;
-            return left;
-        case PARANTHESISRIGHT:
-            printDebugMessage("Hit parantheses right!");
-            printf("\treturning %f\n", left);
-            return left;
-        default:
-            printf("[ERROR] Unexpected token! %s, %s\n", tokenTypeToString(s->tokens[*i].tt), s->tokens[*i].value);
-            exit(EXIT_FAILURE);
-            break;
-    }
-    //(*i)++;
-    return 0;
+    return left;
 }
 

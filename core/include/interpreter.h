@@ -27,9 +27,11 @@ double interpret(SlangInterpreter* s);
 
 double terminal(SlangInterpreter* s, int* i);
 
-double l1_expression(SlangInterpreter* s, int* i);
+double l1_expression(SlangInterpreter* si, int* i);
 
-double l2_expression(SlangInterpreter* s, int* i);
+double l2_expression(SlangInterpreter* si, int* i);
+
+double l3_expression(SlangInterpreter* si, int* i);
 
 void increase(int* i);
 

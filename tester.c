@@ -6,7 +6,7 @@
 #ifndef LIBRARY
 
 int main() {
-    char a[] = "x = 3; y = 2; return y; xy = ((x + y)) * (3 + 1); xx = x * (x + x); fn fun() { sten = 3; } fun(); fun();";
+    char a[] = "x = 3; y = 2; z = (x + y) * 2;";
 
     int length = 0;
     Token* tokens = tokenize(a, &length);
