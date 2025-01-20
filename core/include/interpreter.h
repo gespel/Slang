@@ -25,7 +25,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
 double interpret(SlangInterpreter* s);
 
-double terminal(SlangInterpreter* s, int* i);
+double terminal(SlangInterpreter* si, int* i);
 
 double l1_expression(SlangInterpreter* si, int* i);
 

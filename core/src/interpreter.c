@@ -203,18 +203,17 @@ double interpret(SlangInterpreter* si) {
     return 0;
 }
 
-double terminal(SlangInterpreter* s, int* i) {
-    if(s->tokens[*i].tt == NUMBER) {
-        double out = atof(s->tokens[*i].value);
-        inc(i);
-        return out;
+double terminal(SlangInterpreter* si, int* i) {
+    switch(si->tokens[*i].tt) {
+        case NUMBER:
+            double out = atof(s->tokens[*i].value);
+            inc(i);
+            return out;
+        case IDENTIFIER:
+            double out = getVariableByName(si, s->tokens[*i].value)->value;
+            inc(i);
+            return out;
     }
-    else if(s->tokens[*i].tt == IDENTIFIER) {
-        double out = getVariableByName(s, s->tokens[*i].value)->value;
-        inc(i);
-        return out;
-    }
-    return 0;
 }
 
 double l3_expression(SlangInterpreter* si, int* i) {
