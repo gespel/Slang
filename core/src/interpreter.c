@@ -204,15 +204,20 @@ double interpret(SlangInterpreter* si) {
 }
 
 double terminal(SlangInterpreter* si, int* i) {
+    printDebugMessage("Calling terminal:");
+    printDebugMessage(tokenTypeToString(si->tokens[*i].tt));
+    double out;
     switch(si->tokens[*i].tt) {
         case NUMBER:
-            double out = atof(s->tokens[*i].value);
+            out = atof(si->tokens[*i].value);
             inc(i);
             return out;
         case IDENTIFIER:
-            double out = getVariableByName(si, s->tokens[*i].value)->value;
+            out = getVariableByName(si, si->tokens[*i].value)->value;
             inc(i);
             return out;
+        default:
+            generalError("Terminal expected NUMBER or IDENTIFIER");
     }
 }
 

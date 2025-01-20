@@ -12,4 +12,6 @@ Token getToken(SlangInterpreter* si, int i);
 
 void tokenError(TokenType expected, TokenType got);
 
+void generalError(char* msg);
+
 #endif

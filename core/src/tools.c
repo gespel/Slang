@@ -21,3 +21,7 @@ void tokenError(TokenType expected, TokenType got) {
     exit(1);
 }
 
+void generalError(char* msg) {
+    printf("[ERROR] %s", msg);
+    exit(1);
+}
