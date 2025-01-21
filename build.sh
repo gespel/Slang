@@ -3,5 +3,7 @@ cd build
 make
 cd ..
 make
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/c/Users/stenh/AudioProgramming/Slang/build/
+rm /lib/libslang.so
+cp build/libslang.so /lib/libslang.so
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/c/Users/stenh/AudioProgramming/Slang/build/
 ./test
