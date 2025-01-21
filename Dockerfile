@@ -4,4 +4,4 @@ COPY . .
 
 RUN ./build.sh
 
-ENTRYPOINT ./test
+ENTRYPOINT ["./test"]

@@ -132,6 +132,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "if") == 0) {
                 out[x].tt = IF;
             }
+            else if(strcmp(value, "return") == 0) {
+                out[x].tt = RETURN;
+            }
         }
     } 
 }

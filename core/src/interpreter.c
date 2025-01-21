@@ -188,8 +188,10 @@ double interpret(SlangInterpreter* si) {
         }
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
-            printDebugMessage("Returning now!");
-            return l3_expression(si, &i);
+            double out = l3_expression(si, &i);
+            printDebugMessage("Returning now! Value:");
+            printf("[DEBUG] %lf\n", out);
+            return out;
         }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
@@ -213,8 +215,34 @@ double terminal(SlangInterpreter* si, int* i) {
             inc(i);
             return out;
         case IDENTIFIER:
-            out = getVariableByName(si, si->tokens[*i].value)->value;
-            inc(i);
+            if(getFunctionByName(si, si->tokens[*i].value)) {
+                Function* f = getFunctionByName(si, si->tokens[*i].value);
+                inc(i);
+                inc(i);
+                inc(i);
+                SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
+
+                function_interpreter->tokens = f->function_tokens;
+                function_interpreter->numTokens = f->function_tokens_length;
+ 
+                for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
+                    function_interpreter->variables[variable_index] = si->variables[variable_index];
+                }
+                function_interpreter->vars_length = si->vars_length;
+
+                for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
+                    function_interpreter->functions[function_index] = si->functions[function_index];
+                }
+                function_interpreter->functions_length = si->functions_length;
+                out = interpret(function_interpreter);
+                printAllVariables(function_interpreter);
+                printAllFunctions(function_interpreter);
+                return out;
+            }
+            else {
+                out = getVariableByName(si, si->tokens[*i].value)->value;
+                inc(i);
+            }
             return out;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
