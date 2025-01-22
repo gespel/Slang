@@ -24,6 +24,7 @@ typedef enum TokenType {
     RETURN,
     FOR,
     IF,
+    COMMA,
 } TokenType;
 
 typedef struct t {

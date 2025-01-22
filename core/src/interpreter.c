@@ -217,9 +217,21 @@ double terminal(SlangInterpreter* si, int* i) {
         case IDENTIFIER:
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
-                inc(i);
-                inc(i);
-                inc(i);
+                consume(i, si->tokens[*i], IDENTIFIER);
+                consume(i, si->tokens[*i], PARANTHESISLEFT);
+                
+                Token* arguments = malloc(sizeof(Token) * 512);
+                int arg_counter = 0;
+
+                while(si->tokens[*i].tt != PARANTHESISRIGHT) {
+                    arguments[arg_counter] = si->tokens[*i];
+                    arg_counter++;
+                    inc(i);
+                    if(si->tokens[*i].tt != PARANTHESISRIGHT) {
+                        consume(i, si->tokens[*i], COMMA);
+                    }
+                }
+                consume(i, si->tokens[*i], PARANTHESISRIGHT);
                 SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
 
                 function_interpreter->tokens = f->function_tokens;
