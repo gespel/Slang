@@ -223,15 +223,19 @@ double terminal(SlangInterpreter* si, int* i) {
                 Token* arguments = malloc(sizeof(Token) * 512);
                 int arg_counter = 0;
 
-                while(si->tokens[*i].tt != PARANTHESISRIGHT) {
-                    arguments[arg_counter] = si->tokens[*i];
+                while(si->tokens[*i].tt != PARANTHESISRIGHT) {    
+                    printf("[DEBUG] argument: %lf\n", terminal(si, i));
                     arg_counter++;
-                    inc(i);
                     if(si->tokens[*i].tt != PARANTHESISRIGHT) {
                         consume(i, si->tokens[*i], COMMA);
                     }
                 }
                 consume(i, si->tokens[*i], PARANTHESISRIGHT);
+
+                for(int ac = 0; ac < arg_counter; ac++) {
+                    
+                }
+
                 SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
 
                 function_interpreter->tokens = f->function_tokens;
