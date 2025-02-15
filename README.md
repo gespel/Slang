@@ -1,2 +1,3 @@
-# Slang
 ![alt text](https://audiotechnik-suboptimal.de/slanglogo.png)
+# Slang
+Slang is a audio programming language with the focus on writing applications that are run on a buffer level. It means that each buffer is calculated or modified from the code itself. It is also widely used to write the firmware for the eurorack modules from PhiLabs and GouodModules. All of Slang is written in ANSI C and thus runs on pretty every plattform.
