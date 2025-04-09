@@ -197,6 +197,9 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], SEMICOLON);
             printDebugMessage("Empty line.");
         } 
+        else if(getToken(si, i).tt == IF) {
+            
+        }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
         }
