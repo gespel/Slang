@@ -198,7 +198,18 @@ double interpret(SlangInterpreter* si) {
             printDebugMessage("Empty line.");
         } 
         else if(getToken(si, i).tt == IF) {
-            
+            consume(&i, tokens[i], IF);
+            consume(&i, tokens[i], PARANTHESISLEFT);
+            Token* logicTokens = malloc(sizeof(Token)*1024);
+            int numLogicTokens = 0;
+            while(getToken(si, i).tt != PARANTHESISRIGHT) {
+                logicTokens[numLogicTokens] = getToken(si, i);
+                inc(&i);
+                numLogicTokens++;
+            }
+            consume(&i, tokens[i], PARANTHESISRIGHT);
+            consume(&i, tokens[i], BRACKETLEFT);
+            printDebugMessage("IF call found! Evaluating now!");
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
