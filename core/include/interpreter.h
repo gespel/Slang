@@ -12,6 +12,10 @@
 #define SLANG_INTERPRETER_H
 #define DEBUG
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct SlangInterpreter {
     size_t functions_length;
     Function* functions[8192];
@@ -54,5 +58,9 @@ void inc(int* i);
 void dec(int* i);
 
 void printAllVariables(SlangInterpreter* si);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SLANG_INTERPRETER_H

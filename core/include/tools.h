@@ -4,6 +4,10 @@
 #include "tokenizer.h"
 #include "interpreter.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void printDebugMessage(char* message);
 
 void printTokens(Token* tokens, int length);
@@ -13,5 +17,9 @@ Token getToken(SlangInterpreter* si, int i);
 void tokenError(TokenType expected, TokenType got);
 
 void generalError(char* msg);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

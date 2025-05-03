@@ -1,5 +1,9 @@
 #include "../include/interpreter.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void increase(int* i) {
     (*i)++;
 }
@@ -331,3 +335,6 @@ double l1_expression(SlangInterpreter* si, int* i) {
     return left;
 }
 
+#ifdef __cplusplus
+}
+#endif

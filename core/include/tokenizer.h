@@ -7,6 +7,10 @@
 #ifndef SLANG_TOKENIZER_H
 #define SLANG_TOKENIZER_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum TokenType {
     IDENTIFIER,
     NUMBER,
@@ -39,5 +43,9 @@ TokenType checkTokenString(char* input);
 char* tokenTypeToString(TokenType input);
 
 void tokenizeStrings(Token* out, int numTokens);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //SLANG_TOKENIZER_H
