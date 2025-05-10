@@ -221,6 +221,7 @@ double interpret(SlangInterpreter* si) {
                 while(getToken(si, i).tt != BRACKETRIGHT) {
                     inc(&i);
                 }
+                consume(&i, tokens[i], BRACKETRIGHT);
                 printDebugMessage("IF is false!");
             }
             
