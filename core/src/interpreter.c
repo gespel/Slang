@@ -89,6 +89,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     SlangInterpreter* out = malloc(sizeof(SlangInterpreter));
     out->tokens = tokens;
     out->numTokens = numTokens;
+    out->openBrackets = 0;
     return out;
 }
 
@@ -214,12 +215,26 @@ double interpret(SlangInterpreter* si) {
             printDebugMessage("IF call found! Evaluating now!");
             if(left == right) {
                 printDebugMessage("IF is true!");
+                si->openBrackets += 1;
             }
             else {
+                while(getToken(si, i).tt != BRACKETRIGHT) {
+                    inc(&i);
+                }
                 printDebugMessage("IF is false!");
             }
             
             
+        }
+        else if(getToken(si, i).tt == BRACKETRIGHT) {
+            if((si->openBrackets) > 0) {
+                (si->openBrackets)--;
+                consume(&i, tokens[i], BRACKETRIGHT);
+            }
+            else {
+                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d\n", si->openBrackets);
+                exit(-1);
+            }
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);

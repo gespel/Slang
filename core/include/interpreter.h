@@ -23,6 +23,7 @@ typedef struct SlangInterpreter {
     Variable* variables[8192];
     Token* tokens;
     size_t numTokens;
+    size_t openBrackets;
 } SlangInterpreter;
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
