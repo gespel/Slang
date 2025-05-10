@@ -141,6 +141,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "return") == 0) {
                 out[x].tt = RETURN;
             }
+            else if(strcmp(value, "while") == 0) {
+                out[x].tt = WHILE;
+            }
         }
     } 
 }
@@ -195,6 +198,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case COMMA:
         out = "Comma";
+        break;
+    case WHILE:
+        out = "While";
         break;
     default:
         out = "Unknown";

@@ -29,6 +29,7 @@ typedef enum TokenType {
     FOR,
     IF,
     COMMA,
+    WHILE,
 } TokenType;
 
 typedef struct t {
