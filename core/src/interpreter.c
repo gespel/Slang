@@ -10,7 +10,9 @@ void increase(int* i) {
 
 int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
-    printf("[DEBUG] Consuming %s now. (Expecting %s): %s\n", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
+    char* dbgmsg = malloc(sizeof(char)*1024);
+    snprintf(dbgmsg, 1024, "[DEBUG] Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
+    printDebugMessage(dbgmsg);
 #endif
     if(token.tt == expected) {
         (*i)++;
@@ -41,14 +43,15 @@ void addFunction(SlangInterpreter* si, Function* input) {
 
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
-    printf("[DEBUG] =======================================================\n");
+    printDebugMessage("=======================================================");
     for(size_t i = 0; i < si->functions_length; i++) {
-        printf("[DEBUG] functionname: %s\n", si->functions[i]->name);
+        printDebugMessage("functionname:");
+        printDebugMessage(si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             printf("[DEBUG] \t%s -> %s\n", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }
-    printf("[DEBUG] =======================================================\n");
+    printDebugMessage("=======================================================");
 #endif
 }
 
@@ -76,12 +79,12 @@ void dec(int* i) {
 
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
-    printf("[DEBUG] =======================================================\n");
-    printf("[DEBUG] Variables:\n");
+    printDebugMessage("Variables:");
     for(size_t i = 0; i < si->vars_length; i++) {
-        printf("[DEBUG] %s: %lf\n", si->variables[i]->name, si->variables[i]->value);
+        char* dbgmsg = malloc(sizeof(char)*1024);
+        snprintf(dbgmsg, 1024, "%s: %lf", si->variables[i]->name, si->variables[i]->value);
+        printDebugMessage(dbgmsg);
     }
-    printf("[DEBUG] =======================================================\n");
 #endif
 }
 

@@ -2,7 +2,13 @@
 
 void printDebugMessage(char* message) {
 #ifdef DEBUG
-    printf("[DEBUG] %s\n", message);
+    char buffer[30];
+    struct timeval tv;
+    time_t curtime;
+    gettimeofday(&tv, NULL); 
+    curtime=tv.tv_sec;
+    strftime(buffer,30,"%m-%d-%Y  %T.",localtime(&curtime));
+    printf("%s - DEBUG: %s\n", buffer, message);
 #endif
 }
 

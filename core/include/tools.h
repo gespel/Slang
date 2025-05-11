@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "tokenizer.h"
 #include "interpreter.h"
+#include <sys/time.h>
 
 #ifdef __cplusplus
 extern "C" {
