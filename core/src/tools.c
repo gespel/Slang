@@ -7,7 +7,7 @@ void printDebugMessage(char* message) {
     time_t curtime;
     gettimeofday(&tv, NULL); 
     curtime=tv.tv_sec;
-    strftime(buffer,30,"%m-%d-%Y  %T.",localtime(&curtime));
+    strftime(buffer,30,"%m-%d-%Y  %T.", localtime(&curtime));
     printf("%s - DEBUG: %s\n", buffer, message);
 #endif
 }

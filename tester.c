@@ -7,6 +7,7 @@
 
 int main() {
     char a[] = "x = 3; y = 2; z = (x + y) * 2; fn test() {yx = 6; return yx;} re = test(3, 2); asd = 15; if(test() == 5) {it = 15;}";
+    //char a[] = "x = 3;";
 
     int length = 0;
     Token* tokens = tokenize(a, &length);

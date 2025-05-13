@@ -11,7 +11,7 @@ void increase(int* i) {
 int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
     char* dbgmsg = malloc(sizeof(char)*1024);
-    snprintf(dbgmsg, 1024, "[DEBUG] Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
+    snprintf(dbgmsg, 1024, "Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
     printDebugMessage(dbgmsg);
 #endif
     if(token.tt == expected) {
@@ -48,7 +48,9 @@ void printAllFunctions(SlangInterpreter* si) {
         printDebugMessage("functionname:");
         printDebugMessage(si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
-            printf("[DEBUG] \t%s -> %s\n", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
+            char* dbgmsg = malloc(sizeof(char)*1024);
+            snprintf(dbgmsg, 1024, "%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
+            printDebugMessage(dbgmsg);
         }
     }
     printDebugMessage("=======================================================");
@@ -103,7 +105,9 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
         }
     }
 #ifdef DEBUG
-    printf("[DEBUG] Function %s was not found!\n", name);
+    char* dbgmsg = malloc(sizeof(char)*1024);
+    snprintf(dbgmsg, 1024, "Function %s was not found!", name);
+    printDebugMessage(dbgmsg);
 #endif
     return NULL;
 }
@@ -138,7 +142,11 @@ double interpret(SlangInterpreter* si) {
                 Function* f = getFunctionByName(si, name);
 
                 if(f) {
-                    printf("[DEBUG] Calling function %s now!\n", name);
+                    #ifdef DEBUG
+                    char* dbgmsg = malloc(sizeof(char)*1024);
+                    snprintf(dbgmsg, 1024, "Calling function %s now!", name);
+                    printDebugMessage(dbgmsg);
+                    #endif
                     SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
                     
                     function_interpreter->tokens = f->function_tokens;
@@ -197,8 +205,11 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
             double out = l3_expression(si, &i);
-            printDebugMessage("Returning now! Value:");
-            printf("[DEBUG] %lf\n", out);
+            #ifdef DEBUG
+            char* dbgmsg = malloc(sizeof(char)*1024);
+            snprintf(dbgmsg, 1024, "Returning now! Value: %lf", out);
+            printDebugMessage(dbgmsg);
+            #endif
             return out;
         }
         else if(getToken(si, i).tt == SEMICOLON) {
@@ -266,8 +277,13 @@ double terminal(SlangInterpreter* si, int* i) {
                 Token* arguments = malloc(sizeof(Token) * 512);
                 int arg_counter = 0;
 
-                while(si->tokens[*i].tt != PARANTHESISRIGHT) {    
-                    printf("[DEBUG] argument: %lf\n", terminal(si, i));
+                while(si->tokens[*i].tt != PARANTHESISRIGHT) {
+                    double arg = terminal(si, i);
+                    #ifdef DEBUG
+                    char* dbgmsg = malloc(sizeof(char)*1024);
+                    snprintf(dbgmsg, 1024, "argument: %lf", arg);
+                    printDebugMessage(dbgmsg);
+                    #endif
                     arg_counter++;
                     if(si->tokens[*i].tt != PARANTHESISRIGHT) {
                         consume(i, si->tokens[*i], COMMA);
