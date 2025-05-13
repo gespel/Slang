@@ -4,6 +4,7 @@
 #include "tokenizer.h"
 #include "interpreter.h"
 #include <sys/time.h>
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {
