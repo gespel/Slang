@@ -247,7 +247,7 @@ double interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], BRACKETRIGHT);
             }
             else {
-                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d\n", si->openBrackets);
+                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %ld\n", si->openBrackets);
                 exit(-1);
             }
         }
