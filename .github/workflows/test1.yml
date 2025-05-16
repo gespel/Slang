@@ -1,0 +1,49 @@
+# .github/workflows/build.yml
+name: CMake Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential
+
+    - name: Configure with CMake
+      run: |
+        mkdir -p build
+        cd build
+        cmake ..
+
+    - name: Build with Make
+      run: |
+        cd build
+        make -j$(nproc)
+  run:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build test
+        run: | 
+          mkdir -p build 
+          cd build
+          cmake .. 
+          make
+      - name: Run test
+        run: |
+          make
+          ./slang
