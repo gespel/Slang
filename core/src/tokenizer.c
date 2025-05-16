@@ -9,7 +9,7 @@ Token* tokenize(char* input, int* length) {
 	Token* out = malloc(1024*sizeof(Token));
 	char* tokenString;
   	int tokenCount = 0;
-  	tokenString = strtok(input, " ");
+  	tokenString = strtok(input, " \n\t\r");
   	while(tokenString != NULL) {
         for(size_t j = 0; j < strlen(tokenString); j++) {
             Token temp;
@@ -115,7 +115,7 @@ Token* tokenize(char* input, int* length) {
             out[tokenCount] = temp;
             tokenCount++;
         }
-        tokenString = strtok(NULL, " ");
+        tokenString = strtok(NULL, " \n\t\r");
     }
 
     tokenizeStrings(out, tokenCount);
