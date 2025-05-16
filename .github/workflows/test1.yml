@@ -30,7 +30,7 @@ jobs:
       run: |
         cd build
         make -j$(nproc)
-  run:
+  test:
     needs: build
     runs-on: ubuntu-latest
     steps:
