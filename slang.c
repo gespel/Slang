@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         free(main_interpreter); 
     }
     else {
-        printf("Wrong number of arguments!\nUsage: slang <file to interpret>\n");
+        printf("Wrong number of arguments!\nUsage: slang <file>\n");
     }
     
     
