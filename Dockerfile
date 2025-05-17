@@ -2,6 +2,6 @@ FROM gespel/debian-base:latest
 
 COPY . .
 
-RUN ./build.sh
+RUN mkdir build && cd build && cmake .. && cd .. && make
 
-ENTRYPOINT ["./test"]
+ENTRYPOINT ["./slang example/test1.slang"]
