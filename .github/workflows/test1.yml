@@ -46,4 +46,4 @@ jobs:
       - name: Run test
         run: |
           make
-          ./slang
+          ./slang example/test1.slang
