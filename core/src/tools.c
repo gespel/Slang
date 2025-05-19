@@ -8,7 +8,7 @@ void printDebugMessage(char* message) {
     gettimeofday(&tv, NULL); 
     curtime=tv.tv_sec;
     strftime(buffer,30,"%m-%d-%Y  %T.", localtime(&curtime));
-    printf("\033[95m%s\033[0m - \033[92mDEBUG\033[0m: \033[96m%s\033[0m\n", buffer, message);
+    printf("\033[95m%s\033[0m - \033[92mDEBUG\033[0m: %s\n", buffer, message);
 #endif
 }
 
