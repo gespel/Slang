@@ -1,4 +1,4 @@
-FROM gespel/debian-base:latest
+FROM fedora:latest
 
 COPY . .
 
