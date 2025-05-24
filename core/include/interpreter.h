@@ -53,6 +53,8 @@ void printAllFunctions(SlangInterpreter* si);
 
 void addVariable(SlangInterpreter* si, Variable* input);
 
+void removeVariable(SlangInterpreter* si, char* name);
+
 Variable* getVariableByName(SlangInterpreter* si, char* name);
 
 void inc(int* i);
