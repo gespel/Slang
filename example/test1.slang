@@ -8,6 +8,6 @@ fn test() {
 }
 t = (3 + test()) * 3;
 test();
-while(i = 7, i < 10, i + 1) {
+while(i = 3, i = 3, i - 1) {
     x = x + 10;
 }

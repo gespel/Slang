@@ -295,23 +295,37 @@ double interpret(SlangInterpreter* si) {
             }
             consume(&i, tokens[i], BRACKETRIGHT);
             int loop_end_index = i;
+
+            SlangInterpreter* loop_interpreter = malloc(sizeof(SlangInterpreter));
+            loop_interpreter->tokens = loop_tokens;
+            loop_interpreter->numTokens = loop_tokens_index;
+
+            for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
+                loop_interpreter->variables[variable_index] = si->variables[variable_index];
+            }
+            loop_interpreter->variables[si->vars_length+1] = running_var;
+            loop_interpreter->vars_length = si->vars_length+1;
+
+            for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
+                loop_interpreter->functions[function_index] = si->functions[function_index];
+            }
+            loop_interpreter->functions_length = si->functions_length;
             if(*logic_operator == '<') {
-                
                 while(logic_var_left->value < logic_static_right) {
-                    SlangInterpreter* loop_interpreter = malloc(sizeof(SlangInterpreter));
-                    loop_interpreter->tokens = loop_tokens;
-                    loop_interpreter->numTokens = loop_tokens_index;
-
-                    for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
-                        loop_interpreter->variables[variable_index] = si->variables[variable_index];
-                    }
-                    loop_interpreter->variables[si->vars_length+1] = running_var;
-                    loop_interpreter->vars_length = si->vars_length+1;
-
-                    for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
-                        loop_interpreter->functions[function_index] = si->functions[function_index];
-                    }
-                    loop_interpreter->functions_length = si->functions_length;
+                    out = interpret(loop_interpreter);
+                    i = mod_index;
+                    logic_var_left->value = l3_expression(si, &i);
+                }
+            }
+            else if(*logic_operator == '>') {
+                while(logic_var_left->value > logic_static_right) {
+                    out = interpret(loop_interpreter);
+                    i = mod_index;
+                    logic_var_left->value = l3_expression(si, &i);
+                }
+            }
+            else if(*logic_operator == '=') {
+                while(logic_var_left->value == logic_static_right) {
                     out = interpret(loop_interpreter);
                     i = mod_index;
                     logic_var_left->value = l3_expression(si, &i);
@@ -388,8 +402,8 @@ double terminal(SlangInterpreter* si, int* i) {
                 }
                 function_interpreter->functions_length = si->functions_length;
                 out = interpret(function_interpreter);
-                printAllVariables(function_interpreter);
-                printAllFunctions(function_interpreter);
+                //printAllVariables(function_interpreter);
+                //printAllFunctions(function_interpreter);
                 return out;
             }
             else {
