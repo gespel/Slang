@@ -31,8 +31,8 @@ To build and run the Slang interpreter:
 
 ```bash
 # Clone the repository (if not already done)
-git clone https://your.repo.url/slang.git
-cd slang
+git clone https://github.com/gespel/Slang.git
+cd Slang
 
 # Create a build directory and configure the project
 mkdir build
