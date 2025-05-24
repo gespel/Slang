@@ -4,7 +4,6 @@
 
 Slang is widely adopted in embedded systems, particularly for writing **firmware** for **Eurorack modules** developed by **PhiLabs** and **GouodModules**. The entire Slang ecosystem is written in **ANSI C**, making it portable across virtually all platforms.
 
----
 
 ## Features
 
@@ -14,7 +13,6 @@ Slang is widely adopted in embedded systems, particularly for writing **firmware
 - ANSI C based – portable and lightweight  
 - Used in professional modular synthesizer firmware  
 
----
 
 ## Quickstart
 
@@ -52,7 +50,6 @@ Once compiled, you can run a Slang example like this:
 ```bash
 ./slang example/test1.slang
 ```
----
 
 ## Examples
 
@@ -62,7 +59,6 @@ The `example/` directory includes several demo scripts to help you get started:
 - `test2.slang` – Buffer manipulation
 - `synth_example.slang` – Simple synthesizer logic
 
----
 
 ## Platform Support
 
@@ -73,13 +69,11 @@ Slang is known to work on:
 - Windows (via WSL or MinGW)
 - Embedded systems (e.g., STM32 via cross-compilation)
 
----
 
 ## License
 
 Slang is released under the [MIT License](LICENSE).
 
----
 
 ## Contributing
 
