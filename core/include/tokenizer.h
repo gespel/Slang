@@ -30,6 +30,8 @@ typedef enum TokenType {
     IF,
     COMMA,
     WHILE,
+    SMALLER,
+    GREATER,
 } TokenType;
 
 typedef struct t {

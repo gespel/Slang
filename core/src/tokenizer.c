@@ -90,6 +90,18 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
+            else if(tokenString[j] == '>') {
+                temp.tt = GREATER;
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+            }
+            else if(tokenString[j] == '<') {
+                temp.tt = SMALLER;
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+            }
             else if(tokenString[j] == ',') {
                 temp.tt = COMMA;
                 tmpString[0] = tokenString[j];

@@ -125,12 +125,18 @@ double interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], ASSIGN);
                 //peek(tokens[i], NUMBER);
                 double var_value = l3_expression(si, &i);
+                
+                if(getVariableByName(si, name) != NULL) {
+                    getVariableByName(si, name)->value = var_value;
+                }
+                else {
+                    Variable* temp_var = malloc(sizeof(Variable));
+                    temp_var->name = name;
+                    temp_var->value = var_value;
 
-                Variable* temp_var = malloc(sizeof(Variable));
-                temp_var->name = name;
-                temp_var->value = var_value;
-
-                addVariable(si, temp_var);
+                    addVariable(si, temp_var);
+                }
+                
                 //inc(&i);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
@@ -237,9 +243,81 @@ double interpret(SlangInterpreter* si) {
                 }
                 consume(&i, tokens[i], BRACKETRIGHT);
                 printDebugMessage("IF is false!");
+            } 
+        }
+        else if(getToken(si, i).tt == WHILE) {
+            consume(&i, tokens[i], WHILE);
+            consume(&i, tokens[i], PARANTHESISLEFT);
+            char* run_var_name = getToken(si, i).value;
+            consume(&i, tokens[i], IDENTIFIER);
+            consume(&i, tokens[i], ASSIGN);
+            double run_var_assign = terminal(si, &i);
+
+            Variable* running_var = malloc(sizeof(Variable));
+            running_var->name = run_var_name;
+            running_var->value = run_var_assign;
+            addVariable(si, running_var);
+
+            consume(&i, tokens[i], COMMA);
+            char* logic_var_left_name = getToken(si, i).value;
+            Variable* logic_var_left = getVariableByName(si, logic_var_left_name);
+            consume(&i, tokens[i], IDENTIFIER);
+
+            char* logic_operator = getToken(si, i).value;
+            inc(&i);
+            double logic_static_right = terminal(si, &i);
+
+            consume(&i, tokens[i], COMMA);
+            int mod_index = i;
+            while(getToken(si, i).tt != PARANTHESISRIGHT) {
+                inc(&i);
             }
+            consume(&i, tokens[i], PARANTHESISRIGHT);
+
+            char dbgmsg[1024];
+            snprintf(dbgmsg, 1024, "Full FOR definition found: var: %s = %lf, logic: %s %s %lf, modindex: %d", running_var->name, running_var->value, logic_var_left->name, logic_operator, logic_static_right, mod_index);
+            printDebugMessage(dbgmsg);
             
-            
+            consume(&i, tokens[i], BRACKETLEFT);
+            int other_brackets = -1;
+            Token* loop_tokens = malloc(sizeof(Token)*1024);
+            int loop_tokens_index = 0;
+            while(getToken(si, i).tt != BRACKETRIGHT && other_brackets != 0) {
+                if(getToken(si, i).tt == BRACKETLEFT) {
+                    other_brackets++;
+                }
+                if(getToken(si, i).tt == BRACKETRIGHT) {
+                    other_brackets--;
+                }
+                loop_tokens[loop_tokens_index] = getToken(si, i);
+                loop_tokens_index++;
+                inc(&i);
+            }
+            consume(&i, tokens[i], BRACKETRIGHT);
+            int loop_end_index = i;
+            if(*logic_operator == '<') {
+                
+                while(logic_var_left->value < logic_static_right) {
+                    SlangInterpreter* loop_interpreter = malloc(sizeof(SlangInterpreter));
+                    loop_interpreter->tokens = loop_tokens;
+                    loop_interpreter->numTokens = loop_tokens_index;
+
+                    for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
+                        loop_interpreter->variables[variable_index] = si->variables[variable_index];
+                    }
+                    loop_interpreter->variables[si->vars_length+1] = running_var;
+                    loop_interpreter->vars_length = si->vars_length+1;
+
+                    for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
+                        loop_interpreter->functions[function_index] = si->functions[function_index];
+                    }
+                    loop_interpreter->functions_length = si->functions_length;
+                    out = interpret(loop_interpreter);
+                    i = mod_index;
+                    logic_var_left->value = l3_expression(si, &i);
+                }
+            }
+            i = loop_end_index;
         }
         else if(getToken(si, i).tt == BRACKETRIGHT) {
             if((si->openBrackets) > 0) {
