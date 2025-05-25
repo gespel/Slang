@@ -12,7 +12,7 @@ int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
     char* dbgmsg = malloc(sizeof(char)*1024);
     snprintf(dbgmsg, 1024, "Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
-    printDebugMessage(dbgmsg);
+    printDebugMessage(DBG, dbgmsg);
 #endif
     if(token.tt == expected) {
         (*i)++;
@@ -43,17 +43,17 @@ void addFunction(SlangInterpreter* si, Function* input) {
 
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
-    printDebugMessage("=======================================================");
+    printDebugMessage(INFO, "=======================================================");
     for(size_t i = 0; i < si->functions_length; i++) {
-        printDebugMessage("functionname:");
-        printDebugMessage(si->functions[i]->name);
+        printDebugMessage(INFO, "functionname:");
+        printDebugMessage(INFO, si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             char* dbgmsg = malloc(sizeof(char)*1024);
             snprintf(dbgmsg, 1024, "%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
-            printDebugMessage(dbgmsg);
+            printDebugMessage(INFO, dbgmsg);
         }
     }
-    printDebugMessage("=======================================================");
+    printDebugMessage(INFO, "=======================================================");
 #endif
 }
 
@@ -69,8 +69,7 @@ void removeVariable(SlangInterpreter* si, char* name) {
 Variable* getVariableByName(SlangInterpreter* si, char* name) {
     for(size_t variableIndex = 0; variableIndex < si->vars_length; variableIndex++) {
         if(si->variables[variableIndex] == NULL) {
-            printf("%d", variableIndex);
-            printDebugMessage("ERROR OUT OF BOUNDS FOR VARIABLE FETCH");
+            printDebugMessage(ERR, "OUT OF BOUNDS FOR VARIABLE FETCH");
             exit(1);
         }
         if(strcmp(si->variables[variableIndex]->name, name) == 0) {
@@ -90,11 +89,11 @@ void dec(int* i) {
 
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
-    printDebugMessage("Variables:");
+    printDebugMessage(INFO, "Variables:");
     for(size_t i = 0; i < si->vars_length; i++) {
         char* dbgmsg = malloc(sizeof(char)*1024);
         snprintf(dbgmsg, 1024, "%s: %lf", si->variables[i]->name, si->variables[i]->value);
-        printDebugMessage(dbgmsg);
+        printDebugMessage(INFO, dbgmsg);
     }
 #endif
 }
@@ -116,13 +115,13 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 #ifdef DEBUG
     char* dbgmsg = malloc(sizeof(char)*1024);
     snprintf(dbgmsg, 1024, "Function %s was not found!", name);
-    printDebugMessage(dbgmsg);
+    printDebugMessage(DBG, dbgmsg);
 #endif
     return NULL;
 }
 
 double interpret(SlangInterpreter* si) {
-    printDebugMessage("INTERPRETER STARTED!");
+    printDebugMessage(INFO, "Interpreter started!");
     printAllVariables(si);
     double out = 0.0;
     int numTokens = si->numTokens;
@@ -151,7 +150,7 @@ double interpret(SlangInterpreter* si) {
                 //inc(&i);
             }
             else if(tokens[i].tt == PARANTHESISLEFT) {
-                printDebugMessage("Function call!");
+                printDebugMessage(DBG, "Function call!");
                 consume(&i, tokens[i], PARANTHESISLEFT);
                 consume(&i, tokens[i], PARANTHESISRIGHT);
                 //peek(tokens[i], SEMICOLON);
@@ -162,7 +161,7 @@ double interpret(SlangInterpreter* si) {
                     #ifdef DEBUG
                     char* dbgmsg = malloc(sizeof(char)*1024);
                     snprintf(dbgmsg, 1024, "Calling function %s now!", name);
-                    printDebugMessage(dbgmsg);
+                    printDebugMessage(DBG, dbgmsg);
                     #endif
                     SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
                     
@@ -193,13 +192,13 @@ double interpret(SlangInterpreter* si) {
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);
-            printDebugMessage("Function definition found!");
+            printDebugMessage(INFO, "Function definition found!");
             
             char* fnName = NULL;
 
             if(peek(tokens[i], IDENTIFIER)) {
-                printDebugMessage("Function name:");
-                printDebugMessage(tokens[i].value);
+                printDebugMessage(DBG, "Function name:");
+                printDebugMessage(DBG, tokens[i].value);
                 fnName = tokens[i].value;
             }           
             consume(&i, tokens[i], IDENTIFIER);
@@ -225,13 +224,13 @@ double interpret(SlangInterpreter* si) {
             #ifdef DEBUG
             char* dbgmsg = malloc(sizeof(char)*1024);
             snprintf(dbgmsg, 1024, "Returning now! Value: %lf", out);
-            printDebugMessage(dbgmsg);
+            printDebugMessage(DBG, dbgmsg);
             #endif
             return out;
         }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
-            printDebugMessage("Empty line.");
+            printDebugMessage(DBG, "Empty line.");
         } 
         else if(getToken(si, i).tt == IF) {
             consume(&i, tokens[i], IF);
@@ -243,9 +242,9 @@ double interpret(SlangInterpreter* si) {
 
             consume(&i, tokens[i], PARANTHESISRIGHT);
             consume(&i, tokens[i], BRACKETLEFT);
-            printDebugMessage("IF call found! Evaluating now!");
+            printDebugMessage(DBG, "IF call found! Evaluating now!");
             if(left == right) {
-                printDebugMessage("IF is true!");
+                printDebugMessage(DBG, "IF is true!");
                 si->openBrackets += 1;
             }
             else {
@@ -253,7 +252,7 @@ double interpret(SlangInterpreter* si) {
                     inc(&i);
                 }
                 consume(&i, tokens[i], BRACKETRIGHT);
-                printDebugMessage("IF is false!");
+                printDebugMessage(DBG, "IF is false!");
             } 
         }
         else if(getToken(si, i).tt == WHILE) {
@@ -364,8 +363,8 @@ double interpret(SlangInterpreter* si) {
 }
 
 double terminal(SlangInterpreter* si, int* i) {
-    printDebugMessage("Calling terminal:");
-    printDebugMessage(tokenTypeToString(si->tokens[*i].tt));
+    printDebugMessage(DBG, "Calling terminal:");
+    printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
     double out;
     switch(si->tokens[*i].tt) {
         case NUMBER:
@@ -386,7 +385,7 @@ double terminal(SlangInterpreter* si, int* i) {
                     #ifdef DEBUG
                     char* dbgmsg = malloc(sizeof(char)*1024);
                     snprintf(dbgmsg, 1024, "argument: %lf", arg);
-                    printDebugMessage(dbgmsg);
+                    printDebugMessage(DBG, dbgmsg);
                     #endif
                     arg_counter++;
                     if(si->tokens[*i].tt != PARANTHESISRIGHT) {
@@ -463,7 +462,7 @@ double l2_expression(SlangInterpreter* si, int* i) {
 }
 
 double l1_expression(SlangInterpreter* si, int* i) {
-    printDebugMessage("Called expression");
+    printDebugMessage(DBG, "Called expression");
     //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     //printDebugMessage(s->tokens[*i].value);
     double left, right;

@@ -10,7 +10,14 @@
 extern "C" {
 #endif
 
-void printDebugMessage(char* message);
+typedef enum SlangLogLevel {
+    DBG,
+    INFO,
+    WARN,
+    ERR,
+} SlangLogLevel;
+
+void printDebugMessage(SlangLogLevel ll, char* message);
 
 void printTokens(Token* tokens, int length);
 

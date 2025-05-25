@@ -9,6 +9,6 @@ fn xyz() {
     out = 2;
     return out;
 }
-while(i = test(), i < 10, i + 1) {
+while(i = test(), i < 10000000, i + 1) {
     x = x + xyz();
 }
