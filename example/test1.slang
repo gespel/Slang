@@ -9,6 +9,9 @@ fn xyz() {
     out = 2;
     return out;
 }
+if(test() == 3) {
+    a = a + 12;
+}
 while(i = test(), i < 100, i + 1) {
     x = x + xyz();
 }

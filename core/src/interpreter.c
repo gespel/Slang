@@ -235,10 +235,10 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == IF) {
             consume(&i, tokens[i], IF);
             consume(&i, tokens[i], PARANTHESISLEFT);
-            double left = terminal(si, &i);
+            double left = l3_expression(si, &i);
             consume(&i, tokens[i], ASSIGN);
             consume(&i, tokens[i], ASSIGN);
-            double right = terminal(si, &i);
+            double right = l3_expression(si, &i);
 
             consume(&i, tokens[i], PARANTHESISRIGHT);
             consume(&i, tokens[i], BRACKETLEFT);
