@@ -11,7 +11,7 @@
 #include "variable.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
-//#define DEBUG
+#define DEBUG
 
 #ifdef __cplusplus
 extern "C" {

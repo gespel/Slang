@@ -342,6 +342,7 @@ double interpret(SlangInterpreter* si) {
                     logic_var_left->value = l3_expression(si, &i);
                 }
             }
+            free(loop_interpreter);
             i = loop_end_index;
         }
         else if(getToken(si, i).tt == BRACKETRIGHT) {
