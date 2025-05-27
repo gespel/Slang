@@ -6,6 +6,13 @@
 #ifndef LIBRARY
 
 int main(int argc, char **argv) {
+    printf("\t\t╔═══════════════════════════════════════╗\n");
+    printf("\t\t║     🔮  \033[1;35mWelcome to the slang shell\033[0m    ║\n");
+    printf("\t\t║        \033[1;35mBy Sten (gespel) Heimbrodt\033[0m     ║\n");
+    printf("\t\t╠═══════════════════════════════════════╣\n");
+    printf("\t\t║ \033[1;35mType `help` to see available commands\033[0m ║\n");
+    printf("\t\t║ \033[1;35mType `exit` to leave the interpreter \033[0m ║\n");
+    printf("\t\t╚═══════════════════════════════════════╝\n");
     if(argc == 2) {
         char p[16384];
         char buff[2048];
@@ -33,7 +40,8 @@ int main(int argc, char **argv) {
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, 0);
         while(1) {
             char* buf = malloc(sizeof(4096));
-            printf("slang> ");
+            
+            printf("\033[1;35mλ slang>\033[0m ");
             fgets (buf, 8192, stdin);
             int tokens_length = 0;
             Token* in_tokens = tokenize(buf, &tokens_length);
