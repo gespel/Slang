@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
         Token* tokens = malloc(sizeof(Token)*8192);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, 0);
         while(1) {
-            char* buf = malloc(sizeof(4096));
+            char buf[8192];
             
             printf("\033[1;35mλ slang>\033[0m ");
             fgets (buf, 8192, stdin);
