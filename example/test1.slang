@@ -12,6 +12,6 @@ fn xyz() {
 if(test() == 3) {
     a = a + 12;
 }
-while(i = test(), i < 100, i + 1) {
+while(i = test(), i < 5, i + 1) {
     x = x + xyz();
 }

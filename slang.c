@@ -28,6 +28,21 @@ int main(int argc, char **argv) {
         printAllVariables(main_interpreter);
         free(main_interpreter); 
     }
+    else if(argc == 1) {
+        Token* tokens = malloc(sizeof(Token)*8192);
+        SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, 0);
+        while(1) {
+            char* buf = malloc(sizeof(4096));
+            printf("slang> ");
+            fgets (buf, 8192, stdin);
+            int tokens_length = 0;
+            Token* in_tokens = tokenize(buf, &tokens_length);
+            addTokensToInterpreter(main_interpreter, in_tokens, tokens_length);
+            interpret(main_interpreter);
+            printAllFunctions(main_interpreter);
+            printAllVariables(main_interpreter);
+        }
+    }
     else {
         printf("Wrong number of arguments!\nUsage: slang <file>\n");
     }

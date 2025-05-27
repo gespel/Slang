@@ -103,7 +103,15 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->tokens = tokens;
     out->numTokens = numTokens;
     out->openBrackets = 0;
+    out->last_token_index = 0;
     return out;
+}
+
+void addTokensToInterpreter(SlangInterpreter* si, Token* tokens, size_t numTokens) {
+    for(int i = 0; i < numTokens; i++) {
+        si->tokens[si->numTokens + i] = tokens[i];
+    }
+    si->numTokens += numTokens;
 }
 
 Function* getFunctionByName(SlangInterpreter* si, char* name) {
@@ -127,7 +135,8 @@ double interpret(SlangInterpreter* si) {
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
 
-    for(int i = 0; i < numTokens; i++) {
+    int i;
+    for(i = si->last_token_index; i < numTokens; i++) {
         if(tokens[i].tt == IDENTIFIER) {
             char* name = tokens[i].value;
             consume(&i, tokens[i], IDENTIFIER);
@@ -360,6 +369,10 @@ double interpret(SlangInterpreter* si) {
         }
         i--;
     }
+    si->last_token_index = i;
+    char* dbgmsg = malloc(sizeof(char)*8192);
+    snprintf(dbgmsg, 8192, "Last Token Index: %d", si->last_token_index);
+    printDebugMessage(DBG, dbgmsg);
     return 0;
 }
 

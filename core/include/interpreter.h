@@ -25,9 +25,12 @@ typedef struct SlangInterpreter {
     Token* tokens;
     size_t numTokens;
     size_t openBrackets;
+    int last_token_index;
 } SlangInterpreter;
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
+
+void addTokensToInterpreter(SlangInterpreter* si, Token* tokens, size_t numTokens);
 
 double interpret(SlangInterpreter* s);
 
