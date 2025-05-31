@@ -224,7 +224,7 @@ double interpret(SlangInterpreter* si) {
                 numFunctionTokens++;
             }
 
-            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens));
+            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens, NULL));
             consume(&i, tokens[i], BRACKETRIGHT);
         }
         else if(getToken(si, i).tt == RETURN) {
