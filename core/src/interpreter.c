@@ -212,6 +212,19 @@ double interpret(SlangInterpreter* si) {
             }           
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], PARANTHESISLEFT);
+
+            char* var_names[128];
+            int vars_length = 0;
+
+            while(getToken(si, i).tt != PARANTHESISRIGHT) {
+                var_names[vars_length] = getToken(si, i).value;
+                printDebugMessage(INFO, var_names[vars_length]);
+                consume(&i, tokens[i], IDENTIFIER);
+                if(getToken(si, i).tt != PARANTHESISRIGHT) {
+                    consume(&i, tokens[i], COMMA);
+                }
+                vars_length++;
+            }
             consume(&i, tokens[i], PARANTHESISRIGHT);
             consume(&i, tokens[i], BRACKETLEFT);
 
@@ -224,7 +237,11 @@ double interpret(SlangInterpreter* si) {
                 numFunctionTokens++;
             }
 
-            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens, NULL));
+            char* dbgmsg = malloc(sizeof(char) * 2048);
+            snprintf(dbgmsg, 2048, "Creating function: %s with %d argmuents", fnName, vars_length);
+            printDebugMessage(INFO, dbgmsg);
+
+            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens, var_names, vars_length));
             consume(&i, tokens[i], BRACKETRIGHT);
         }
         else if(getToken(si, i).tt == RETURN) {
@@ -388,17 +405,21 @@ double terminal(SlangInterpreter* si, int* i) {
         case IDENTIFIER:
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
+                char* dbgmsg = malloc(sizeof(char)*1024);
+                snprintf(dbgmsg, 1024, "got function %s with %s %s", f->name, f->vars[0], f->vars[1]);
+                printDebugMessage(INFO, dbgmsg);
+                printDebugMessage(INFO, f->vars[0]);
                 consume(i, si->tokens[*i], IDENTIFIER);
                 consume(i, si->tokens[*i], PARANTHESISLEFT);
                 
-                Token* arguments = malloc(sizeof(Token) * 512);
+                double* arguments = malloc(sizeof(double) * 512);
                 int arg_counter = 0;
 
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
-                    double arg = terminal(si, i);
+                    arguments[arg_counter] = terminal(si, i);
                     #ifdef DEBUG
                     char* dbgmsg = malloc(sizeof(char)*1024);
-                    snprintf(dbgmsg, 1024, "argument: %lf", arg);
+                    snprintf(dbgmsg, 1024, "argument: %lf", arguments[arg_counter]);
                     printDebugMessage(DBG, dbgmsg);
                     #endif
                     arg_counter++;
@@ -406,21 +427,27 @@ double terminal(SlangInterpreter* si, int* i) {
                         consume(i, si->tokens[*i], COMMA);
                     }
                 }
-                consume(i, si->tokens[*i], PARANTHESISRIGHT);
 
-                for(int ac = 0; ac < arg_counter; ac++) {
-                    
+                if(arg_counter != f->vars_length) {
+                    printDebugMessage(ERR, "Number of function call is not equal to function definition!");
+                    exit(-1);
                 }
+
+                consume(i, si->tokens[*i], PARANTHESISRIGHT);
 
                 SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
 
                 function_interpreter->tokens = f->function_tokens;
                 function_interpreter->numTokens = f->function_tokens_length;
  
-                for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
-                    function_interpreter->variables[variable_index] = si->variables[variable_index];
+                for(size_t vi = 0; vi < f->vars_length; vi++) {
+                    Variable* nv = malloc(sizeof(Variable));
+                    nv->name = f->vars[vi];
+                    nv->value = arguments[vi];
+                    printDebugMessage(INFO, "Adding variable:");
+                    printDebugMessage(INFO, nv->name);
+                    addVariable(function_interpreter, nv);
                 }
-                function_interpreter->vars_length = si->vars_length;
 
                 for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
                     function_interpreter->functions[function_index] = si->functions[function_index];
