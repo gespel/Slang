@@ -8,4 +8,4 @@ fn f(y) {
     return y * y;
 }
 
-x = x + test(3, 3);
+x = x + f(3) + test(2, 3);

@@ -17,7 +17,7 @@ void printDebugMessage(SlangLogLevel ll, char* message) {
         case ERR: prefix = "\033[91mERROR\033[0m"; break;
     }
 
-    printf("\033[34m%s\033[0m - %s: %s\n", buffer, prefix, message);
+    printf("[Slang] \033[34m%s\033[0m - %s: %s\n", buffer, prefix, message);
 #endif
 }
 
