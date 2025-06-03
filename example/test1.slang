@@ -4,4 +4,8 @@ fn test(aa, ab) {
     return out; 
 }
 
-x = x + test(3, 1);
+fn f(y) {
+    return y * y;
+}
+
+x = x + test(3, 3);

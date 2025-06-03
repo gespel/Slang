@@ -213,7 +213,7 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], PARANTHESISLEFT);
 
-            char* var_names[128];
+            char** var_names = malloc(sizeof(char)*1024);
             int vars_length = 0;
 
             while(getToken(si, i).tt != PARANTHESISRIGHT) {
@@ -394,8 +394,8 @@ double interpret(SlangInterpreter* si) {
 }
 
 double terminal(SlangInterpreter* si, int* i) {
-    printDebugMessage(DBG, "Calling terminal:");
-    printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
+    //printDebugMessage(DBG, "Calling terminal:");
+    //printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
     double out;
     switch(si->tokens[*i].tt) {
         case NUMBER:
@@ -405,17 +405,19 @@ double terminal(SlangInterpreter* si, int* i) {
         case IDENTIFIER:
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
-                char* dbgmsg = malloc(sizeof(char)*1024);
-                snprintf(dbgmsg, 1024, "got function %s with %s %s", f->name, f->vars[0], f->vars[1]);
-                printDebugMessage(INFO, dbgmsg);
-                printDebugMessage(INFO, f->vars[0]);
+                if(f == NULL) {
+                    printDebugMessage(ERR, "Function not found!");
+                    exit(-1);
+                }
+                
                 consume(i, si->tokens[*i], IDENTIFIER);
                 consume(i, si->tokens[*i], PARANTHESISLEFT);
                 
                 double* arguments = malloc(sizeof(double) * 512);
                 int arg_counter = 0;
-
+                
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
+                    
                     arguments[arg_counter] = terminal(si, i);
                     #ifdef DEBUG
                     char* dbgmsg = malloc(sizeof(char)*1024);
@@ -427,19 +429,19 @@ double terminal(SlangInterpreter* si, int* i) {
                         consume(i, si->tokens[*i], COMMA);
                     }
                 }
-
+                
                 if(arg_counter != f->vars_length) {
                     printDebugMessage(ERR, "Number of function call is not equal to function definition!");
                     exit(-1);
                 }
-
+                
                 consume(i, si->tokens[*i], PARANTHESISRIGHT);
 
                 SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
-
+                
                 function_interpreter->tokens = f->function_tokens;
                 function_interpreter->numTokens = f->function_tokens_length;
- 
+                
                 for(size_t vi = 0; vi < f->vars_length; vi++) {
                     Variable* nv = malloc(sizeof(Variable));
                     nv->name = f->vars[vi];
@@ -448,18 +450,29 @@ double terminal(SlangInterpreter* si, int* i) {
                     printDebugMessage(INFO, nv->name);
                     addVariable(function_interpreter, nv);
                 }
-
+                
                 for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
                     function_interpreter->functions[function_index] = si->functions[function_index];
                 }
                 function_interpreter->functions_length = si->functions_length;
+                printAllFunctions(function_interpreter);
+                printAllVariables(function_interpreter);
+                //exit(-1);
                 out = interpret(function_interpreter);
+                free(function_interpreter);
                 //printAllVariables(function_interpreter);
                 //printAllFunctions(function_interpreter);
                 return out;
             }
             else {
-                out = getVariableByName(si, si->tokens[*i].value)->value;
+                Variable* tvar = getVariableByName(si, si->tokens[*i].value);
+                if(tvar == NULL) {
+                    char* dbgmsg = malloc(sizeof(char)*1024);
+                    snprintf(dbgmsg, 1024, "%s Variable is unkown!", si->tokens[*i].value);
+                    printDebugMessage(ERR, dbgmsg);
+                    exit(-1);
+                }
+                out = tvar->value;
                 inc(i);
             }
             return out;
