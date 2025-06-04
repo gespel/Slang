@@ -137,67 +137,30 @@ double interpret(SlangInterpreter* si) {
 
     int i;
     for(i = si->last_token_index; i < numTokens; i++) {
-        if(tokens[i].tt == IDENTIFIER) {
-            char* name = tokens[i].value;
-            consume(&i, tokens[i], IDENTIFIER);
-            if(tokens[i].tt == ASSIGN) {
+        if(tokens[i].tt == IDENTIFIER || tokens[i].tt == NUMBER) {
+            if(getToken(si, i+1).tt == ASSIGN) {
+                char* name = tokens[i].value;
+                consume(&i, tokens[i], IDENTIFIER);
                 consume(&i, tokens[i], ASSIGN);
-                //peek(tokens[i], NUMBER);
-                double var_value = l3_expression(si, &i);
-                
+                double value = l3_expression(si, &i);
+
                 if(getVariableByName(si, name) != NULL) {
-                    getVariableByName(si, name)->value = var_value;
+                    getVariableByName(si, name)->value = value;
                 }
                 else {
                     Variable* temp_var = malloc(sizeof(Variable));
                     temp_var->name = name;
-                    temp_var->value = var_value;
+                    temp_var->value = value;
 
                     addVariable(si, temp_var);
                 }
-                
-                //inc(&i);
             }
-            else if(tokens[i].tt == PARANTHESISLEFT) {
-                printDebugMessage(DBG, "Function call!");
-                consume(&i, tokens[i], PARANTHESISLEFT);
-                consume(&i, tokens[i], PARANTHESISRIGHT);
-                //peek(tokens[i], SEMICOLON);
-
-                Function* f = getFunctionByName(si, name);
-
-                if(f) {
-                    #ifdef DEBUG
-                    char* dbgmsg = malloc(sizeof(char)*1024);
-                    snprintf(dbgmsg, 1024, "Calling function %s now!", name);
-                    printDebugMessage(DBG, dbgmsg);
-                    #endif
-                    SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
-                    
-                    function_interpreter->tokens = f->function_tokens;
-                    function_interpreter->numTokens = f->function_tokens_length;
-
-                    for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
-                        function_interpreter->variables[variable_index] = si->variables[variable_index];
-                    }
-                    function_interpreter->vars_length = si->vars_length;
-
-                    for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
-                        function_interpreter->functions[function_index] = si->functions[function_index];
-                    }
-                    function_interpreter->functions_length = si->functions_length;
-
-                    interpret(function_interpreter);
-                    printAllVariables(function_interpreter);
-                    printAllFunctions(function_interpreter);
-                    //interpret(f->function_tokens, f->function_tokens_length);
-                }
-                else {
-                    printf("[ERROR] Function not found! Exiting...\n");
-                    exit(-1);
-                }
-            }  
-            consume(&i, tokens[i], SEMICOLON);
+            else {
+                double value = l3_expression(si, &i);
+                char* dbgmsg = malloc(sizeof(char)*1024);
+                snprintf(dbgmsg, 1024, "%lf", value);
+                printDebugMessage(INFO, dbgmsg);
+            }
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);

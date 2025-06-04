@@ -32,6 +32,8 @@ typedef enum TokenType {
     WHILE,
     SMALLER,
     GREATER,
+    SINEOSC,
+    SAWOSC,
 } TokenType;
 
 typedef struct t {

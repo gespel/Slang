@@ -156,6 +156,12 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "while") == 0) {
                 out[x].tt = WHILE;
             }
+            else if(strcmp(value, "sineosc") == 0) {
+                out[x].tt = SINEOSC;
+            }
+            else if(strcmp(value, "sawtoothosc") == 0) {
+                out[x].tt = SAWOSC;
+            }
         }
     } 
 }
@@ -213,6 +219,12 @@ char* tokenTypeToString(TokenType input) {
         break;
     case WHILE:
         out = "While";
+        break;
+    case SAWOSC:
+        out = "SawtoothOscilator";
+        break;
+    case SINEOSC:
+        out = "SineOscilator";
         break;
     default:
         out = "Unknown";
