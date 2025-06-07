@@ -17,6 +17,10 @@ typedef enum SlangLogLevel {
     ERR,
 } SlangLogLevel;
 
+#define  LOGDEBUG(fmt, ...) { char* dbgmsg = malloc(sizeof(char)*8192); snprintf(dbgmsg, 8192, fmt, __VA_ARGS__); printDebugMessage(DBG, dbgmsg); free(dbgmsg); }
+#define  LOGINFO(fmt, ...)  { char* dbgmsg = malloc(sizeof(char)*8192); snprintf(dbgmsg, 8192, fmt, __VA_ARGS__); printDebugMessage(INFO, dbgmsg); free(dbgmsg); }
+#define  LOGERROR(fmt, ...) { char* dbgmsg = malloc(sizeof(char)*8192); snprintf(dbgmsg, 8192, fmt, __VA_ARGS__); printDebugMessage(ERR, dbgmsg); free(dbgmsg); }
+
 void printDebugMessage(SlangLogLevel ll, char* message);
 
 void printTokens(Token* tokens, int length);

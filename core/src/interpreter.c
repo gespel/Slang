@@ -10,16 +10,14 @@ void increase(int* i) {
 
 int consume(int* i, Token token, TokenType expected) {
 #ifdef DEBUG
-    char* dbgmsg = malloc(sizeof(char)*1024);
-    snprintf(dbgmsg, 1024, "Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
-    printDebugMessage(DBG, dbgmsg);
+    LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
 #endif
     if(token.tt == expected) {
         (*i)++;
         return 1;
     }
     else {
-        printf("\n[ERROR] WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD (Value: %s)\n", tokenTypeToString(expected), tokenTypeToString(token.tt), token.value);
+        LOGERROR("WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD (Value: %s)\n", tokenTypeToString(expected), tokenTypeToString(token.tt), token.value);
         exit(-1);
         return 0;
     }
@@ -30,7 +28,7 @@ int peek(Token token, TokenType expected) {
         return 1;
     }
     else {
-        printf("\nERROR! WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
+        LOGERROR("WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
         exit(-1);
         return 0;
     }
@@ -43,17 +41,14 @@ void addFunction(SlangInterpreter* si, Function* input) {
 
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
-    printDebugMessage(INFO, "=======================================================");
+    LOGINFO("=======================================================", 0);
     for(size_t i = 0; i < si->functions_length; i++) {
-        printDebugMessage(INFO, "functionname:");
-        printDebugMessage(INFO, si->functions[i]->name);
+        LOGINFO("functionname: %s", si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
-            char* dbgmsg = malloc(sizeof(char)*1024);
-            snprintf(dbgmsg, 1024, "%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
-            printDebugMessage(INFO, dbgmsg);
+            LOGDEBUG("%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }
-    printDebugMessage(INFO, "=======================================================");
+    LOGINFO("=======================================================", 0);
 #endif
 }
 
@@ -89,11 +84,9 @@ void dec(int* i) {
 
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
-    printDebugMessage(INFO, "Variables:");
+    LOGINFO("Variables:", NULL);
     for(size_t i = 0; i < si->vars_length; i++) {
-        char* dbgmsg = malloc(sizeof(char)*1024);
-        snprintf(dbgmsg, 1024, "%s: %lf", si->variables[i]->name, si->variables[i]->value);
-        printDebugMessage(INFO, dbgmsg);
+        LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
     }
 #endif
 }
@@ -124,9 +117,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
         }
     }
 #ifdef DEBUG
-    char* dbgmsg = malloc(sizeof(char)*1024);
-    snprintf(dbgmsg, 1024, "Function %s was not found!", name);
-    printDebugMessage(DBG, dbgmsg);
+    LOGDEBUG("Function %s was not found!", name);
 #endif
     return NULL;
 }
@@ -160,9 +151,7 @@ double interpret(SlangInterpreter* si) {
             }
             else {
                 double value = l3_expression(si, &i);
-                char* dbgmsg = malloc(sizeof(char)*1024);
-                snprintf(dbgmsg, 1024, "%lf", value);
-                printDebugMessage(INFO, dbgmsg);
+                LOGINFO("%lf", value);
             }
         }
         else if(tokens[i].tt == FUNCTION) {
@@ -203,9 +192,7 @@ double interpret(SlangInterpreter* si) {
                 numFunctionTokens++;
             }
 
-            char* dbgmsg = malloc(sizeof(char) * 2048);
-            snprintf(dbgmsg, 2048, "Creating function: %s with %d argmuents", fnName, vars_length);
-            printDebugMessage(INFO, dbgmsg);
+            LOGINFO("Creating function: %s with %d argmuents", fnName, vars_length);
 
             addFunction(si, createFunction(fnName, fntokens, numFunctionTokens, var_names, vars_length));
             consume(&i, tokens[i], BRACKETRIGHT);
@@ -214,9 +201,7 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], RETURN);
             double out = l3_expression(si, &i);
             #ifdef DEBUG
-            char* dbgmsg = malloc(sizeof(char)*1024);
-            snprintf(dbgmsg, 1024, "Returning now! Value: %lf", out);
-            printDebugMessage(DBG, dbgmsg);
+            LOGDEBUG("Returning now! Value: %lf", out);
             #endif
             return out;
         }
@@ -274,10 +259,6 @@ double interpret(SlangInterpreter* si) {
                 inc(&i);
             }
             consume(&i, tokens[i], PARANTHESISRIGHT);
-
-            /*char dbgmsg[1024];
-            snprintf(dbgmsg, 1024, "Full FOR definition found: var: %s = %lf, logic: %s %s %lf, modindex: %d", running_var->name, running_var->value, logic_var_left->name, logic_operator, logic_static_right, mod_index);
-            printDebugMessage(dbgmsg);*/
             consume(&i, tokens[i], BRACKETLEFT);
             int other_brackets = -1;
             Token* loop_tokens = malloc(sizeof(Token)*1024);
@@ -359,19 +340,15 @@ double interpret(SlangInterpreter* si) {
             new->phase = 0.f;
             new->volume = volume;
             addSineOscillator(si->main_rack, new);
-            char* dbgmsg = malloc(sizeof(char) * 2048);
-            snprintf(dbgmsg, 2048, "Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
-            printDebugMessage(INFO, dbgmsg);
+            LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
         }
         else {
-            printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
+            LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
         }
         i--;
     }
     si->last_token_index = i;
-    char* dbgmsg = malloc(sizeof(char)*8192);
-    snprintf(dbgmsg, 8192, "Last Token Index: %d", si->last_token_index);
-    printDebugMessage(DBG, dbgmsg);
+    LOGDEBUG("Last Token Index: %d", si->last_token_index);
     return 0;
 }
 
@@ -388,7 +365,7 @@ double terminal(SlangInterpreter* si, int* i) {
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
                 if(f == NULL) {
-                    printDebugMessage(ERR, "Function not found!");
+                    LOGERROR("Function not found!", NULL);
                     exit(-1);
                 }
                 
@@ -402,9 +379,7 @@ double terminal(SlangInterpreter* si, int* i) {
                     
                     arguments[arg_counter] = terminal(si, i);
                     #ifdef DEBUG
-                    char* dbgmsg = malloc(sizeof(char)*1024);
-                    snprintf(dbgmsg, 1024, "argument: %lf", arguments[arg_counter]);
-                    printDebugMessage(DBG, dbgmsg);
+                    LOGDEBUG("argument: %lf", arguments[arg_counter]);
                     #endif
                     arg_counter++;
                     if(si->tokens[*i].tt != PARANTHESISRIGHT) {
@@ -449,9 +424,7 @@ double terminal(SlangInterpreter* si, int* i) {
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
-                    char* dbgmsg = malloc(sizeof(char)*1024);
-                    snprintf(dbgmsg, 1024, "%s Variable is unkown!", si->tokens[*i].value);
-                    printDebugMessage(ERR, dbgmsg);
+                    LOGERROR("%s Variable is unkown!", si->tokens[*i].value);
                     exit(-1);
                 }
                 out = tvar->value;
