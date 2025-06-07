@@ -169,7 +169,7 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], FUNCTION);
             printDebugMessage(INFO, "Function definition found!");
             
-            char* fnName = nullptr;
+            char* fnName = NULL;
 
             if(peek(tokens[i], IDENTIFIER)) {
                 printDebugMessage(DBG, "Function name:");
