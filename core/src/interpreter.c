@@ -153,6 +153,7 @@ double interpret(SlangInterpreter* si) {
                 double value = l3_expression(si, &i);
                 LOGINFO("%lf", value);
             }
+            consume(&i, tokens[i], SEMICOLON);
         }
         else if(tokens[i].tt == FUNCTION) {
             consume(&i, tokens[i], FUNCTION);
@@ -341,6 +342,7 @@ double interpret(SlangInterpreter* si) {
             new->volume = volume;
             addSineOscillator(si->main_rack, new);
             LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
+            consume(&i, tokens[i], SEMICOLON);
         }
         else {
             LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
