@@ -5,7 +5,6 @@
 #ifndef BUFFER_CORE_H
 #define BUFFER_CORE_H
 #include "interpreter.h"
-#include "stdlib.h"
 
 typedef struct SlangBufferCore {
     SlangInterpreter* interpreter;
