@@ -33,6 +33,7 @@ int main(int argc, char **argv) {
         interpret(main_interpreter);
         printAllFunctions(main_interpreter);
         printAllVariables(main_interpreter);
+        printAllOscillators(main_interpreter);
         free(main_interpreter); 
     }
     else if(argc == 1) {

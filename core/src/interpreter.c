@@ -41,14 +41,15 @@ void addFunction(SlangInterpreter* si, Function* input) {
 
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
-    LOGINFO("=======================================================", 0);
+    LOGINFO("=======================================================", NULL);
+    LOGINFO("Functions:", NULL);
     for(size_t i = 0; i < si->functions_length; i++) {
         LOGINFO("functionname: %s", si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             LOGDEBUG("%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }
-    LOGINFO("=======================================================", 0);
+    LOGINFO("=======================================================", NULL);
 #endif
 }
 
@@ -87,6 +88,15 @@ void printAllVariables(SlangInterpreter* si) {
     LOGINFO("Variables:", NULL);
     for(size_t i = 0; i < si->vars_length; i++) {
         LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
+    }
+#endif
+}
+
+void printAllOscillators(SlangInterpreter* si) {
+#ifdef DEBUG
+    LOGINFO("Oscillators:", NULL);
+    for(int i = 0; i < si->main_rack->num_sine_oscs; i++) {
+        LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscs[i]->frequency, si->main_rack->sine_oscs[i]->volume);
     }
 #endif
 }

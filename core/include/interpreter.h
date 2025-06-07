@@ -68,6 +68,8 @@ void dec(int* i);
 
 void printAllVariables(SlangInterpreter* si);
 
+void printAllOscillators(SlangInterpreter* si);
+
 #ifdef __cplusplus
 }
 #endif
