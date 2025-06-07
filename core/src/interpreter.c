@@ -445,7 +445,9 @@ double terminal(SlangInterpreter* si, int* i) {
             return out;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
+            exit(-1);
     }
+
 }
 
 double l3_expression(SlangInterpreter* si, int* i) {
