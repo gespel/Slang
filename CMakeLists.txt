@@ -10,12 +10,11 @@ endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 add_library(slang SHARED
-    core/src/core.c
-    core/src/function.c
-    core/src/interpreter.c
-    core/src/tokenizer.c
-    core/src/tools.c
-    core/src/rack.c
+        core/src/function.c
+        core/src/interpreter.c
+        core/src/tokenizer.c
+        core/src/tools.c
+        core/src/rack.c core/src/buffer_core.c
 )
 
 set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})

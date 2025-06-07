@@ -9,7 +9,6 @@
 extern "C" {
 #endif
 
-#include "core/include/core.h"
 #include "core/include/interpreter.h"
 #include "core/include/tokenizer.h"
 #include "core/include/tools.h"
