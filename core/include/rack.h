@@ -4,7 +4,9 @@
 
 typedef struct Rack {
     SineOscillator** sine_oscs;
-    size_t num_sine_oscs;
+    int num_sine_oscs;
 } Rack;
+
+void addSineOscillator(Rack* rack, SineOscillator* input);
 
 #endif

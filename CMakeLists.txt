@@ -15,6 +15,7 @@ add_library(slang SHARED
     core/src/interpreter.c
     core/src/tokenizer.c
     core/src/tools.c
+    core/src/rack.c
 )
 
 set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})

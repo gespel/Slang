@@ -105,6 +105,8 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->openBrackets = 0;
     out->last_token_index = 0;
     out->main_rack = malloc(sizeof(Rack));
+    out->main_rack->num_sine_oscs = 0;
+    out->main_rack->sine_oscs = malloc(sizeof(SineOscillator) * 128);
     return out;
 }
 
@@ -346,7 +348,11 @@ double interpret(SlangInterpreter* si) {
             }
         }
         else if(getToken(si, i).tt == SINEOSC) {
-
+            SineOscillator* new = malloc(sizeof(SineOscillator));
+            new->frequency = 440.f;
+            new->phase = 0.f;
+            new->volume = 1.f;
+            addSineOscillator(si->main_rack, new);
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
