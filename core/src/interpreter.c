@@ -348,11 +348,20 @@ double interpret(SlangInterpreter* si) {
             }
         }
         else if(getToken(si, i).tt == SINEOSC) {
+            consume(&i, tokens[i], SINEOSC);
+            consume(&i, tokens[i], PARANTHESISLEFT);
+            double freq = l3_expression(si, &i);
+            consume(&i, tokens[i], COMMA);
+            double volume = l3_expression(si, &i);
+            consume(&i, tokens[i], PARANTHESISRIGHT);
             SineOscillator* new = malloc(sizeof(SineOscillator));
-            new->frequency = 440.f;
+            new->frequency = freq;
             new->phase = 0.f;
-            new->volume = 1.f;
+            new->volume = volume;
             addSineOscillator(si->main_rack, new);
+            char* dbgmsg = malloc(sizeof(char) * 2048);
+            snprintf(dbgmsg, 2048, "Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
+            printDebugMessage(INFO, dbgmsg);
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
