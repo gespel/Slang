@@ -169,7 +169,7 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], FUNCTION);
             printDebugMessage(INFO, "Function definition found!");
             
-            char* fnName = NULL;
+            char* fnName = nullptr;
 
             if(peek(tokens[i], IDENTIFIER)) {
                 printDebugMessage(DBG, "Function name:");
@@ -194,27 +194,27 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], PARANTHESISRIGHT);
             consume(&i, tokens[i], BRACKETLEFT);
 
-            Token* fntokens = malloc(sizeof(Token) * 8192);
+            Token* function_tokens = malloc(sizeof(Token) * 8192);
             int numFunctionTokens = 0;
 
             while(tokens[i].tt != BRACKETRIGHT) {
-                fntokens[numFunctionTokens] = tokens[i];
+                function_tokens[numFunctionTokens] = tokens[i];
                 inc(&i);
                 numFunctionTokens++;
             }
 
             LOGINFO("Creating function: %s with %d argmuents", fnName, vars_length);
 
-            addFunction(si, createFunction(fnName, fntokens, numFunctionTokens, var_names, vars_length));
+            addFunction(si, createFunction(fnName, function_tokens, numFunctionTokens, var_names, vars_length));
             consume(&i, tokens[i], BRACKETRIGHT);
         }
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
-            double out = l3_expression(si, &i);
+            double out1 = l3_expression(si, &i);
             #ifdef DEBUG
-            LOGDEBUG("Returning now! Value: %lf", out);
+            LOGDEBUG("Returning now! Value: %lf", out1);
             #endif
-            return out;
+            return out1;
         }
         else if(getToken(si, i).tt == SEMICOLON) {
             consume(&i, tokens[i], SEMICOLON);
