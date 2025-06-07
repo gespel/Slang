@@ -104,6 +104,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->numTokens = numTokens;
     out->openBrackets = 0;
     out->last_token_index = 0;
+    out->main_rack = malloc(sizeof(Rack));
     return out;
 }
 
@@ -343,6 +344,9 @@ double interpret(SlangInterpreter* si) {
                 printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %ld\n", si->openBrackets);
                 exit(-1);
             }
+        }
+        else if(getToken(si, i).tt == SINEOSC) {
+
         }
         else {
             printf("[ERROR] Wrong token exception! Type: %s Value: %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);

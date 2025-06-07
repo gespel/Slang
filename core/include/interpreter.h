@@ -9,6 +9,7 @@
 #include "tools.h"
 #include "function.h"
 #include "variable.h"
+#include "rack.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
 #define DEBUG
@@ -26,6 +27,7 @@ typedef struct SlangInterpreter {
     size_t numTokens;
     size_t openBrackets;
     int last_token_index;
+    Rack* main_rack;
 } SlangInterpreter;
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
