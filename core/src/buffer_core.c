@@ -18,6 +18,6 @@ double* renderBuffer(SlangBufferCore* sbc) {
             out[sample] = getSample(rack->sine_oscillators[ss]);
         }
     }
-
+    sbc->buffer = out;
     return out;
 }

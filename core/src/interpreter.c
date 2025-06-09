@@ -352,7 +352,7 @@ double interpret(SlangInterpreter* si) {
             new->frequency = freq;
             new->phase = 0.f;
             new->volume = volume;
-            new->sampleRate = 48000;
+            new->sampleRate = si->main_rack->sampleRate;
             addSineOscillator(si->main_rack, new);
             LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
             consume(&i, tokens[i], SEMICOLON);
