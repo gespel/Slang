@@ -25,6 +25,8 @@ void printDebugMessage(SlangLogLevel ll, char* message);
 
 void printTokens(Token* tokens, int length);
 
+void printAudioBuffer(double* audioBuffer, int length);
+
 Token getToken(SlangInterpreter* si, int i);
 
 void tokenError(TokenType expected, TokenType got);

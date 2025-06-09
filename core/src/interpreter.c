@@ -95,7 +95,7 @@ void printAllVariables(SlangInterpreter* si) {
 void printAllOscillators(SlangInterpreter* si) {
 #ifdef DEBUG
     LOGINFO("Oscillators:", NULL);
-    for(int i = 0; i < si->main_rack->num_sine_oscillators; i++) {
+    for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
         LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
     }
 #endif
@@ -108,8 +108,10 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->openBrackets = 0;
     out->last_token_index = 0;
     out->main_rack = malloc(sizeof(Rack));
-    out->main_rack->num_sine_oscillators = 0;
+    out->main_rack->numSineOscillators = 0;
     out->main_rack->sine_oscillators = malloc(sizeof(SineOscillator) * 128);
+    out->main_rack->sampleRate = 48000;
+    out->main_rack->bufferSize = 512;
     return out;
 }
 
@@ -350,6 +352,7 @@ double interpret(SlangInterpreter* si) {
             new->frequency = freq;
             new->phase = 0.f;
             new->volume = volume;
+            new->sampleRate = 48000;
             addSineOscillator(si->main_rack, new);
             LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
             consume(&i, tokens[i], SEMICOLON);

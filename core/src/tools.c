@@ -27,6 +27,14 @@ void printTokens(Token* tokens, int length) {
     }
 }
 
+void printAudioBuffer(double* audioBuffer, int length) {
+    LOGDEBUG("Rendered audio buffer:", NULL);
+    for(int j = 0; j < length; j++) {
+        LOGDEBUG("\t%lf", audioBuffer[j]);
+    }
+}
+
+
 Token getToken(SlangInterpreter* si, int i) {
     return si->tokens[i];
 }

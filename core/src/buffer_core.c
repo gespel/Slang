@@ -10,6 +10,14 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int bufferSize) {
     return bufferCore;
 }
 
-void renderBuffer(SlangBufferCore* sbc) {
+double* renderBuffer(SlangBufferCore* sbc) {
+    Rack* rack = sbc->interpreter->main_rack;
+    double* out = malloc(sizeof(double) * rack->bufferSize);
+    for (int sample = 0; sample < rack->bufferSize; sample++) {
+        for (int ss = 0; ss < rack->numSineOscillators; ss++) {
+            out[sample] = getSample(rack->sine_oscillators[ss]);
+        }
+    }
 
+    return out;
 }

@@ -12,6 +12,6 @@ typedef struct SlangBufferCore {
 } SlangBufferCore;
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int bufferSize);
-void renderBuffer(SlangBufferCore* sbc);
+double* renderBuffer(SlangBufferCore* sbc);
 
 #endif //BUFFER_CORE_H

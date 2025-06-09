@@ -13,10 +13,13 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 file(GLOB MODULE_SOURCES ${CMAKE_SOURCE_DIR}/modules/src/*.c)
 file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
 
+
 add_library(slang_modules SHARED ${MODULE_SOURCES} ${MODULE_HEADERS}
         modules/src/oscillator.c)
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
+target_link_libraries(slang_modules PUBLIC m)
+
 
 # === Slang Core Library ===
 

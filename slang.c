@@ -1,6 +1,7 @@
 //
 // Created by stenh
 //
+#include "core/include/buffer_core.h"
 #include "slang-lib.h"
 //#define LIBRARY
 #ifndef LIBRARY
@@ -34,6 +35,10 @@ int main(int argc, char **argv) {
         printAllFunctions(main_interpreter);
         printAllVariables(main_interpreter);
         printAllOscillators(main_interpreter);
+
+        SlangBufferCore* sbc = createBufferCore(main_interpreter, 512);
+        double* buf = renderBuffer(sbc);
+        printAudioBuffer(buf, 512);
         free(main_interpreter); 
     }
     else if(argc == 1) {
