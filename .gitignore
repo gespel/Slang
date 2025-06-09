@@ -6,4 +6,5 @@ test
 .idea/
 slang
 .vscode
+*.DS_Store
 

@@ -14,9 +14,12 @@ double* renderBuffer(SlangBufferCore* sbc) {
     Rack* rack = sbc->interpreter->main_rack;
     double* out = malloc(sizeof(double) * rack->bufferSize);
     for (int sample = 0; sample < rack->bufferSize; sample++) {
+        double temp = 0;
         for (int ss = 0; ss < rack->numSineOscillators; ss++) {
-            out[sample] = getSample(rack->sine_oscillators[ss]);
+            temp += getSample(rack->sine_oscillators[ss]);
+
         }
+        out[sample] = temp;
     }
     sbc->buffer = out;
     return out;

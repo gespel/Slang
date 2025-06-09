@@ -14,7 +14,7 @@ file(GLOB MODULE_SOURCES ${CMAKE_SOURCE_DIR}/modules/src/*.c)
 file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
 
 
-add_library(slang_modules SHARED ${MODULE_SOURCES} ${MODULE_HEADERS}
+add_library(slang_modules STATIC ${MODULE_SOURCES} ${MODULE_HEADERS}
         modules/src/oscillator.c)
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
@@ -23,7 +23,7 @@ target_link_libraries(slang_modules PUBLIC m)
 
 # === Slang Core Library ===
 
-add_library(slang SHARED
+add_library(slang STATIC
         core/src/function.c
         core/src/interpreter.c
         core/src/tokenizer.c
@@ -31,6 +31,7 @@ add_library(slang SHARED
         core/src/rack.c
         core/src/buffer_core.c
 )
+
 
 set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})
 
