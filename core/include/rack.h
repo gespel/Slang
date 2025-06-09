@@ -1,10 +1,10 @@
 #ifndef SLANG_RACK_H
 #define SLANG_RACK_H
-#include "oscillator.h"
+#include "../../modules/include/oscillator.h"
 
 typedef struct Rack {
-    SineOscillator** sine_oscs;
-    int num_sine_oscs;
+    SineOscillator** sine_oscillators;
+    int num_sine_oscillators;
 } Rack;
 
 void addSineOscillator(Rack* rack, SineOscillator* input);

@@ -9,13 +9,24 @@ endif()
 
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+
+file(GLOB MODULE_SOURCES ${CMAKE_SOURCE_DIR}/modules/src/*.c)
+file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
+
+add_library(slang_modules SHARED ${MODULE_SOURCES} ${MODULE_HEADERS}
+        modules/src/oscillator.c)
+
+target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
+
+# === Slang Core Library ===
+
 add_library(slang SHARED
-    core/src/function.c
-    core/src/interpreter.c
-    core/src/tokenizer.c
-    core/src/tools.c
-    core/src/rack.c
-    core/src/buffer_core.c
+        core/src/function.c
+        core/src/interpreter.c
+        core/src/tokenizer.c
+        core/src/tools.c
+        core/src/rack.c
+        core/src/buffer_core.c
 )
 
 set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})
@@ -23,8 +34,17 @@ set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})
 target_include_directories(slang PRIVATE core/include)
 target_include_directories(slang PRIVATE core/src)
 
+target_link_libraries(slang PRIVATE slang_modules)
+
+# === Installation ===
+
 include(GNUInstallDirs)
 
 install(TARGETS slang
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(TARGETS slang_modules
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)

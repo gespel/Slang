@@ -1,6 +1,6 @@
 #include "../include/rack.h"
 
 void addSineOscillator(Rack* rack, SineOscillator* input) {
-    rack->sine_oscs[rack->num_sine_oscs] = input;
-    rack->num_sine_oscs = rack->num_sine_oscs + 1; 
+    rack->sine_oscillators[rack->num_sine_oscillators] = input;
+    rack->num_sine_oscillators = rack->num_sine_oscillators + 1;
 }
