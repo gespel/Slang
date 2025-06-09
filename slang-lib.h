@@ -13,6 +13,10 @@ extern "C" {
 #include "core/include/tokenizer.h"
 #include "core/include/tools.h"
 #include "core/include/function.h"
+#include "core/include/buffer_core.h"
+#include "core/include/rack.h"
+#include "core/include/variable.h"
+#include "modules/include/oscillator.h"
 
 #ifdef __cplusplus
 }
