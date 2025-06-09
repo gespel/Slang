@@ -7,8 +7,7 @@ fn test(aa, ab) {
 fn f(y) {
     return y * y;
 }
-sineosc(220, test(1, 1));
+sineosc(110, 1);
 x = x + f(3) + test(2, 3) * 3 + (2 * 2);
 12 + 12;
 f(12);
-sineosc(220, test(1, 1));
