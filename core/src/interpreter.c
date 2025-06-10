@@ -85,19 +85,23 @@ void dec(int* i) {
 
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
+    LOGINFO("=======================================================", NULL);
     LOGINFO("Variables:", NULL);
     for(size_t i = 0; i < si->vars_length; i++) {
         LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
     }
+    LOGINFO("=======================================================", NULL);
 #endif
 }
 
 void printAllOscillators(SlangInterpreter* si) {
 #ifdef DEBUG
+    LOGINFO("=======================================================", NULL);
     LOGINFO("Oscillators:", NULL);
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
         LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
     }
+    LOGINFO("=======================================================", NULL);
 #endif
 }
 
