@@ -469,7 +469,9 @@ double l3_expression(SlangInterpreter* si, int* i) {
         case MINUS:
             consume(i, si->tokens[*i], MINUS);
             right = l3_expression(si, i);
-            return left - right; 
+            return left - right;
+        default:
+            break;
     }
     return left;
 }
@@ -487,6 +489,8 @@ double l2_expression(SlangInterpreter* si, int* i) {
             consume(i, si->tokens[*i], DIVIDE);
             right = l3_expression(si, i);
             return left / right;
+        default:
+            break;
     }
     return left;
 }
