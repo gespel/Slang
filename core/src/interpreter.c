@@ -41,15 +41,15 @@ void addFunction(SlangInterpreter* si, Function* input) {
 
 void printAllFunctions(SlangInterpreter* si) {
 #ifdef DEBUG
-    LOGINFO("=======================================================", NULL);
-    LOGINFO("Functions:", NULL);
+    LOGINFO("=======================================================");
+    LOGINFO("Functions:");
     for(size_t i = 0; i < si->functions_length; i++) {
         LOGINFO("functionname: %s", si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             LOGDEBUG("%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }
-    LOGINFO("=======================================================", NULL);
+    LOGINFO("=======================================================");
 #endif
 }
 
@@ -85,23 +85,23 @@ void dec(int* i) {
 
 void printAllVariables(SlangInterpreter* si) {
 #ifdef DEBUG
-    LOGINFO("=======================================================", NULL);
-    LOGINFO("Variables:", NULL);
+    LOGINFO("=======================================================");
+    LOGINFO("Variables:");
     for(size_t i = 0; i < si->vars_length; i++) {
         LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
     }
-    LOGINFO("=======================================================", NULL);
+    LOGINFO("=======================================================");
 #endif
 }
 
 void printAllOscillators(SlangInterpreter* si) {
 #ifdef DEBUG
-    LOGINFO("=======================================================", NULL);
-    LOGINFO("Oscillators:", NULL);
+    LOGINFO("=======================================================");
+    LOGINFO("Oscillators:");
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
         LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
     }
-    LOGINFO("=======================================================", NULL);
+    LOGINFO("=======================================================");
 #endif
 }
 
@@ -384,7 +384,7 @@ double terminal(SlangInterpreter* si, int* i) {
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
                 if(f == NULL) {
-                    LOGERROR("Function not found!", NULL);
+                    LOGERROR("Function not found!");
                     exit(-1);
                 }
                 
