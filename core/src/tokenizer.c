@@ -16,10 +16,10 @@ Token* tokenize(char* input, int* length) {
             char *tmpString = malloc(sizeof(char) * 2);
 
             //printf("lexing char: %c\n", tokenString[j]);
-            if(isalpha(tokenString[j])) {
+            if(isalpha((unsigned char)tokenString[j])) {
                 char* ns = calloc(128, sizeof(char));
                 int nsc = 0;
-                while(isalpha(tokenString[j])) {
+                while(isalpha((unsigned char)tokenString[j])) {
                     ns[nsc] = tokenString[j];
                     j++;
                     nsc++;
@@ -108,11 +108,11 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
-            else if(isdigit(tokenString[j])) {
+            else if(isdigit((unsigned char)tokenString[j])) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
                 char* ns = malloc(sizeof(char)*128);
                 int nsc = 0;
-                while(isdigit(tokenString[j])) {
+                while(isdigit((unsigned char)tokenString[j])) {
                     //printf("%c is a digit\n", tokenString[j]);
                     ns[nsc] = tokenString[j];
                     j++;
