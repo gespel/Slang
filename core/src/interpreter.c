@@ -167,7 +167,7 @@ double interpret(SlangInterpreter* si) {
             }
             else {
                 double value = l3_expression(si, &i);
-                LOGINFO("%lf", value);
+                printf("%lf\n", value);
             }
             consume(&i, tokens[i], SEMICOLON);
         }
