@@ -1,7 +1,7 @@
 //
 // Created by Sten on 07.06.2025.
 //
-#include "buffer_core.h"
+#include "../include/buffer_core.h"
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int bufferSize) {
     SlangBufferCore* bufferCore = malloc(sizeof(SlangBufferCore));
