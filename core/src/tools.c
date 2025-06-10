@@ -30,7 +30,7 @@ void printTokens(Token* tokens, int length) {
 void printAudioBuffer(double* audioBuffer, int length) {
     LOGDEBUG("Rendered audio buffer:");
     for(int j = 0; j < length; j++) {
-        printf("\t%lf ", audioBuffer[j]);
+        printf("\t%d: %lf ", j, audioBuffer[j]);
         if ((j+1) % 8 == 0) {
             printf("\n");
         }
