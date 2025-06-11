@@ -18,7 +18,6 @@ void printDebugMessage(SlangLogLevel ll, char* message) {
     }
 
     printf("[Slang] \033[34m%s\033[0m - %s: %s\n", buffer, prefix, message);
-    free(prefix);
 #endif
 }
 
