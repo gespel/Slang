@@ -140,7 +140,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 
 double interpret(SlangInterpreter* si) {
     printDebugMessage(INFO, "Interpreter started!");
-    printAllVariables(si);
+    //printAllVariables(si);
     double out = 0.0;
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
