@@ -9,6 +9,7 @@ typedef struct SineOscillator {
     double volume;
     double phase;
     int sampleRate;
+    char* name;
 } SineOscillator;
 
 double getSample(SineOscillator* oscillator);

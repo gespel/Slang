@@ -99,7 +99,7 @@ void printAllOscillators(SlangInterpreter* si) {
     LOGINFO("=======================================================");
     LOGINFO("Oscillators:");
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
-        LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
+        LOGINFO("SineOscillator: %lf Hz and %lf volume", *si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
     }
     LOGINFO("=======================================================");
 #endif
@@ -348,19 +348,21 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == SINEOSC) {
             consume(&i, tokens[i], SINEOSC);
             consume(&i, tokens[i], PARANTHESISLEFT);
+            char* name = getToken(si, i).value;
+            printf("%s\n", name);
+            consume(&i, tokens[i], IDENTIFIER);
+            consume(&i, tokens[i], COMMA);
             double freq = l3_expression(si, &i);
             double* freqptr = malloc(sizeof(double));
             freqptr[0] = freq;
-            consume(&i, tokens[i], COMMA);
-            double volume = l3_expression(si, &i);
             consume(&i, tokens[i], PARANTHESISRIGHT);
             SineOscillator* new = malloc(sizeof(SineOscillator));
+            new->name = name;
             new->frequency = freqptr;
             new->phase = 0.f;
-            new->volume = volume;
             new->sampleRate = si->main_rack->sampleRate;
             addSineOscillator(si->main_rack, new);
-            LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
+            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", *new->frequency, new->name);
             consume(&i, tokens[i], SEMICOLON);
         }
         else {
