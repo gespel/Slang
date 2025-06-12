@@ -352,11 +352,13 @@ double interpret(SlangInterpreter* si) {
             printf("%s\n", name);
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], COMMA);
+
             double freq = l3_expression(si, &i);
             double* freqptr = malloc(sizeof(double));
             freqptr[0] = freq;
             consume(&i, tokens[i], PARANTHESISRIGHT);
             SineOscillator* new = malloc(sizeof(SineOscillator));
+
             new->name = name;
             new->frequency = freqptr;
             new->phase = 0.f;
