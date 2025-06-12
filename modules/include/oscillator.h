@@ -4,7 +4,8 @@
 #include <math.h>
 
 typedef struct SineOscillator {
-    double frequency;
+    double* frequency;
+    double* sample;
     double volume;
     double phase;
     int sampleRate;

@@ -349,11 +349,13 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], SINEOSC);
             consume(&i, tokens[i], PARANTHESISLEFT);
             double freq = l3_expression(si, &i);
+            double* freqptr = malloc(sizeof(double));
+            freqptr[0] = freq;
             consume(&i, tokens[i], COMMA);
             double volume = l3_expression(si, &i);
             consume(&i, tokens[i], PARANTHESISRIGHT);
             SineOscillator* new = malloc(sizeof(SineOscillator));
-            new->frequency = freq;
+            new->frequency = freqptr;
             new->phase = 0.f;
             new->volume = volume;
             new->sampleRate = si->main_rack->sampleRate;

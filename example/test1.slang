@@ -15,3 +15,4 @@ if(test() == 3) {
 while(i = test(), i < 100, i + 1) {
     x = x + xyz();
 }
+sineosc(1100, 1);
