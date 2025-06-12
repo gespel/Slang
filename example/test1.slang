@@ -16,3 +16,4 @@ while(i = test(), i < 100, i + 1) {
     x = x + xyz();
 }
 sineosc(syn, 110);
+sineosc(syna, syn);

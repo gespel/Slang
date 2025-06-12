@@ -2,6 +2,7 @@
 #define SLANG_RACK_H
 #include "../../modules/include/oscillator.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct Rack {
     SineOscillator** sine_oscillators;
@@ -11,5 +12,7 @@ typedef struct Rack {
 } Rack;
 
 void addSineOscillator(Rack* rack, SineOscillator* input);
+
+SineOscillator* getSineOscillator(Rack* rack, char* name);
 
 #endif

@@ -349,21 +349,36 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], SINEOSC);
             consume(&i, tokens[i], PARANTHESISLEFT);
             char* name = getToken(si, i).value;
-            printf("%s\n", name);
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], COMMA);
 
-            double freq = l3_expression(si, &i);
-            double* freqptr = malloc(sizeof(double));
-            freqptr[0] = freq;
-            consume(&i, tokens[i], PARANTHESISRIGHT);
+            double* freqptr;
+            char* temp = getToken(si, i).value;
+            if(getSineOscillator(si->main_rack, temp) != NULL) {
+                SineOscillator* osc = getSineOscillator(si->main_rack, temp);
+                freqptr = osc->sample;
+                consume(&i, tokens[i], IDENTIFIER);
+                consume(&i, tokens[i], PARANTHESISRIGHT);
+            }
+            else {
+                double freq = l3_expression(si, &i);
+                freqptr[0] = freq;
+                consume(&i, tokens[i], PARANTHESISRIGHT);
+            }
+
             SineOscillator* new = malloc(sizeof(SineOscillator));
 
+            new->sample = malloc(sizeof(double));
             new->name = name;
             new->frequency = freqptr;
             new->phase = 0.f;
             new->sampleRate = si->main_rack->sampleRate;
+
             addSineOscillator(si->main_rack, new);
+            //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
+            //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
+            //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
+            //}
             LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", *new->frequency, new->name);
             consume(&i, tokens[i], SEMICOLON);
         }
