@@ -13,6 +13,6 @@ typedef struct SineOscillator {
     char* name;
 } SineOscillator;
 
-double getSample(SineOscillator* oscillator);
+double getSineSample(SineOscillator* oscillator);
 
 #endif

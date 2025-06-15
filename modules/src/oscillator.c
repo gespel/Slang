@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-double getSample(SineOscillator* oscillator) {
+double getSineSample(SineOscillator* oscillator) {
     oscillator->phase += (oscillator->frequency[0] / oscillator->sampleRate) * 2.0 * M_PI;
     oscillator->sample[0] = sin(oscillator->phase);
     return oscillator->sample[0];
