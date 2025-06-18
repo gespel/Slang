@@ -13,5 +13,4 @@ if(test() == 3) {
     a = a + 12;
 }
 sineosc(asd, 110);
-
-asdf = 0;
+sineosc(asdf, asd*100);

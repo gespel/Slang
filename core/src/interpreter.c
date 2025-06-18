@@ -352,12 +352,17 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], COMMA);
 
+            double frequency_multiplier = 1.f;
             double* freqptr;
             char* temp = getToken(si, i).value;
             if(getSineOscillator(si->main_rack, temp) != NULL) {
                 SineOscillator* osc = getSineOscillator(si->main_rack, temp);
                 freqptr = osc->sample;
                 consume(&i, tokens[i], IDENTIFIER);
+                if(getToken(si, i).tt == MULTIPLY) {
+                    consume(&i, tokens[i], MULTIPLY);
+                    frequency_multiplier = l3_expression(si, &i);
+                }
                 consume(&i, tokens[i], PARANTHESISRIGHT);
             }
             else {
@@ -372,6 +377,7 @@ double interpret(SlangInterpreter* si) {
             newOsc->sample = malloc(sizeof(double));
             newOsc->name = name;
             newOsc->frequency = freqptr;
+            newOsc->frequencyMultiplier = frequency_multiplier;
             newOsc->phase = 0.f;
             newOsc->sampleRate = si->main_rack->sampleRate;
 

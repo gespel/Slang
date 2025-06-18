@@ -7,6 +7,7 @@
 typedef struct SineOscillator {
     double* frequency;
     double* sample;
+    double frequencyMultiplier;
     double volume;
     double phase;
     int sampleRate;
