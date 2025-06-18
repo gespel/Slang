@@ -1,7 +1,7 @@
 #include "../include/tools.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     char buffer[30];
     struct timeval tv;
     time_t curtime;

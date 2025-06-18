@@ -9,7 +9,7 @@ void increase(int* i) {
 }
 
 int consume(int* i, Token token, TokenType expected) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
 #endif
     if(token.tt == expected) {
@@ -40,7 +40,7 @@ void addFunction(SlangInterpreter* si, Function* input) {
 }
 
 void printAllFunctions(SlangInterpreter* si) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGINFO("=======================================================");
     LOGINFO("Functions:");
     for(size_t i = 0; i < si->functions_length; i++) {
@@ -84,7 +84,7 @@ void dec(int* i) {
 }
 
 void printAllVariables(SlangInterpreter* si) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGINFO("=======================================================");
     LOGINFO("Variables:");
     for(size_t i = 0; i < si->vars_length; i++) {
@@ -95,7 +95,7 @@ void printAllVariables(SlangInterpreter* si) {
 }
 
 void printAllOscillators(SlangInterpreter* si) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGINFO("=======================================================");
     LOGINFO("Oscillators:");
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
@@ -132,7 +132,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
             return si->functions[i];
         }
     }
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGDEBUG("Function %s was not found!", name);
 #endif
     return NULL;
@@ -217,7 +217,7 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
             double out1 = l3_expression(si, &i);
-            #ifdef DEBUG
+            #ifdef SLANG_DEBUG
             LOGDEBUG("Returning now! Value: %lf", out1);
             #endif
             return out1;
@@ -425,7 +425,7 @@ double terminal(SlangInterpreter* si, int* i) {
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
                     
                     arguments[arg_counter] = terminal(si, i);
-                    #ifdef DEBUG
+                    #ifdef SLANG_DEBUG
                     LOGDEBUG("argument: %lf", arguments[arg_counter]);
                     #endif
                     arg_counter++;

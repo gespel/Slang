@@ -12,7 +12,7 @@
 #include "rack.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
-#define DEBUG
+#define SLANG_DEBUG
 
 #ifdef __cplusplus
 extern "C" {
