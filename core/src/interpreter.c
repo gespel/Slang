@@ -99,7 +99,7 @@ void printAllOscillators(SlangInterpreter* si) {
     LOGINFO("=======================================================");
     LOGINFO("Oscillators:");
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
-        LOGINFO("SineOscillator: %lf Hz and %lf volume", *si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
+        LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency[0], si->main_rack->sine_oscillators[i]->volume);
     }
     LOGINFO("=======================================================");
 #endif
@@ -361,25 +361,26 @@ double interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], PARANTHESISRIGHT);
             }
             else {
-                double freq = l3_expression(si, &i);
-                freqptr[0] = freq;
+                double* freq = malloc(sizeof(double));
+                freq[0] = l3_expression(si, &i);
+                freqptr = freq;
                 consume(&i, tokens[i], PARANTHESISRIGHT);
             }
 
-            SineOscillator* new = malloc(sizeof(SineOscillator));
+            SineOscillator* newOsc = malloc(sizeof(SineOscillator));
 
-            new->sample = malloc(sizeof(double));
-            new->name = name;
-            new->frequency = freqptr;
-            new->phase = 0.f;
-            new->sampleRate = si->main_rack->sampleRate;
+            newOsc->sample = malloc(sizeof(double));
+            newOsc->name = name;
+            newOsc->frequency = freqptr;
+            newOsc->phase = 0.f;
+            newOsc->sampleRate = si->main_rack->sampleRate;
 
-            addSineOscillator(si->main_rack, new);
+            addSineOscillator(si->main_rack, newOsc);
             //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
             //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
             //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
             //}
-            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", *new->frequency, new->name);
+            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", newOsc->frequency[0], newOsc->name);
             consume(&i, tokens[i], SEMICOLON);
         }
         else {
