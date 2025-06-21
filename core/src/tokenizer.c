@@ -110,7 +110,7 @@ Token* tokenize(char* input, int* length) {
             }
             else if(isdigit((unsigned char)tokenString[j])) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
-                char* ns = malloc(sizeof(char)*128);
+                char* ns = calloc(128, sizeof(char));
                 int nsc = 0;
                 while(isdigit((unsigned char)tokenString[j])) {
                     //printf("%c is a digit\n", tokenString[j]);
