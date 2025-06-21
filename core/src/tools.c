@@ -1,7 +1,7 @@
 #include "../include/tools.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     char buffer[30];
     struct timeval tv;
     time_t curtime;
@@ -28,9 +28,12 @@ void printTokens(Token* tokens, int length) {
 }
 
 void printAudioBuffer(double* audioBuffer, int length) {
-    LOGDEBUG("Rendered audio buffer:", NULL);
+    LOGDEBUG("Rendered audio buffer:");
     for(int j = 0; j < length; j++) {
-        LOGDEBUG("\t%lf", audioBuffer[j]);
+        printf("\t%d: %lf ", j, audioBuffer[j]);
+        if ((j+1) % 8 == 0) {
+            printf("\n");
+        }
     }
 }
 

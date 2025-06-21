@@ -1,13 +1,16 @@
 x = 13;
-fn test(aa, ab) {
-    out = aa + ab;
-    return out; 
+a = 3;
+y = 2;
+fn test() { 
+    asd = 3; 
+    return asd; 
 }
-
-fn f(y) {
-    return y * y;
+fn xyz() {
+    out = 2;
+    return out;
 }
-sineosc(110, 1);
-x = x + f(3) + test(2, 3) * 3 + (2 * 2);
-12 + 12;
-f(12);
+if(test() == 3) {
+    a = a + 12;
+}
+sineosc(asd, 110);
+sineosc(asdf, asd*100);

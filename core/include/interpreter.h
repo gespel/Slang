@@ -12,20 +12,20 @@
 #include "rack.h"
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
-#define DEBUG
+#define SLANG_DEBUG
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 typedef struct SlangInterpreter {
-    size_t functions_length;
+    int functions_length;
     Function* functions[8192];
-    size_t vars_length;
+    int vars_length;
     Variable* variables[8192];
     Token* tokens;
-    size_t numTokens;
-    size_t openBrackets;
+    int numTokens;
+    int openBrackets;
     int last_token_index;
     Rack* main_rack;
 } SlangInterpreter;

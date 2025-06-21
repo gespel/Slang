@@ -9,7 +9,7 @@ void increase(int* i) {
 }
 
 int consume(int* i, Token token, TokenType expected) {
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
 #endif
     if(token.tt == expected) {
@@ -40,16 +40,16 @@ void addFunction(SlangInterpreter* si, Function* input) {
 }
 
 void printAllFunctions(SlangInterpreter* si) {
-#ifdef DEBUG
-    LOGINFO("=======================================================", NULL);
-    LOGINFO("Functions:", NULL);
+#ifdef SLANG_DEBUG
+    LOGINFO("=======================================================");
+    LOGINFO("Functions:");
     for(size_t i = 0; i < si->functions_length; i++) {
         LOGINFO("functionname: %s", si->functions[i]->name);
         for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
             LOGDEBUG("%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
         }
     }
-    LOGINFO("=======================================================", NULL);
+    LOGINFO("=======================================================");
 #endif
 }
 
@@ -84,20 +84,24 @@ void dec(int* i) {
 }
 
 void printAllVariables(SlangInterpreter* si) {
-#ifdef DEBUG
-    LOGINFO("Variables:", NULL);
+#ifdef SLANG_DEBUG
+    LOGINFO("=======================================================");
+    LOGINFO("Variables:");
     for(size_t i = 0; i < si->vars_length; i++) {
         LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
     }
+    LOGINFO("=======================================================");
 #endif
 }
 
 void printAllOscillators(SlangInterpreter* si) {
-#ifdef DEBUG
-    LOGINFO("Oscillators:", NULL);
+#ifdef SLANG_DEBUG
+    LOGINFO("=======================================================");
+    LOGINFO("Oscillators:");
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
-        LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency, si->main_rack->sine_oscillators[i]->volume);
+        LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency[0], si->main_rack->sine_oscillators[i]->volume);
     }
+    LOGINFO("=======================================================");
 #endif
 }
 
@@ -128,7 +132,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
             return si->functions[i];
         }
     }
-#ifdef DEBUG
+#ifdef SLANG_DEBUG
     LOGDEBUG("Function %s was not found!", name);
 #endif
     return NULL;
@@ -136,7 +140,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 
 double interpret(SlangInterpreter* si) {
     printDebugMessage(INFO, "Interpreter started!");
-    printAllVariables(si);
+    //printAllVariables(si);
     double out = 0.0;
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
@@ -163,7 +167,7 @@ double interpret(SlangInterpreter* si) {
             }
             else {
                 double value = l3_expression(si, &i);
-                LOGINFO("%lf", value);
+                printf("%lf\n", value);
             }
             consume(&i, tokens[i], SEMICOLON);
         }
@@ -213,7 +217,7 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
             double out1 = l3_expression(si, &i);
-            #ifdef DEBUG
+            #ifdef SLANG_DEBUG
             LOGDEBUG("Returning now! Value: %lf", out1);
             #endif
             return out1;
@@ -337,24 +341,52 @@ double interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], BRACKETRIGHT);
             }
             else {
-                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %ld\n", si->openBrackets);
+                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d\n", si->openBrackets);
                 exit(-1);
             }
         }
         else if(getToken(si, i).tt == SINEOSC) {
             consume(&i, tokens[i], SINEOSC);
             consume(&i, tokens[i], PARANTHESISLEFT);
-            double freq = l3_expression(si, &i);
+            char* name = getToken(si, i).value;
+            consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], COMMA);
-            double volume = l3_expression(si, &i);
-            consume(&i, tokens[i], PARANTHESISRIGHT);
-            SineOscillator* new = malloc(sizeof(SineOscillator));
-            new->frequency = freq;
-            new->phase = 0.f;
-            new->volume = volume;
-            new->sampleRate = si->main_rack->sampleRate;
-            addSineOscillator(si->main_rack, new);
-            LOGINFO("Creating a SINESYNTH with %lf Hz and %lf volume", new->frequency, new->volume);
+
+            double frequency_multiplier = 1.f;
+            double* freqptr;
+            char* temp = getToken(si, i).value;
+            if(getSineOscillator(si->main_rack, temp) != NULL) {
+                SineOscillator* osc = getSineOscillator(si->main_rack, temp);
+                freqptr = osc->sample;
+                consume(&i, tokens[i], IDENTIFIER);
+                if(getToken(si, i).tt == MULTIPLY) {
+                    consume(&i, tokens[i], MULTIPLY);
+                    frequency_multiplier = l3_expression(si, &i);
+                }
+                consume(&i, tokens[i], PARANTHESISRIGHT);
+            }
+            else {
+                double* freq = malloc(sizeof(double));
+                freq[0] = l3_expression(si, &i);
+                freqptr = freq;
+                consume(&i, tokens[i], PARANTHESISRIGHT);
+            }
+
+            SineOscillator* newOsc = malloc(sizeof(SineOscillator));
+
+            newOsc->sample = malloc(sizeof(double));
+            newOsc->name = name;
+            newOsc->frequency = freqptr;
+            newOsc->frequencyMultiplier = frequency_multiplier;
+            newOsc->phase = 0.f;
+            newOsc->sampleRate = si->main_rack->sampleRate;
+
+            addSineOscillator(si->main_rack, newOsc);
+            //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
+            //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
+            //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
+            //}
+            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", newOsc->frequency[0], newOsc->name);
             consume(&i, tokens[i], SEMICOLON);
         }
         else {
@@ -380,7 +412,7 @@ double terminal(SlangInterpreter* si, int* i) {
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
                 if(f == NULL) {
-                    LOGERROR("Function not found!", NULL);
+                    LOGERROR("Function not found!");
                     exit(-1);
                 }
                 
@@ -393,7 +425,7 @@ double terminal(SlangInterpreter* si, int* i) {
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
                     
                     arguments[arg_counter] = terminal(si, i);
-                    #ifdef DEBUG
+                    #ifdef SLANG_DEBUG
                     LOGDEBUG("argument: %lf", arguments[arg_counter]);
                     #endif
                     arg_counter++;
@@ -465,7 +497,9 @@ double l3_expression(SlangInterpreter* si, int* i) {
         case MINUS:
             consume(i, si->tokens[*i], MINUS);
             right = l3_expression(si, i);
-            return left - right; 
+            return left - right;
+        default:
+            break;
     }
     return left;
 }
@@ -483,6 +517,8 @@ double l2_expression(SlangInterpreter* si, int* i) {
             consume(i, si->tokens[*i], DIVIDE);
             right = l3_expression(si, i);
             return left / right;
+        default:
+            break;
     }
     return left;
 }

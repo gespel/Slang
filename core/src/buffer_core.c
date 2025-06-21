@@ -1,7 +1,7 @@
 //
 // Created by Sten on 07.06.2025.
 //
-#include "buffer_core.h"
+#include "../include/buffer_core.h"
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int bufferSize) {
     SlangBufferCore* bufferCore = malloc(sizeof(SlangBufferCore));
@@ -14,9 +14,18 @@ double* renderBuffer(SlangBufferCore* sbc) {
     Rack* rack = sbc->interpreter->main_rack;
     double* out = malloc(sizeof(double) * rack->bufferSize);
     for (int sample = 0; sample < rack->bufferSize; sample++) {
+        double temp = 0;
         for (int ss = 0; ss < rack->numSineOscillators; ss++) {
-            out[sample] = getSample(rack->sine_oscillators[ss]);
+            temp += getSineSample(rack->sine_oscillators[ss]);
+
         }
+        if(rack->numSineOscillators != 0) {
+		    temp /= rack->numSineOscillators;
+        }
+        else {
+            temp = 0;
+        }
+        out[sample] = temp;
     }
     sbc->buffer = out;
     return out;
