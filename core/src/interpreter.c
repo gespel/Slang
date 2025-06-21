@@ -386,7 +386,6 @@ double interpret(SlangInterpreter* si) {
             //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
             //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
             //}
-            strcat(si->dbgmsgbuffer, "Creating SINESYNTH!");
             LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", newOsc->frequency[0], newOsc->name);
             consume(&i, tokens[i], SEMICOLON);
         }
