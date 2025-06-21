@@ -28,7 +28,6 @@ typedef struct SlangInterpreter {
     int openBrackets;
     int last_token_index;
     Rack* main_rack;
-    char* dbgmsgbuffer;
 } SlangInterpreter;
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);

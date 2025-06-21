@@ -116,7 +116,6 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack->sine_oscillators = malloc(sizeof(SineOscillator) * 128);
     out->main_rack->sampleRate = 48000;
     out->main_rack->bufferSize = 512;
-    out->dbgmsgbuffer = calloc(8192, sizeof(char));
     return out;
 }
 
