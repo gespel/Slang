@@ -543,6 +543,18 @@ double l1_expression(SlangInterpreter* si, int* i) {
     return left;
 }
 
+char* getInterpreterStatusString(SlangInterpreter* si) {
+    char* out = calloc(8192, sizeof(char));
+
+    for (int i = 0; i < si->numTokens; i++) {
+        char* tbuf = malloc(32 * sizeof(char));
+        snprintf(tbuf, 32, "%s -> %s\n", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
+        strcat(out, tbuf);
+    }
+
+    return out;
+}
+
 #ifdef __cplusplus
 }
 #endif

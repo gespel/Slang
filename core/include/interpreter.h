@@ -71,6 +71,8 @@ void printAllVariables(SlangInterpreter* si);
 
 void printAllOscillators(SlangInterpreter* si);
 
+char* getInterpreterStatusString(SlangInterpreter* si);
+
 #ifdef __cplusplus
 }
 #endif
