@@ -7,12 +7,14 @@
 typedef struct Rack {
     SineOscillator** sine_oscillators;
     int numSineOscillators;
-    int sampleRate;
-    int bufferSize;
+    int* sampleRate;
+    int* bufferSize;
 } Rack;
 
 void addSineOscillator(Rack* rack, SineOscillator* input);
 
 SineOscillator* getSineOscillator(Rack* rack, char* name);
+
+void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
 #endif

@@ -20,8 +20,6 @@ extern "C" {
 
 typedef struct SlangInterpreter {
     int functions_length;
-    int sampleRate;
-    int bufferSize;
     Function* functions[8192];
     int vars_length;
     Variable* variables[8192];

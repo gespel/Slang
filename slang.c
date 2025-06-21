@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
         printAllVariables(main_interpreter);
         printAllOscillators(main_interpreter);
 
-        SlangBufferCore* sbc = createBufferCore(main_interpreter, 512);
+        SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
         double* buf = renderBuffer(sbc);
         printAudioBuffer(buf, 512);
         printf("%s\n", getInterpreterStatusString(main_interpreter));

@@ -105,19 +105,15 @@ void printAllOscillators(SlangInterpreter* si) {
 #endif
 }
 
-SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens, int sampleRate, int bufferSize) {
+SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     SlangInterpreter* out = malloc(sizeof(SlangInterpreter));
     out->tokens = tokens;
     out->numTokens = numTokens;
     out->openBrackets = 0;
     out->last_token_index = 0;
-    out->sampleRate = sampleRate;
-    out->bufferSize = bufferSize;
     out->main_rack = malloc(sizeof(Rack));
     out->main_rack->numSineOscillators = 0;
     out->main_rack->sine_oscillators = malloc(sizeof(SineOscillator) * 128);
-    out->main_rack->sampleRate = sampleRate;
-    out->main_rack->bufferSize = bufferSize;
     return out;
 }
 
@@ -381,7 +377,7 @@ double interpret(SlangInterpreter* si) {
             newOsc->frequency = freqptr;
             newOsc->frequencyMultiplier = frequency_multiplier;
             newOsc->phase = 0.f;
-            newOsc->sampleRate = si->main_rack->sampleRate;
+            newOsc->sampleRate = 0;
 
             addSineOscillator(si->main_rack, newOsc);
             //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
