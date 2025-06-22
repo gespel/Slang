@@ -10,6 +10,7 @@
 #include "function.h"
 #include "variable.h"
 #include "rack.h"
+
 #ifndef SLANG_INTERPRETER_H
 #define SLANG_INTERPRETER_H
 #define SLANG_DEBUG
