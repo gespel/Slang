@@ -17,6 +17,7 @@ extern "C" {
 #include "core/include/rack.h"
 #include "core/include/variable.h"
 #include "modules/include/oscillator.h"
+#include "modules/include/binaryData.h"
 
 #ifdef __cplusplus
 }
