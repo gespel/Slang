@@ -10,3 +10,12 @@ double getSineSample(SineOscillator* oscillator) {
     oscillator->sample[0] = sin(oscillator->phase);
     return oscillator->sample[0];
 }
+
+double getWavetableSample(WavetableOscillator* oscillator) {
+    if (oscillator->index >= oscillator->wavetableLength) {
+        oscillator->index = 0;
+    }
+    double out = oscillator->waveTable[oscillator->index];
+    oscillator->index = oscillator->index + 1;
+    return out;
+}

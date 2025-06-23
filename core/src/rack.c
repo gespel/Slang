@@ -5,6 +5,12 @@ void addSineOscillator(Rack* rack, SineOscillator* input) {
     rack->numSineOscillators = rack->numSineOscillators + 1;
 }
 
+void addWavetableOscillator(Rack* rack, WavetableOscillator* input) {
+    rack->wave_oscillators[rack->numWaveOscillators] = input;
+    rack->numWaveOscillators = rack->numWaveOscillators + 1;
+}
+
+
 SineOscillator* getSineOscillator(Rack* rack, char* name) {
     for (int i = 0; i < rack->numSineOscillators; i++) {
         if (strcmp(rack->sine_oscillators[i]->name, name) == 0) {
@@ -18,5 +24,8 @@ SineOscillator* getSineOscillator(Rack* rack, char* name) {
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
     for (int i = 0; i < rack->numSineOscillators; i++) {
         rack->sine_oscillators[i]->sampleRate = sampleRate;
+    }
+    for (int i = 0; i < rack->numWaveOscillators; i++) {
+        rack->wave_oscillators[i]->sampleRate = sampleRate;
     }
 }

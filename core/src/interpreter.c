@@ -114,6 +114,8 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack = malloc(sizeof(Rack));
     out->main_rack->numSineOscillators = 0;
     out->main_rack->sine_oscillators = malloc(sizeof(SineOscillator) * 128);
+    out->main_rack->numWaveOscillators = 0;
+    out->main_rack->wave_oscillators = malloc(sizeof(WavetableOscillator) * 128);
     return out;
 }
 
@@ -370,7 +372,7 @@ double interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], PARANTHESISRIGHT);
             }
 
-            SineOscillator* newOsc = malloc(sizeof(SineOscillator));
+            /*SineOscillator* newOsc = malloc(sizeof(SineOscillator));
 
             newOsc->sample = malloc(sizeof(double));
             newOsc->name = name;
@@ -379,12 +381,23 @@ double interpret(SlangInterpreter* si) {
             newOsc->phase = 0.f;
             newOsc->sampleRate = 0;
 
-            addSineOscillator(si->main_rack, newOsc);
+            addSineOscillator(si->main_rack, newOsc);*/
+            WavetableOscillator* osc = malloc(sizeof(WavetableOscillator));
+
+            osc->sample = malloc(sizeof(double));
+            osc->name = name;
+            osc->sample = freqptr;
+            osc->frequencyMultiplier = frequency_multiplier;
+            osc->index = 0;
+            osc->sampleRate = 0;
+            osc->waveTable = sine_wave;
+            osc->wavetableLength = 4800;
+            addWavetableOscillator(si->main_rack, osc);
             //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
             //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
             //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
             //}
-            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", newOsc->frequency[0], newOsc->name);
+            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
             consume(&i, tokens[i], SEMICOLON);
         }
         else {
