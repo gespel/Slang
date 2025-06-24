@@ -16,6 +16,8 @@ double getWavetableSample(WavetableOscillator* oscillator) {
         oscillator->index = 0;
     }
     double out = oscillator->waveTable[oscillator->index];
-    oscillator->index = oscillator->index + 1;
+    float temp = (float)oscillator->frequency[0] / 10;
+    int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
+    oscillator->index += n;
     return out;
 }

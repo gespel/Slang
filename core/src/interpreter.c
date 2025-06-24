@@ -389,6 +389,7 @@ double interpret(SlangInterpreter* si) {
             osc->sample = freqptr;
             osc->frequencyMultiplier = frequency_multiplier;
             osc->index = 0;
+            osc->frequency = freqptr;
             osc->sampleRate = 0;
             osc->waveTable = sine_wave;
             osc->wavetableLength = 4800;
