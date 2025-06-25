@@ -371,7 +371,7 @@ double interpret(SlangInterpreter* si) {
                 freqptr = freq;
                 consume(&i, tokens[i], PARANTHESISRIGHT);
             }
-
+            //TODO: Move to truesine!
             /*SineOscillator* newOsc = malloc(sizeof(SineOscillator));
 
             newOsc->sample = malloc(sizeof(double));
@@ -394,10 +394,7 @@ double interpret(SlangInterpreter* si) {
             osc->waveTable = sine_wave;
             osc->wavetableLength = 4800;
             addWavetableOscillator(si->main_rack, osc);
-            //printf("num of oscs: %d\n", si->main_rack->numSineOscillators);
-            //for(int x = 0; x < si->main_rack->numSineOscillators; x++) {
-            //    printf("Name: %s\n", si->main_rack->sine_oscillators[x]->name);
-            //}
+
             LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
             consume(&i, tokens[i], SEMICOLON);
         }

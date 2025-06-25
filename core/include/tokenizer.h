@@ -34,6 +34,7 @@ typedef enum TokenType {
     GREATER,
     SINEOSC,
     SAWOSC,
+    WAVEOSC,
 } TokenType;
 
 typedef struct t {

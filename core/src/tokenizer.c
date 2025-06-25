@@ -162,6 +162,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "sawtoothosc") == 0) {
                 out[x].tt = SAWOSC;
             }
+            else if (strcmp(value, "wavetableosc") == 0) {
+                out[x].tt = WAVEOSC;
+            }
         }
     } 
 }
@@ -225,6 +228,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case SINEOSC:
         out = "SineOscilator";
+        break;
+    case WAVEOSC:
+        out = "WaveOscillator";
         break;
     default:
         out = "Unknown";
