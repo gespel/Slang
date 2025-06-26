@@ -33,6 +33,7 @@ typedef enum TokenType {
     SMALLER,
     GREATER,
     SINEOSC,
+	TRUESINEOSC,
     SAWOSC,
     WAVEOSC,
 } TokenType;
