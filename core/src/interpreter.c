@@ -562,6 +562,14 @@ char* getInterpreterStatusString(SlangInterpreter* si) {
     return out;
 }
 
+int isOscillator(Token* token) {
+    if (token->tt == SEMICOLON || token->tt == SAWOSC || token->tt == TRUESINEOSC || token->tt == WAVEOSC || token->tt == SINEOSC) {
+        return 1;
+    }
+    return 0;
+}
+
+
 #ifdef __cplusplus
 }
 #endif
