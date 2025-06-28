@@ -150,28 +150,7 @@ double interpret(SlangInterpreter* si) {
     int i;
     for(i = si->last_token_index; i < numTokens; i++) {
         if(tokens[i].tt == IDENTIFIER || tokens[i].tt == NUMBER) {
-            if(getToken(si, i+1).tt == ASSIGN) {
-                char* name = tokens[i].value;
-                consume(&i, tokens[i], IDENTIFIER);
-                consume(&i, tokens[i], ASSIGN);
-                double value = l3_expression(si, &i);
-
-                if(getVariableByName(si, name) != NULL) {
-                    getVariableByName(si, name)->value = value;
-                }
-                else {
-                    Variable* temp_var = malloc(sizeof(Variable));
-                    temp_var->name = name;
-                    temp_var->value = value;
-
-                    addVariable(si, temp_var);
-                }
-            }
-            else {
-                double value = l3_expression(si, &i);
-                printf("%lf\n", value);
-            }
-            consume(&i, tokens[i], SEMICOLON);
+            parseExpression(si, &i);
         }
         else if(tokens[i].tt == FUNCTION) {
             parseFunction(si, &i);

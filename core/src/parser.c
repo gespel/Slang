@@ -102,3 +102,28 @@ void parseFunction(SlangInterpreter* si, int* i) {
     addFunction(si, createFunction(fnName, function_tokens, numFunctionTokens, var_names, vars_length));
     consume(i, getToken(si, *i), BRACKETRIGHT);
 }
+
+void parseExpression(SlangInterpreter* si, int* i) {
+    if(getToken(si, (*i)+1).tt == ASSIGN) {
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), ASSIGN);
+        double value = l3_expression(si, i);
+
+        if(getVariableByName(si, name) != NULL) {
+            getVariableByName(si, name)->value = value;
+        }
+        else {
+            Variable* temp_var = malloc(sizeof(Variable));
+            temp_var->name = name;
+            temp_var->value = value;
+
+            addVariable(si, temp_var);
+        }
+    }
+    else {
+        double value = l3_expression(si, i);
+        printf("%lf\n", value);
+    }
+    consume(i, getToken(si, *i), SEMICOLON);
+}
