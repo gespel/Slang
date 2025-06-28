@@ -36,7 +36,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
 void addTokensToInterpreter(SlangInterpreter* si, Token* tokens, size_t numTokens);
 
-double interpret(SlangInterpreter* s);
+double interpret(SlangInterpreter* si);
 
 double terminal(SlangInterpreter* si, int* i);
 
@@ -74,7 +74,7 @@ void printAllOscillators(SlangInterpreter* si);
 
 char* getInterpreterStatusString(SlangInterpreter* si);
 
-int isOscillator(Token* token);
+int isOscillator(Token token);
 
 #ifdef __cplusplus
 }

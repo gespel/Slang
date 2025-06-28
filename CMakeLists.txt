@@ -32,6 +32,7 @@ add_library(slang STATIC
         core/src/tools.c
         core/src/rack.c
         core/src/buffer_core.c
+        core/src/parser.c
 )
 
 

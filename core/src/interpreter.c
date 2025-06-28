@@ -1,5 +1,7 @@
 #include "../include/interpreter.h"
 
+#include "parser.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -345,58 +347,8 @@ double interpret(SlangInterpreter* si) {
                 exit(-1);
             }
         }
-        else if(getToken(si, i).tt == SINEOSC) {
-            consume(&i, tokens[i], SINEOSC);
-            consume(&i, tokens[i], PARANTHESISLEFT);
-            char* name = getToken(si, i).value;
-            consume(&i, tokens[i], IDENTIFIER);
-            consume(&i, tokens[i], COMMA);
-
-            double frequency_multiplier = 1.f;
-            double* freqptr;
-            char* temp = getToken(si, i).value;
-            if(getSineOscillator(si->main_rack, temp) != NULL) {
-                SineOscillator* osc = getSineOscillator(si->main_rack, temp);
-                freqptr = osc->sample;
-                consume(&i, tokens[i], IDENTIFIER);
-                if(getToken(si, i).tt == MULTIPLY) {
-                    consume(&i, tokens[i], MULTIPLY);
-                    frequency_multiplier = l3_expression(si, &i);
-                }
-                consume(&i, tokens[i], PARANTHESISRIGHT);
-            }
-            else {
-                double* freq = malloc(sizeof(double));
-                freq[0] = l3_expression(si, &i);
-                freqptr = freq;
-                consume(&i, tokens[i], PARANTHESISRIGHT);
-            }
-            //TODO: Move to truesine!
-            /*SineOscillator* newOsc = malloc(sizeof(SineOscillator));
-
-            newOsc->sample = malloc(sizeof(double));
-            newOsc->name = name;
-            newOsc->frequency = freqptr;
-            newOsc->frequencyMultiplier = frequency_multiplier;
-            newOsc->phase = 0.f;
-            newOsc->sampleRate = 0;
-
-            addSineOscillator(si->main_rack, newOsc);*/
-            WavetableOscillator* osc = malloc(sizeof(WavetableOscillator));
-
-            osc->sample = malloc(sizeof(double));
-            osc->name = name;
-            osc->sample = freqptr;
-            osc->frequencyMultiplier = frequency_multiplier;
-            osc->index = 0;
-            osc->frequency = freqptr;
-            osc->sampleRate = 0;
-            osc->waveTable = sine_wave;
-            osc->wavetableLength = 4800;
-            addWavetableOscillator(si->main_rack, osc);
-
-            LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
-            consume(&i, tokens[i], SEMICOLON);
+        else if (isOscillator(getToken(si, i))) {
+            parseOscillators(si, &i);
         }
         else {
             LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
@@ -562,8 +514,8 @@ char* getInterpreterStatusString(SlangInterpreter* si) {
     return out;
 }
 
-int isOscillator(Token* token) {
-    if (token->tt == SEMICOLON || token->tt == SAWOSC || token->tt == TRUESINEOSC || token->tt == WAVEOSC || token->tt == SINEOSC) {
+int isOscillator(Token token) {
+    if (token.tt == SEMICOLON || token.tt == SAWOSC || token.tt == TRUESINEOSC || token.tt == WAVEOSC || token.tt == SINEOSC) {
         return 1;
     }
     return 0;
