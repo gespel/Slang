@@ -9,4 +9,6 @@
 
 void parseOscillators(SlangInterpreter* si, int* i);
 
+void parseFunction(SlangInterpreter* si, int* i);
+
 #endif //PARSER_H

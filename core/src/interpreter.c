@@ -174,47 +174,7 @@ double interpret(SlangInterpreter* si) {
             consume(&i, tokens[i], SEMICOLON);
         }
         else if(tokens[i].tt == FUNCTION) {
-            consume(&i, tokens[i], FUNCTION);
-            printDebugMessage(INFO, "Function definition found!");
-            
-            char* fnName = NULL;
-
-            if(peek(tokens[i], IDENTIFIER)) {
-                printDebugMessage(DBG, "Function name:");
-                printDebugMessage(DBG, tokens[i].value);
-                fnName = tokens[i].value;
-            }           
-            consume(&i, tokens[i], IDENTIFIER);
-            consume(&i, tokens[i], PARANTHESISLEFT);
-
-            char** var_names = malloc(sizeof(char)*1024);
-            int vars_length = 0;
-
-            while(getToken(si, i).tt != PARANTHESISRIGHT) {
-                var_names[vars_length] = getToken(si, i).value;
-                printDebugMessage(INFO, var_names[vars_length]);
-                consume(&i, tokens[i], IDENTIFIER);
-                if(getToken(si, i).tt != PARANTHESISRIGHT) {
-                    consume(&i, tokens[i], COMMA);
-                }
-                vars_length++;
-            }
-            consume(&i, tokens[i], PARANTHESISRIGHT);
-            consume(&i, tokens[i], BRACKETLEFT);
-
-            Token* function_tokens = malloc(sizeof(Token) * 8192);
-            int numFunctionTokens = 0;
-
-            while(tokens[i].tt != BRACKETRIGHT) {
-                function_tokens[numFunctionTokens] = tokens[i];
-                inc(&i);
-                numFunctionTokens++;
-            }
-
-            LOGINFO("Creating function: %s with %d argmuents", fnName, vars_length);
-
-            addFunction(si, createFunction(fnName, function_tokens, numFunctionTokens, var_names, vars_length));
-            consume(&i, tokens[i], BRACKETRIGHT);
+            parseFunction(si, &i);
         }
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);

@@ -58,3 +58,47 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), SEMICOLON);
     }
 }
+
+void parseFunction(SlangInterpreter* si, int* i) {
+    consume(i, getToken(si, *i), FUNCTION);
+    printDebugMessage(INFO, "Function definition found!");
+
+    char* fnName = NULL;
+
+    if(peek(getToken(si, *i), IDENTIFIER)) {
+        printDebugMessage(DBG, "Function name:");
+        printDebugMessage(DBG, getToken(si, *i).value);
+        fnName = getToken(si, *i).value;
+    }
+    consume(i, getToken(si, *i), IDENTIFIER);
+    consume(i, getToken(si, *i), PARANTHESISLEFT);
+
+    char** var_names = malloc(sizeof(char)*1024);
+    int vars_length = 0;
+
+    while(getToken(si, *i).tt != PARANTHESISRIGHT) {
+        var_names[vars_length] = getToken(si, *i).value;
+        printDebugMessage(INFO, var_names[vars_length]);
+        consume(i, getToken(si, *i), IDENTIFIER);
+        if(getToken(si, *i).tt != PARANTHESISRIGHT) {
+            consume(i, getToken(si, *i), COMMA);
+        }
+        vars_length++;
+    }
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    consume(i, getToken(si, *i), BRACKETLEFT);
+
+    Token* function_tokens = malloc(sizeof(Token) * 8192);
+    int numFunctionTokens = 0;
+
+    while(getToken(si, *i).tt != BRACKETRIGHT) {
+        function_tokens[numFunctionTokens] = getToken(si, *i);
+        inc(i);
+        numFunctionTokens++;
+    }
+
+    LOGINFO("Creating function: %s with %d argmuents", fnName, vars_length);
+
+    addFunction(si, createFunction(fnName, function_tokens, numFunctionTokens, var_names, vars_length));
+    consume(i, getToken(si, *i), BRACKETRIGHT);
+}
