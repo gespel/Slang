@@ -8,5 +8,6 @@
 extern float sine_wave[];
 extern float random_wave_one[];
 extern float random_wave_two[];
+extern float random_wave_three[];
 
 #endif //BINARYDATA_H
