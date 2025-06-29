@@ -6,5 +6,6 @@
 #define BINARYDATA_H
 
 extern float sine_wave[];
+extern float random_wave_one[];
 
 #endif //BINARYDATA_H
