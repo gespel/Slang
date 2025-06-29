@@ -50,7 +50,8 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         osc->index = 0;
         osc->frequency = freqptr;
         osc->sampleRate = 0;
-        osc->waveTable = sine_wave;
+        //osc->waveTable = sine_wave;
+        osc->waveTable = random_wave_one;
         osc->wavetableLength = 4800;
         addWavetableOscillator(si->main_rack, osc);
 
