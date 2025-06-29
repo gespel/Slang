@@ -1,7 +1,5 @@
 #include "../include/interpreter.h"
 
-#include "parser.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
