@@ -168,6 +168,18 @@ void tokenizeStrings(Token* out, int numTokens) {
 			else if(strcmp(value, "truesineosc") == 0) {
 				out[x].tt = TRUESINEOSC;
 			}
+            else if(strcmp(value, "inputa") == 0) {
+                out[x].tt = INPUTA;
+            }
+            else if(strcmp(value, "inputb") == 0) {
+                out[x].tt = INPUTB;
+            }
+            else if(strcmp(value, "inputc") == 0) {
+                out[x].tt = INPUTC;
+            }
+            else if(strcmp(value, "inputd") == 0) {
+                out[x].tt = INPUTD;
+            }
         }
     } 
 }
@@ -238,6 +250,18 @@ char* tokenTypeToString(TokenType input) {
 	case TRUESINEOSC:
 		out = "TruesineOscilator";
 		break;
+    case INPUTA:
+        out = "InputA";
+        break;
+    case INPUTB:
+        out = "InputB";
+        break;
+    case INPUTC:
+        out = "InputC";
+        break;
+    case INPUTD:
+        out = "InputD";
+        break;
     default:
         out = "Unknown";
         break;

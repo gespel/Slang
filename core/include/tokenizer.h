@@ -36,6 +36,10 @@ typedef enum TokenType {
 	TRUESINEOSC,
     SAWOSC,
     WAVEOSC,
+    INPUTA,
+    INPUTB,
+    INPUTC,
+    INPUTD,
 } TokenType;
 
 typedef struct t {

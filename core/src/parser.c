@@ -3,6 +3,8 @@
 //
 #include "../include/parser.h"
 
+#include "interpreter.h"
+
 void parseOscillators(SlangInterpreter* si, int* i) {
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
@@ -23,6 +25,25 @@ void parseOscillators(SlangInterpreter* si, int* i) {
                 frequency_multiplier = l3_expression(si, i);
             }
             consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        }
+        else if (getInputIndex(getToken(si, *i)) != -1) {
+            int index = getInputIndex(getToken(si, *i));
+            switch(index) {
+                case 0:
+                    consume(i, getToken(si, *i), INPUTA);
+                    break;
+                case 1:
+                    consume(i, getToken(si, *i), INPUTB);
+                    break;
+                case 2:
+                    consume(i, getToken(si, *i), INPUTC);
+                    break;
+                case 3:
+                    consume(i, getToken(si, *i), INPUTD);
+                    break;
+                default:
+                    break;
+            }
         }
         else {
             double* freq = malloc(sizeof(double));

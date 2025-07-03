@@ -23,6 +23,10 @@ int consume(int* i, Token token, TokenType expected) {
     }
 }
 
+void linkInput(SlangInterpreter* si, int nr, double *value) {
+    si->inputs[nr] = value;
+}
+
 int peek(Token token, TokenType expected) {
     if(token.tt == expected) {
         return 1;
@@ -456,6 +460,22 @@ int isOscillator(Token token) {
         return 1;
     }
     return 0;
+}
+
+int getInputIndex(Token token) {
+    if (token.tt == INPUTA) {
+        return 0;
+    }
+    if (token.tt == INPUTB) {
+        return 1;
+    }
+    if (token.tt == INPUTC) {
+        return 2;
+    }
+    if (token.tt == INPUTD) {
+        return 3;
+    }
+    return -1;
 }
 
 
