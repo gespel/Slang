@@ -31,19 +31,28 @@ void parseOscillators(SlangInterpreter* si, int* i) {
             switch(index) {
                 case 0:
                     consume(i, getToken(si, *i), INPUTA);
+                    freqptr = si->inputs[0];
                     break;
                 case 1:
                     consume(i, getToken(si, *i), INPUTB);
+                    freqptr = si->inputs[1];
                     break;
                 case 2:
                     consume(i, getToken(si, *i), INPUTC);
+                    freqptr = si->inputs[2];
                     break;
                 case 3:
                     consume(i, getToken(si, *i), INPUTD);
+                    freqptr = si->inputs[3];
                     break;
                 default:
                     break;
             }
+            if(getToken(si, *i).tt == MULTIPLY) {
+                consume(i, getToken(si, *i), MULTIPLY);
+                frequency_multiplier = l3_expression(si, i);
+            }
+            consume(i, getToken(si, *i), PARANTHESISRIGHT);
         }
         else {
             double* freq = malloc(sizeof(double));
