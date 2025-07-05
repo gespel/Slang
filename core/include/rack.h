@@ -18,6 +18,8 @@ void addSineOscillator(Rack* rack, SineOscillator* input);
 
 SineOscillator* getSineOscillator(Rack* rack, char* name);
 
+void *getOscillator(Rack* rack, char* name);
+
 void addWavetableOscillator(Rack* rack, WavetableOscillator* input);
 
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);

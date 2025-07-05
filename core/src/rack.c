@@ -21,6 +21,20 @@ SineOscillator* getSineOscillator(Rack* rack, char* name) {
     return NULL;
 }
 
+void *getOscillator(Rack* rack, char* name) {
+    for (int i = 0; i < rack->numWaveOscillators; i++) {
+        if (strcmp(rack->wave_oscillators[i]->name, name) == 0) {
+            return rack->wave_oscillators[i];
+        }
+    }
+    for (int i = 0; i < rack->numSineOscillators; i++) {
+        if (strcmp(rack->sine_oscillators[i]->name, name) == 0) {
+            return rack->sine_oscillators[i];
+        }
+    }
+    return NULL;
+}
+
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
     for (int i = 0; i < rack->numSineOscillators; i++) {
         rack->sine_oscillators[i]->sampleRate = sampleRate;

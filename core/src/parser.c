@@ -5,7 +5,18 @@
 
 #include "interpreter.h"
 
+void parseOscillatorArguments(SlangInterpreter* si, int* i) {
+
+}
+
 void parseOscillators(SlangInterpreter* si, int* i) {
+    if (getToken(si, *i).tt == WAVEOSC) {
+        consume(i, getToken(si, *i), WAVEOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
+    }
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
@@ -17,7 +28,11 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         double* freqptr;
         char* temp = getToken(si, *i).value;
         if(getSineOscillator(si->main_rack, temp) != NULL) {
-            SineOscillator* osc = getSineOscillator(si->main_rack, temp);
+            SineOscillator* osc = getOscillator(si->main_rack, temp);
+            if(osc == NULL) {
+                LOGERROR("Synth %s is unkown!", temp);
+                exit(1);
+            }
             freqptr = osc->sample;
             consume(i, getToken(si, *i), IDENTIFIER);
             if(getToken(si, *i).tt == MULTIPLY) {
