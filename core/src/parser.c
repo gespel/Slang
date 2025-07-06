@@ -5,17 +5,64 @@
 
 #include "interpreter.h"
 
-void parseOscillatorArguments(SlangInterpreter* si, int* i) {
-
+void parseOscillatorArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier) {
+    char* temp = getToken(si, *i).value;
+    if(getOscillator(si->main_rack, temp) != NULL) {
+        SineOscillator* osc = getOscillator(si->main_rack, temp);
+        freqptr = osc->sample;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        if(getToken(si, *i).tt == MULTIPLY) {
+            consume(i, getToken(si, *i), MULTIPLY);
+            frequency_multiplier[0] = l3_expression(si, i);
+        }
+        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    }
+    else if (getInputIndex(getToken(si, *i)) != -1) {
+        int index = getInputIndex(getToken(si, *i));
+        switch(index) {
+            case 0:
+                consume(i, getToken(si, *i), INPUTA);
+                freqptr = si->inputs[0];
+                break;
+            case 1:
+                consume(i, getToken(si, *i), INPUTB);
+                freqptr = si->inputs[1];
+                break;
+            case 2:
+                consume(i, getToken(si, *i), INPUTC);
+                freqptr = si->inputs[2];
+                break;
+            case 3:
+                consume(i, getToken(si, *i), INPUTD);
+                freqptr = si->inputs[3];
+                break;
+            default:
+                break;
+        }
+        if(getToken(si, *i).tt == MULTIPLY) {
+            consume(i, getToken(si, *i), MULTIPLY);
+            frequency_multiplier[0] = l3_expression(si, i);
+        }
+        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    }
+    else {
+        freqptr[0] = l3_expression(si, i);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    }
 }
 
 void parseOscillators(SlangInterpreter* si, int* i) {
+    double* freqptr = malloc(sizeof(double));
+    double frequency_multiplier = 1.0;
+
     if (getToken(si, *i).tt == WAVEOSC) {
         consume(i, getToken(si, *i), WAVEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
+
+        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier);
     }
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
@@ -24,81 +71,43 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        double frequency_multiplier = 1.f;
-        double* freqptr;
-        char* temp = getToken(si, *i).value;
-        if(getSineOscillator(si->main_rack, temp) != NULL) {
-            SineOscillator* osc = getOscillator(si->main_rack, temp);
-            if(osc == NULL) {
-                LOGERROR("Synth %s is unkown!", temp);
-                exit(1);
-            }
-            freqptr = osc->sample;
-            consume(i, getToken(si, *i), IDENTIFIER);
-            if(getToken(si, *i).tt == MULTIPLY) {
-                consume(i, getToken(si, *i), MULTIPLY);
-                frequency_multiplier = l3_expression(si, i);
-            }
-            consume(i, getToken(si, *i), PARANTHESISRIGHT);
-        }
-        else if (getInputIndex(getToken(si, *i)) != -1) {
-            int index = getInputIndex(getToken(si, *i));
-            switch(index) {
-                case 0:
-                    consume(i, getToken(si, *i), INPUTA);
-                    freqptr = si->inputs[0];
-                    break;
-                case 1:
-                    consume(i, getToken(si, *i), INPUTB);
-                    freqptr = si->inputs[1];
-                    break;
-                case 2:
-                    consume(i, getToken(si, *i), INPUTC);
-                    freqptr = si->inputs[2];
-                    break;
-                case 3:
-                    consume(i, getToken(si, *i), INPUTD);
-                    freqptr = si->inputs[3];
-                    break;
-                default:
-                    break;
-            }
-            if(getToken(si, *i).tt == MULTIPLY) {
-                consume(i, getToken(si, *i), MULTIPLY);
-                frequency_multiplier = l3_expression(si, i);
-            }
-            consume(i, getToken(si, *i), PARANTHESISRIGHT);
-        }
-        else {
-            double* freq = malloc(sizeof(double));
-            freq[0] = l3_expression(si, i);
-            freqptr = freq;
-            consume(i, getToken(si, *i), PARANTHESISRIGHT);
-        }
-        //TODO: Move to truesine!
-        /*SineOscillator* newOsc = malloc(sizeof(SineOscillator));
+        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier);
 
-        newOsc->sample = malloc(sizeof(double));
-        newOsc->name = name;
-        newOsc->frequency = freqptr;
-        newOsc->frequencyMultiplier = frequency_multiplier;
-        newOsc->phase = 0.f;
-        newOsc->sampleRate = 0;
-
-        addSineOscillator(si->main_rack, newOsc);*/
         WavetableOscillator* osc = malloc(sizeof(WavetableOscillator));
 
         osc->sample = malloc(sizeof(double));
         osc->name = name;
-        osc->sample = freqptr;
+        osc->sample[0] = 0;
         osc->frequencyMultiplier = frequency_multiplier;
         osc->index = 0;
         osc->frequency = freqptr;
         osc->sampleRate = 0;
-        //osc->waveTable = sine_wave;
-        osc->waveTable = random_wave_three;
+        osc->waveTable = sine_wave;
         osc->wavetableLength = 4800;
         addWavetableOscillator(si->main_rack, osc);
+
+        LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
+        consume(i, getToken(si, *i), SEMICOLON);
+    }
+    if (getToken(si, *i).tt == TRUESINEOSC) {
+        consume(i, getToken(si, *i), TRUESINEOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
+
+        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier);
+
+        SineOscillator* osc = malloc(sizeof(SineOscillator));
+
+        osc->sample = malloc(sizeof(double));
+        osc->name = name;
+        osc->frequency = freqptr;
+        osc->frequencyMultiplier = frequency_multiplier;
+        osc->phase = 0.f;
+        osc->sampleRate = 0;
+
+        addSineOscillator(si->main_rack, osc);
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
         consume(i, getToken(si, *i), SEMICOLON);
