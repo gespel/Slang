@@ -8,7 +8,12 @@
 double getSineSample(SineOscillator* oscillator) {
     oscillator->phase += (oscillator->frequency[0] * oscillator->frequencyMultiplier / oscillator->sampleRate) * 2.0 * M_PI;
     oscillator->sample[0] = sin(oscillator->phase);
-    return oscillator->sample[0];
+    if (oscillator->isOutput == 1) {
+        return oscillator->sample[0];
+    }
+    else {
+        return 0.0;
+    }
 }
 
 double getWavetableSample(WavetableOscillator* oscillator) {
@@ -19,5 +24,11 @@ double getWavetableSample(WavetableOscillator* oscillator) {
     float temp = (float)oscillator->frequency[0] / 10;
     int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
     oscillator->index += n;
-    return out;
+    oscillator->sample[0] = out;
+    if (oscillator->isOutput == 1) {
+        return oscillator->sample[0];
+    }
+    else {
+        return 0.0;
+    }
 }

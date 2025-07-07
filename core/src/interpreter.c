@@ -105,6 +105,9 @@ void printAllOscillators(SlangInterpreter* si) {
     for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
         LOGINFO("SineOscillator: %lf Hz and %lf volume", si->main_rack->sine_oscillators[i]->frequency[0], si->main_rack->sine_oscillators[i]->volume);
     }
+    for(int i = 0; i < si->main_rack->numWaveOscillators; i++) {
+        LOGINFO("WavetableOscillator: %lf Hz and %lf volume", si->main_rack->wave_oscillators[i]->frequency[0], si->main_rack->wave_oscillators[i]->volume);
+    }
     LOGINFO("=======================================================");
 #endif
 }

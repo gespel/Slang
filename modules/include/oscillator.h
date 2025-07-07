@@ -14,6 +14,7 @@ typedef struct SineOscillator {
     double phase;
     int sampleRate;
     char* name;
+    int isOutput;
 } SineOscillator;
 
 typedef struct WavetableOscillator {
@@ -26,6 +27,7 @@ typedef struct WavetableOscillator {
     int sampleRate;
     char* name;
     float* waveTable;
+    int isOutput;
 } WavetableOscillator;
 
 double getSineSample(SineOscillator* oscillator);
