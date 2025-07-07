@@ -38,7 +38,6 @@ int main(int argc, char **argv) {
         SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
         double* buf = renderBuffer(sbc);
         printAudioBuffer(buf, 512);
-        printf("%s\n", getInterpreterStatusString(main_interpreter));
         free(main_interpreter);
     }
     else if(argc == 1) {
