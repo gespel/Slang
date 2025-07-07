@@ -53,9 +53,9 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqpt
 }
 
 void parseOscillators(SlangInterpreter* si, int* i) {
-    double* freqptr = malloc(sizeof(double));
+    double* freqptr = malloc(sizeof(double*));
     double frequency_multiplier = 1.0;
-    int* is_output = malloc(sizeof(int));
+    int* is_output = malloc(sizeof(int*));
     is_output[0] = 1;
 
     if (getToken(si, *i).tt == WAVEOSC) {
