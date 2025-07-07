@@ -5,7 +5,7 @@
 
 #include "interpreter.h"
 
-void parseOscillatorArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output) {
+void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output) {
     char* temp = getToken(si, *i).value;
     if(getOscillator(si->main_rack, temp) != NULL) {
         SineOscillator* osc = getOscillator(si->main_rack, temp);
@@ -65,7 +65,7 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
     }
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
@@ -74,7 +74,7 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
         WavetableOscillator* osc = malloc(sizeof(WavetableOscillator));
 
@@ -100,7 +100,7 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        parseOscillatorArguments(si, i, freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
         SineOscillator* osc = malloc(sizeof(SineOscillator));
 

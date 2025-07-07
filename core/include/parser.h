@@ -13,6 +13,6 @@ void parseFunction(SlangInterpreter* si, int* i);
 
 void parseExpression(SlangInterpreter* si, int* i);
 
-void parseOscillatorArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output);
+void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output);
 
 #endif //PARSER_H
