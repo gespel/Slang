@@ -123,6 +123,8 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack->sine_oscillators = malloc(sizeof(SineOscillator) * 128);
     out->main_rack->numWaveOscillators = 0;
     out->main_rack->wave_oscillators = malloc(sizeof(WavetableOscillator) * 128);
+	out->main_rack->sawtooth_oscillators = malloc(sizeof(SawtoothOscillator) * 128);
+	out->main_rack->numSawtoothOscillators = 0;
     return out;
 }
 

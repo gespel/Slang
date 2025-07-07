@@ -30,8 +30,21 @@ typedef struct WavetableOscillator {
     int isOutput;
 } WavetableOscillator;
 
+typedef struct SawtoothOscillator {
+    double* frequency;
+    double* sample;
+    double frequencyMultiplier;
+    double volume;
+    double phase;
+    int sampleRate;
+    char* name;
+    int isOutput;
+} SawtoothOscillator;
+
 double getSineSample(SineOscillator* oscillator);
 
 double getWavetableSample(WavetableOscillator* oscillator);
+
+double getSawtoothSample(SawtoothOscillator* oscillator);
 
 #endif

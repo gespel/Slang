@@ -67,6 +67,32 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
     }
+
+	if (getToken(si, *i).tt == SAWOSC) {
+		consume(i, getToken(si, *i), SAWOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
+
+        parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
+
+        SawtoothOscillator* osc = malloc(sizeof(SawtoothOscillator));
+
+        osc->isOutput = is_output[0];
+        osc->sample = malloc(sizeof(double));
+        osc->name = name;
+        osc->frequency = freqptr;
+        osc->frequencyMultiplier = frequency_multiplier;
+        osc->phase = 0.f;
+        osc->sampleRate = 0;
+
+        addSawtoothOscillator(si->main_rack, osc);
+
+        LOGINFO("Creating a SAWTOOTHOSC with %lf Hz and name %s", osc->frequency[0], osc->name);
+        consume(i, getToken(si, *i), SEMICOLON);
+	}
+
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);

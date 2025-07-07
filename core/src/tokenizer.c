@@ -239,16 +239,16 @@ char* tokenTypeToString(TokenType input) {
         out = "While";
         break;
     case SAWOSC:
-        out = "SawtoothOscilator";
+        out = "SawtoothOscillator";
         break;
     case SINEOSC:
-        out = "SineOscilator";
+        out = "SineOscillator";
         break;
     case WAVEOSC:
         out = "WaveOscillator";
         break;
 	case TRUESINEOSC:
-		out = "TruesineOscilator";
+		out = "TruesineOscillator";
 		break;
     case INPUTA:
         out = "InputA";

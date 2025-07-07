@@ -38,6 +38,13 @@ double* renderBuffer(SlangBufferCore* sbc) {
         if(rack->numWaveOscillators != 0) {
             temp /= rack->numWaveOscillators;
         }
+
+		for (int sts = 0; sts < rack->numSawtoothOscillators; sts++) {
+			temp += getSawtoothSample(rack->sawtooth_oscillators[sts]);
+		}
+		if(rack->numSawtoothOscillators != 0) {
+			temp /= rack->numSawtoothOscillators;
+		}
         //else {
         //    temp = 0;
         //}
