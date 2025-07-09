@@ -50,7 +50,7 @@ typedef struct SquareOscillator {
     int sampleRate;
     char* name;
     int isOutput;
-} SawtoothOscillator;
+} SqazreOscillator;
 
 double getSineSample(SineOscillator* oscillator);
 
