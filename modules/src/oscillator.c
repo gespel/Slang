@@ -40,3 +40,7 @@ double getSawtoothSample(SawtoothOscillator* oscillator) {
 	oscillator->sample[0] = oscillator->sample[0] + (oscillator->frequency[0] / oscillator->sampleRate);
 	return oscillator->sample[0];
 }
+
+double getSquareSample(SquareOscillator* oscillator) {
+
+}
