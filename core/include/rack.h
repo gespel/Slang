@@ -1,6 +1,7 @@
 #ifndef SLANG_RACK_H
 #define SLANG_RACK_H
 #include "../../modules/include/oscillator.h"
+#include "../../modules/include/wavetable.h"
 #include "../../modules/include/binaryData.h"
 #include <stdlib.h>
 #include <stdio.h>

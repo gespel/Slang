@@ -64,6 +64,9 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
+        char* waveName = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
     }
