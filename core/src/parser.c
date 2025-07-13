@@ -69,6 +69,10 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), COMMA);
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
+
+        createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
+
+        consume(i, getToken(si, *i), SEMICOLON);
     }
 
 	if (getToken(si, *i).tt == SAWOSC) {

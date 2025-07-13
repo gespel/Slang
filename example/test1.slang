@@ -1,4 +1,4 @@
-sawtoothosc(asd, 110);
+wavetableosc(asd, strangeone, 110);
 fn test(asd) {
     y = asd + 1;
     return y;

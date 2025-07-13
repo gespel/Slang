@@ -4,7 +4,11 @@
 
 #ifndef WAVETABLE_H
 #define WAVETABLE_H
+#define M_PI 3.14159265358979323846
 #include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include "binaryData.h"
 
 
 typedef struct WavetableOscillator {

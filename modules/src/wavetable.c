@@ -3,8 +3,6 @@
 //
 #include "wavetable.h"
 
-#include <stdlib.h>
-
 WavetableOscillator* createWavetableOscillator(
     double* frequency,
     double frequencyMultiplier,
@@ -15,7 +13,14 @@ WavetableOscillator* createWavetableOscillator(
     int isOutput) {
 
     WavetableOscillator* out = malloc(sizeof(WavetableOscillator));
-
+    out->frequency = frequency;
+    out->frequencyMultiplier = frequencyMultiplier;
+    out->name = name;
+    out->waveTable = waveTable;
+    out->wavetableLength = wavetableLength;
+    out->sampleRate = sampleRate;
+    out->isOutput = isOutput;
+    out->index = 0;
 
     return out;
 }
@@ -34,4 +39,21 @@ double getWavetableSample(WavetableOscillator* oscillator) {
     else {
         return 0.0;
     }
+}
+
+float* getWavetableByName(char* name) {
+    if (strcmp("strangeone", name) == 0) {
+        return random_wave_one;
+    }
+    if (strcmp("strangetwo", name) == 0) {
+        return random_wave_two;
+    }
+    if (strcmp("strangethree", name) == 0) {
+        return random_wave_three;
+    }
+    if (strcmp("sine", name) == 0) {
+        return sine_wave;
+    }
+
+    return NULL;
 }
