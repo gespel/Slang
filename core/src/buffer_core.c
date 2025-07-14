@@ -31,13 +31,13 @@ double* renderBuffer(SlangBufferCore* sbc) {
         //else {
         //    temp = 0;
         //}
-
         for (int ws = 0; ws < rack->numWaveOscillators; ws++) {
             temp += getWavetableSample(rack->wave_oscillators[ws]);
         }
         if(rack->numWaveOscillators != 0) {
             temp /= rack->numWaveOscillators;
         }
+
 
 		for (int sts = 0; sts < rack->numSawtoothOscillators; sts++) {
 			temp += getSawtoothSample(rack->sawtooth_oscillators[sts]);
