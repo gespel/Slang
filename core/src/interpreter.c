@@ -43,20 +43,6 @@ void addFunction(SlangInterpreter* si, Function* input) {
     si->functions_length++;
 }
 
-void printAllFunctions(SlangInterpreter* si) {
-#ifdef SLANG_DEBUG
-    LOGINFO("=======================================================");
-    LOGINFO("Functions:");
-    for(size_t i = 0; i < si->functions_length; i++) {
-        LOGINFO("functionname: %s", si->functions[i]->name);
-        for(size_t j = 0; j < si->functions[i]->function_tokens_length; j++) {
-            LOGDEBUG("%s -> %s", tokenTypeToString(si->functions[i]->function_tokens[j].tt), si->functions[i]->function_tokens[j].value);
-        }
-    }
-    LOGINFO("=======================================================");
-#endif
-}
-
 void addVariable(SlangInterpreter* input_inter, Variable* input) {
     input_inter->variables[input_inter->vars_length] = input;
     input_inter->vars_length++;
@@ -85,31 +71,6 @@ void inc(int* i) {
 
 void dec(int* i) {
     (*i)--;
-}
-
-void printAllVariables(SlangInterpreter* si) {
-#ifdef SLANG_DEBUG
-    LOGINFO("=======================================================");
-    LOGINFO("Variables:");
-    for(size_t i = 0; i < si->vars_length; i++) {
-        LOGINFO("%s: %lf", si->variables[i]->name, si->variables[i]->value);
-    }
-    LOGINFO("=======================================================");
-#endif
-}
-
-void printAllOscillators(SlangInterpreter* si) {
-#ifdef SLANG_DEBUG
-    LOGINFO("=======================================================");
-    LOGINFO("Oscillators:");
-    for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
-        LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sine_oscillators[i]->name, si->main_rack->sine_oscillators[i]->frequency[0], si->main_rack->sine_oscillators[i]->volume);
-    }
-    for(int i = 0; i < si->main_rack->numWaveOscillators; i++) {
-        LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->wave_oscillators[i]->name, si->main_rack->wave_oscillators[i]->frequency[0], si->main_rack->wave_oscillators[i]->volume);
-    }
-    LOGINFO("=======================================================");
-#endif
 }
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {

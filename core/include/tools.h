@@ -56,6 +56,12 @@ void tokenError(TokenType expected, TokenType got);
 
 void generalError(char* msg);
 
+void printAllVariables(SlangInterpreter* si);
+
+void printAllOscillators(SlangInterpreter* si);
+
+void printAllFunctions(SlangInterpreter* si);
+
 #ifdef __cplusplus
 }
 #endif
