@@ -15,9 +15,11 @@ file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
 
 
 add_library(slang_modules STATIC ${MODULE_SOURCES} ${MODULE_HEADERS}
-        modules/src/oscillator.c
         modules/src/binaryData.c
         modules/src/wavetable.c
+        modules/src/sine.c
+        modules/src/sawtooth.c
+        modules/src/square.c
 )
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
