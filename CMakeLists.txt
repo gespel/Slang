@@ -14,13 +14,7 @@ file(GLOB MODULE_SOURCES ${CMAKE_SOURCE_DIR}/modules/src/*.c)
 file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
 
 
-add_library(slang_modules STATIC ${MODULE_SOURCES} ${MODULE_HEADERS}
-        modules/src/binaryData.c
-        modules/src/wavetable.c
-        modules/src/sine.c
-        modules/src/sawtooth.c
-        modules/src/square.c
-)
+add_library(slang_modules STATIC ${MODULE_SOURCES} ${MODULE_HEADERS})
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
 target_link_libraries(slang_modules PUBLIC m)
@@ -28,15 +22,10 @@ target_link_libraries(slang_modules PUBLIC m)
 
 # === Slang Core Library ===
 
-add_library(slang STATIC
-        core/src/function.c
-        core/src/interpreter.c
-        core/src/tokenizer.c
-        core/src/tools.c
-        core/src/rack.c
-        core/src/buffer_core.c
-        core/src/parser.c
-)
+file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/core/src/*.c)
+file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/core/include/*.h)
+
+add_library(slang STATIC ${SOURCES} ${HEADERS})
 
 
 set_target_properties(slang PROPERTIES VERSION ${PROJECT_VERSION})
