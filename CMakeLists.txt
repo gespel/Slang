@@ -10,11 +10,13 @@ endif()
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 
-file(GLOB MODULE_SOURCES ${CMAKE_SOURCE_DIR}/modules/src/*.c)
-file(GLOB MODULE_HEADERS ${CMAKE_SOURCE_DIR}/modules/include/*.h)
+file(GLOB OSC_SOURCES ${CMAKE_SOURCE_DIR}/modules/oscillators/src/*.c)
+file(GLOB OSC_HEADERS ${CMAKE_SOURCE_DIR}/modules/oscillators/include/*.h)
+file(GLOB DATA_SOURCES ${CMAKE_SOURCE_DIR}/modules/data/src/*.c)
+file(GLOB DATA_HEADERS ${CMAKE_SOURCE_DIR}/modules/data/include/*.h)
 
 
-add_library(slang_modules STATIC ${MODULE_SOURCES} ${MODULE_HEADERS})
+add_library(slang_modules STATIC ${DATA_SOURCES} ${DATA_HEADERS} ${OSC_SOURCES} ${OSC_HEADERS} )
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
 target_link_libraries(slang_modules PUBLIC m)

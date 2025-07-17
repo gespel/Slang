@@ -8,7 +8,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
-#include "binaryData.h"
+#include "../../data/include/binaryData.h"
 
 
 typedef struct WavetableOscillator {
