@@ -91,3 +91,37 @@ void printAllFunctions(SlangInterpreter* si) {
     LOGINFO("=======================================================");
 #endif
 }
+
+double noteNameToFrequency(char *name) {
+    char *notes[] = {"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"};
+    //a = 1; a# = 1 + 1/12; b = 1 + 2/12; g# = 1 - 1/12; g = 1 - 2/12; f# = 1 - 3/12; f = 1 - 4/12; e = 1 - 5/12; d# = 1 - 6/12; d = 1 - 7/12; c# = 1 - 8/12; c = 1 - 9/12
+    double c0 = 16.3516;
+    int noteIndex = 0;
+    char *noteName = malloc(sizeof(char) * 3);
+
+
+    if (name[1] == '#') {
+        noteName[0] = name[0];
+        noteName[1] = name[1];
+        noteName[2] = '\0';
+        noteIndex = name[2];
+    }
+    else {
+        noteName[0] = name[0];
+        noteName[1] = '\0';
+        noteIndex = name[1];
+    }
+
+    int index = 0;
+    for (int i = 0; i < 11; i++) {
+        if (strcmp(noteName, notes[i]) == 0) {
+            index = i;
+        }
+    }
+
+    double baseFrequency = c0 * pow(2, index);
+
+    double frequency = baseFrequency * pow(2, noteIndex);
+
+    return frequency;
+}
