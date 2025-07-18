@@ -1,5 +1,5 @@
 wavetableosc(a, strangeone, 110);
-wavetableosc(b, strangetwoa, 220);
+wavetableosc(b, strangetwo, 220);
 fn test(asd) {
     y = asd + 1;
     return y;
