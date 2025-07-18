@@ -94,7 +94,6 @@ void printAllFunctions(SlangInterpreter* si) {
 
 double noteNameToFrequency(char *name) {
     char *notes[] = {"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"};
-    //a = 1; a# = 1 + 1/12; b = 1 + 2/12; g# = 1 - 1/12; g = 1 - 2/12; f# = 1 - 3/12; f = 1 - 4/12; e = 1 - 5/12; d# = 1 - 6/12; d = 1 - 7/12; c# = 1 - 8/12; c = 1 - 9/12
     double c0 = 16.3516;
     int noteIndex = 0;
     char *noteName = malloc(sizeof(char) * 3);
