@@ -121,7 +121,7 @@ double noteNameToFrequency(char *name) {
 
     double baseFrequency = c0 * pow(2, index);
 
-    double frequency = baseFrequency * pow(2, noteIndex);
+    double frequency = baseFrequency * pow(2, noteIndex*12);
 
     return frequency;
 }
