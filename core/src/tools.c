@@ -103,24 +103,24 @@ double noteNameToFrequency(char *name) {
         noteName[0] = name[0];
         noteName[1] = name[1];
         noteName[2] = '\0';
-        noteIndex = name[2];
+        noteIndex = name[2] - '0';
     }
     else {
         noteName[0] = name[0];
         noteName[1] = '\0';
-        noteIndex = name[1];
+        noteIndex = name[1] - '0';
     }
 
     int index = 0;
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 12; i++) {
         if (strcmp(noteName, notes[i]) == 0) {
             index = i;
         }
     }
 
-    double baseFrequency = c0 * pow(2, index);
+    double baseFrequency = c0 * pow(2, (double)index/12);
 
-    double frequency = baseFrequency * pow(2, noteIndex*12);
-
+    double frequency = baseFrequency * pow(2, noteIndex);
+	free(noteName);
     return frequency;
 }
