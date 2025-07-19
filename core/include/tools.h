@@ -62,6 +62,8 @@ void printAllOscillators(SlangInterpreter* si);
 
 void printAllFunctions(SlangInterpreter* si);
 
+double noteNameToFrequency(char *name);
+
 #ifdef __cplusplus
 }
 #endif
