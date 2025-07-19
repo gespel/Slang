@@ -21,7 +21,7 @@ WavetableOscillator* createWavetableOscillator(
     out->sampleRate = sampleRate;
     out->isOutput = isOutput;
     out->index = 0;
-
+    out->sample = malloc(sizeof(double));
     return out;
 }
 double getWavetableSample(WavetableOscillator* oscillator) {
