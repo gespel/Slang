@@ -36,9 +36,12 @@ int main(int argc, char **argv) {
         printAllOscillators(main_interpreter);
 
         SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
-        double* buf = renderBuffer(sbc);
-        printAudioBuffer(buf, 512);
-        free(buf);
+        //while(1) {
+            double* buf = renderBuffer(sbc);
+            printAudioBuffer(buf, 512);
+            free(buf);
+        //}
+
 
 
         free(main_interpreter);

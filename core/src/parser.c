@@ -95,7 +95,7 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 
         SawtoothOscillator* osc = malloc(sizeof(SawtoothOscillator));
 
-        osc->isOutput = is_output[0];
+        osc->isOutput = 1;
         osc->sample = malloc(sizeof(double));
         osc->name = name;
         osc->frequency = freqptr;
