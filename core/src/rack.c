@@ -56,6 +56,7 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
 	}
 }
 
-void addOscillator(Rack *rack, void *oscillator) {
-    rack->oscillators[rack->numOscillators] = oscillator;
+void addOscillator(Rack *rack, Oscillators *oscillator) {
+    rack->oscillators[rack->numOscillators] = *oscillator;
+    rack->numOscillators = rack->numOscillators + 1;
 }

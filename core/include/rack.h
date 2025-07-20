@@ -37,6 +37,6 @@ void addSawtoothOscillator(Rack* rack, SawtoothOscillator* input);
 
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
-void addOscillator(Rack *rack, void *oscillator);
+void addOscillator(Rack *rack, Oscillators *oscillator);
 
 #endif
