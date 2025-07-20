@@ -55,3 +55,7 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
 		rack->sawtooth_oscillators[i]->sampleRate = sampleRate;
 	}
 }
+
+void addOscillator(Rack *rack, void *oscillator) {
+    rack->oscillators[rack->numOscillators] = oscillator;
+}

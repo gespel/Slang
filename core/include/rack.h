@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+typedef union Oscillators {
+    SineOscillator *sine;
+    SawtoothOscillator *sawtooth;
+    WavetableOscillator *wavetable;
+    SquareOscillator *square;
+} Oscillators;
+
 typedef struct Rack {
     SineOscillator** sine_oscillators;
     int numSineOscillators;
@@ -14,6 +21,8 @@ typedef struct Rack {
     int numSawtoothOscillators;
     int* sampleRate;
     int* bufferSize;
+    Oscillators *oscillators;
+    int numOscillators;
 } Rack;
 
 void addSineOscillator(Rack* rack, SineOscillator* input);
@@ -27,5 +36,7 @@ void addWavetableOscillator(Rack* rack, WavetableOscillator* input);
 void addSawtoothOscillator(Rack* rack, SawtoothOscillator* input);
 
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
+
+void addOscillator(Rack *rack, void *oscillator);
 
 #endif
