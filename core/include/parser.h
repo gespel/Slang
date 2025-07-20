@@ -2,7 +2,7 @@
 // Created by Sten on 28.06.2025.
 //
 #pragma once
-#include "interpreter.h"
+#include "../include/interpreter.h"
 
 #ifndef PARSER_H
 #define PARSER_H

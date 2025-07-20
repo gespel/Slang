@@ -72,7 +72,11 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 
 		if(wt != NULL) {
 			WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
-        	addWavetableOscillator(si->main_rack, osc);
+		    Oscillator *o = malloc(sizeof(Oscillator));
+		    o->data = malloc(sizeof(OscillatorData));
+		    o->data->wavetable = osc;
+		    o->type = WAVETABLE;
+		    addOscillator(si->main_rack, o);
         	consume(i, getToken(si, *i), SEMICOLON);
 		}
 		else {
@@ -101,7 +105,11 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         osc->phase = 0.f;
         osc->sampleRate = 0;
 
-        addSawtoothOscillator(si->main_rack, osc);
+	    Oscillator* o = malloc(sizeof(Oscillator));
+	    o->data = malloc(sizeof(OscillatorData));
+	    o->data->sawtooth = osc;
+	    o->type = SAWTOOTH;
+	    addOscillator(si->main_rack, o);
 
         LOGINFO("Creating a SAWTOOTHOSC with %lf Hz and name %s", osc->frequency[0], osc->name);
         consume(i, getToken(si, *i), SEMICOLON);
@@ -128,7 +136,13 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         osc->sampleRate = 0;
         osc->waveTable = sine_wave;
         osc->wavetableLength = 4800;
-        addWavetableOscillator(si->main_rack, osc);
+
+        Oscillator* o = malloc(sizeof(Oscillator));
+        o->data = malloc(sizeof(OscillatorData));
+        o->data->wavetable = osc;
+        o->type = SINE;
+        addOscillator(si->main_rack, o);
+
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
         consume(i, getToken(si, *i), SEMICOLON);
@@ -152,8 +166,8 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         osc->phase = 0.f;
         osc->sampleRate = 0;
 
-        addSineOscillator(si->main_rack, osc);
-
+        //addSineOscillator(si->main_rack, osc);
+        //TODO: add truesine osc
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
         consume(i, getToken(si, *i), SEMICOLON);
     }

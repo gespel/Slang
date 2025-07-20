@@ -68,11 +68,22 @@ void printAllOscillators(SlangInterpreter* si) {
 #ifdef SLANG_DEBUG
     LOGINFO("=======================================================");
     LOGINFO("Oscillators:");
-    for(int i = 0; i < si->main_rack->numSineOscillators; i++) {
-        LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sine_oscillators[i]->name, si->main_rack->sine_oscillators[i]->frequency[0], si->main_rack->sine_oscillators[i]->volume);
-    }
-    for(int i = 0; i < si->main_rack->numWaveOscillators; i++) {
-        LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->wave_oscillators[i]->name, si->main_rack->wave_oscillators[i]->frequency[0], si->main_rack->wave_oscillators[i]->volume);
+    for(int i = 0; i < si->main_rack->numOscillators; i++) {
+        switch (si->main_rack->oscillators[i]->type) {
+            case SINE:
+                LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->sine->name, si->main_rack->oscillators[i]->data->sine->frequency[0], si->main_rack->oscillators[i]->data->sine->volume);
+                break;
+            case WAVETABLE:
+                LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->wavetable->name, si->main_rack->oscillators[i]->data->wavetable->frequency[0], si->main_rack->oscillators[i]->data->wavetable->volume);
+                break;
+            case SAWTOOTH:
+                LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->sawtooth->name, si->main_rack->oscillators[i]->data->sawtooth->frequency[0], si->main_rack->oscillators[i]->data->sawtooth->volume);
+                break;
+            case SQUARE:
+                LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->square->name, si->main_rack->oscillators[i]->data->square->frequency[0], si->main_rack->oscillators[i]->data->square->volume);
+                break;
+        }
+
     }
     LOGINFO("=======================================================");
 #endif

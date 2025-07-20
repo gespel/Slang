@@ -1,62 +1,84 @@
 #include "../include/rack.h"
 
-void addSineOscillator(Rack* rack, SineOscillator* input) {
-    rack->sine_oscillators[rack->numSineOscillators] = input;
-    rack->numSineOscillators = rack->numSineOscillators + 1;
-}
+#include "tools.h"
 
-void addWavetableOscillator(Rack* rack, WavetableOscillator* input) {
-    rack->wave_oscillators[rack->numWaveOscillators] = input;
-    rack->numWaveOscillators = rack->numWaveOscillators + 1;
-}
-
-void addSawtoothOscillator(Rack* rack, SawtoothOscillator* input) {
-    rack->sawtooth_oscillators[rack->numSawtoothOscillators] = input;
-    rack->numSawtoothOscillators = rack->numSawtoothOscillators + 1;
-}
-
-SineOscillator* getSineOscillator(Rack* rack, char* name) {
-    for (int i = 0; i < rack->numSineOscillators; i++) {
-        if (strcmp(rack->sine_oscillators[i]->name, name) == 0) {
-            printf("found!");
-            return rack->sine_oscillators[i];
-        }
-    }
-    return NULL;
-}
 
 void *getOscillator(Rack* rack, char* name) {
-    for (int i = 0; i < rack->numWaveOscillators; i++) {
-        if (strcmp(rack->wave_oscillators[i]->name, name) == 0) {
-            return rack->wave_oscillators[i];
-        }
-    }
-    for (int i = 0; i < rack->numSineOscillators; i++) {
-        if (strcmp(rack->sine_oscillators[i]->name, name) == 0) {
-            return rack->sine_oscillators[i];
-        }
-    }
-    for (int i = 0; i < rack->numSawtoothOscillators; i++) {
-        if (strcmp(rack->sawtooth_oscillators[i]->name, name) == 0) {
-            return rack->sawtooth_oscillators[i];
+    for (int i = 0; i < rack->numOscillators; i++) {
+        switch (rack->oscillators[i]->type) {
+            case SINE:
+                if (strcmp(rack->oscillators[i]->data->sine->name, name) == 0) {
+                    return rack->oscillators[i]->data->sine;
+                }
+                break;
+            case SAWTOOTH:
+                if (strcmp(rack->oscillators[i]->data->sawtooth->name, name) == 0) {
+                    return rack->oscillators[i]->data->sawtooth;
+                }
+                break;
+            case SQUARE:
+                if (strcmp(rack->oscillators[i]->data->square->name, name) == 0) {
+                    return rack->oscillators[i]->data->square;
+                }
+                break;
+            case WAVETABLE:
+                if (strcmp(rack->oscillators[i]->data->wavetable->name, name) == 0) {
+                    return rack->oscillators[i]->data->wavetable;
+                }
+                break;
         }
     }
     return NULL;
 }
 
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
-    for (int i = 0; i < rack->numSineOscillators; i++) {
-        rack->sine_oscillators[i]->sampleRate = sampleRate;
+    for (int i = 0; i < rack->numOscillators; i++) {
+        switch (rack->oscillators[i]->type) {
+            case SINE:
+                rack->oscillators[i]->data->sine->sampleRate = sampleRate;
+                break;
+            case SAWTOOTH:
+                rack->oscillators[i]->data->sawtooth->sampleRate = sampleRate;
+                break;
+            case SQUARE:
+                rack->oscillators[i]->data->square->sampleRate = sampleRate;
+                break;
+            case WAVETABLE:
+                rack->oscillators[i]->data->wavetable->sampleRate = sampleRate;
+                break;
+        }
     }
-    for (int i = 0; i < rack->numWaveOscillators; i++) {
-        rack->wave_oscillators[i]->sampleRate = sampleRate;
-    }
-	for (int i = 0; i < rack->numSawtoothOscillators; i++) {
-		rack->sawtooth_oscillators[i]->sampleRate = sampleRate;
-	}
+
 }
 
-void addOscillator(Rack *rack, Oscillators *oscillator) {
-    rack->oscillators[rack->numOscillators] = *oscillator;
+void addOscillator(Rack* rack, Oscillator* input) {
+    rack->oscillators[rack->numOscillators] = input;
     rack->numOscillators = rack->numOscillators + 1;
+}
+
+double getSample(Rack* rack) {
+    double out = 0.f;
+    for (int i = 0; i < rack->numOscillators; i++) {
+        switch (rack->oscillators[i]->type) {
+            case SINE:
+                out += getSineSample(rack->oscillators[i]->data->sine);
+                break;
+            case WAVETABLE:
+                out += getWavetableSample(rack->oscillators[i]->data->wavetable);
+                break;
+            case SAWTOOTH:
+                out += getSawtoothSample(rack->oscillators[i]->data->sawtooth);
+                break;
+            case SQUARE:
+                out += getSquareSample(rack->oscillators[i]->data->square);
+                break;
+            default:
+                out += 0;
+                break;
+        }
+    }
+    if (rack->numOscillators > 0) {
+        out /= rack->numOscillators;
+    }
+    return out;
 }
