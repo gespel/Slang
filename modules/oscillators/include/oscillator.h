@@ -23,5 +23,6 @@ typedef struct Oscillator {
     OscillatorData* data;
 } Oscillator;
 
+Oscillator *createOscillator(void* data, OscillatorType type);
 
 #endif

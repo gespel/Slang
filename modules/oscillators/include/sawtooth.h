@@ -18,4 +18,6 @@ typedef struct SawtoothOscillator {
 
 double getSawtoothSample(SawtoothOscillator* oscillator);
 
+SawtoothOscillator *createSawtoothOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput);
+
 #endif //SAWTOOTH_H

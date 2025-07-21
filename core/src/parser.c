@@ -72,10 +72,7 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 
 		if(wt != NULL) {
 			WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
-		    Oscillator *o = malloc(sizeof(Oscillator));
-		    o->data = malloc(sizeof(OscillatorData));
-		    o->data->wavetable = osc;
-		    o->type = WAVETABLE;
+		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
         	consume(i, getToken(si, *i), SEMICOLON);
 		}
@@ -95,20 +92,10 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-        SawtoothOscillator* osc = malloc(sizeof(SawtoothOscillator));
+	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, 48000, 1);
 
-        osc->isOutput = 1;
-        osc->sample = malloc(sizeof(double));
-        osc->name = name;
-        osc->frequency = freqptr;
-        osc->frequencyMultiplier = frequency_multiplier;
-        osc->phase = 0.f;
-        osc->sampleRate = 0;
+	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
-	    Oscillator* o = malloc(sizeof(Oscillator));
-	    o->data = malloc(sizeof(OscillatorData));
-	    o->data->sawtooth = osc;
-	    o->type = SAWTOOTH;
 	    addOscillator(si->main_rack, o);
 
         LOGINFO("Creating a SAWTOOTHOSC with %lf Hz and name %s", osc->frequency[0], osc->name);
