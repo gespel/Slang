@@ -27,6 +27,7 @@ int main(int argc, char **argv) {
         Token* tokens = tokenize(p, &length);
         //printTokens(tokens, length);
 
+		printf("%lf\n", noteNameToFrequency("a4"));
 
         printf("%d tokens!\n", length);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
