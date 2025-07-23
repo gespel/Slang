@@ -13,3 +13,15 @@ double getSineSample(SineOscillator* oscillator) {
         return 0.0;
     }
 }
+
+SineOscillator *createSineOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput) {
+    SineOscillator* osc = malloc(sizeof(SineOscillator));
+    osc->isOutput = isOutput;
+    osc->sample = malloc(sizeof(double));
+    osc->name = name;
+    osc->frequency = frequency;
+    osc->frequencyMultiplier = frequencyMultiplier;
+    osc->phase = 0.f;
+    osc->sampleRate = sampleRate;
+    return osc;
+}
