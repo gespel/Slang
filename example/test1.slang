@@ -1,7 +1,4 @@
 a = sineosc(55);
-fn test(asd) {
-    y = asd + 1;
-    return y;
-}
-test(3);
-x = 13;
+b = wavetableosc(strangeone, 110);
+c = sawtoothosc(220);
+d = truesineosc(440);

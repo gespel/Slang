@@ -9,17 +9,21 @@ Oscillator *createOscillator(void* data, OscillatorType type) {
     switch (type) {
         case WAVETABLE:
             o->data->wavetable = data;
+            o->type = WAVETABLE;
             break;
         case SINE:
             o->data->sine = data;
+            o->type = SINE;
             break;
         case SQUARE:
             o->data->square = data;
+            o->type = SQUARE;
             break;
         case SAWTOOTH:
             o->data->sawtooth = data;
+            o->type = SAWTOOTH;
             break;
     }
-    o->type = WAVETABLE;
+
     return o;
 }
