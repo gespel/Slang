@@ -42,9 +42,7 @@ int main(int argc, char **argv) {
             printAudioBuffer(buf, 512);
             free(buf);
         //}
-
-
-
+        
         free(main_interpreter);
     }
     else if(argc == 1) {

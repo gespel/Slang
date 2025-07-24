@@ -14,9 +14,12 @@ file(GLOB OSC_SOURCES ${CMAKE_SOURCE_DIR}/modules/oscillators/src/*.c)
 file(GLOB OSC_HEADERS ${CMAKE_SOURCE_DIR}/modules/oscillators/include/*.h)
 file(GLOB DATA_SOURCES ${CMAKE_SOURCE_DIR}/modules/data/src/*.c)
 file(GLOB DATA_HEADERS ${CMAKE_SOURCE_DIR}/modules/data/include/*.h)
+file(GLOB STEP_SOURCES ${CMAKE_SOURCE_DIR}/modules/stepsequencer/src/*.c)
+file(GLOB STEP_HEADERS ${CMAKE_SOURCE_DIR}/modules/stepsequencer/include/*.h)
 
 
-add_library(slang_modules STATIC ${DATA_SOURCES} ${DATA_HEADERS} ${OSC_SOURCES} ${OSC_HEADERS} )
+
+add_library(slang_modules STATIC ${DATA_SOURCES} ${DATA_HEADERS} ${OSC_SOURCES} ${OSC_HEADERS} ${STEP_SOURCES} ${STEP_HEADERS})
 
 target_include_directories(slang_modules PUBLIC ${CMAKE_SOURCE_DIR}/modules/include)
 target_link_libraries(slang_modules PUBLIC m)

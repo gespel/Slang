@@ -17,10 +17,6 @@
 #define SLANG_INTERPRETER_H
 #define SLANG_DEBUG
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct SlangInterpreter {
     int functions_length;
     Function* functions[8192];
@@ -82,8 +78,5 @@ char* getInterpreterStatusString(SlangInterpreter* si);
 
 int isOscillator(Token token);
 
-#ifdef __cplusplus
-}
-#endif
 
 #endif //SLANG_INTERPRETER_H
