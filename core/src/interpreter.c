@@ -113,7 +113,10 @@ double interpret(SlangInterpreter* si) {
 
     int i;
     for(i = si->last_token_index; i < numTokens; i++) {
-        if(tokens[i].tt == IDENTIFIER || tokens[i].tt == NUMBER) {
+        if(tokens[i].tt == IDENTIFIER) {
+            parseExpression(si, &i);
+        }
+        else if (tokens[i].tt == NUMBER) {
             parseExpression(si, &i);
         }
         else if(tokens[i].tt == FUNCTION) {
@@ -251,7 +254,7 @@ double interpret(SlangInterpreter* si) {
             }
         }
         else if (isOscillator(getToken(si, i))) {
-            parseOscillators(si, &i);
+            //parseOscillators(si, &i);
         }
         else {
             LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);

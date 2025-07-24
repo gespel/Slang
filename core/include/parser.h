@@ -7,7 +7,7 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-void parseOscillators(SlangInterpreter* si, int* i);
+void parseOscillators(SlangInterpreter* si, int* i, char *name);
 
 void parseFunction(SlangInterpreter* si, int* i);
 

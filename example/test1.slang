@@ -1,4 +1,4 @@
-sineosc(a, 55);
+a = sineosc(55);
 fn test(asd) {
     y = asd + 1;
     return y;

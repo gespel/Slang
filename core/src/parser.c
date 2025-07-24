@@ -3,6 +3,8 @@
 //
 #include "../include/parser.h"
 
+#include "interpreter.h"
+
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output) {
     char* temp = getToken(si, *i).value;
     if(getOscillator(si->main_rack, temp) != NULL) {
@@ -50,7 +52,7 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqpt
     }
 }
 
-void parseOscillators(SlangInterpreter* si, int* i) {
+void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     double* freqptr = malloc(sizeof(double*));
     double frequency_multiplier = 1.0;
     int* is_output = malloc(sizeof(int*));
@@ -59,9 +61,6 @@ void parseOscillators(SlangInterpreter* si, int* i) {
     if (getToken(si, *i).tt == WAVEOSC) {
         consume(i, getToken(si, *i), WAVEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-        char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
         char* waveName = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
@@ -74,7 +73,6 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 			WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
-        	consume(i, getToken(si, *i), SEMICOLON);
 		}
 		else {
 			LOGERROR("could not find given wavetable %s", waveName);
@@ -86,9 +84,6 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 	if (getToken(si, *i).tt == SAWOSC) {
 		consume(i, getToken(si, *i), SAWOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-        char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
@@ -99,15 +94,11 @@ void parseOscillators(SlangInterpreter* si, int* i) {
 	    addOscillator(si->main_rack, o);
 
         LOGINFO("Creating a SAWTOOTHOSC with %lf Hz and name %s", osc->frequency[0], osc->name);
-        consume(i, getToken(si, *i), SEMICOLON);
 	}
 
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-        char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
@@ -118,14 +109,10 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         addOscillator(si->main_rack, o);
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
-        consume(i, getToken(si, *i), SEMICOLON);
     }
     if (getToken(si, *i).tt == TRUESINEOSC) {
         consume(i, getToken(si, *i), TRUESINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-        char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
@@ -136,7 +123,6 @@ void parseOscillators(SlangInterpreter* si, int* i) {
         addOscillator(si->main_rack, o);
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
-        consume(i, getToken(si, *i), SEMICOLON);
     }
 }
 
@@ -185,7 +171,14 @@ void parseFunction(SlangInterpreter* si, int* i) {
 }
 
 void parseExpression(SlangInterpreter* si, int* i) {
-    if(getToken(si, (*i)+1).tt == ASSIGN) {
+    if(getToken(si, (*i)+1).tt == ASSIGN && isOscillator(getToken(si, (*i)+2)) == 1) {
+        char *name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), ASSIGN);
+
+        parseOscillators(si, i, name);
+    }
+    else if(getToken(si, (*i)+1).tt == ASSIGN) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), ASSIGN);
