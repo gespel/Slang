@@ -48,12 +48,12 @@ make
 ### Run an Example
 Once compiled, you can run a Slang example like this: 
 ```bash
-./slang example/test1.slang
+./slang examples/synths.slang
 ```
 
 ## Examples
 
-The `example/` directory includes several demo scripts to help you get started:
+The `examples/` directory includes several demo scripts to help you get started:
 
 - `test1.slang` – Basic signal processing
 - `test2.slang` – Buffer manipulation

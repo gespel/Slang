@@ -2,4 +2,4 @@
 
 set -e
 
-./slang example/test1.slang
+./slang examples/synths.slang
