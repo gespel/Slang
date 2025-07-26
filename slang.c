@@ -25,9 +25,7 @@ int main(int argc, char **argv) {
 
         int length = 0;
         Token* tokens = tokenize(p, &length);
-        //printTokens(tokens, length);
-
-		printf("%lf\n", noteNameToFrequency("a4"));
+        printTokens(tokens, length);
 
         printf("%d tokens!\n", length);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
@@ -37,11 +35,10 @@ int main(int argc, char **argv) {
         printAllOscillators(main_interpreter);
 
         SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
-        //while(1) {
-            double* buf = renderBuffer(sbc);
-            printAudioBuffer(buf, 512);
-            free(buf);
-        //}
+        double* buf = renderBuffer(sbc);
+        printAudioBuffer(buf, 16);
+        free(buf);
+
         
         free(main_interpreter);
     }
