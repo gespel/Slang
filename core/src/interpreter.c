@@ -345,6 +345,11 @@ double terminal(SlangInterpreter* si, int* i) {
                 inc(i);
             }
             return out;
+        case NOTEMARKER:
+            consume(i, si->tokens[*i], NOTEMARKER);
+            out = noteNameToFrequency(si->tokens[*i].value);
+            consume(i, si->tokens[*i], IDENTIFIER);
+            return out;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);
