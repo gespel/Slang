@@ -124,6 +124,18 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
     }
+    if (getToken(si, *i).tt == SQUAREOSC) {
+        consume(i, getToken(si, *i), SQUAREOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+
+        parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
+
+        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, 48000, *is_output);
+
+        Oscillator *o = createOscillator(osc, SQUARE);
+
+        addOscillator(si->main_rack, o);
+    }
 }
 
 void parseFunction(SlangInterpreter* si, int* i) {

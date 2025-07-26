@@ -36,6 +36,7 @@ typedef enum TokenType {
 	TRUESINEOSC,
     SAWOSC,
     WAVEOSC,
+    SQUAREOSC,
     INPUTA,
     INPUTB,
     INPUTC,

@@ -28,5 +28,6 @@ double getSquareSample(SquareOscillator* oscillator) {
     else {
         out = -1;
     }
+    oscillator->index++;
     return out;
 }

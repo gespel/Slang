@@ -174,6 +174,9 @@ void tokenizeStrings(Token* out, int numTokens) {
 			else if(strcmp(value, "truesineosc") == 0) {
 				out[x].tt = TRUESINEOSC;
 			}
+            else if (strcmp(value, "squareosc") == 0) {
+                out[x].tt = SQUAREOSC;
+            }
             else if(strcmp(value, "inputa") == 0) {
                 out[x].tt = INPUTA;
             }
@@ -256,6 +259,9 @@ char* tokenTypeToString(TokenType input) {
 	case TRUESINEOSC:
 		out = "TruesineOscillator";
 		break;
+    case SQUAREOSC:
+        out = "SquareOscillator";
+        break;
     case INPUTA:
         out = "InputA";
         break;
