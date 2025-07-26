@@ -40,6 +40,7 @@ typedef enum TokenType {
     INPUTB,
     INPUTC,
     INPUTD,
+    NOTEMARKER,
 } TokenType;
 
 typedef struct t {

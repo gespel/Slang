@@ -108,6 +108,12 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
+            else if (tokenString[j] == '$') {
+                temp.tt = NOTEMARKER;
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+            }
             else if(isdigit((unsigned char)tokenString[j])) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
                 char* ns = calloc(128, sizeof(char));
@@ -261,6 +267,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case INPUTD:
         out = "InputD";
+        break;
+    case NOTEMARKER:
+        out = "Notemarker";
         break;
     default:
         out = "Unknown";
