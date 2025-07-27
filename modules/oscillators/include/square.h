@@ -7,19 +7,19 @@
 #include <stdlib.h>
 
 typedef struct SquareOscillator {
-    double* frequency;
-    double* sample;
-    double frequencyMultiplier;
-    double volume;
-    double phase;
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
     int sampleRate;
     char* name;
     int isOutput;
     int index;
 } SquareOscillator;
 
-SquareOscillator *createSquareOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput);
+SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput);
 
-double getSquareSample(SquareOscillator* oscillator);
+float getSquareSample(SquareOscillator* oscillator);
 
 #endif //SQUARE_H

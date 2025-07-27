@@ -6,18 +6,18 @@
 #define SAWTOOTH_H
 
 typedef struct SawtoothOscillator {
-    double* frequency;
-    double* sample;
-    double frequencyMultiplier;
-    double volume;
-    double phase;
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
     int sampleRate;
     char* name;
     int isOutput;
 } SawtoothOscillator;
 
-double getSawtoothSample(SawtoothOscillator* oscillator);
+float getSawtoothSample(SawtoothOscillator* oscillator);
 
-SawtoothOscillator *createSawtoothOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput);
+SawtoothOscillator *createSawtoothOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput);
 
 #endif //SAWTOOTH_H

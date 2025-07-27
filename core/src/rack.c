@@ -56,8 +56,8 @@ void addOscillator(Rack* rack, Oscillator* input) {
     rack->numOscillators = rack->numOscillators + 1;
 }
 
-double getSample(Rack* rack) {
-    double out = 0.f;
+float getSample(Rack* rack) {
+    float out = 0.f;
     for (int i = 0; i < rack->numOscillators; i++) {
         switch (rack->oscillators[i]->type) {
             case SINE:

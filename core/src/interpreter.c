@@ -23,7 +23,7 @@ int consume(int* i, Token token, TokenType expected) {
     }
 }
 
-void linkInput(SlangInterpreter* si, int nr, double *value) {
+void linkInput(SlangInterpreter* si, int nr, float *value) {
     si->inputs[nr] = value;
 }
 
@@ -104,10 +104,10 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
     return NULL;
 }
 
-double interpret(SlangInterpreter* si) {
+float interpret(SlangInterpreter* si) {
     printDebugMessage(INFO, "Interpreter started!");
     //printAllVariables(si);
-    double out = 0.0;
+    float out = 0.0;
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
 
@@ -124,7 +124,7 @@ double interpret(SlangInterpreter* si) {
         }
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
-            double out1 = l3_expression(si, &i);
+            float out1 = l3_expression(si, &i);
             #ifdef SLANG_DEBUG
             LOGDEBUG("Returning now! Value: %lf", out1);
             #endif
@@ -137,10 +137,10 @@ double interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == IF) {
             consume(&i, tokens[i], IF);
             consume(&i, tokens[i], PARANTHESISLEFT);
-            double left = l3_expression(si, &i);
+            float left = l3_expression(si, &i);
             consume(&i, tokens[i], ASSIGN);
             consume(&i, tokens[i], ASSIGN);
-            double right = l3_expression(si, &i);
+            float right = l3_expression(si, &i);
 
             consume(&i, tokens[i], PARANTHESISRIGHT);
             consume(&i, tokens[i], BRACKETLEFT);
@@ -163,7 +163,7 @@ double interpret(SlangInterpreter* si) {
             char* run_var_name = getToken(si, i).value;
             consume(&i, tokens[i], IDENTIFIER);
             consume(&i, tokens[i], ASSIGN);
-            double run_var_assign = terminal(si, &i);
+            float run_var_assign = terminal(si, &i);
 
             Variable* running_var = malloc(sizeof(Variable));
             running_var->name = run_var_name;
@@ -176,7 +176,7 @@ double interpret(SlangInterpreter* si) {
             char* logic_operator = getToken(si, i).value;
             inc(&i);
             
-            double logic_static_right = terminal(si, &i);
+            float logic_static_right = terminal(si, &i);
             consume(&i, tokens[i], COMMA);
            
             int mod_index = i;
@@ -266,10 +266,10 @@ double interpret(SlangInterpreter* si) {
     return 0;
 }
 
-double terminal(SlangInterpreter* si, int* i) {
+float terminal(SlangInterpreter* si, int* i) {
     //printDebugMessage(DBG, "Calling terminal:");
     //printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
-    double out;
+    float out;
     switch(si->tokens[*i].tt) {
         case NUMBER:
             out = atof(si->tokens[*i].value);
@@ -286,7 +286,7 @@ double terminal(SlangInterpreter* si, int* i) {
                 consume(i, si->tokens[*i], IDENTIFIER);
                 consume(i, si->tokens[*i], PARANTHESISLEFT);
                 
-                double* arguments = malloc(sizeof(double) * 512);
+                float* arguments = malloc(sizeof(float) * 512);
                 int arg_counter = 0;
                 
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
@@ -357,9 +357,9 @@ double terminal(SlangInterpreter* si, int* i) {
 
 }
 
-double l3_expression(SlangInterpreter* si, int* i) {
-    double left = l2_expression(si, i);
-    double right;
+float l3_expression(SlangInterpreter* si, int* i) {
+    float left = l2_expression(si, i);
+    float right;
 
     switch(getToken(si, *i).tt) {
         case PLUS:
@@ -376,8 +376,8 @@ double l3_expression(SlangInterpreter* si, int* i) {
     return left;
 }
 
-double l2_expression(SlangInterpreter* si, int* i) {
-    double left, right;
+float l2_expression(SlangInterpreter* si, int* i) {
+    float left, right;
     left = l1_expression(si, i);
 
     switch(getToken(si, *i).tt) {
@@ -395,11 +395,11 @@ double l2_expression(SlangInterpreter* si, int* i) {
     return left;
 }
 
-double l1_expression(SlangInterpreter* si, int* i) {
+float l1_expression(SlangInterpreter* si, int* i) {
     printDebugMessage(DBG, "Called expression");
     //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     //printDebugMessage(s->tokens[*i].value);
-    double left, right;
+    float left, right;
     if(si->tokens[*i].tt == PARANTHESISLEFT) {
         //printDebugMessage("Hit parantheses!");
         consume(i, si->tokens[*i], PARANTHESISLEFT);

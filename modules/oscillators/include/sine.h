@@ -9,18 +9,18 @@
 #include <stdlib.h>
 
 typedef struct SineOscillator {
-    double* frequency;
-    double* sample;
-    double frequencyMultiplier;
-    double volume;
-    double phase;
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
     int sampleRate;
     char* name;
     int isOutput;
 } SineOscillator;
 
-double getSineSample(SineOscillator* oscillator);
+float getSineSample(SineOscillator* oscillator);
 
-SineOscillator *createSineOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput);
+SineOscillator *createSineOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput);
 
 #endif //SINE_H

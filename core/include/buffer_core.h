@@ -8,12 +8,12 @@
 
 typedef struct SlangBufferCore {
     SlangInterpreter* interpreter;
-    double* buffer;
+    float* buffer;
     int bufferSize;
     int sampleRate;
 } SlangBufferCore;
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int bufferSize);
-double* renderBuffer(SlangBufferCore* sbc);
+float* renderBuffer(SlangBufferCore* sbc);
 
 #endif //BUFFER_CORE_H

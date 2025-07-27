@@ -27,7 +27,7 @@ void printTokens(Token* tokens, int length) {
     }
 }
 
-void printAudioBuffer(double* audioBuffer, int length) {
+void printAudioBuffer(float* audioBuffer, int length) {
     for(int j = 0; j < length; j++) {
         if (audioBuffer[j]) {
             printf("\t%d: %lf ", j, audioBuffer[j]);
@@ -103,9 +103,9 @@ void printAllFunctions(SlangInterpreter* si) {
 #endif
 }
 
-double noteNameToFrequency(char *name) {
+float noteNameToFrequency(char *name) {
     char *notes[] = {"c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "b"};
-    double c0 = 16.3516;
+    float c0 = 16.3516;
     int noteIndex = 0;
     char *noteName = malloc(sizeof(char) * 3);
 
@@ -129,9 +129,9 @@ double noteNameToFrequency(char *name) {
         }
     }
 
-    double baseFrequency = c0 * pow(2, (double)index/12);
+    float baseFrequency = c0 * pow(2, (float)index/12);
 
-    double frequency = baseFrequency * pow(2, noteIndex);
+    float frequency = baseFrequency * pow(2, noteIndex);
 	free(noteName);
     return frequency;
 }

@@ -4,8 +4,8 @@
 #include "../include/wavetable.h"
 
 WavetableOscillator* createWavetableOscillator(
-    double* frequency,
-    double frequencyMultiplier,
+    float* frequency,
+    float frequencyMultiplier,
     char* name,
     float* waveTable,
     int wavetableLength,
@@ -21,14 +21,14 @@ WavetableOscillator* createWavetableOscillator(
     out->sampleRate = sampleRate;
     out->isOutput = isOutput;
     out->index = 0;
-    out->sample = malloc(sizeof(double));
+    out->sample = malloc(sizeof(float));
     return out;
 }
-double getWavetableSample(WavetableOscillator* oscillator) {
+float getWavetableSample(WavetableOscillator* oscillator) {
     if (oscillator->index >= oscillator->wavetableLength) {
         oscillator->index = 0;
     }
-    double out = oscillator->waveTable[oscillator->index];
+    float out = oscillator->waveTable[oscillator->index];
     float temp = (float)oscillator->frequency[0] / 10;
     int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
     oscillator->index += n;

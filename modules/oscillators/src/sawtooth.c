@@ -5,7 +5,7 @@
 
 #include <stdlib.h>
 
-double getSawtoothSample(SawtoothOscillator* oscillator) {
+float getSawtoothSample(SawtoothOscillator* oscillator) {
     if (oscillator->sample[0] >= 1) {
         oscillator->sample[0] = -1.0;
     }
@@ -13,14 +13,14 @@ double getSawtoothSample(SawtoothOscillator* oscillator) {
     return oscillator->sample[0];
 }
 
-SawtoothOscillator *createSawtoothOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput) {
+SawtoothOscillator *createSawtoothOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput) {
     SawtoothOscillator* oscillator = malloc(sizeof(SawtoothOscillator));
     oscillator->frequency = frequency;
     oscillator->frequencyMultiplier = frequencyMultiplier;
     oscillator->name = name;
     oscillator->sampleRate = sampleRate;
     oscillator->isOutput = isOutput;
-    oscillator->sample = malloc(sizeof (double));
+    oscillator->sample = malloc(sizeof (float));
     oscillator->sample[0] = 0;
     return oscillator;
 }

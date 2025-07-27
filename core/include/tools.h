@@ -48,7 +48,7 @@ void printDebugMessage(SlangLogLevel ll, char* message);
 
 void printTokens(Token* tokens, int length);
 
-void printAudioBuffer(double* audioBuffer, int length);
+void printAudioBuffer(float* audioBuffer, int length);
 
 Token getToken(SlangInterpreter* si, int i);
 
@@ -62,7 +62,7 @@ void printAllOscillators(SlangInterpreter* si);
 
 void printAllFunctions(SlangInterpreter* si);
 
-double noteNameToFrequency(char *name);
+float noteNameToFrequency(char *name);
 
 #ifdef __cplusplus
 }

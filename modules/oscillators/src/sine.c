@@ -3,7 +3,7 @@
 //
 #include "../include/sine.h"
 
-double getSineSample(SineOscillator* oscillator) {
+float getSineSample(SineOscillator* oscillator) {
     oscillator->phase += (oscillator->frequency[0] * oscillator->frequencyMultiplier / oscillator->sampleRate) * 2.0 * M_PI;
     oscillator->sample[0] = sin(oscillator->phase);
     if (oscillator->isOutput == 1) {
@@ -14,10 +14,10 @@ double getSineSample(SineOscillator* oscillator) {
     }
 }
 
-SineOscillator *createSineOscillator(double* frequency, double frequencyMultiplier, char* name, int sampleRate, int isOutput) {
+SineOscillator *createSineOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput) {
     SineOscillator* osc = malloc(sizeof(SineOscillator));
     osc->isOutput = isOutput;
-    osc->sample = malloc(sizeof(double));
+    osc->sample = malloc(sizeof(float));
     osc->name = name;
     osc->frequency = frequency;
     osc->frequencyMultiplier = frequencyMultiplier;

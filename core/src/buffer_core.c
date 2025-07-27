@@ -10,14 +10,14 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int buff
     bufferCore->sampleRate = sampleRate;
     bufferCore->interpreter->main_rack->bufferSize = &bufferCore->bufferSize;
     bufferCore->interpreter->main_rack->sampleRate = &bufferCore->sampleRate;
-    bufferCore->buffer = malloc(sizeof(double) * bufferSize);
+    bufferCore->buffer = malloc(sizeof(float) * bufferSize);
     setSampleRateForAllOscillators(bufferCore->interpreter->main_rack, sampleRate);
     return bufferCore;
 }
 
-double* renderBuffer(SlangBufferCore* sbc) {
+float* renderBuffer(SlangBufferCore* sbc) {
     Rack* rack = sbc->interpreter->main_rack;
-    double* out = malloc(sizeof(double) * sbc->bufferSize);
+    float* out = malloc(sizeof(float) * sbc->bufferSize);
     for (int sample = 0; sample < sbc->bufferSize; sample++) {
         out[sample] = getSample(rack);
     }

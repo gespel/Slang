@@ -18,6 +18,6 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
 void addOscillator(Rack* rack, Oscillator* input);
 
-double getSample(Rack* rack);
+float getSample(Rack* rack);
 
 #endif

@@ -8,7 +8,7 @@ extern "C" {
 
 typedef struct Variable {
     char* name;
-    double value;
+    float value;
 } Variable;
 
 #ifdef __cplusplus

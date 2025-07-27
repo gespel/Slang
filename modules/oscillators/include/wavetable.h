@@ -12,10 +12,10 @@
 
 
 typedef struct WavetableOscillator {
-    double* frequency;
-    double* sample;
-    double frequencyMultiplier;
-    double volume;
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
     int index;
     int wavetableLength;
     int sampleRate;
@@ -24,9 +24,9 @@ typedef struct WavetableOscillator {
     int isOutput;
 } WavetableOscillator;
 
-double getWavetableSample(WavetableOscillator* oscillator);
+float getWavetableSample(WavetableOscillator* oscillator);
 
-WavetableOscillator* createWavetableOscillator(double* frequency, double frequencyMultiplier, char* name, float* waveTable, int wavetableLength, int sampleRate, int isOutput);
+WavetableOscillator* createWavetableOscillator(float* frequency, float frequencyMultiplier, char* name, float* waveTable, int wavetableLength, int sampleRate, int isOutput);
 
 float* getWavetableByName(char* name);
 

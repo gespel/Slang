@@ -5,7 +5,7 @@
 
 #include "interpreter.h"
 
-void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqptr, double* frequency_multiplier, int* is_output) {
+void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, float* frequency_multiplier, int* is_output) {
     char* temp = getToken(si, *i).value;
     if(getOscillator(si->main_rack, temp) != NULL) {
         SineOscillator* osc = getOscillator(si->main_rack, temp);
@@ -53,8 +53,8 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, double* freqpt
 }
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name) {
-    double* freqptr = malloc(sizeof(double*));
-    double frequency_multiplier = 1.0;
+    float* freqptr = malloc(sizeof(float*));
+    float frequency_multiplier = 1.0;
     int* is_output = malloc(sizeof(int*));
     is_output[0] = 1;
 
@@ -194,7 +194,7 @@ void parseExpression(SlangInterpreter* si, int* i) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), ASSIGN);
-        double value = l3_expression(si, i);
+        float value = l3_expression(si, i);
 
         if(getVariableByName(si, name) != NULL) {
             getVariableByName(si, name)->value = value;
@@ -208,7 +208,7 @@ void parseExpression(SlangInterpreter* si, int* i) {
         }
     }
     else {
-        double value = l3_expression(si, i);
+        float value = l3_expression(si, i);
         printf("%lf\n", value);
     }
     consume(i, getToken(si, *i), SEMICOLON);

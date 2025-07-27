@@ -27,26 +27,26 @@ typedef struct SlangInterpreter {
     int openBrackets;
     int last_token_index;
     Rack* main_rack;
-    double *inputs[4];
+    float *inputs[4];
 } SlangInterpreter;
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
 int getInputIndex(Token token);
 
-void linkInput(SlangInterpreter* si, int nr, double *value);
+void linkInput(SlangInterpreter* si, int nr, float *value);
 
 void addTokensToInterpreter(SlangInterpreter* si, Token* tokens, size_t numTokens);
 
-double interpret(SlangInterpreter* si);
+float interpret(SlangInterpreter* si);
 
-double terminal(SlangInterpreter* si, int* i);
+float terminal(SlangInterpreter* si, int* i);
 
-double l1_expression(SlangInterpreter* si, int* i);
+float l1_expression(SlangInterpreter* si, int* i);
 
-double l2_expression(SlangInterpreter* si, int* i);
+float l2_expression(SlangInterpreter* si, int* i);
 
-double l3_expression(SlangInterpreter* si, int* i);
+float l3_expression(SlangInterpreter* si, int* i);
 
 void increase(int* i);
 
