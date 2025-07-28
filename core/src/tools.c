@@ -31,10 +31,11 @@ void printAudioBuffer(float* audioBuffer, int length) {
     for(int j = 0; j < length; j++) {
         if (audioBuffer[j]) {
             printf("\t%d: %lf ", j, audioBuffer[j]);
+            if ((j+1) % 8 == 0) {
+                printf("\n");
+            }
         }
-        if ((j+1) % 8 == 0) {
-            printf("\n");
-        }
+
     }
 }
 
