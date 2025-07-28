@@ -46,4 +46,4 @@ jobs:
       - name: Run test
         run: |
           make
-          ./slang examples/synths.slang
+          ./test.sh
