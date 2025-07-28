@@ -21,11 +21,11 @@ int main(int argc, char **argv) {
         while(fgets(buff, 2048, f)) {
             strcat(p, buff);
         }
-        printf("Read programm: %s\n", p);
+        //printf("Read programm: %s\n", p);
 
         int length = 0;
         Token* tokens = tokenize(p, &length);
-        printTokens(tokens, length);
+        //printTokens(tokens, length);
 
         printf("%d tokens!\n", length);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
