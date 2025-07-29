@@ -4,8 +4,9 @@
 #pragma once
 #include "interpreter.h"
 
-#ifndef PARSER_H
-#define PARSER_H
+struct SlangInterpreter;
+typedef struct SlangInterpreter SlangInterpreter;
+
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name);
 
@@ -15,4 +16,3 @@ void parseExpression(SlangInterpreter* si, int* i);
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, float* frequency_multiplier, int* is_output);
 
-#endif //PARSER_H

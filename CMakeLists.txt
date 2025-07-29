@@ -28,7 +28,8 @@ target_link_libraries(slang_modules PUBLIC m)
 # === Slang Core Library ===
 
 file(GLOB SOURCES ${CMAKE_SOURCE_DIR}/core/src/*.c)
-file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/core/include/*.h)
+#file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/core/include/*.h)
+file(GLOB HEADERS ${CMAKE_SOURCE_DIR}/slang-lib.h)
 
 add_library(slang STATIC ${SOURCES} ${HEADERS})
 

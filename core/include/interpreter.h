@@ -1,6 +1,10 @@
 //
 // Created by sten on 12.06.24.
 //
+#pragma once
+struct Rack;
+typedef struct Rack Rack;
+#define SLANG_DEBUG
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,11 +15,6 @@
 #include "variable.h"
 #include "rack.h"
 #include "parser.h"
-
-
-#ifndef SLANG_INTERPRETER_H
-#define SLANG_INTERPRETER_H
-#define SLANG_DEBUG
 
 typedef struct SlangInterpreter {
     int functions_length;
@@ -79,4 +78,3 @@ char* getInterpreterStatusString(SlangInterpreter* si);
 int isOscillator(Token token);
 
 
-#endif //SLANG_INTERPRETER_H

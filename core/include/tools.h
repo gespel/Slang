@@ -1,14 +1,12 @@
-#ifndef SLANG_TOOLS_H
-#define SLANG_TOOLS_H
+#pragma once
 #include <stdio.h>
 #include "tokenizer.h"
 #include "interpreter.h"
 #include <sys/time.h>
 #include <time.h>
+struct SlangInterpreter;
+typedef struct SlangInterpreter SlangInterpreter;
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef enum SlangLogLevel {
     DBG,
@@ -63,9 +61,3 @@ void printAllOscillators(SlangInterpreter* si);
 void printAllFunctions(SlangInterpreter* si);
 
 float noteNameToFrequency(char *name);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif
