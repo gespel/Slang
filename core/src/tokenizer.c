@@ -19,7 +19,7 @@ Token* tokenize(char* input, int* length) {
             if(isalpha((unsigned char)tokenString[j])) {
                 char* ns = calloc(128, sizeof(char));
                 int nsc = 0;
-                while(isalpha((unsigned char)tokenString[j]) || isdigit((unsigned char)tokenString[j])) {
+                while(isalpha((unsigned char)tokenString[j]) || isdigit((unsigned char)tokenString[j]) || tokenString[j] == '#') {
                     ns[nsc] = tokenString[j];
                     j++;
                     nsc++;

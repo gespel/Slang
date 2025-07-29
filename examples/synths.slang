@@ -3,4 +3,4 @@ b = wavetableosc(strangeone, 110);
 c = sawtoothosc(220);
 d = truesineosc(440);
 e = truesineosc($a5);
-f = squareosc($a1);
+f = squareosc($c#3);
