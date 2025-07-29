@@ -1,8 +1,5 @@
 #include "../include/rack.h"
 
-#include "tools.h"
-
-
 void *getOscillator(Rack* rack, char* name) {
     for (int i = 0; i < rack->numOscillators; i++) {
         switch (rack->oscillators[i]->type) {

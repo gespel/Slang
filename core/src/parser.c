@@ -3,8 +3,6 @@
 //
 #include "../include/parser.h"
 
-#include "interpreter.h"
-
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, float* frequency_multiplier, int* is_output) {
     char* temp = getToken(si, *i).value;
     if(getOscillator(si->main_rack, temp) != NULL) {

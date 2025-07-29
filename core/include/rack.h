@@ -4,6 +4,8 @@
 #include "../../modules/data/include/binaryData.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "tools.h"
+
 
 typedef struct Rack {
     int* sampleRate;
