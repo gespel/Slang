@@ -77,4 +77,6 @@ char* getInterpreterStatusString(SlangInterpreter* si);
 
 int isOscillator(Token token);
 
+void setInput(SlangInterpreter* si, int nr, float *value);
+
 

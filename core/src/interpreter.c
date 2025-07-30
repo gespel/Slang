@@ -350,6 +350,18 @@ float terminal(SlangInterpreter* si, int* i) {
             out = noteNameToFrequency(si->tokens[*i].value);
             consume(i, si->tokens[*i], IDENTIFIER);
             return out;
+        case INPUTA:
+            out = si->inputs[0][0];
+            return out;
+        case INPUTB:
+            out = si->inputs[1][0];
+            return out;
+        case INPUTC:
+            out = si->inputs[2][0];
+            return out;
+        case INPUTD:
+            out = si->inputs[3][0];
+            return out;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);
@@ -432,6 +444,13 @@ int isOscillator(Token token) {
     return 0;
 }
 
+int isInput(Token token) {
+    if (token.tt == INPUTA || token.tt == INPUTB || token.tt == INPUTC || token.tt == INPUTD) {
+        return 1;
+    }
+    return 0;
+}
+
 int getInputIndex(Token token) {
     if (token.tt == INPUTA) {
         return 0;
@@ -446,6 +465,10 @@ int getInputIndex(Token token) {
         return 3;
     }
     return -1;
+}
+
+void setInput(SlangInterpreter* si, int index, float *value) {
+    si->inputs[index] = value;
 }
 
 
