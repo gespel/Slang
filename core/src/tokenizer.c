@@ -6,10 +6,24 @@
 //
 
 Token* tokenize(char* input, int* length) {
+    char *cleaned = calloc(strlen(input), sizeof(char));
+    int cleanedLength = 0;
+    for (int i = 0; i < strlen(input); i++) {
+        if (input[i] == '/' && input[i+1] == '/') {
+            while (input[i] != '\n' && i < strlen(input)) {
+                i++;
+            }
+        }
+        else {
+            cleaned[cleanedLength] = input[i];
+            cleanedLength++;
+        }
+    }
+
 	Token* out = malloc(1024*sizeof(Token));
 	char* tokenString;
   	int tokenCount = 0;
-  	tokenString = strtok(input, " \n\t\r");
+  	tokenString = strtok(cleaned, " \n\t\r");
   	while(tokenString != NULL) {
         for(size_t j = 0; j < strlen(tokenString); j++) {
             Token temp;
@@ -89,6 +103,7 @@ Token* tokenize(char* input, int* length) {
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
+
             }
             else if(tokenString[j] == '>') {
                 temp.tt = GREATER;
