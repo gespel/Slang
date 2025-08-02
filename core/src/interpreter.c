@@ -152,7 +152,7 @@ float interpret(SlangInterpreter* si) {
                         si->openBrackets--;
                     }
                     i++;
-	            }
+                }
             }
         }
         else if(getToken(si, i).tt == WHILE) {
