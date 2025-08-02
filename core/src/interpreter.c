@@ -137,25 +137,23 @@ float interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == IF) {
             consume(&i, tokens[i], IF);
             consume(&i, tokens[i], PARANTHESISLEFT);
-            float left = l3_expression(si, &i);
-            consume(&i, tokens[i], ASSIGN);
-            consume(&i, tokens[i], ASSIGN);
-            float right = l3_expression(si, &i);
 
-            consume(&i, tokens[i], PARANTHESISRIGHT);
-            consume(&i, tokens[i], BRACKETLEFT);
             printDebugMessage(DBG, "IF call found! Evaluating now!");
-            if(left == right) {
-                printDebugMessage(DBG, "IF is true!");
-                si->openBrackets += 1;
-            }
-            else {
-                while(getToken(si, i).tt != BRACKETRIGHT) {
-                    inc(&i);
-                }
-                consume(&i, tokens[i], BRACKETRIGHT);
-                printDebugMessage(DBG, "IF is false!");
-            } 
+
+            int l = checkLogic(si, &i);
+
+			consume(&i, tokens[i], PARANTHESISRIGHT);
+			consume(&i, tokens[i], BRACKETLEFT);
+			int nrbr = si->openBrackets;
+			si->openBrackets++;
+			if (l == 0) {
+				while (si->openBrackets > nrbr) {
+					if (getToken(si, i).tt == BRACKETRIGHT) {
+						si->openBrackets--;
+					}
+					i++;
+				}
+			}
         }
         else if(getToken(si, i).tt == WHILE) {
             consume(&i, tokens[i], WHILE);
@@ -469,6 +467,58 @@ int getInputIndex(Token token) {
 
 void setInput(SlangInterpreter* si, int index, float *value) {
     si->inputs[index] = value;
+}
+
+int checkLogic(SlangInterpreter* si, int* i) {
+    float left = l3_expression(si, i);
+
+    int operand = 0;
+
+    if (getToken(si, *i).tt == ASSIGN) {
+        operand = 1;
+        consume(i, si->tokens[*i], ASSIGN);
+    }
+    else if (getToken(si, *i).tt == SMALLER) {
+        operand = 2;
+        consume(i, si->tokens[*i], SMALLER);
+    }
+    else if (getToken(si, *i).tt == GREATER) {
+        operand = 3;
+        consume(i, si->tokens[*i], GREATER);
+    }
+    else {
+        LOGERROR("MALFORMED LOGIC STATEMENT.");
+        exit(-1);
+    }
+
+    float right = l3_expression(si, i);
+
+    switch (operand) {
+        case 1:
+            if (left == right) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+            break;
+        case 2:
+            if (left < right) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+            break;
+        case 3:
+            if (left > right) {
+                return 1;
+            }
+            else {
+                return 0;
+            }
+            break;
+    }
 }
 
 
