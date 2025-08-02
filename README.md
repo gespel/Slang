@@ -2,7 +2,7 @@
 
 **Slang** is a lightweight, high-performance programming language designed for **audio programming** and **multimedia applications**. It follows a buffer-driven computation model, where audio and multimedia buffers are directly calculated or modified from within the code.
 
-Slang is widely adopted in embedded systems, particularly for writing **firmware** for **Eurorack modules** developed by **PhiLabs** and **GouodModules**. The entire Slang ecosystem is written in **ANSI C**, making it portable across virtually all platforms.
+Slang is widely adopted in embedded systems, particularly for writing **firmware** for **Eurorack modules** developed by **PhiLabs** and **GouodModules**. The entire Slang ecosystem is written in **pure C** with no external dependency, making it portable across virtually all platforms.
 
 
 ## Features
