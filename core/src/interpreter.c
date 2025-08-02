@@ -140,20 +140,20 @@ float interpret(SlangInterpreter* si) {
 
             printDebugMessage(DBG, "IF call found! Evaluating now!");
 
-            int l = checkLogic(si, &i);
+        	int l = checkLogic(si, &i);
 
-			consume(&i, tokens[i], PARANTHESISRIGHT);
-			consume(&i, tokens[i], BRACKETLEFT);
-			int nrbr = si->openBrackets;
-			si->openBrackets++;
-			if (l == 0) {
-				while (si->openBrackets > nrbr) {
-					if (getToken(si, i).tt == BRACKETRIGHT) {
-						si->openBrackets--;
-					}
-					i++;
-				}
-			}
+            consume(&i, tokens[i], PARANTHESISRIGHT);
+            consume(&i, tokens[i], BRACKETLEFT);
+            int nrbr = si->openBrackets;
+            si->openBrackets++;
+            if (l == 0) {
+                while (si->openBrackets > nrbr) {
+                    if (getToken(si, i).tt == BRACKETRIGHT) {
+                        si->openBrackets--;
+                    }
+                    i++;
+	            }
+            }
         }
         else if(getToken(si, i).tt == WHILE) {
             consume(&i, tokens[i], WHILE);
