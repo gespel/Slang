@@ -252,7 +252,7 @@ float interpret(SlangInterpreter* si) {
             }
         }
         else if (isOscillator(getToken(si, i))) {
-            //parseOscillators(si, &i);
+            parseOscillators(si, &i, NULL);
         }
         else {
             LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
