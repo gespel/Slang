@@ -306,10 +306,12 @@ float terminal(SlangInterpreter* si, int* i) {
                 
                 consume(i, si->tokens[*i], PARANTHESISRIGHT);
 
-                SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
+                /*SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
                 
                 function_interpreter->tokens = f->function_tokens;
-                function_interpreter->numTokens = f->function_tokens_length;
+                function_interpreter->numTokens = f->function_tokens_length;*/
+
+				SlangInterpreter *function_interpreter = createSlangInterpreter(f->function_tokens, f->function_tokens_length);
                 
                 for(size_t vi = 0; vi < f->vars_length; vi++) {
                     Variable* nv = malloc(sizeof(Variable));
