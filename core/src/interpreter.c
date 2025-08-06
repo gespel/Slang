@@ -272,7 +272,7 @@ float terminal(SlangInterpreter* si, int* i) {
         case NUMBER:
             out = atof(si->tokens[*i].value);
             inc(i);
-            return out;
+            break;
         case IDENTIFIER:
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
@@ -333,7 +333,6 @@ float terminal(SlangInterpreter* si, int* i) {
                 free(function_interpreter);
                 //printAllVariables(function_interpreter);
                 //printAllFunctions(function_interpreter);
-                return out;
             }
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
@@ -344,67 +343,68 @@ float terminal(SlangInterpreter* si, int* i) {
                 out = tvar->value;
                 inc(i);
             }
-            return out;
+            break;
         case NOTEMARKER:
             consume(i, si->tokens[*i], NOTEMARKER);
             out = noteNameToFrequency(si->tokens[*i].value);
             consume(i, si->tokens[*i], IDENTIFIER);
-            return out;
+            break;
         case INPUTA:
             out = si->inputs[0][0];
-            return out;
+            break;
         case INPUTB:
             out = si->inputs[1][0];
-            return out;
+            break;
         case INPUTC:
             out = si->inputs[2][0];
-            return out;
+            break;
         case INPUTD:
             out = si->inputs[3][0];
-            return out;
+            break;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);
     }
-
+    LOGDEBUG("Terminal: %lf", out);
+    return out;
 }
 
 float l3_expression(SlangInterpreter* si, int* i) {
     float left = l2_expression(si, i);
-    float right;
-
-    switch(getToken(si, *i).tt) {
-        case PLUS:
-            consume(i, si->tokens[*i], PLUS);
-            right = l3_expression(si, i);
-            return left + right;
-        case MINUS:
-            consume(i, si->tokens[*i], MINUS);
-            right = l3_expression(si, i);
-            return left - right;
-        default:
-            break;
+    while (1) {
+        switch(getToken(si, *i).tt) {
+            case PLUS:
+                consume(i, si->tokens[*i], PLUS);
+                left += l2_expression(si, i);  // <-- korrekt!
+                break;
+            case MINUS:
+                consume(i, si->tokens[*i], MINUS);
+                left -= l2_expression(si, i);  // <-- korrekt!
+                break;
+            default:
+                LOGDEBUG("l3 Returning left: %lf", left);
+                return left;
+        }
     }
-    return left;
 }
 
 float l2_expression(SlangInterpreter* si, int* i) {
-    float left, right;
-    left = l1_expression(si, i);
-
-    switch(getToken(si, *i).tt) {
-        case MULTIPLY:
-            consume(i, si->tokens[*i], MULTIPLY);
-            right = l3_expression(si, i);
-            return left * right;
-        case DIVIDE:
-            consume(i, si->tokens[*i], DIVIDE);
-            right = l3_expression(si, i);
-            return left / right;
-        default:
-            break;
+    float left = l1_expression(si, i);
+    while (1) {
+        switch(getToken(si, *i).tt) {
+            case MULTIPLY:
+                consume(i, si->tokens[*i], MULTIPLY);
+                left *= l1_expression(si, i);  // <-- korrekt!
+                break;
+            case DIVIDE:
+                consume(i, si->tokens[*i], DIVIDE);
+                left /= l1_expression(si, i);  // <-- korrekt!
+                break;
+            default:
+                LOGDEBUG("l2 Returning left: %lf", left);
+                return left;
+        }
     }
-    return left;
 }
 
 float l1_expression(SlangInterpreter* si, int* i) {
@@ -422,6 +422,7 @@ float l1_expression(SlangInterpreter* si, int* i) {
         //printDebugMessage("No parantheses. Regular left...");
         left = terminal(si, i);
     }
+    LOGDEBUG("l1 Returning left: %lf", left);
     return left;
 }
 
