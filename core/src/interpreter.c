@@ -334,6 +334,9 @@ float terminal(SlangInterpreter* si, int* i) {
                 //printAllVariables(function_interpreter);
                 //printAllFunctions(function_interpreter);
             }
+			//else if () {
+
+			//}
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
