@@ -170,7 +170,7 @@ float interpret(SlangInterpreter* si) {
 				}
 				i++;
 			}
-			consume(&i, tokens[i], BRACKETSLEFT);
+			consume(&i, tokens[i], BRACKETLEFT);
 
 			int loop_body_index = i;
 			int open_brackets = 1;
