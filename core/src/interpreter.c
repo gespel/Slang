@@ -157,89 +157,32 @@ float interpret(SlangInterpreter* si) {
         }
         else if(getToken(si, i).tt == WHILE) {
             consume(&i, tokens[i], WHILE);
-            consume(&i, tokens[i], PARANTHESISLEFT);
-            char* run_var_name = getToken(si, i).value;
-            consume(&i, tokens[i], IDENTIFIER);
-            consume(&i, tokens[i], ASSIGN);
-            float run_var_assign = terminal(si, &i);
+			consume(&i, tokens[i], PARANTHESISLEFT);
+			int logic_start_index = i;
 
-            Variable* running_var = malloc(sizeof(Variable));
-            running_var->name = run_var_name;
-            running_var->value = run_var_assign;
-            consume(&i, tokens[i], COMMA);
-            
-            char* logic_var_left_name = getToken(si, i).value;
-            consume(&i, tokens[i], IDENTIFIER);
+			int open_parantheses = 1;
+			while(open_parantheses > 0) {
+				if (getToken(si, i).tt == PARANTHESISLEFT) {
+					open_parantheses++;
+				}
+				if (getToken(si, i).tt == PARANTHESISRIGHT) {
+					open_parantheses--;
+				}
+				i++;
+			}
+			consume(&i, tokens[i], BRACKETSLEFT);
 
-            char* logic_operator = getToken(si, i).value;
-            inc(&i);
-            
-            float logic_static_right = terminal(si, &i);
-            consume(&i, tokens[i], COMMA);
-           
-            int mod_index = i;
-            while(getToken(si, i).tt != PARANTHESISRIGHT) {
-                inc(&i);
-            }
-            consume(&i, tokens[i], PARANTHESISRIGHT);
-            consume(&i, tokens[i], BRACKETLEFT);
-            int other_brackets = -1;
-            Token* loop_tokens = malloc(sizeof(Token)*1024);
-            int loop_tokens_index = 0;
-            
-            while(getToken(si, i).tt != BRACKETRIGHT && other_brackets != 0) {
-                if(getToken(si, i).tt == BRACKETLEFT) {
-                    other_brackets++;
-                }
-                if(getToken(si, i).tt == BRACKETRIGHT) {
-                    other_brackets--;
-                }
-                loop_tokens[loop_tokens_index] = getToken(si, i);
-                loop_tokens_index++;
-                inc(&i);
-            }
-            consume(&i, tokens[i], BRACKETRIGHT);
-            int loop_end_index = i;
-            
-            SlangInterpreter* loop_interpreter = malloc(sizeof(SlangInterpreter));
-            loop_interpreter->tokens = loop_tokens;
-            loop_interpreter->numTokens = loop_tokens_index;
-
-            for(size_t variable_index = 0; variable_index < si->vars_length; variable_index++) {
-                addVariable(loop_interpreter, si->variables[variable_index]);
-            }
-            addVariable(loop_interpreter, running_var);
-            addVariable(si, running_var);
-            Variable* logic_var_left = getVariableByName(loop_interpreter, logic_var_left_name);
-            
-            for(size_t function_index = 0; function_index < si->functions_length; function_index++) {
-                loop_interpreter->functions[function_index] = si->functions[function_index];
-            }
-            loop_interpreter->functions_length = si->functions_length;
-            
-            if(*logic_operator == '<') {
-                while(logic_var_left->value < logic_static_right) {
-                    interpret(loop_interpreter);
-                    i = mod_index;
-                    logic_var_left->value = l3_expression(si, &i);
-                }
-            }
-            else if(*logic_operator == '>') {
-                while(logic_var_left->value > logic_static_right) {
-                    interpret(loop_interpreter);
-                    i = mod_index;
-                    logic_var_left->value = l3_expression(si, &i);
-                }
-            }
-            else if(*logic_operator == '=') {
-                while(logic_var_left->value == logic_static_right) {
-                    interpret(loop_interpreter);
-                    i = mod_index;
-                    logic_var_left->value = l3_expression(si, &i);
-                }
-            }
-            free(loop_interpreter);
-            i = loop_end_index;
+			int loop_body_index = i;
+			int open_brackets = 1;
+			while(open_brackets > 0) {
+				if (getToken(si, i).tt == BRACKETLEFT) {
+					open_brackets++;
+				}
+				if (getToken(si, i).tt == BRACKETRIGHT) {
+					open_brackets--;
+				}
+				i++;
+			}
         }
         else if(getToken(si, i).tt == BRACKETRIGHT) {
             if((si->openBrackets) > 0) {
