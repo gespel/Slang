@@ -8,6 +8,10 @@ void increase(int* i) {
     (*i)++;
 }
 
+void copyInterpreter(SlangInterpreter* src, SlangInterpreter* dst) {
+
+}
+
 int consume(int* i, Token token, TokenType expected) {
 #ifdef SLANG_DEBUG
     LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);

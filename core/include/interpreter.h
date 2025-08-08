@@ -31,6 +31,8 @@ typedef struct SlangInterpreter {
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
+void copyInterpreter(SlangInterpreter* src, SlangInterpreter* dst);
+
 int getInputIndex(Token token);
 
 void linkInput(SlangInterpreter* si, int nr, float *value);
