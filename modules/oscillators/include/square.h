@@ -5,18 +5,8 @@
 #ifndef SQUARE_H
 #define SQUARE_H
 #include <stdlib.h>
+#include "oscillator_types.h"
 
-typedef struct SquareOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
-    float volume;
-    float phase;
-    int sampleRate;
-    char* name;
-    int isOutput;
-    int index;
-} SquareOscillator;
 
 SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput);
 

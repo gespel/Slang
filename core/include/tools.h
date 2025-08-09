@@ -4,16 +4,10 @@
 #include "interpreter.h"
 #include <sys/time.h>
 #include <time.h>
-struct SlangInterpreter;
-typedef struct SlangInterpreter SlangInterpreter;
+#include "core_types.h"
 
 
-typedef enum SlangLogLevel {
-    DBG,
-    INFO,
-    WARN,
-    ERR,
-} SlangLogLevel;
+
 
 #define LOGDEBUG(...) do { \
 char* dbgmsg = malloc(8192); \

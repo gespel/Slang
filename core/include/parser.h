@@ -4,9 +4,6 @@
 #pragma once
 #include "interpreter.h"
 
-struct SlangInterpreter;
-typedef struct SlangInterpreter SlangInterpreter;
-
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name);
 

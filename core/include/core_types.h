@@ -4,6 +4,72 @@
 
 #ifndef CORE_TYPES_H
 #define CORE_TYPES_H
+#include "../../modules/oscillators/include/oscillator_types.h"
+
+typedef enum SlangLogLevel {
+    DBG,
+    INFO,
+    WARN,
+    ERR,
+} SlangLogLevel;
+
+typedef enum TokenType {
+    IDENTIFIER,
+    NUMBER,
+    FUNCTION,
+    SEMICOLON,
+    BRACKETLEFT,
+    BRACKETRIGHT,
+    PARANTHESISLEFT,
+    PARANTHESISRIGHT,
+    ASSIGN,
+    PLUS,
+    MINUS,
+    MULTIPLY,
+    DIVIDE,
+    RETURN,
+    FOR,
+    IF,
+    COMMA,
+    WHILE,
+    SMALLER,
+    GREATER,
+    SINEOSC,
+    TRUESINEOSC,
+    SAWOSC,
+    WAVEOSC,
+    SQUAREOSC,
+    INPUTA,
+    INPUTB,
+    INPUTC,
+    INPUTD,
+    NOTEMARKER,
+} TokenType;
+
+typedef struct t {
+    TokenType tt;
+    char* value;
+} Token;
+
+typedef struct Variable {
+    char* name;
+    float value;
+} Variable;
+
+typedef struct Function {
+    char* name;
+    Token* function_tokens;
+    size_t function_tokens_length;
+    char** vars;
+    size_t vars_length;
+} Function;
+
+typedef struct Rack {
+    int* sampleRate;
+    int* bufferSize;
+    Oscillator** oscillators;
+    int numOscillators;
+} Rack;
 
 typedef struct SlangInterpreter {
     int functions_length;

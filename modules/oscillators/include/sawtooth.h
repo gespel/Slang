@@ -4,17 +4,7 @@
 
 #ifndef SAWTOOTH_H
 #define SAWTOOTH_H
-
-typedef struct SawtoothOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
-    float volume;
-    float phase;
-    int sampleRate;
-    char* name;
-    int isOutput;
-} SawtoothOscillator;
+#include "oscillator_types.h"
 
 float getSawtoothSample(SawtoothOscillator* oscillator);
 

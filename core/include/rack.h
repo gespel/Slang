@@ -5,14 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "tools.h"
-
-
-typedef struct Rack {
-    int* sampleRate;
-    int* bufferSize;
-    Oscillator** oscillators;
-    int numOscillators;
-} Rack;
+#include "core_types.h"
 
 void *getOscillator(Rack* rack, char* name);
 

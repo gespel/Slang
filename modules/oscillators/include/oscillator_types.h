@@ -1,0 +1,71 @@
+//
+// Created by Sten on 09.08.2025.
+//
+
+#ifndef OSCILLATOR_TYPES_H
+#define OSCILLATOR_TYPES_H
+
+typedef struct WavetableOscillator {
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    int index;
+    int wavetableLength;
+    int sampleRate;
+    char* name;
+    float* waveTable;
+    int isOutput;
+} WavetableOscillator;
+
+typedef struct SawtoothOscillator {
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
+    int sampleRate;
+    char* name;
+    int isOutput;
+} SawtoothOscillator;
+
+typedef struct SquareOscillator {
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
+    int sampleRate;
+    char* name;
+    int isOutput;
+    int index;
+} SquareOscillator;
+
+typedef struct SineOscillator {
+    float* frequency;
+    float* sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
+    int sampleRate;
+    char* name;
+    int isOutput;
+} SineOscillator;
+
+typedef enum OscillatorType {
+    WAVETABLE, SQUARE, SAWTOOTH, SINE
+} OscillatorType;
+
+typedef union OscillatorData {
+    WavetableOscillator* wavetable;
+    SawtoothOscillator* sawtooth;
+    SineOscillator* sine;
+    SquareOscillator* square;
+} OscillatorData;
+
+typedef struct Oscillator {
+    OscillatorType type;
+    OscillatorData* data;
+} Oscillator;
+
+#endif //OSCILLATOR_TYPES_H

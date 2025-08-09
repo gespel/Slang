@@ -6,22 +6,8 @@
 #include "sawtooth.h"
 #include "sine.h"
 #include "square.h"
+#include "oscillator_types.h"
 
-typedef enum OscillatorType {
-    WAVETABLE, SQUARE, SAWTOOTH, SINE
-} OscillatorType;
-
-typedef union OscillatorData {
-    WavetableOscillator* wavetable;
-    SawtoothOscillator* sawtooth;
-    SineOscillator* sine;
-    SquareOscillator* square;
-} OscillatorData;
-
-typedef struct Oscillator {
-    OscillatorType type;
-    OscillatorData* data;
-} Oscillator;
 
 Oscillator *createOscillator(void* data, OscillatorType type);
 

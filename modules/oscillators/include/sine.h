@@ -7,17 +7,8 @@
 #define M_PI 3.14159265358979323846
 #include <math.h>
 #include <stdlib.h>
+#include "oscillator_types.h"
 
-typedef struct SineOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
-    float volume;
-    float phase;
-    int sampleRate;
-    char* name;
-    int isOutput;
-} SineOscillator;
 
 float getSineSample(SineOscillator* oscillator);
 

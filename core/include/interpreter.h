@@ -2,8 +2,6 @@
 // Created by sten on 12.06.24.
 //
 #pragma once
-struct Rack;
-typedef struct Rack Rack;
 #define SLANG_DEBUG
 #include <stdio.h>
 #include <stdlib.h>

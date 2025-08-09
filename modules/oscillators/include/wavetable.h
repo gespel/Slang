@@ -9,20 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../../data/include/binaryData.h"
-
-
-typedef struct WavetableOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
-    float volume;
-    int index;
-    int wavetableLength;
-    int sampleRate;
-    char* name;
-    float* waveTable;
-    int isOutput;
-} WavetableOscillator;
+#include "oscillator_types.h"
 
 float getWavetableSample(WavetableOscillator* oscillator);
 
