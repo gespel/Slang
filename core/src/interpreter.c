@@ -9,7 +9,25 @@ void increase(int* i) {
 }
 
 void copyInterpreter(SlangInterpreter* src, SlangInterpreter* dst) {
+    memcpy(dst, src, sizeof(SlangInterpreter));
+    dst->tokens = malloc(sizeof(Token) * src->numTokens);
+    memcpy(dst->tokens, src->tokens, sizeof(Token) * src->numTokens);
 
+    for (int i = 0; i < src->functions_length; i++) {
+        dst->functions[i] = malloc(sizeof(Function));
+        memcpy(dst->functions[i], src->functions[i], sizeof(Function));
+    }
+
+    for (int i = 0; i < src->vars_length; i++) {
+        dst->variables[i] = malloc(sizeof(Variable));
+        memcpy(dst->variables[i], src->variables[i], sizeof(Variable));
+    }
+    dst->functions_length = src->functions_length;
+    dst->vars_length = src->vars_length;
+    dst->numTokens = src->numTokens;
+    dst->openBrackets = src->openBrackets;
+    dst->last_token_index = src->last_token_index;
+    dst->main_rack = src->main_rack;
 }
 
 int consume(int* i, Token token, TokenType expected) {
@@ -178,6 +196,8 @@ float interpret(SlangInterpreter* si) {
 
 			int loop_body_index = i;
 			int open_brackets = 1;
+            int loop_body_tokens_length = 0;
+            Token *loop_body_tokens = malloc(sizeof(Token) * 1024);
 			while(open_brackets > 0) {
 				if (getToken(si, i).tt == BRACKETLEFT) {
 					open_brackets++;
@@ -185,8 +205,12 @@ float interpret(SlangInterpreter* si) {
 				if (getToken(si, i).tt == BRACKETRIGHT) {
 					open_brackets--;
 				}
+                loop_body_tokens[loop_body_tokens_length] = tokens[i];
 				i++;
+			    loop_body_tokens_length++;
 			}
+
+            Function* loop_body = malloc(sizeof(Function));
         }
         else if(getToken(si, i).tt == BRACKETRIGHT) {
             if((si->openBrackets) > 0) {
