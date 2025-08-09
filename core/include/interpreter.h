@@ -15,19 +15,7 @@ typedef struct Rack Rack;
 #include "variable.h"
 #include "rack.h"
 #include "parser.h"
-
-typedef struct SlangInterpreter {
-    int functions_length;
-    Function* functions[8192];
-    int vars_length;
-    Variable* variables[8192];
-    Token* tokens;
-    int numTokens;
-    int openBrackets;
-    int last_token_index;
-    Rack* main_rack;
-    float *inputs[4];
-} SlangInterpreter;
+#include "core_types.h"
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
