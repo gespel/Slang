@@ -46,7 +46,7 @@ typedef enum TokenType {
     NOTEMARKER,
 } TokenType;
 
-typedef struct t {
+typedef struct Token {
     TokenType tt;
     char* value;
 } Token;
