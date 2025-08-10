@@ -48,6 +48,13 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
         freqptr[0] = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
+    if (getToken(si, *i).tt == MINUS) {
+        consume(i, getToken(si, *i), MINUS);
+        *is_output = 0;
+    }
+    else {
+        *is_output = 1;
+    }
 }
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name) {
@@ -85,7 +92,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, 48000, 1);
+	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, 48000, *is_output);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 

@@ -58,16 +58,24 @@ float getSample(Rack* rack) {
     for (int i = 0; i < rack->numOscillators; i++) {
         switch (rack->oscillators[i]->type) {
             case SINE:
-                out += getSineSample(rack->oscillators[i]->data->sine);
+                if (rack->oscillators[i]->data->sine->isOutput == 1) {
+                    out += getSineSample(rack->oscillators[i]->data->sine);
+                }
                 break;
             case WAVETABLE:
-                out += getWavetableSample(rack->oscillators[i]->data->wavetable);
+                if (rack->oscillators[i]->data->wavetable->isOutput == 1) {
+                    out += getWavetableSample(rack->oscillators[i]->data->wavetable);
+                }
                 break;
             case SAWTOOTH:
-                out += getSawtoothSample(rack->oscillators[i]->data->sawtooth);
+                if (rack->oscillators[i]->data->sawtooth->isOutput == 1) {
+                    out += getSawtoothSample(rack->oscillators[i]->data->sawtooth);
+                }
                 break;
             case SQUARE:
-                out += getSquareSample(rack->oscillators[i]->data->square);
+                if (rack->oscillators[i]->data->square->isOutput == 1) {
+                    out += getSquareSample(rack->oscillators[i]->data->square);
+                }
                 break;
             default:
                 out += 0;
