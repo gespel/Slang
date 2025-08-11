@@ -1,20 +1,24 @@
 #include "../include/tools.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
-#ifdef SLANG_DEBUG
     char buffer[30];
     struct timeval tv;
     time_t curtime;
-    gettimeofday(&tv, NULL); 
+    gettimeofday(&tv, NULL);
     curtime = tv.tv_sec;
     strftime(buffer,30,"%d-%m-%Y %T", localtime(&curtime));
 
+    if (ll == ERR) {
+        printf("[Slang] \033[34m%s\033[0m - \033[91mERROR\033[0m: %s\n", buffer, message);
+        return;
+    }
+#ifdef SLANG_DEBUG
     char* prefix = malloc(sizeof(char)*16);
     switch (ll) {
         case DBG: prefix = "\033[95mDEBUG\033[0m"; break;
         case INFO: prefix = "\033[92mINFO\033[0m"; break;
         case WARN: prefix = "\033[93mWARNING\033[0m"; break;
-        case ERR: prefix = "\033[91mERROR\033[0m"; break;
+        //case ERR: prefix = "\033[91mERROR\033[0m"; break;
     }
 
     printf("[Slang] \033[34m%s\033[0m - %s: %s\n", buffer, prefix, message);
