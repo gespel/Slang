@@ -41,7 +41,7 @@ jobs:
         run: | 
           mkdir -p build 
           cd build
-          cmake .. 
+          cmake .. -DSLANG_DEBUG=ON
           make
       - name: Run test
         run: |
