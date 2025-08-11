@@ -17,11 +17,26 @@ void printLogo() {
     printf(" /_/\\__/ / /  / /_/_/ ___/\\ / /_________/\\ \\ \\  / / /    / / // / /_____/ / /\n");
     printf(" \\ \\/___/ /  /_______/\\__\\// / /_       __\\ \\_\\/ / /    / / // / /______\\/ /\n");
     printf("  \\_____\\/   \\_______\\/    \\_\\___\\     /____/_/\\/_/     \\/_/ \\/___________/\n");
-    printf("By Sten (gespel) Heimbrodt - www.sten-heimbrodt.de; www.github.com/gespel/Slang\n");
+    printf("By Sten (gespel) Heimbrodt - www.sten-heimbrodt.de; www.github.com/gespel/Slang\n\n");
 }
 
 int main(int argc, char **argv) {
-    printLogo();
+	printLogo();
+
+	int live_render_active = 0;
+	char *pTmp;
+
+	if (( pTmp = getenv( "SLANG_LIVE_RENDER" )) != NULL ) {
+  		if (pTmp[0] == '1') {
+			live_render_active = 1;
+		}
+
+	}
+	else {
+		printf("SLANG_LIVE_RENDER is set to %s. No audio output is printed\n", pTmp);
+	}
+
+
     if(argc == 2) {
         char p[16384];
         char buff[2048];
@@ -43,10 +58,14 @@ int main(int argc, char **argv) {
         printAllVariables(main_interpreter);
         printAllOscillators(main_interpreter);
 
-        SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
-        float* buf = renderBuffer(sbc);
-        printAudioBuffer(buf, 512);
-        free(buf);
+        SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 32);
+
+		while (live_render_active == 1) {
+			float* buf = renderBuffer(sbc);
+        	printAudioBuffer(buf, 32);
+        	free(buf);
+		}
+
 
         free(main_interpreter);
     }
