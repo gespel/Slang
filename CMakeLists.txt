@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.9)
 
 project(slang VERSION 1.0.1 DESCRIPTION "Slang Language Library")
 
+#add_definitions(-DSLANG_DEBUG)
+if(SLANG_DEBUG)
+    add_definitions(-DSLANG_DEBUG)
+endif()
+
 # Für macOS: Universal Binary (Intel + Apple Silicon)
 if(APPLE)
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")

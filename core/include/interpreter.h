@@ -2,7 +2,6 @@
 // Created by sten on 12.06.24.
 //
 #pragma once
-#define SLANG_DEBUG
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,6 +13,7 @@
 #include "rack.h"
 #include "parser.h"
 #include "core_types.h"
+//#define SLANG_DEBUG
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 

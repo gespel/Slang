@@ -4,6 +4,7 @@
 extern "C" {
 #endif
 
+
 void increase(int* i) {
     (*i)++;
 }
