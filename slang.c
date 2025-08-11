@@ -53,7 +53,6 @@ int main(int argc, char **argv) {
 
         printf("%d tokens!\n", length);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
-        enableDebugLogging(main_interpreter);
         interpret(main_interpreter);
         printAllFunctions(main_interpreter);
         printAllVariables(main_interpreter);
