@@ -106,7 +106,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack->oscillators = malloc(sizeof(Oscillator) * 128);
     out->main_rack->numOscillators = 0;
     out->functions_length = 0;
-    out->variables_length = 0;
+    out->vars_length = 0;
     return out;
 }
 
