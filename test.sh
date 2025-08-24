@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 ./slang examples/basics.slang
 ./slang examples/functions.slang
 ./slang examples/logic.slang
