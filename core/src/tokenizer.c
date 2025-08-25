@@ -6,7 +6,7 @@
 //
 
 Token* tokenize(char* input, int* length) {
-    char *cleaned = calloc(strlen(input), sizeof(char));
+    char *cleaned = calloc(strlen(input) + 1, sizeof(char));
     int cleanedLength = 0;
     for (int i = 0; i < strlen(input); i++) {
         if (input[i] == '/' && input[i+1] == '/') {
@@ -19,8 +19,9 @@ Token* tokenize(char* input, int* length) {
             cleanedLength++;
         }
     }
+    cleaned[cleanedLength] = '\0';
 
-	Token* out = malloc(1024*sizeof(Token));
+	Token* out = calloc(1024, sizeof(Token));
 	char* tokenString;
   	int tokenCount = 0;
   	tokenString = strtok(cleaned, " \n\t\r");
