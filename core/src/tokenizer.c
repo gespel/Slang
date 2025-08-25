@@ -29,7 +29,7 @@ Token* tokenize(char* input, int* length) {
   	while(tokenString != NULL && exit_marked == 0) {
         for(size_t j = 0; j < strlen(tokenString); j++) {
             if (tokenString[j] == '\0') {
-                printf("EXIT MARK HIT!\n");
+                //printf("EXIT MARK HIT!\n");
                 exit_marked = 1;
                 break;
             }
@@ -49,7 +49,7 @@ Token* tokenize(char* input, int* length) {
 
                 temp.tt = IDENTIFIER;
                 temp.value = ns;
-                printf("Tokenzier registered identifier: %s\n", ns);
+                //printf("Tokenzier registered identifier: %s\n", ns);
             }
             else if(tokenString[j] == ';') {
                 temp.tt = SEMICOLON;
