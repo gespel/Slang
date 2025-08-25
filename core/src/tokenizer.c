@@ -48,6 +48,7 @@ Token* tokenize(char* input, int* length) {
 
                 temp.tt = IDENTIFIER;
                 temp.value = ns;
+                printf("Tokenzier registered identifier: %s\n", ns);
             }
             else if(tokenString[j] == ';') {
                 temp.tt = SEMICOLON;
