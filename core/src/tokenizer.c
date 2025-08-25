@@ -26,6 +26,8 @@ Token* tokenize(char* input, int* length) {
   	tokenString = strtok(cleaned, " \n\t\r");
   	while(tokenString != NULL) {
         for(size_t j = 0; j < strlen(tokenString); j++) {
+            if (tokenString[j] == '\0')
+                break;
             Token temp;
             char *tmpString = malloc(sizeof(char) * 2);
 
@@ -128,9 +130,6 @@ Token* tokenize(char* input, int* length) {
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
-            }
-            else if (tokenString[j] == '\0') {
-                break;
             }
             else if(isdigit((unsigned char)tokenString[j])) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
