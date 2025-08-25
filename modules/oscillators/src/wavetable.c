@@ -51,6 +51,9 @@ float* getWavetableByName(char* name) {
     if (strcmp("strangethree", name) == 0) {
         return random_wave_three;
     }
+    if (strcmp("strangefour", name) == 0) {
+        return random_wave_four;
+    }
     if (strcmp("sine", name) == 0) {
         return sine_wave;
     }
