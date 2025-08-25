@@ -24,10 +24,13 @@ Token* tokenize(char* input, int* length) {
 	char* tokenString;
   	int tokenCount = 0;
   	tokenString = strtok(cleaned, " \n\t\r");
-  	while(tokenString != NULL) {
+    int exit_marked = 0;
+  	while(tokenString != NULL && exit_marked == 0) {
         for(size_t j = 0; j < strlen(tokenString); j++) {
-            if (tokenString[j] == '\0')
+            if (tokenString[j] == '\0') {
+                exit_marked = 1;
                 break;
+            }
             Token temp;
             char *tmpString = malloc(sizeof(char) * 2);
 
