@@ -129,6 +129,9 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
+            else if (tokenString[j] == '\0') {
+                break;
+            }
             else if(isdigit((unsigned char)tokenString[j])) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
                 char* ns = calloc(128, sizeof(char));
