@@ -10,5 +10,6 @@ extern float random_wave_one[];
 extern float random_wave_two[];
 extern float random_wave_three[];
 extern float random_wave_four[];
+extern float random_wave_five[];
 
 #endif //BINARYDATA_H
