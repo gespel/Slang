@@ -3,6 +3,7 @@ test
 *.o
 *.so
 **/.idea/
+*.dSYM
 .idea/
 slang
 .vscode
