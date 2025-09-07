@@ -60,3 +60,28 @@ float* getWavetableByName(char* name) {
 
     return NULL;
 }
+
+float* loadWavetableByName(char* name) {
+    char *line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    int i = 0;
+    float* out = malloc(sizeof(float) * 4800);
+
+    char *path = malloc(sizeof(char) * 1024);
+    snprintf(path, 1024, "%s/%s.swave", WAVETABLE_FILE_PATH, name);
+
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL) {
+        printf("Error opening file\n");
+        exit(1);
+    }
+    while (getline(&line, &len, fp) != -1) {
+        //printf("Read line: %s\n", line);
+        out[i] = atof(line);
+        //printf("Parsed number: %lf\n", out[0]);
+        i++;
+    }
+    free(path);
+    return out;
+}

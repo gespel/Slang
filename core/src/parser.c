@@ -72,10 +72,11 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-		float *wt = getWavetableByName(waveName);
+		float *wt = loadWavetableByName(waveName);
 
 		if(wt != NULL) {
-			WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
+			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
+		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, 48000, *is_output);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
 		}
