@@ -73,7 +73,7 @@ float* loadWavetableByName(char* name) {
 
     FILE *fp = fopen(path, "r");
     if (fp == NULL) {
-        printf("Error opening file\n");
+        printf("Error opening file %s\n", path);
         exit(1);
     }
     while (getline(&line, &len, fp) != -1) {
