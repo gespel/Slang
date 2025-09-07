@@ -5,7 +5,7 @@
 #ifndef WAVETABLE_H
 #define WAVETABLE_H
 #define M_PI 3.14159265358979323846
-#define WAVETABLE_FILE_PATH "/mnt/c/Users/stenh/Desktop/Audioprogramming/Slang/waves"
+#define WAVETABLE_FILE_PATH "waves"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
