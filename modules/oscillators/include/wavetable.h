@@ -12,6 +12,8 @@
 #include <string.h>
 #include "../../data/include/binaryData.h"
 #include "oscillator_types.h"
+#include <errno.h>
+#include <locale.h>
 
 float getWavetableSample(WavetableOscillator* oscillator);
 

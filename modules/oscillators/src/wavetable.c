@@ -62,27 +62,36 @@ float* getWavetableByName(char* name) {
 }
 
 float* loadWavetableByName(char* name) {
+    setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
     size_t len = 0;
-    ssize_t read;
     int i = 0;
     float* out = malloc(sizeof(float) * 4800);
 
-    char *path = malloc(sizeof(char) * 1024);
+    char path[1024];
     snprintf(path, 1024, "%s/%s.swave", WAVETABLE_FILE_PATH, name);
 
     FILE *fp = fopen(path, "r");
-    if (fp == NULL) {
-        printf("Error opening file %s\n", path);
-        exit(1);
-    }
+    if (!fp) { perror("fopen"); exit(1); }
+
     while (getline(&line, &len, fp) != -1) {
-        //printf("Read line: %s\n", line);
-        out[i] = atof(line);
-        LOGINFO("Parsing wavetable value: %f", out[i]);
-        //printf("Parsed number: %lf\n", out[0]);
-        i++;
+        // BOM entfernen falls vorhanden
+        if ((unsigned char)line[0] == 0xEF) line += 3;
+
+        line[strcspn(line, "\r\n")] = '\0';
+
+        char *end;
+        errno = 0;
+        double val = strtod(line, &end);
+        if (end == line) {
+            continue;
+        }
+
+        out[i++] = (float)val;
+        //printf("Parsed value: %f\n", out[i-1]);
     }
-    free(path);
+
+    free(line);
+    fclose(fp);
     return out;
 }
