@@ -79,6 +79,7 @@ float* loadWavetableByName(char* name) {
     while (getline(&line, &len, fp) != -1) {
         //printf("Read line: %s\n", line);
         out[i] = atof(line);
+        LOGINFO("Parsing wavetable value: %f", out[i]);
         //printf("Parsed number: %lf\n", out[0]);
         i++;
     }
