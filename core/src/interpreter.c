@@ -110,6 +110,23 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     return out;
 }
 
+void destroySlangInterpreter(SlangInterpreter* si) {
+    for(int i = 0; i < si->functions_length; i++) {
+        free(si->functions[i]);
+    }
+    for(int i = 0; i < si->vars_length; i++) {
+        free(si->variables[i]);
+    }
+    for(int i = 0; i < si->numTokens; i++) {
+        free(si->tokens[i].value);
+    }
+    for(int i = 0; i < si->main_rack->numOscillators; i++) {
+        free(si->main_rack->oscillators[i]);
+    }
+    free(si->main_rack);
+    free(si);
+}
+
 void addTokensToInterpreter(SlangInterpreter* si, Token* tokens, size_t numTokens) {
     for(int i = 0; i < numTokens; i++) {
         si->tokens[si->numTokens + i] = tokens[i];

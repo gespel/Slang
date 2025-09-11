@@ -17,6 +17,8 @@
 
 SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens);
 
+void destroySlangInterpreter(SlangInterpreter* si);
+
 void copyInterpreter(SlangInterpreter* src, SlangInterpreter* dst);
 
 int getInputIndex(Token token);
