@@ -82,7 +82,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		}
 		else {
 			LOGERROR("could not find given wavetable %s", waveName);
-			exit(1);
 		}
 
     }
