@@ -7,14 +7,8 @@
 #include "interpreter.h"
 #include "core_types.h"
 
-typedef struct SlangBufferCore {
-    SlangInterpreter* interpreter;
-    float* buffer;
-    int bufferSize;
-    int sampleRate;
-} SlangBufferCore;
-
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int bufferSize);
+void destroyBufferCore(SlangBufferCore* sbc);
 float* renderBuffer(SlangBufferCore* sbc);
 
 #endif //BUFFER_CORE_H

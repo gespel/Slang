@@ -15,6 +15,15 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int buff
     return bufferCore;
 }
 
+void destroyBufferCore(SlangBufferCore* sbc) {
+    if (sbc) {
+        if (sbc->buffer) {
+            free(sbc->buffer);
+        }
+        free(sbc);
+    }
+}
+
 float* renderBuffer(SlangBufferCore* sbc) {
     Rack* rack = sbc->interpreter->main_rack;
     float* out = malloc(sizeof(float) * sbc->bufferSize);

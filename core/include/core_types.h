@@ -84,4 +84,11 @@ typedef struct SlangInterpreter {
     float *inputs[4];
 } SlangInterpreter;
 
+typedef struct SlangBufferCore {
+    SlangInterpreter* interpreter;
+    float* buffer;
+    int bufferSize;
+    int sampleRate;
+} SlangBufferCore;
+
 #endif //CORE_TYPES_H
