@@ -82,6 +82,7 @@ typedef struct SlangInterpreter {
     int last_token_index;
     Rack* main_rack;
     float *inputs[4];
+    int sampleRate;
 } SlangInterpreter;
 
 typedef struct SlangBufferCore {

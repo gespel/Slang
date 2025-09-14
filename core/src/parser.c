@@ -76,7 +76,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 		if(wt != NULL) {
 			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
-		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, 48000, *is_output);
+		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
 		}
@@ -92,7 +92,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, 48000, *is_output);
+	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
@@ -107,7 +107,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, 48000, *is_output);
+		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, si->sampleRate, *is_output);
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
@@ -121,7 +121,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-        SineOscillator *osc = createSineOscillator(freqptr, frequency_multiplier, name, 48000, *is_output);
+        SineOscillator *osc = createSineOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
 
 		Oscillator *o = createOscillator(osc, SINE);
 
@@ -135,7 +135,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, freqptr, &frequency_multiplier, is_output);
 
-        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, 48000, *is_output);
+        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
 
         Oscillator *o = createOscillator(osc, SQUARE);
 

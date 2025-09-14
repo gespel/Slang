@@ -12,6 +12,7 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int buff
     bufferCore->interpreter->main_rack->sampleRate = &bufferCore->sampleRate;
     bufferCore->buffer = malloc(sizeof(float) * bufferSize);
     setSampleRateForAllOscillators(bufferCore->interpreter->main_rack, sampleRate);
+    si->sampleRate = sampleRate;
     return bufferCore;
 }
 
