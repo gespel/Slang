@@ -50,3 +50,13 @@ jobs:
           ./slang examples/functions.slang
           ./slang examples/logic.slang
           ./slang examples/synths.slang
+  image:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t slang:latest .
