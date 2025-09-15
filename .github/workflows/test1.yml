@@ -60,3 +60,5 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t slang:latest .
+          docker images
+          docker run --rm slang:latest
