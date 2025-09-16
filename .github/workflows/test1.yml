@@ -34,10 +34,10 @@ jobs:
         make
     
     - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifact
-          path: slang
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifact
+        path: slang
   test:
     needs: build
     runs-on: ubuntu-latest
