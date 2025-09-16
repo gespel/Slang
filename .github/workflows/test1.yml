@@ -43,13 +43,21 @@ jobs:
           cd build
           cmake .. -DSLANG_DEBUG=ON
           make
+          cd ..
+          make
       - name: Run test
         run: |
-          make
           ./slang examples/basics.slang
           ./slang examples/functions.slang
           ./slang examples/logic.slang
           ./slang examples/synths.slang
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifact
+          path: slang
+
   image:
     needs: build
     runs-on: ubuntu-latest
@@ -74,3 +82,28 @@ jobs:
       - name: Push image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/slang:latest
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: ./dist
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false
+          files: ./dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
