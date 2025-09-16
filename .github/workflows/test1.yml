@@ -32,6 +32,7 @@ jobs:
         make -j$(nproc)
         cd ..
         make
+        chmod +x slang
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
