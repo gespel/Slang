@@ -1,3 +1,5 @@
+#ifndef STEPSEQUENCER_TYPES_H
+#define STEPSEQUENCER_TYPES_H
 typedef struct StepSequencer {
     int sampleRate;
     int speed;
@@ -7,3 +9,4 @@ typedef struct StepSequencer {
     int index;
     int stepIndex;
 } StepSequencer;
+#endif //STEPSEQUENCER_TYPES_H
