@@ -85,15 +85,50 @@ float getSample(Rack* rack) {
     if (rack->numOscillators > 0) {
         out /= rack->numOscillators;
     }
+
+    for (int i = 0; i < rack->numSampleSources; i++) {
+        if (rack->sampleSources[i]->type == STEPSEQUENCER) {
+            StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
+            getStepSequencerSample(seq);
+        }
+    }
+
     return out;
 }
 
-void *getSampleSource(Rack* rack, char* name) {
-
+SampleSource *getSampleSource(Rack* rack, char* name) {
+    for (int i = 0; i < rack->numSampleSources; i++) {
+        if (strcmp(rack->sampleSources[i]->name, name) == 0) {
+            return rack->sampleSources[i];
+        }
+    }
     return NULL;
 }
 
 void addSampleSource(Rack* rack, SampleSource* input) {
     rack->sampleSources[rack->numSampleSources] = input;
     rack->numSampleSources = rack->numSampleSources + 1;
+}
+
+float *getSampleSourceSamplePtr(SampleSource *ss) {
+    if (ss->type == OSCILLATOR) {
+        Oscillator *osc = (Oscillator *) ss->sampleSource;
+        switch (osc->type) {
+            case SINE:
+                return osc->data->sine->sample;
+            case SAWTOOTH:
+                return osc->data->sawtooth->sample;
+            case SQUARE:
+                return osc->data->square->sample;
+            case WAVETABLE:
+                return osc->data->wavetable->sample;
+            default:
+                return NULL;
+        }
+    }
+    else if (ss->type == STEPSEQUENCER) {
+        StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+        return &seq->sample;
+    }
+    return NULL;
 }

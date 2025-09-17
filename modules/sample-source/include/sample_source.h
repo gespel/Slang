@@ -1,6 +1,7 @@
 #pragma once
 #include "../../oscillators/include/oscillator_types.h"
 #include "../../stepsequencer/include/stepsequencer_types.h"
+#include "../../stepsequencer/include/stepsequencer.h"
 #include "../../oscillators/include/oscillator.h"
 
 typedef enum SampleSourceType {
@@ -9,8 +10,9 @@ typedef enum SampleSourceType {
 } SampleSourceType;
 
 typedef struct SampleSource {
+    char* name;
     void *sampleSource;
     SampleSourceType type;
 } SampleSource;
 
-SampleSource* createSampleSource(void *sampleSource, SampleSourceType type);
+SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type);
