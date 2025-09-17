@@ -18,7 +18,7 @@ StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int 
     return seq;
 }
 
-float getSample(StepSequencer *seq) {
+float getStepSequencerSample(StepSequencer *seq) {
     if (seq->stepIndex >= (seq->sampleRate/seq->numSteps)) {
         seq->stepIndex = 0;
         seq->index += 1;

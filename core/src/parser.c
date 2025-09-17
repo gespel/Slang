@@ -44,6 +44,9 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
         }
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
+    else if (getSampleSource(si->main_rack, temp) != NULL) {
+
+    }
     else {
         freqptr[0] = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);

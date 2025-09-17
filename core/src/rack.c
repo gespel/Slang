@@ -87,3 +87,7 @@ float getSample(Rack* rack) {
     }
     return out;
 }
+
+void *getSampleSource(Rack* rack, char* name) {
+    
+}

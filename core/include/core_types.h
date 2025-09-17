@@ -5,6 +5,7 @@
 #ifndef CORE_TYPES_H
 #define CORE_TYPES_H
 #include "../../modules/oscillators/include/oscillator_types.h"
+#include "../../modules/stepsequencer/include/stepsequencer.h"
 
 typedef enum SlangLogLevel {
     DBG,
@@ -69,6 +70,8 @@ typedef struct Rack {
     int* bufferSize;
     Oscillator** oscillators;
     int numOscillators;
+    StepSequencer** stepSequencers;
+    int numStepSequencers;
 } Rack;
 
 typedef struct SlangInterpreter {

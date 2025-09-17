@@ -17,6 +17,6 @@ typedef struct StepSequencer {
 
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps);
 
-float getSample(StepSequencer *seq);
+float getStepSequencerSample(StepSequencer *seq);
 
 #endif //STEPSEQUENCER_H
