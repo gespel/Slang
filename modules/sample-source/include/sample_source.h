@@ -7,3 +7,10 @@ typedef enum SampleSourceType {
     OSCILLATOR,
     STEPSEQUENCER,
 } SampleSourceType;
+
+typedef struct SampleSource {
+    void *sampleSource;
+    SampleSourceType type;
+} SampleSource;
+
+SampleSource* createSampleSource(void *sampleSource, SampleSourceType type);

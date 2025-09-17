@@ -1,7 +1,14 @@
-FROM fedora:42
+FROM archlinux:latest
 
 # Pakete installieren
-RUN dnf -y install cmake make automake gcc gcc-c++ kernel-devel git
+RUN pacman -Sy --noconfirm \
+      cmake \
+      make \
+      automake \
+      gcc \
+      git \
+#      linux-headers \
+      bash 
 
 # Arbeitsverzeichnis setzen
 WORKDIR /app
@@ -20,4 +27,4 @@ RUN mkdir build \
 # Testskript ausführbar machen
 RUN chmod +x test.sh
 
-ENTRYPOINT ["./test.sh"]
+ENTRYPOINT ["bash", "/app/test.sh"]
