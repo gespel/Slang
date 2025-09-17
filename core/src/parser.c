@@ -4,18 +4,18 @@
 #include "../include/parser.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, float* frequency_multiplier, int* is_output) {
-    char* temp = getToken(si, *i).value;
-    if(getOscillator(si->main_rack, temp) != NULL) {
-        SineOscillator* osc = getOscillator(si->main_rack, temp);
-        freqptr = osc->sample;
+    char* freq_token = getToken(si, *i).value;
+    if(getSampleSource(si->main_rack, freq_token) != NULL) {
         consume(i, getToken(si, *i), IDENTIFIER);
+        SampleSource *ss = getSampleSource(si->main_rack, freq_token);
+        freqptr = getSampleSourceSamplePtr(ss);
         if(getToken(si, *i).tt == MULTIPLY) {
             consume(i, getToken(si, *i), MULTIPLY);
             frequency_multiplier[0] = l3_expression(si, i);
         }
-
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
+
     else if (getInputIndex(getToken(si, *i)) != -1) {
         int index = getInputIndex(getToken(si, *i));
         switch(index) {
@@ -43,9 +43,6 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
             frequency_multiplier[0] = l3_expression(si, i);
         }
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
-    }
-    else if (getSampleSource(si->main_rack, temp) != NULL) {
-
     }
     else {
         freqptr[0] = l3_expression(si, i);
@@ -102,6 +99,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
 	    addOscillator(si->main_rack, o);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SAWTOOTHOSC with %lf Hz and name %s", osc->frequency[0], osc->name);
 	}
@@ -117,6 +116,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
         addOscillator(si->main_rack, o);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
     }
@@ -131,6 +132,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		Oscillator *o = createOscillator(osc, SINE);
 
         addOscillator(si->main_rack, o);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %lf Hz and name %s", osc->frequency[0], osc->name);
     }
@@ -145,6 +148,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         Oscillator *o = createOscillator(osc, SQUARE);
 
         addOscillator(si->main_rack, o);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        addSampleSource(si->main_rack, sampleSource);
     }
 }
 

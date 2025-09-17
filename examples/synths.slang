@@ -5,3 +5,4 @@ d = truesineosc(440);
 e = truesineosc($a5);
 f = squareosc($c#3);
 sawtoothosc(110);
+g = sawtoothosc(a * 110);

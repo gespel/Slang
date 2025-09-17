@@ -99,6 +99,7 @@ float getSample(Rack* rack) {
 SampleSource *getSampleSource(Rack* rack, char* name) {
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (strcmp(rack->sampleSources[i]->name, name) == 0) {
+            //printf("Found sample source with name %s\n", name);
             return rack->sampleSources[i];
         }
     }
