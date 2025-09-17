@@ -89,5 +89,6 @@ float getSample(Rack* rack) {
 }
 
 void *getSampleSource(Rack* rack, char* name) {
-    
+
+    return NULL;
 }
