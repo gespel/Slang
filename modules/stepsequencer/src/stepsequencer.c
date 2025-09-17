@@ -29,3 +29,4 @@ float getStepSequencerSample(StepSequencer *seq) {
     seq->sample = seq->steps[seq->index];
     return seq->steps[seq->index];
 }
+

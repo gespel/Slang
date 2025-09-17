@@ -61,20 +61,32 @@ float getSample(Rack* rack) {
                 if (rack->oscillators[i]->data->sine->isOutput == 1) {
                     out += getSineSample(rack->oscillators[i]->data->sine);
                 }
+                else {
+                    getSineSample(rack->oscillators[i]->data->sine);
+                }
                 break;
             case WAVETABLE:
                 if (rack->oscillators[i]->data->wavetable->isOutput == 1) {
                     out += getWavetableSample(rack->oscillators[i]->data->wavetable);
+                }
+                else {
+                    getWavetableSample(rack->oscillators[i]->data->wavetable);
                 }
                 break;
             case SAWTOOTH:
                 if (rack->oscillators[i]->data->sawtooth->isOutput == 1) {
                     out += getSawtoothSample(rack->oscillators[i]->data->sawtooth);
                 }
+                else {
+                    getSawtoothSample(rack->oscillators[i]->data->sawtooth);
+                }
                 break;
             case SQUARE:
                 if (rack->oscillators[i]->data->square->isOutput == 1) {
                     out += getSquareSample(rack->oscillators[i]->data->square);
+                }
+                else {
+                    getSquareSample(rack->oscillators[i]->data->square);
                 }
                 break;
             default:
