@@ -105,6 +105,10 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack = malloc(sizeof(Rack));
     out->main_rack->oscillators = malloc(sizeof(Oscillator) * 128);
     out->main_rack->numOscillators = 0;
+    out->main_rack->stepSequencers = malloc(sizeof(StepSequencer) * 128);
+    out->main_rack->numStepSequencers = 0;
+    out->main_rack->sampleSources = malloc(sizeof(SampleSource) * 128);
+    out->main_rack->numSampleSources = 0;
     out->functions_length = 0;
     out->vars_length = 0;
     return out;

@@ -16,6 +16,8 @@ void addOscillator(Rack* rack, Oscillator* input);
 
 void addStepSequencer(Rack* rack, StepSequencer* input);
 
+void addSampleSource(Rack* rack, SampleSource* input);
+
 float getSample(Rack* rack);
 
 #endif

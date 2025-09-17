@@ -83,6 +83,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
             SampleSource *sasou = createSampleSource(o, OSCILLATOR);
+            addSampleSource(si->main_rack, sasou);
 		}
 		else {
 			LOGERROR("could not find given wavetable %s", waveName);

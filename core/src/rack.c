@@ -92,3 +92,8 @@ void *getSampleSource(Rack* rack, char* name) {
 
     return NULL;
 }
+
+void addSampleSource(Rack* rack, SampleSource* input) {
+    rack->sampleSources[rack->numSampleSources] = input;
+    rack->numSampleSources = rack->numSampleSources + 1;
+}
