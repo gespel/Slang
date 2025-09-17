@@ -4,16 +4,7 @@
 
 #ifndef STEPSEQUENCER_H
 #define STEPSEQUENCER_H
-
-typedef struct StepSequencer {
-    int sampleRate;
-    int speed;
-    float *steps;
-    int numSteps;
-    float sample;
-    int index;
-    int stepIndex;
-} StepSequencer;
+#include "stepsequencer_types.h"
 
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps);
 

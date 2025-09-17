@@ -21,6 +21,7 @@ file(GLOB DATA_SOURCES ${CMAKE_SOURCE_DIR}/modules/data/src/*.c)
 file(GLOB DATA_HEADERS ${CMAKE_SOURCE_DIR}/modules/data/include/*.h)
 file(GLOB STEP_SOURCES ${CMAKE_SOURCE_DIR}/modules/stepsequencer/src/*.c)
 file(GLOB STEP_HEADERS ${CMAKE_SOURCE_DIR}/modules/stepsequencer/include/*.h)
+file(GLOB SAMPLE_SOURCE_HEADERS ${CMAKE_SOURCE_DIR}/modules/sample-source/include/*.h)
 
 
 

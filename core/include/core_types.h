@@ -4,8 +4,7 @@
 
 #ifndef CORE_TYPES_H
 #define CORE_TYPES_H
-#include "../../modules/oscillators/include/oscillator_types.h"
-#include "../../modules/stepsequencer/include/stepsequencer.h"
+#include "../../modules/modules.h"
 
 typedef enum SlangLogLevel {
     DBG,

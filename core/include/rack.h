@@ -1,8 +1,6 @@
 #ifndef SLANG_RACK_H
 #define SLANG_RACK_H
-#include "../../modules/oscillators/include/oscillator.h"
-#include "../../modules/stepsequencer/include/stepsequencer.h"
-#include "../../modules/data/include/binaryData.h"
+#include "../../modules/modules.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include "tools.h"
