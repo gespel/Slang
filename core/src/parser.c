@@ -3,7 +3,7 @@
 //
 #include "../include/parser.h"
 
-void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqptr, float* frequency_multiplier, int* is_output) {
+void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqptr, float* frequency_multiplier, int* is_output, int *is_cv) {
     char* freq_token = getToken(si, *i).value;
     if(getSampleSource(si->main_rack, freq_token) != NULL) {
         consume(i, getToken(si, *i), IDENTIFIER);
@@ -55,6 +55,11 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqpt
         consume(i, getToken(si, *i), MINUS);
         *is_output = 0;
     }
+    else if (getToken(si, *i).tt == PLUS) {
+        consume(i, getToken(si, *i), PLUS);
+        *is_cv = 1;
+        *is_output = 0;
+    }
     else {
         *is_output = 1;
     }
@@ -64,6 +69,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     float* freqptr = malloc(sizeof(float));
     float frequency_multiplier = 1.0;
     int* is_output = malloc(sizeof(int));
+    int* is_cv = malloc(sizeof(int));
     is_output[0] = 1;
 
     if (getToken(si, *i).tt == WAVEOSC) {
@@ -73,13 +79,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
 		float *wt = loadWavetableByName(waveName);
 
 		if(wt != NULL) {
 			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
-		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output);
+		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
 		    addOscillator(si->main_rack, o);
             SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
@@ -95,9 +101,10 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		consume(i, getToken(si, *i), SAWOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
-	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
+        printf("is output %d is cv: %d\n", *is_output, *is_cv);
+	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
@@ -112,9 +119,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
-		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, si->sampleRate, *is_output);
+		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
@@ -128,9 +135,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), TRUESINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
-        SineOscillator *osc = createSineOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
+        SineOscillator *osc = createSineOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, SINE);
 
@@ -144,9 +151,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), SQUAREOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
-        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output);
+        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, SQUARE);
 

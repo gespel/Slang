@@ -3,12 +3,13 @@
 //
 #include "../include/square.h"
 
-SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput) {
+SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput, int isCV) {
     SquareOscillator* oscillator = malloc(sizeof(SquareOscillator));
     oscillator->frequency = frequency;
     oscillator->frequencyMultiplier = frequencyMultiplier;
     oscillator->name = name;
     oscillator->sampleRate = sampleRate;
+    oscillator->isCV = isCV;
     oscillator->isOutput = isOutput;
     oscillator->sample = malloc(sizeof (float));
     oscillator->sample[0] = 0;
@@ -28,6 +29,16 @@ float getSquareSample(SquareOscillator* oscillator) {
     else {
         out = -1;
     }
+    oscillator->sample[0] = out;
     oscillator->index++;
-    return out;
+
+    if (oscillator->isCV == 1) {
+        oscillator->sample[0] = oscillator->sample[0] + 1.0;
+    }
+    if (oscillator->isOutput == 1) {
+        return oscillator->sample[0];
+    }
+    else {
+        return 0.0;
+    }
 }

@@ -12,6 +12,6 @@
 
 float getSineSample(SineOscillator* oscillator);
 
-SineOscillator *createSineOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput);
+SineOscillator *createSineOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput, int isCV);
 
 #endif //SINE_H

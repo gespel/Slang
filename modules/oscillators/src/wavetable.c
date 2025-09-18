@@ -10,7 +10,8 @@ WavetableOscillator* createWavetableOscillator(
     float* waveTable,
     int wavetableLength,
     int sampleRate,
-    int isOutput) {
+    int isOutput,
+    int isCV) {
 
     WavetableOscillator* out = malloc(sizeof(WavetableOscillator));
     out->frequency = frequency;
@@ -21,6 +22,7 @@ WavetableOscillator* createWavetableOscillator(
     out->sampleRate = sampleRate;
     out->isOutput = isOutput;
     out->index = 0;
+    out->isCV = isCV;
     out->sample = malloc(sizeof(float));
     return out;
 }
@@ -33,6 +35,9 @@ float getWavetableSample(WavetableOscillator* oscillator) {
     int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
     oscillator->index += n;
     oscillator->sample[0] = out;
+    if (oscillator->isCV == 1) {
+        oscillator->sample[0] = oscillator->sample[0] + 1.0;
+    }
     if (oscillator->isOutput == 1) {
         return oscillator->sample[0];
     }

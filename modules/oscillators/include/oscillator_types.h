@@ -16,6 +16,7 @@ typedef struct WavetableOscillator {
     char* name;
     float* waveTable;
     int isOutput;
+    int isCV;
 } WavetableOscillator;
 
 typedef struct SawtoothOscillator {
@@ -27,6 +28,7 @@ typedef struct SawtoothOscillator {
     int sampleRate;
     char* name;
     int isOutput;
+    int isCV;
 } SawtoothOscillator;
 
 typedef struct SquareOscillator {
@@ -39,6 +41,7 @@ typedef struct SquareOscillator {
     char* name;
     int isOutput;
     int index;
+    int isCV;
 } SquareOscillator;
 
 typedef struct SineOscillator {
@@ -50,6 +53,7 @@ typedef struct SineOscillator {
     int sampleRate;
     char* name;
     int isOutput;
+    int isCV;
 } SineOscillator;
 
 typedef enum OscillatorType {

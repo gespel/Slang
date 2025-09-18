@@ -24,6 +24,5 @@ Oscillator *createOscillator(void* data, OscillatorType type) {
             o->type = SAWTOOTH;
             break;
     }
-
     return o;
 }
