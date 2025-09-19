@@ -36,6 +36,7 @@ float getWavetableSample(WavetableOscillator* oscillator) {
     int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
     oscillator->index += n;
     oscillator->sample[0] = out;
+    //printf("isCV: %d isOutput: %d\n", oscillator->isCV, oscillator->isOutput);
     if (oscillator->isCV == 1) {
         oscillator->sample[0] = oscillator->sample[0] + 1.0;
     }

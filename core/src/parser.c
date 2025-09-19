@@ -92,6 +92,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 		    addOscillator(si->main_rack, o);
             SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
             addSampleSource(si->main_rack, sampleSource);
+
+            LOGINFO("Creating a WAVEOSC with %f Hz and name %s", osc->frequency[0], osc->name);
 		}
 		else {
 			LOGERROR("could not find given wavetable %s", waveName);
