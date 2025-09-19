@@ -54,6 +54,7 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqpt
     if (getToken(si, *i).tt == MINUS) {
         consume(i, getToken(si, *i), MINUS);
         *is_output = 0;
+        *is_cv = 0;
     }
     else if (getToken(si, *i).tt == PLUS) {
         consume(i, getToken(si, *i), PLUS);
@@ -62,6 +63,7 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqpt
     }
     else {
         *is_output = 1;
+        *is_cv = 0;
     }
 }
 

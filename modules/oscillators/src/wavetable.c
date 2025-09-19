@@ -24,6 +24,7 @@ WavetableOscillator* createWavetableOscillator(
     out->index = 0;
     out->isCV = isCV;
     out->sample = malloc(sizeof(float));
+    out->sample[0] = 0.0;
     return out;
 }
 float getWavetableSample(WavetableOscillator* oscillator) {
