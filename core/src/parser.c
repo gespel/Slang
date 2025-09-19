@@ -165,6 +165,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     }
 }
 
+
+
 void parseFunction(SlangInterpreter* si, int* i) {
     consume(i, getToken(si, *i), FUNCTION);
     printDebugMessage(INFO, "Function definition found!");
@@ -240,3 +242,9 @@ void parseExpression(SlangInterpreter* si, int* i) {
     }
     consume(i, getToken(si, *i), SEMICOLON);
 }
+
+void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
+    
+
+}
+
