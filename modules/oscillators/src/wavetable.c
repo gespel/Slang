@@ -48,26 +48,6 @@ float getWavetableSample(WavetableOscillator* oscillator) {
     }
 }
 
-float* getWavetableByName(char* name) {
-    if (strcmp("strangeone", name) == 0) {
-        return random_wave_one;
-    }
-    if (strcmp("strangetwo", name) == 0) {
-        return random_wave_two;
-    }
-    if (strcmp("strangethree", name) == 0) {
-        return random_wave_three;
-    }
-    if (strcmp("strangefour", name) == 0) {
-        return random_wave_four;
-    }
-    if (strcmp("sine", name) == 0) {
-        return sine_wave;
-    }
-
-    return NULL;
-}
-
 float* loadWavetableByName(char* name) {
     setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
