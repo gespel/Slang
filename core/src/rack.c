@@ -101,6 +101,7 @@ float getSample(Rack* rack) {
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
+            LOGINFO("Adding step sequencer sample: %f", seq->sample);
             getStepSequencerSample(seq);
         }
     }

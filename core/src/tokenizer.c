@@ -88,6 +88,18 @@ Token* tokenize(char* input, int* length) {
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
+            else if(tokenString[j] == '[') {
+                temp.tt = SQUAREBRACKETLEFT;
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+            }
+            else if(tokenString[j] == ']') {
+                temp.tt = SQUAREBRACKETRIGHT;
+                tmpString[0] = tokenString[j];
+                tmpString[1] = '\0';
+                temp.value = tmpString;
+            }
             else if(tokenString[j] == '+') {
                 temp.tt = PLUS;
                 tmpString[0] = tokenString[j];
@@ -245,6 +257,12 @@ char* tokenTypeToString(TokenType input) {
         break;
     case PARANTHESISRIGHT:
         out = "Paranthesisright";    
+        break;
+    case SQUAREBRACKETLEFT:
+        out = "Squarebracketleft";
+        break;
+    case SQUAREBRACKETRIGHT:
+        out = "Squarebracketright";
         break;
     case ASSIGN:
         out = "Assign";

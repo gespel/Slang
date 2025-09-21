@@ -26,6 +26,7 @@ float getStepSequencerSample(StepSequencer *seq) {
     if (seq->index >= seq->numSteps) {
         seq->index = 0;
     }
+    seq->stepIndex += 1;
     seq->sample = seq->steps[seq->index];
     return seq->steps[seq->index];
 }
