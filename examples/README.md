@@ -46,7 +46,7 @@ The typical oscillators available are:
 - `sineosc(frequency);`
 - `sawtoothosc(frequency);`
 - `squareosc(frequency);`
-> Note that the sine oscillator is implemented using a wavetable for efficiency.If you want to create a real sine oscillator using the `sin` function, you can do it like this: `truesineosc(440);`
+> Note that the sine oscillator is implemented using a wavetable for efficiency. If you want to create a real sine oscillator using the `sin` function, you can do it like this: `truesineosc(440);`
 
 ### Wavetable Oscillator
 You can also create a wavetable oscillator using a custom waveform. Here's an example:
