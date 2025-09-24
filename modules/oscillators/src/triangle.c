@@ -1,4 +1,5 @@
 #include "../include/triangle.h"
+#include <stdlib.h>
 
 TriangleOscillator* createTriangleOscillator(float* frequency, float frequencyMultiplier, float volume, int sampleRate, char* name, int isOutput, int isCV) {
     TriangleOscillator* osc = malloc(sizeof(TriangleOscillator));
