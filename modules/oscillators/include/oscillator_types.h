@@ -56,8 +56,20 @@ typedef struct SineOscillator {
     int isCV;
 } SineOscillator;
 
+typedef struct TriangleOscillator {
+    float *frequency;
+    float *sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
+    int sampleRate;
+    char *name;
+    int isOutput;
+    int isCV;
+} TriangleOscillator;
+
 typedef enum OscillatorType {
-    WAVETABLE, SQUARE, SAWTOOTH, SINE
+    WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE
 } OscillatorType;
 
 typedef union OscillatorData {
@@ -65,6 +77,7 @@ typedef union OscillatorData {
     SawtoothOscillator* sawtooth;
     SineOscillator* sine;
     SquareOscillator* square;
+    TriangleOscillator* triangle;
 } OscillatorData;
 
 typedef struct Oscillator {
