@@ -55,54 +55,50 @@ void addOscillator(Rack* rack, Oscillator* input) {
 
 float getSample(Rack* rack) {
     float out = 0.f;
-    for (int i = 0; i < rack->numOscillators; i++) {
-        switch (rack->oscillators[i]->type) {
-            case SINE:
-                if (rack->oscillators[i]->data->sine->isOutput == 1) {
-                    out += getSineSample(rack->oscillators[i]->data->sine);
-                }
-                else {
-                    getSineSample(rack->oscillators[i]->data->sine);
-                }
-                break;
-            case WAVETABLE:
-                if (rack->oscillators[i]->data->wavetable->isOutput == 1) {
-                    out += getWavetableSample(rack->oscillators[i]->data->wavetable);
-                }
-                else {
-                    getWavetableSample(rack->oscillators[i]->data->wavetable);
-                }
-                break;
-            case SAWTOOTH:
-                if (rack->oscillators[i]->data->sawtooth->isOutput == 1) {
-                    out += getSawtoothSample(rack->oscillators[i]->data->sawtooth);
-                }
-                else {
-                    getSawtoothSample(rack->oscillators[i]->data->sawtooth);
-                }
-                break;
-            case SQUARE:
-                if (rack->oscillators[i]->data->square->isOutput == 1) {
-                    out += getSquareSample(rack->oscillators[i]->data->square);
-                }
-                else {
-                    getSquareSample(rack->oscillators[i]->data->square);
-                }
-                break;
-            default:
-                out += 0;
-                break;
-        }
-    }
-    if (rack->numOscillators > 0) {
-        out /= rack->numOscillators;
-    }
-
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
             //LOGINFO("Adding step sequencer sample: %f", seq->sample);
             getStepSequencerSample(seq);
+        }
+        else if (rack->sampleSources[i]->type == OSCILLATOR) {
+            Oscillator *osc = (Oscillator *) rack->sampleSources[i]->sampleSource;
+            switch (osc->type) {
+                case SINE:
+                    if (osc->data->sine->isOutput == 1) {
+                        out += getSineSample(osc->data->sine);
+                    }
+                    else {
+                        getSineSample(osc->data->sine);
+                    }
+                    break;
+                case SAWTOOTH:
+                    if (osc->data->sawtooth->isOutput == 1) {
+                        out += getSawtoothSample(osc->data->sawtooth);
+                    }
+                    else {
+                        getSawtoothSample(osc->data->sawtooth);
+                    }
+                    break;
+                case SQUARE:
+                    if (osc->data->square->isOutput == 1) {
+                        out += getSquareSample(osc->data->square);
+                    }
+                    else {
+                        getSquareSample(osc->data->square);
+                    }
+                    break;
+                case WAVETABLE:
+                    if (osc->data->wavetable->isOutput == 1) {
+                        out += getWavetableSample(osc->data->wavetable);
+                    }
+                    else {
+                        getWavetableSample(osc->data->wavetable);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
