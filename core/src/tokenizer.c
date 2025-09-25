@@ -212,6 +212,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if (strcmp(value, "squareosc") == 0) {
                 out[x].tt = SQUAREOSC;
             }
+            else if (strcmp(value, "triangleosc") == 0) {
+                out[x].tt = TRIANGLEOSC;
+            }
             else if(strcmp(value, "inputa") == 0) {
                 out[x].tt = INPUTA;
             }
@@ -305,6 +308,9 @@ char* tokenTypeToString(TokenType input) {
 		break;
     case SQUAREOSC:
         out = "SquareOscillator";
+        break;
+    case TRIANGLEOSC:
+        out = "TriangleOscillator";
         break;
     case STEPSEQ:
         out = "StepSequencer";

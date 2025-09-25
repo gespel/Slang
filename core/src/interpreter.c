@@ -437,7 +437,7 @@ char* getInterpreterStatusString(SlangInterpreter* si) {
 }
 
 int isOscillator(Token token) {
-    if (token.tt == SEMICOLON || token.tt == SAWOSC || token.tt == TRUESINEOSC || token.tt == WAVEOSC || token.tt == SINEOSC || token.tt == SQUAREOSC) {
+    if (token.tt == SEMICOLON || token.tt == SAWOSC || token.tt == TRUESINEOSC || token.tt == WAVEOSC || token.tt == SINEOSC || token.tt == SQUAREOSC || token.tt == TRIANGLEOSC) {
         return 1;
     }
     return 0;

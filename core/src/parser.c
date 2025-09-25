@@ -151,6 +151,22 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency[0], osc->name);
     }
+    if (getToken(si, *i).tt == TRIANGLEOSC) {
+        consume(i, getToken(si, *i), TRIANGLEOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+
+        TriangleOscillator *osc = createTriangleOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
+
+        Oscillator *o = createOscillator(osc, TRIANGLE);
+
+        addOscillator(si->main_rack, o);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        addSampleSource(si->main_rack, sampleSource);
+
+        LOGINFO("Creating a TRIANGLEOSC with %f Hz and name %s", osc->frequency[0], osc->name);
+    }
     if (getToken(si, *i).tt == SQUAREOSC) {
         consume(i, getToken(si, *i), SQUAREOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);

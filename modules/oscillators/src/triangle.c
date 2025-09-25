@@ -1,7 +1,7 @@
 #include "../include/triangle.h"
 #include <stdlib.h>
 
-TriangleOscillator* createTriangleOscillator(float* frequency, float frequencyMultiplier, float volume, int sampleRate, char* name, int isOutput, int isCV) {
+TriangleOscillator* createTriangleOscillator(float* frequency, float frequencyMultiplier,char *name, int sampleRate, int isOutput, int isCV) {
     TriangleOscillator* osc = malloc(sizeof(TriangleOscillator));
     osc->frequency = frequency;
     osc->frequencyMultiplier = frequencyMultiplier;

@@ -6,6 +6,7 @@
 #include "sawtooth.h"
 #include "sine.h"
 #include "square.h"
+#include "triangle.h"
 #include "oscillator_types.h"
 
 
