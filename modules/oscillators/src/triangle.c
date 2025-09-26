@@ -5,7 +5,7 @@ TriangleOscillator* createTriangleOscillator(float* frequency, float frequencyMu
     TriangleOscillator* osc = malloc(sizeof(TriangleOscillator));
     osc->frequency = frequency;
     osc->frequencyMultiplier = frequencyMultiplier;
-    osc->volume = volume;
+    osc->volume = 1.f;
     osc->phase = 0.f;
     osc->sampleRate = sampleRate;
     osc->name = name;
