@@ -42,6 +42,8 @@ typedef enum TokenType {
     WAVEOSC,
     SQUAREOSC,
     TRIANGLEOSC,
+    LOWPASSFILTER,
+    HIGHPASSFILTER,
     STEPSEQ,
     INPUTA,
     INPUTB,
