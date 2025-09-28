@@ -7,6 +7,8 @@
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name);
 
+void parseFilter(SlangInterpreter* si, int* i);
+
 void parseStepSequencer(SlangInterpreter* si, int* i, char* name);
 
 void parseFunction(SlangInterpreter* si, int* i);

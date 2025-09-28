@@ -301,3 +301,20 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     LOGINFO("Creating a STEPSEQUENCER with speed %f and name %s", speed[0], name);
 }
 
+void parseFilter(SlangInterpreter* si, int* i) {
+    int filter_type = -1;
+    if(getToken(si, *i).tt == LOWPASSFILTER) {
+        consume(i, getToken(si, *i), LOWPASSFILTER);
+    }
+    else if(getToken(si, *i).tt == HIGHPASSFILTER) {
+        consume(i, getToken(si, *i), HIGHPASSFILTER);
+    }
+    else {
+        LOGERROR("Filter type not recognized!");
+    }
+    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    float *cutoff = malloc(sizeof(float));
+
+    cutoff[0] = l3_expression(si, i);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+}

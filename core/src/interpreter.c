@@ -246,6 +246,9 @@ float interpret(SlangInterpreter* si) {
                 exit(-1);
             }
         }
+        else if (getToken(si, i).tt == LOWPASSFILTER || getToken(si, i).tt == HIGHPASSFILTER) {
+            parseFilter(si, &i);
+        }
         else if (isOscillator(getToken(si, i))) {
             parseOscillators(si, &i, NULL);
         }
