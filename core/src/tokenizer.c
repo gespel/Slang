@@ -216,10 +216,10 @@ void tokenizeStrings(Token* out, int numTokens) {
                 out[x].tt = TRIANGLEOSC;
             }
             else if(strcmp(value, "lowpassfilter") == 0) {
-                out[x].tt = LOWPASSFILTER;
+                out[x].tt = LOWPASSFILTERTOKEN;
             }
             else if(strcmp(value, "highpassfilter") == 0) {
-                out[x].tt = HIGHPASSFILTER;
+                out[x].tt = HIGHPASSFILTERTOKEN;
             }
             else if(strcmp(value, "inputa") == 0) {
                 out[x].tt = INPUTA;
@@ -321,10 +321,10 @@ char* tokenTypeToString(TokenType input) {
     case STEPSEQ:
         out = "StepSequencer";
         break;
-    case LOWPASSFILTER:
+    case LOWPASSFILTERTOKEN:
         out = "LowpassFilter";
         break;
-    case HIGHPASSFILTER:
+    case HIGHPASSFILTERTOKEN:
         out = "HighpassFilter";
         break;
     case RETURN:

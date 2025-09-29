@@ -4,7 +4,6 @@
 #pragma once
 #include "interpreter.h"
 
-
 void parseOscillators(SlangInterpreter* si, int* i, char *name);
 
 void parseFilter(SlangInterpreter* si, int* i);

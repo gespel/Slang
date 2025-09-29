@@ -303,11 +303,11 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
 
 void parseFilter(SlangInterpreter* si, int* i) {
     int filter_type = -1;
-    if(getToken(si, *i).tt == LOWPASSFILTER) {
-        consume(i, getToken(si, *i), LOWPASSFILTER);
+    if(getToken(si, *i).tt == LOWPASSFILTERTOKEN) {
+        consume(i, getToken(si, *i), LOWPASSFILTERTOKEN);
     }
-    else if(getToken(si, *i).tt == HIGHPASSFILTER) {
-        consume(i, getToken(si, *i), HIGHPASSFILTER);
+    else if(getToken(si, *i).tt == HIGHPASSFILTERTOKEN) {
+        consume(i, getToken(si, *i), HIGHPASSFILTERTOKEN);
     }
     else {
         LOGERROR("Filter type not recognized!");
@@ -317,4 +317,8 @@ void parseFilter(SlangInterpreter* si, int* i) {
 
     cutoff[0] = l3_expression(si, i);
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    LowPassFilter* filter = createLowPassFilter(cutoff[0], si->sampleRate);
+    Filter *f = malloc(sizeof(Filter));
+    f->type = LOWPASSFILTER;
+    f->filter = filter;
 }
