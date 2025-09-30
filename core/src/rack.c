@@ -151,3 +151,8 @@ float *getSampleSourceSamplePtr(SampleSource *ss) {
     }
     return NULL;
 }
+
+void addFilter(Rack* rack, Filter* input) {
+    rack->filters[rack->numFilters] = input;
+    rack->numFilters = rack->numFilters + 1;
+}

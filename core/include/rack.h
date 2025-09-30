@@ -20,6 +20,8 @@ void addStepSequencer(Rack* rack, StepSequencer* input);
 
 void addSampleSource(Rack* rack, SampleSource* input);
 
+void addFilter(Rack* rack, Filter* input);
+
 float getSample(Rack* rack);
 
 #endif

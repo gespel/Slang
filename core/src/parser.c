@@ -321,4 +321,6 @@ void parseFilter(SlangInterpreter* si, int* i) {
     Filter *f = malloc(sizeof(Filter));
     f->type = LOWPASSFILTER;
     f->filter = filter;
+    addFilter(si->main_rack, f);
+    LOGINFO("Creating a LOWPASSFILTER with cutoff %f", cutoff[0]);
 }
