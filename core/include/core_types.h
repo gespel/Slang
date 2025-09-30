@@ -79,6 +79,8 @@ typedef struct Rack {
     int numStepSequencers;
     SampleSource **sampleSources;
     int numSampleSources;
+    Filter **filters;
+    int numFilters;
 } Rack;
 
 typedef struct SlangInterpreter {

@@ -102,6 +102,11 @@ float getSample(Rack* rack) {
         }
     }
 
+    for (int i = 0; i < rack->numFilters; i++) {
+        Filter *filter = rack->filters[i];
+        out = processFilterSample(filter, out);
+    }
+
     return out;
 }
 
