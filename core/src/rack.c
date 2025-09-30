@@ -104,7 +104,12 @@ float getSample(Rack* rack) {
 
     for (int i = 0; i < rack->numFilters; i++) {
         Filter *filter = rack->filters[i];
-        out = processFilterSample(filter, out);
+        //out = processFilterSample(filter, out);
+        if (filter->type == LOWPASSFILTER) {
+            LowPassFilter *lp = (LowPassFilter *) filter->filter;
+            out = processLowPassSample(lp, out);
+        }
+        
     }
 
     return out;
