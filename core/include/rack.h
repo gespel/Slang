@@ -6,6 +6,8 @@
 #include "tools.h"
 #include "core_types.h"
 
+Rack* createRack(int* sampleRate, int* bufferSize);
+
 void *getOscillator(Rack* rack, char* name);
 
 SampleSource *getSampleSource(Rack* rack, char* name);

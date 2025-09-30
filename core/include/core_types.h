@@ -95,6 +95,7 @@ typedef struct SlangInterpreter {
     Rack* main_rack;
     float *inputs[4];
     int sampleRate;
+    int bufferSize;
 } SlangInterpreter;
 
 typedef struct SlangBufferCore {

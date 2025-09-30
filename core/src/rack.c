@@ -1,5 +1,24 @@
 #include "../include/rack.h"
 
+Rack* createRack(int* sampleRate, int* bufferSize) {
+    Rack* rack = malloc(sizeof(Rack));
+    rack->sampleRate = sampleRate;
+    rack->bufferSize = bufferSize;
+    rack->oscillators = malloc(sizeof(Oscillator*) * 128);
+    memset(rack->oscillators, 0, sizeof(Oscillator*) * 128);
+    rack->numOscillators = 0;
+    rack->stepSequencers = malloc(sizeof(StepSequencer*) * 128);
+    memset(rack->stepSequencers, 0, sizeof(StepSequencer*) * 128);
+    rack->numStepSequencers = 0;
+    rack->sampleSources = malloc(sizeof(SampleSource*) * 128);
+    memset(rack->sampleSources, 0, sizeof(SampleSource*) * 128);
+    rack->numSampleSources = 0;
+    rack->filters = malloc(sizeof(Filter*) * 128);
+    memset(rack->filters, 0, sizeof(Filter*) * 128);
+    rack->numFilters = 0;
+    return rack;
+}
+
 void *getOscillator(Rack* rack, char* name) {
     for (int i = 0; i < rack->numOscillators; i++) {
         switch (rack->oscillators[i]->type) {
