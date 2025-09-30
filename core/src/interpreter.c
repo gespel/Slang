@@ -104,11 +104,14 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->last_token_index = 0;
     out->main_rack = malloc(sizeof(Rack));
     out->main_rack->oscillators = malloc(sizeof(Oscillator) * 128);
+    memset(out->main_rack->oscillators, 0, sizeof(Oscillator*) * 128);
     out->main_rack->numOscillators = 0;
     out->main_rack->stepSequencers = malloc(sizeof(StepSequencer) * 128);
     out->main_rack->numStepSequencers = 0;
     out->main_rack->sampleSources = malloc(sizeof(SampleSource) * 128);
+    memset(out->main_rack->sampleSources, 0, sizeof(SampleSource*) * 128);
     out->main_rack->numSampleSources = 0;
+    out->main_rack->numFilters = 0;
     out->functions_length = 0;
     out->vars_length = 0;
     return out;
@@ -246,7 +249,7 @@ float interpret(SlangInterpreter* si) {
                 exit(-1);
             }
         }
-        else if (getToken(si, i).tt == LOWPASSFILTER || getToken(si, i).tt == HIGHPASSFILTER) {
+        else if (getToken(si, i).tt == LOWPASSFILTERTOKEN || getToken(si, i).tt == HIGHPASSFILTERTOKEN) {
             parseFilter(si, &i);
         }
         else if (isOscillator(getToken(si, i))) {

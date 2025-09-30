@@ -58,12 +58,11 @@ int main(int argc, char **argv) {
         printAllVariables(main_interpreter);
         printAllOscillators(main_interpreter);
 
-        SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 32);
+        SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
 
 		while (live_render_active == 1) {
 			float* buf = renderBuffer(sbc);
-        	printAudioBuffer(buf, 32);
-        	free(buf);
+        	printAudioBuffer(buf, 512);
 		}
 
 

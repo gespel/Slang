@@ -26,21 +26,15 @@ void destroyBufferCore(SlangBufferCore* sbc) {
 }
 
 float* renderBuffer(SlangBufferCore* sbc) {
+    if(sbc->buffer) {
+        free(sbc->buffer);
+    }
     Rack* rack = sbc->interpreter->main_rack;
-    if (!rack || !sbc->interpreter) {
-        return NULL;
-    }
-    if (sbc->bufferSize <= 0) {
-        return NULL;
-    }
-    if (sbc->sampleRate <= 0) {
-        return NULL;
-    }
     
     float* out = malloc(sizeof(float) * sbc->bufferSize);
     for (int sample = 0; sample < sbc->bufferSize; sample++) {
         out[sample] = getSample(rack);
     }
     sbc->buffer = out;
-    return out;
+    return sbc->buffer;
 }

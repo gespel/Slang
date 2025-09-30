@@ -55,6 +55,7 @@ void addOscillator(Rack* rack, Oscillator* input) {
 
 float getSample(Rack* rack) {
     float out = 0.f;
+    //printf("Number of sample sources: %d\n", rack->numSampleSources);
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
@@ -101,10 +102,8 @@ float getSample(Rack* rack) {
             }
         }
     }
-
     for (int i = 0; i < rack->numFilters; i++) {
         Filter *filter = rack->filters[i];
-        //out = processFilterSample(filter, out);
         if (filter->type == LOWPASSFILTER) {
             LowPassFilter *lp = (LowPassFilter *) filter->filter;
             out = processLowPassSample(lp, out);
