@@ -74,7 +74,7 @@ int main() {
 
     Token* tokens = tokenize(p, &length);
     SlangInterpreter* interpreter = createSlangInterpreter(tokens, length);
-
+    interpret(interpreter);
     return 0;
 }
 ```
@@ -91,6 +91,8 @@ int main() {
     SlangInterpreter* interpreter = createSlangInterpreter(tokens, length);
 
     SlangBufferCore* sbc = createBufferCore(interpreter, 48000, 32);
+    
+    interpret(interpreter);
     float* buf = renderBuffer(sbc);
 
     return 0;
