@@ -49,7 +49,7 @@ float getWavetableSample(WavetableOscillator* oscillator) {
 }
 
 float* loadWavetableByName(char* name) {
-    /*setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
+    setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
     size_t len = 0;
     int i = 0;
@@ -83,6 +83,6 @@ float* loadWavetableByName(char* name) {
 
     free(line);
     fclose(fp);
-    return out;*/
-    return 0; // Not implemented yet
+    return out;
+    //return 0; // Not implemented yet
 }
