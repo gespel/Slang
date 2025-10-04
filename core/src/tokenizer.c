@@ -236,6 +236,12 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "stepsequencer") == 0) {
                 out[x].tt = STEPSEQ;
             }
+            else if(strcmp(value, "random") == 0) {
+                out[x].tt = RANDOM;
+            }
+            else if(strcmp(value, "randomint") == 0) {
+                out[x].tt = RANDOMINT;
+            }
         }
     } 
 }
@@ -350,6 +356,12 @@ char* tokenTypeToString(TokenType input) {
         break;
     case NOTEMARKER:
         out = "Notemarker";
+        break;
+    case RANDOM:
+        out = "Random";
+        break;
+    case RANDOMINT:
+        out = "RandomInt";
         break;
     default:
         out = "Unknown";
