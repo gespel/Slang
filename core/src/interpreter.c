@@ -356,6 +356,16 @@ float terminal(SlangInterpreter* si, int* i) {
         case INPUTD:
             out = si->inputs[3][0];
             break;
+        case RANDOM:
+            consume(i, si->tokens[*i], RANDOM);
+            consume(i, si->tokens[*i], PARANTHESISLEFT);
+            float lowerBound = atof(si->tokens[*i].value);
+            consume(i, si->tokens[*i], NUMBER);
+            consume(i, si->tokens[*i], COMMA);
+            float upperBound = atof(si->tokens[*i].value);
+            consume(i, si->tokens[*i], NUMBER);
+            consume(i, si->tokens[*i], PARANTHESISRIGHT);
+            //TODO: actual random implementation 
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);
