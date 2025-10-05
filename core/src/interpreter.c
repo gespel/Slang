@@ -359,13 +359,27 @@ float terminal(SlangInterpreter* si, int* i) {
         case RANDOM:
             consume(i, si->tokens[*i], RANDOM);
             consume(i, si->tokens[*i], PARANTHESISLEFT);
-            float lowerBound = atof(si->tokens[*i].value);
+            float lowerFloatBound = atof(si->tokens[*i].value);
             consume(i, si->tokens[*i], NUMBER);
             consume(i, si->tokens[*i], COMMA);
-            float upperBound = atof(si->tokens[*i].value);
+            float upperFloatBound = atof(si->tokens[*i].value);
             consume(i, si->tokens[*i], NUMBER);
             consume(i, si->tokens[*i], PARANTHESISRIGHT);
-            //TODO: actual random implementation 
+            float rFloat = randomFloat(lowerFloatBound, upperFloatBound);
+            out = rFloat;
+            break;
+        case RANDOMINT:
+            consume(i, si->tokens[*i], RANDOMINT);
+            consume(i, si->tokens[*i], PARANTHESISLEFT);
+            int lowerIntBound = atoi(si->tokens[*i].value);
+            consume(i, si->tokens[*i], NUMBER);
+            consume(i, si->tokens[*i], COMMA);
+            int upperIntBound = atoi(si->tokens[*i].value);
+            consume(i, si->tokens[*i], NUMBER);
+            consume(i, si->tokens[*i], PARANTHESISRIGHT);
+            int rInt = randomInt(lowerIntBound, upperIntBound);
+            out = (float)rInt;
+            break;
         default:
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);

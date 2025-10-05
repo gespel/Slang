@@ -141,3 +141,14 @@ float noteNameToFrequency(char *name) {
 	free(noteName);
     return frequency;
 }
+
+float randomFloat(float min, float max) {
+    srand((unsigned) time(NULL));
+    float scale = rand() / (float) RAND_MAX; /* [0, 1.0] */
+    return min + scale * (max - min);      /* [min, max] */
+}
+
+int randomInt(int min, int max) {
+    srand((unsigned) time(NULL));
+    return min + rand() % (max - min + 1);
+}
