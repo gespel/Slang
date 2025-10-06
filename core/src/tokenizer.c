@@ -153,7 +153,7 @@ Token* tokenize(char* input, int* length) {
                 //printf("DIGIT found! %c\n", tokenString[j]);
                 char* ns = calloc(128, sizeof(char));
                 int nsc = 0;
-                while(isdigit((unsigned char)tokenString[j]) || tokenString[j] == '.' || tokenString[j] == ',') {
+                while(isdigit((unsigned char)tokenString[j]) || tokenString[j] == '.') {
                     //printf("%c is a digit or decimal separator\n", tokenString[j]);
                     ns[nsc] = tokenString[j];
                     j++;
