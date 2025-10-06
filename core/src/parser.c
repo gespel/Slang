@@ -301,6 +301,28 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     LOGINFO("Creating a STEPSEQUENCER with speed %f and name %s", speed[0], name);
 }
 
+void parseIf(SlangInterpreter* si, int* i) {
+    consume(i, getToken(si, *i), IF);
+    consume(i, getToken(si, *i), PARANTHESISLEFT);
+
+    printDebugMessage(DBG, "IF call found! Evaluating now!");
+
+    int l = checkLogic(si, i);
+
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    consume(i, getToken(si, *i), BRACKETLEFT);
+    int nrbr = si->openBrackets;
+    si->openBrackets++;
+    if (l == 0) {
+        while (si->openBrackets > nrbr) {
+            if (getToken(si, *i).tt == BRACKETRIGHT) {
+                si->openBrackets--;
+            }
+            i++;
+        }
+    }
+}
+
 void parseFilter(SlangInterpreter* si, int* i) {
     int filter_type = -1;
     if(getToken(si, *i).tt == LOWPASSFILTERTOKEN) {

@@ -175,60 +175,7 @@ float interpret(SlangInterpreter* si) {
             printDebugMessage(DBG, "Empty line.");
         } 
         else if(getToken(si, i).tt == IF) {
-            consume(&i, tokens[i], IF);
-            consume(&i, tokens[i], PARANTHESISLEFT);
-
-            printDebugMessage(DBG, "IF call found! Evaluating now!");
-
-        	int l = checkLogic(si, &i);
-
-            consume(&i, tokens[i], PARANTHESISRIGHT);
-            consume(&i, tokens[i], BRACKETLEFT);
-            int nrbr = si->openBrackets;
-            si->openBrackets++;
-            if (l == 0) {
-                while (si->openBrackets > nrbr) {
-                    if (getToken(si, i).tt == BRACKETRIGHT) {
-                        si->openBrackets--;
-                    }
-                    i++;
-                }
-            }
-        }
-        else if(getToken(si, i).tt == WHILE) {
-            consume(&i, tokens[i], WHILE);
-			consume(&i, tokens[i], PARANTHESISLEFT);
-			int logic_start_index = i;
-
-			int open_parantheses = 1;
-			while(open_parantheses > 0) {
-				if (getToken(si, i).tt == PARANTHESISLEFT) {
-					open_parantheses++;
-				}
-				if (getToken(si, i).tt == PARANTHESISRIGHT) {
-					open_parantheses--;
-				}
-				i++;
-			}
-			consume(&i, tokens[i], BRACKETLEFT);
-
-			int loop_body_index = i;
-			int open_brackets = 1;
-            int loop_body_tokens_length = 0;
-            Token *loop_body_tokens = malloc(sizeof(Token) * 1024);
-			while(open_brackets > 0) {
-				if (getToken(si, i).tt == BRACKETLEFT) {
-					open_brackets++;
-				}
-				if (getToken(si, i).tt == BRACKETRIGHT) {
-					open_brackets--;
-				}
-                loop_body_tokens[loop_body_tokens_length] = tokens[i];
-				i++;
-			    loop_body_tokens_length++;
-			}
-
-            Function* loop_body = malloc(sizeof(Function));
+            parseIf(si, &i);
         }
         else if(getToken(si, i).tt == BRACKETRIGHT) {
             if((si->openBrackets) > 0) {
