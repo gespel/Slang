@@ -269,6 +269,8 @@ float terminal(SlangInterpreter* si, int* i) {
                 printAllVariables(function_interpreter);
                 //exit(-1);
                 out = interpret(function_interpreter);
+                // copy ressources back to main interpreter
+                
                 free(function_interpreter);
                 //printAllVariables(function_interpreter);
                 //printAllFunctions(function_interpreter);
