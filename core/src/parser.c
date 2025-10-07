@@ -89,7 +89,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
 		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
-		    addOscillator(si->main_rack, o);
             SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
             addSampleSource(si->main_rack, sampleSource);
 
@@ -112,7 +111,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
-	    addOscillator(si->main_rack, o);
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -129,7 +127,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
-        addOscillator(si->main_rack, o);
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -145,7 +142,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 		Oscillator *o = createOscillator(osc, SINE);
 
-        addOscillator(si->main_rack, o);
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -161,7 +157,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         Oscillator *o = createOscillator(osc, TRIANGLE);
 
-        addOscillator(si->main_rack, o);
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -177,7 +172,6 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         Oscillator *o = createOscillator(osc, SQUARE);
 
-        addOscillator(si->main_rack, o);
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
     }
