@@ -74,19 +74,22 @@ void printAllOscillators(SlangInterpreter* si) {
 #ifdef SLANG_DEBUG
     LOGINFO("=======================================================");
     LOGINFO("Oscillators:");
-    for(int i = 0; i < si->main_rack->numOscillators; i++) {
-        switch (si->main_rack->oscillators[i]->type) {
+    for(int i = 0; i < si->main_rack->numSampleSources; i++) {
+        if (si->main_rack->sampleSources[i]->type != OSCILLATOR) {
+            continue;
+        }
+        switch (si->main_rack->sampleSources[i]->sampleSource->type) {
             case SINE:
-                LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->sine->name, si->main_rack->oscillators[i]->data->sine->frequency[0], si->main_rack->oscillators[i]->data->sine->volume);
+                LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sampleSources[i]->data->sine->name, si->main_rack->sampleSources[i]->data->sine->frequency[0], si->main_rack->sampleSources[i]->data->sine->volume);
                 break;
             case WAVETABLE:
-                LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->wavetable->name, si->main_rack->oscillators[i]->data->wavetable->frequency[0], si->main_rack->oscillators[i]->data->wavetable->volume);
+                LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sampleSources[i]->data->wavetable->name, si->main_rack->sampleSources[i]->data->wavetable->frequency[0], si->main_rack->sampleSources[i]->data->wavetable->volume);
                 break;
             case SAWTOOTH:
-                LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->sawtooth->name, si->main_rack->oscillators[i]->data->sawtooth->frequency[0], si->main_rack->oscillators[i]->data->sawtooth->volume);
+                LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sampleSources[i]->data->sawtooth->name, si->main_rack->sampleSources[i]->data->sawtooth->frequency[0], si->main_rack->sampleSources[i]->data->sawtooth->volume);
                 break;
             case SQUARE:
-                LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->oscillators[i]->data->square->name, si->main_rack->oscillators[i]->data->square->frequency[0], si->main_rack->oscillators[i]->data->square->volume);
+                LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", si->main_rack->sampleSources[i]->data->square->name, si->main_rack->oscillators[i]->data->square->frequency[0], si->main_rack->oscillators[i]->data->square->volume);
                 break;
         }
 
