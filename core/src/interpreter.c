@@ -267,17 +267,13 @@ float terminal(SlangInterpreter* si, int* i) {
                 function_interpreter->functions_length = si->functions_length;
                 printAllFunctions(function_interpreter);
                 printAllVariables(function_interpreter);
-                //exit(-1);
+                function_interpreter->main_rack = si->main_rack;
+                si->sampleRate = function_interpreter->sampleRate;
+                si->bufferSize = function_interpreter->bufferSize;
                 out = interpret(function_interpreter);
-                // copy ressources back to main interpreter
-                
+                       
                 free(function_interpreter);
-                //printAllVariables(function_interpreter);
-                //printAllFunctions(function_interpreter);
             }
-			//else if () {
-
-			//}
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
