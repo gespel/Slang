@@ -27,4 +27,4 @@ RUN mkdir build \
 # Testskript ausführbar machen
 RUN chmod +x test.sh
 
-ENTRYPOINT ["bash", "/app/test.sh"]
+ENTRYPOINT ["sleep", "infinity"]
