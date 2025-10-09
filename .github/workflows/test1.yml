@@ -33,7 +33,9 @@ jobs:
         cd ..
         make
         chmod +x slang
-    
+        ls
+        ls build
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
