@@ -42,6 +42,7 @@ typedef enum TokenType {
     WAVEOSC,
     SQUAREOSC,
     TRIANGLEOSC,
+    TERRAINOSC,
     RANDOM,
     RANDOMINT,
     LOWPASSFILTERTOKEN,

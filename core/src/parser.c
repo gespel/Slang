@@ -175,6 +175,16 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
         addSampleSource(si->main_rack, sampleSource);
     }
+    if (getToken(si, *i).tt == TERRAINOSC) {
+        consume(i, getToken(si, *i), TERRAINOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+        char* terrainName = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
+        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+
+        //TODO: implement terrain oscillator creation
+    }
 }
 
 
