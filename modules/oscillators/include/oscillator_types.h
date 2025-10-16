@@ -90,6 +90,7 @@ typedef union OscillatorData {
     SineOscillator* sine;
     SquareOscillator* square;
     TriangleOscillator* triangle;
+    TerrainOscillator* terrain;
 } OscillatorData;
 
 typedef struct Oscillator {
