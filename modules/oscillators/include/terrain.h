@@ -10,3 +10,7 @@ TerrainOscillator* createTerrainOscillator(
     int isOutput, 
     int isCV
 );
+
+float getTerrainSample(TerrainOscillator* terrainOscillator);
+
+float** loadTerrainByName(char* terrainName);
