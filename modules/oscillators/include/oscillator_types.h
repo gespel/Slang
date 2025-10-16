@@ -68,6 +68,18 @@ typedef struct TriangleOscillator {
     int isCV;
 } TriangleOscillator;
 
+typedef struct TerrainOscillator {
+    float *frequency;
+    float *sample;
+    float frequencyMultiplier;
+    float volume;
+    float phase;
+    int sampleRate;
+    char *name;
+    int isOutput;
+    int isCV;
+} TerrainOscillator;
+
 typedef enum OscillatorType {
     WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE
 } OscillatorType;
