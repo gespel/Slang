@@ -1,4 +1,13 @@
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "../../data/include/binaryData.h"
 #include "oscillator_types.h"
+#include <errno.h>
+#include <locale.h>
+#define TERRAIN_FILE_PATH "waves"
+
 
 TerrainOscillator* createTerrainOscillator(
     float* frequency, 
