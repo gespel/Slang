@@ -78,11 +78,9 @@ float* loadWavetableByName(char* name) {
         }
 
         out[i++] = (float)val;
-        //printf("Parsed value: %f\n", out[i-1]);
     }
 
     free(line);
     fclose(fp);
     return out;
-    //return 0; // Not implemented yet
 }
