@@ -73,6 +73,9 @@ void addVariable(SlangInterpreter* input_inter, Variable* input) {
 
 void removeVariable(SlangInterpreter* si, char* name) {
     //TODO!
+    for(size_t i = 0; i < si->vars_length; i++) {
+
+    }
 }
 
 Variable* getVariableByName(SlangInterpreter* si, char* name) {
