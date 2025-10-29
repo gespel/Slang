@@ -13,6 +13,8 @@ typedef struct SampleSource {
     char* name;
     void *sampleSource;
     SampleSourceType type;
+    void **modifier;
+    int numModifiers;
 } SampleSource;
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type);

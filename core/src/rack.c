@@ -171,6 +171,15 @@ float *getSampleSourceSamplePtr(SampleSource *ss) {
     return NULL;
 }
 
+void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {
+    for (int i = 0; i < rack->numSampleSources; i++) {
+        if (strcmp(name, rack->sampleSources[i]->name) == 0) {
+            rack->sampleSources[i]->modifier[rack->sampleSources[i]->numModifiers] = modifier;
+            rack->sampleSources[i]->numModifiers += 1;
+        }
+    }
+}
+
 void addFilter(Rack* rack, Filter* input) {
     rack->filters[rack->numFilters] = input;
     rack->numFilters = rack->numFilters + 1;

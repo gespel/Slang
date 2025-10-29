@@ -5,5 +5,7 @@ SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceTyp
     out->name = name;
     out->sampleSource = sampleSource;
     out->type = type;
+    out->numModifiers = 0;
+    out->modifier = malloc(8192);
     return out;
 }

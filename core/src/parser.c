@@ -354,7 +354,21 @@ void parseFilter(SlangInterpreter* si, int* i) {
     }
     else if (getToken(si, *i).tt == IDENTIFIER) {
         char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), COMMA);
+        float *cutoff = malloc(sizeof(float));
+        cutoff[0] = l3_expression(si, i);
+        consume(i, getToken(si, *i), NUMBER);
 
+
+        LowPassFilter *filter = createLowPassFilter(cutoff[0], si->sampleRate);
+        Filter *f = malloc(sizeof(Filter));
+        f->type = LOWPASSFILTER;
+        f->filter = filter;
+        Modifier *modifier = malloc(sizeof(Modifier));
+        modifier->type = FILTER;
+        modifier->modifier = f;
+        addModifierToSampleSource(si->main_rack, name, modifier);
     }
 
     
