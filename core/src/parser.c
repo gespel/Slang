@@ -341,7 +341,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
         LOGERROR("Filter type not recognized!");
     }
     consume(i, getToken(si, *i), PARANTHESISLEFT);
-    if (getToken(si, i).tt == NUMBER) {
+    if (getToken(si, *i).tt == NUMBER) {
         float *cutoff = malloc(sizeof(float));
         cutoff[0] = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
@@ -352,9 +352,9 @@ void parseFilter(SlangInterpreter* si, int* i) {
         addFilter(si->main_rack, f);
         LOGINFO("Creating a LOWPASSFILTER with cutoff %f", cutoff[0]);
     }
-    else if (getToken(si, i).tt == IDENTIFIER) {
-        char* name = getToken(si, i).value;
-        
+    else if (getToken(si, *i).tt == IDENTIFIER) {
+        char* name = getToken(si, *i).value;
+
     }
 
     
