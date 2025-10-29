@@ -331,22 +331,31 @@ void parseFilter(SlangInterpreter* si, int* i) {
     int filter_type = -1;
     if(getToken(si, *i).tt == LOWPASSFILTERTOKEN) {
         consume(i, getToken(si, *i), LOWPASSFILTERTOKEN);
+        filter_type = 1;
     }
     else if(getToken(si, *i).tt == HIGHPASSFILTERTOKEN) {
         consume(i, getToken(si, *i), HIGHPASSFILTERTOKEN);
+        filter_type = 2;
     }
     else {
         LOGERROR("Filter type not recognized!");
     }
     consume(i, getToken(si, *i), PARANTHESISLEFT);
-    float *cutoff = malloc(sizeof(float));
+    if (getToken(si, i).tt == NUMBER) {
+        float *cutoff = malloc(sizeof(float));
+        cutoff[0] = l3_expression(si, i);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        LowPassFilter* filter = createLowPassFilter(cutoff[0], si->sampleRate);
+        Filter *f = malloc(sizeof(Filter));
+        f->type = LOWPASSFILTER;
+        f->filter = filter;
+        addFilter(si->main_rack, f);
+        LOGINFO("Creating a LOWPASSFILTER with cutoff %f", cutoff[0]);
+    }
+    else if (getToken(si, i).tt == IDENTIFIER) {
+        char* name = getToken(si, i).value;
+        
+    }
 
-    cutoff[0] = l3_expression(si, i);
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
-    LowPassFilter* filter = createLowPassFilter(cutoff[0], si->sampleRate);
-    Filter *f = malloc(sizeof(Filter));
-    f->type = LOWPASSFILTER;
-    f->filter = filter;
-    addFilter(si->main_rack, f);
-    LOGINFO("Creating a LOWPASSFILTER with cutoff %f", cutoff[0]);
+    
 }
