@@ -120,6 +120,11 @@ float getSample(Rack* rack) {
                     break;
             }
         }
+
+        for (int j = 0; j < rack->sampleSources[i]->numModifiers; j++) {
+            //TODO: add apply of sampleSource modifier 
+        }
+
     }
     for (int i = 0; i < rack->numFilters; i++) {
         Filter *filter = rack->filters[i];
