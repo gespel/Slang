@@ -358,7 +358,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), COMMA);
         float *cutoff = malloc(sizeof(float));
         cutoff[0] = l3_expression(si, i);
-        consume(i, getToken(si, *i), NUMBER);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT);
 
 
         LowPassFilter *filter = createLowPassFilter(cutoff[0], si->sampleRate);
@@ -369,6 +369,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
         modifier->type = FILTER;
         modifier->modifier = f;
         addModifierToSampleSource(si->main_rack, name, modifier);
+        LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, cutoff);
     }
 
     

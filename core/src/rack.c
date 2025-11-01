@@ -124,13 +124,14 @@ float getSample(Rack* rack) {
         for (int j = 0; j < rack->sampleSources[i]->numModifiers; j++) {
             //TODO: add apply of sampleSource modifier
             SampleSource *sampleSource = rack->sampleSources[i];
-            Modifier *modifier = sampleSource->modifier;
+            Modifier *modifier = sampleSource->modifier[j];
             
             switch (modifier->type) {
                 case FILTER:
                     Filter *f = modifier->modifier;
                     if (f->type == LOWPASSFILTER) {
-                        out = processLowPassSample(f, out);
+                        LowPassFilter *lp = f->filter;
+                        out = processLowPassSample(lp, out);
                     }
             } 
         }
