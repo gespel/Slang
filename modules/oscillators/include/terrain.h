@@ -15,6 +15,8 @@ TerrainOscillator* createTerrainOscillator(
     char* name, 
     float** terrain, 
     int terrainWidth, 
+    int terrainIndex,
+    int wavetableIndex,
     int sampleRate, 
     int isOutput, 
     int isCV

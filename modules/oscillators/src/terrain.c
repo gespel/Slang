@@ -1,7 +1,15 @@
 #include "../include/terrain.h"
 
 float getTerrainSample(TerrainOscillator* terrainOscillator) {
-
+    float out = 0;
+    out = terrainOscillator->terrain[terrainOscillator->terrainIndex][terrainOscillator->wavetableIndex];
+    
+    terrainOscillator->wavetableIndex += 1;
+    if (terrainOscillator->wavetableIndex >= terrainOscillator->wavetableSize) {
+        terrainOscillator->wavetableIndex = 0;
+    }
+    
+    return out;
 }
 
 float** loadTerrainByName(char* terrainName) {

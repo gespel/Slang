@@ -76,6 +76,11 @@ typedef struct TerrainOscillator {
     float phase;
     int sampleRate;
     char *name;
+    int terrainSize;
+    int wavetableSize;
+    int terrainIndex;
+    int wavetableIndex;
+    float **terrain;
     int isOutput;
     int isCV;
 } TerrainOscillator;
