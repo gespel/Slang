@@ -103,3 +103,10 @@ tester_exe = executable(
   dependencies: [],
   link_args: ['-lm'], 
 )
+
+slang_exe = executable(
+    'slang',
+    'slang.c',
+    link_with: [slang_core, slang_modules],
+    link_args: ['-lm']
+)
