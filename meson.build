@@ -12,6 +12,7 @@ osc_sources = [
     'modules/oscillators/src/sawtooth.c',
     'modules/oscillators/src/triangle.c',
     'modules/oscillators/src/terrain.c',
+    'modules/oscillators/src/wavetable.c',
 ]
 osc_headers = [
     'modules/oscillators/include/oscillator.h',
@@ -20,6 +21,7 @@ osc_headers = [
     'modules/oscillators/include/sawtooth.h',
     'modules/oscillators/include/triangle.h',
     'modules/oscillators/include/terrain.h',
+    'modules/oscillators/include/wavetable.h',
     'modules/oscillators/include/oscillator_types.h',
 ]
 data_sources = [
@@ -49,7 +51,7 @@ filter_headers = [
     'modules/filters/include/filter_types.h',
 ]
 
-slang_modules = shared_library(
+slang_modules = static_library(
   'slang_modules',
   data_sources + data_headers +
   osc_sources + osc_headers +
@@ -60,4 +62,44 @@ slang_modules = shared_library(
   dependencies: [],
   link_args: ['-lm'], 
   install: true
+)
+
+core_headers = [
+    'core/include/buffer_core.h',
+    'core/include/core_types.h',
+    'core/include/function.h',
+    'core/include/interpreter.h',
+    'core/include/parser.h',
+    'core/include/rack.h',
+    'core/include/tokenizer.h',
+    'core/include/tools.h',
+    'core/include/variable.h',
+]
+core_sources = [
+    'core/src/buffer_core.c',
+    'core/src/function.c',
+    'core/src/interpreter.c',
+    'core/src/parser.c',
+    'core/src/rack.c',
+    'core/src/tokenizer.c',
+    'core/src/tools.c',
+]
+
+slang_core = static_library(
+  'slang',
+  core_sources + core_headers,
+  include_directories: include_directories('core/'),
+  link_with: slang_modules,
+  dependencies: [],
+  link_args: ['-lm'], 
+  install: true
+)
+
+tester_exe = executable(
+  'tester',
+  'tester.c',
+  include_directories: include_directories('core/', 'modules/'),
+  link_with: [slang_core, slang_modules],
+  dependencies: [],
+  link_args: ['-lm'], 
 )
