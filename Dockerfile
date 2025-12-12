@@ -8,7 +8,9 @@ RUN pacman -Sy --noconfirm \
       gcc \
       git \
 #      linux-headers \
-      bash 
+      bash \
+      meson \
+      ninja-build
 
 # Arbeitsverzeichnis setzen
 WORKDIR /app
