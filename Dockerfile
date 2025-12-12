@@ -9,7 +9,7 @@ RUN pacman -Sy --noconfirm \
       git \
 #      linux-headers \
       bash \
-      meson \
+      meson 
 
 # Arbeitsverzeichnis setzen
 WORKDIR /app
