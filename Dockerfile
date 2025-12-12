@@ -17,12 +17,8 @@ WORKDIR /app
 COPY . .
 
 # Build
-RUN mkdir build \
-    && cd build \
-    && cmake .. -DSLANG_DEBUG=ON \
-    && make \
-    && cd .. \
-    && make
+RUN meson setup build
+RUN ninja -C build
 
 # Testskript ausführbar machen
 RUN chmod +x test.sh
