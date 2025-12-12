@@ -51,10 +51,10 @@ jobs:
           meson setup build
       - name: Run test
         run: |
-          ./build/slang examples/basics.slang
-          ./build/slang examples/functions.slang
-          ./build/slang examples/logic.slang
-          ./build/slang examples/synths.slang
+          build/slang examples/basics.slang
+          build/slang examples/functions.slang
+          build/slang examples/logic.slang
+          build/slang examples/synths.slang
 
   image:
     needs: build

@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #set -e
-./slang examples/basics.slang
-./slang examples/functions.slang
-./slang examples/logic.slang
+./build/slang examples/basics.slang
+./build/slang examples/functions.slang
+./build/slang examples/logic.slang
 #export SLANG_LIVE_RENDER=1
-./slang examples/synths.slang
+./build/slang examples/synths.slang
