@@ -10,7 +10,6 @@ RUN pacman -Sy --noconfirm \
 #      linux-headers \
       bash \
       meson \
-      ninja-build
 
 # Arbeitsverzeichnis setzen
 WORKDIR /app

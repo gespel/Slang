@@ -49,6 +49,7 @@ jobs:
       - name: Build test
         run: | 
           meson setup build
+          ninja -C build
       - name: Run test
         run: |
           build/slang examples/basics.slang
