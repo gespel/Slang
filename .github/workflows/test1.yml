@@ -18,23 +18,14 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake build-essential
+        sudo apt-get install -y cmake build-essential meson ninja-build
 
-    - name: Configure with CMake
+    - name: Configure with Meson
       run: |
-        mkdir -p build
-        cd build
-        cmake ..
-
-    - name: Build with Make
+        meson setup build
+    - name: Build with Ninja
       run: |
-        cd build
-        make -j$(nproc)
-        cd ..
-        make
-        chmod +x slang
-        ls
-        ls build
+        ninja -C build
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
@@ -54,18 +45,13 @@ jobs:
 
       - name: Build test
         run: | 
-          mkdir -p build 
-          cd build
-          cmake .. -DSLANG_DEBUG=ON
-          make
-          cd ..
-          make
+          meson setup build
       - name: Run test
         run: |
-          ./slang examples/basics.slang
-          ./slang examples/functions.slang
-          ./slang examples/logic.slang
-          ./slang examples/synths.slang
+          ./build/slang examples/basics.slang
+          ./build/slang examples/functions.slang
+          ./build/slang examples/logic.slang
+          ./build/slang examples/synths.slang
 
   image:
     needs: build
