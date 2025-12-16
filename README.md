@@ -22,8 +22,7 @@ To build and run the Slang interpreter:
 ### Prerequisites
 
 - A C compiler (e.g., `gcc`, `clang`)
-- CMake (`>= 3.5`)
-- Make
+- Meson
 - Optional: `sudo` (for installing system-wide)
 
 ### Build Instructions
@@ -33,18 +32,8 @@ To build and run the Slang interpreter:
 git clone https://github.com/gespel/Slang.git
 cd Slang
 
-# Create a build directory and configure the project
-mkdir build
-cd build
-cmake ..
-
-# Compile and optionally install
-make
-sudo make install
-
-# Return to root and build the Slang interpreter
-cd ..
-make
+meson setup build
+ninja -C build
 ```
 ### Run an Example
 Once compiled, you can run a Slang example like this: 
