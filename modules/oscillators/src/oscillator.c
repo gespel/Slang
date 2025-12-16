@@ -23,6 +23,8 @@ Oscillator *createOscillator(void* data, OscillatorType type) {
             o->data->sawtooth = data;
             o->type = SAWTOOTH;
             break;
+        case TRIANGLE:
+            break;
     }
     return o;
 }

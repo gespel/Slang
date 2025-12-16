@@ -14,7 +14,7 @@ float getTerrainSample(TerrainOscillator* terrainOscillator) {
 
 float** loadTerrainByName(char* terrainName) {
     int x = 128;
-    int y = 48000;
+
     setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
     size_t read;

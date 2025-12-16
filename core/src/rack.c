@@ -42,6 +42,8 @@ void *getOscillator(Rack* rack, char* name) {
                     return rack->oscillators[i]->data->wavetable;
                 }
                 break;
+            case TRIANGLE:
+                break;
         }
     }
     return NULL;
@@ -61,6 +63,8 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
                 break;
             case WAVETABLE:
                 rack->oscillators[i]->data->wavetable->sampleRate = sampleRate;
+                break;
+            case TRIANGLE:
                 break;
         }
     }
@@ -133,6 +137,9 @@ float getSample(Rack* rack) {
                         LowPassFilter *lp = f->filter;
                         out = processLowPassSample(lp, out);
                     }
+                    break;
+                case BITCRUSHER:
+                    break;
             } 
         }
 

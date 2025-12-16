@@ -178,7 +178,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     if (getToken(si, *i).tt == TERRAINOSC) {
         consume(i, getToken(si, *i), TERRAINOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-        char* terrainName = getToken(si, *i).value;
+        //char* terrainName = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
         parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
@@ -328,14 +328,14 @@ void parseIf(SlangInterpreter* si, int* i) {
 }
 
 void parseFilter(SlangInterpreter* si, int* i) {
-    int filter_type = -1;
+    //int filter_type = -1;
     if(getToken(si, *i).tt == LOWPASSFILTERTOKEN) {
         consume(i, getToken(si, *i), LOWPASSFILTERTOKEN);
-        filter_type = 1;
+        //filter_type = 1;
     }
     else if(getToken(si, *i).tt == HIGHPASSFILTERTOKEN) {
         consume(i, getToken(si, *i), HIGHPASSFILTERTOKEN);
-        filter_type = 2;
+        //filter_type = 2;
     }
     else {
         LOGERROR("Filter type not recognized!");
@@ -369,7 +369,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
         modifier->type = FILTER;
         modifier->modifier = f;
         addModifierToSampleSource(si->main_rack, name, modifier);
-        LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, cutoff);
+        LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, *cutoff);
     }
 
     

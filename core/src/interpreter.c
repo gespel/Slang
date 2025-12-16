@@ -150,7 +150,6 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 float interpret(SlangInterpreter* si) {
     printDebugMessage(INFO, "Interpreter started!");
     //printAllVariables(si);
-    float out = 0.0;
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;
 
@@ -378,7 +377,7 @@ float l1_expression(SlangInterpreter* si, int* i) {
     printDebugMessage(DBG, "Called expression");
     //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
     //printDebugMessage(s->tokens[*i].value);
-    float left, right;
+    float left;
     if(si->tokens[*i].tt == PARANTHESISLEFT) {
         //printDebugMessage("Hit parantheses!");
         consume(i, si->tokens[*i], PARANTHESISLEFT);
@@ -489,6 +488,7 @@ int checkLogic(SlangInterpreter* si, int* i) {
             }
             break;
     }
+    return 0;
 }
 
 
