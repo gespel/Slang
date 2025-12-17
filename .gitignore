@@ -9,3 +9,4 @@ slang
 .vscode
 .vs
 *.DS_Store
+.cache

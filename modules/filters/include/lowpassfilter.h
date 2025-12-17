@@ -7,4 +7,6 @@ LowPassFilter* createLowPassFilter(float cutoff, int sampleRate);
 
 float processLowPassSample(LowPassFilter* filter, float inputSample);
 
+void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate);
+
 #endif // LOWPASSFILTER_H

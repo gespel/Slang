@@ -1,8 +1,14 @@
 #include "../include/lowpassfilter.h"
+#include "filters/include/filter_types.h"
 #include <stdlib.h>
 
 LowPassFilter* createLowPassFilter(float cutoff, int sampleRate) {
     LowPassFilter* filter = malloc(sizeof(LowPassFilter));
+    updateCoefficients(filter, cutoff, sampleRate);
+    return filter;
+}
+
+void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate) {
     filter->cutoff = cutoff;
     float rc = 1.0f / (2.0f * 3.14159265f * cutoff);
     float dt = 1.0f / sampleRate;
@@ -11,7 +17,6 @@ LowPassFilter* createLowPassFilter(float cutoff, int sampleRate) {
     filter->RC = rc;
     filter->currentInput = 0.0f;
     filter->currentOutput = 0.0f;
-    return filter;
 }
 
 float processLowPassSample(LowPassFilter* filter, float inputSample) {
