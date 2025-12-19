@@ -135,6 +135,7 @@ float getSample(Rack* rack) {
                     Filter *f = modifier->modifier;
                     if (f->type == LOWPASSFILTER) {
                         LowPassFilter *lp = f->filter;
+                        recalculateFilterCoefficients(lp);
                         out = processLowPassSample(lp, out);
                     }
                     break;

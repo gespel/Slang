@@ -9,4 +9,6 @@ float processLowPassSample(LowPassFilter* filter, float inputSample);
 
 void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate);
 
+void recalculateFilterCoefficients(LowPassFilter* filter);
+
 #endif // LOWPASSFILTER_H

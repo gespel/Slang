@@ -18,6 +18,7 @@ typedef struct LowPassFilter {
     float alpha;
     float currentInput;
     float currentOutput;
+    int sampleRate;
 } LowPassFilter;
 
 typedef struct HighPassFilter {

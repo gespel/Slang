@@ -4,19 +4,25 @@
 
 LowPassFilter* createLowPassFilter(float cutoff, int sampleRate) {
     LowPassFilter* filter = malloc(sizeof(LowPassFilter));
+    filter->sampleRate = sampleRate;
     updateCoefficients(filter, cutoff, sampleRate);
     return filter;
 }
 
 void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate) {
     filter->cutoff = cutoff;
-    float rc = 1.0f / (2.0f * 3.14159265f * cutoff);
-    float dt = 1.0f / sampleRate;
+    filter->sampleRate = sampleRate;
+    recalculateFilterCoefficients(filter);
+    filter->currentInput = 0.0f;
+    filter->currentOutput = 0.0f;
+}
+
+void recalculateFilterCoefficients(LowPassFilter* filter) {
+    float rc = 1.0f / (2.0f * 3.14159265f * filter->cutoff);
+    float dt = 1.0f / filter->sampleRate;
     filter->alpha = dt / (rc + dt);
     filter->dt = dt;
     filter->RC = rc;
-    filter->currentInput = 0.0f;
-    filter->currentOutput = 0.0f;
 }
 
 float processLowPassSample(LowPassFilter* filter, float inputSample) {
