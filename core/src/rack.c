@@ -126,7 +126,6 @@ float getSample(Rack* rack) {
         }
 
         for (int j = 0; j < rack->sampleSources[i]->numModifiers; j++) {
-            //TODO: add apply of sampleSource modifier
             SampleSource *sampleSource = rack->sampleSources[i];
             Modifier *modifier = sampleSource->modifier[j];
             
