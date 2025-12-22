@@ -1,4 +1,4 @@
-#include "../include/tools.h"
+#include "core/include/tools.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
     char buffer[30];

@@ -1,5 +1,5 @@
 #include <ctype.h>
-#include "../include/tokenizer.h"
+#include "core/include/tokenizer.h"
 
 //
 // Created by sten on 11.06.24.

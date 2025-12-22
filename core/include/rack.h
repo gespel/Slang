@@ -1,9 +1,8 @@
 #ifndef SLANG_RACK_H
 #define SLANG_RACK_H
-#include "../../modules/modules.h"
+#include "modules/modules.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "tools.h"
 #include "core_types.h"
 
 Rack* createRack(int* sampleRate, int* bufferSize);

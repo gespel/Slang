@@ -1,4 +1,4 @@
-#include "../include/interpreter.h"
+#include "core/include/interpreter.h"
 
 #ifdef __cplusplus
 extern "C" {

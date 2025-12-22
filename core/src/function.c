@@ -1,4 +1,4 @@
-#include "../include/function.h"
+#include "core/include/function.h"
 
 Function* createFunction(char* name, Token* function_tokens, size_t function_tokens_length, char** vars, size_t vars_length) {
     Function* out = malloc(sizeof(Function));
