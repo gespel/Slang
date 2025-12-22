@@ -1,4 +1,5 @@
 #include "core/include/rack.h"
+#include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/oscillators/include/sawtooth.h"
 #include "modules/oscillators/include/sine.h"
@@ -161,6 +162,7 @@ float getSample(Rack* rack) {
         Filter *filter = rack->filters[i];
         if (filter->type == LOWPASSFILTER) {
             LowPassFilter *lp = (LowPassFilter *) filter->filter;
+            recalculateFilterCoefficients(lp);
             out = processLowPassSample(lp, out);
         }
         
