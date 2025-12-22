@@ -1,7 +1,8 @@
 //
 // Created by Sten on 20.07.2025.
 //
-#include "../include/oscillator.h"
+#include "oscillators/include/oscillator.h"
+#include "oscillators/include/oscillator_types.h"
 
 Oscillator *createOscillator(void* data, OscillatorType type) {
     Oscillator *o = malloc(sizeof(Oscillator));
@@ -24,6 +25,8 @@ Oscillator *createOscillator(void* data, OscillatorType type) {
             o->type = SAWTOOTH;
             break;
         case TRIANGLE:
+            break;
+        case TERRAIN:
             break;
     }
     return o;

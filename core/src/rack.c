@@ -1,4 +1,11 @@
 #include "../include/rack.h"
+#include "modules/oscillators/include/oscillator_types.h"
+#include "modules/oscillators/include/sawtooth.h"
+#include "modules/oscillators/include/sine.h"
+#include "modules/oscillators/include/square.h"
+#include "modules/oscillators/include/triangle.h"
+#include "modules/oscillators/include/wavetable.h"
+#include <string.h>
 
 Rack* createRack(int* sampleRate, int* bufferSize) {
     Rack* rack = malloc(sizeof(Rack));
@@ -43,6 +50,11 @@ void *getOscillator(Rack* rack, char* name) {
                 }
                 break;
             case TRIANGLE:
+                if (strcmp(rack->oscillators[i]->data->triangle->name, name) == 0) {
+                    return rack->oscillators[i]->data->triangle;
+                }
+                break;
+            case TERRAIN:
                 break;
         }
     }
@@ -65,6 +77,9 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
                 rack->oscillators[i]->data->wavetable->sampleRate = sampleRate;
                 break;
             case TRIANGLE:
+                rack->oscillators[i]->data->triangle->sampleRate = sampleRate;
+                break;
+            case TERRAIN:
                 break;
         }
     }
@@ -78,6 +93,7 @@ void addOscillator(Rack* rack, Oscillator* input) {
 
 float getSample(Rack* rack) {
     float out = 0.f;
+    float sample = 0.f;
     //printf("Number of sample sources: %d\n", rack->numSampleSources);
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
@@ -89,37 +105,34 @@ float getSample(Rack* rack) {
             Oscillator *osc = (Oscillator *) rack->sampleSources[i]->sampleSource;
             switch (osc->type) {
                 case SINE:
+                    sample = getSineSample(osc->data->sine);
                     if (osc->data->sine->isOutput == 1) {
-                        out += getSineSample(osc->data->sine);
-                    }
-                    else {
-                        getSineSample(osc->data->sine);
+                        out += sample;
                     }
                     break;
                 case SAWTOOTH:
+                    sample = getSawtoothSample(osc->data->sawtooth);
                     if (osc->data->sawtooth->isOutput == 1) {
-                        out += getSawtoothSample(osc->data->sawtooth);
-                    }
-                    else {
-                        getSawtoothSample(osc->data->sawtooth);
+                        out += sample;
                     }
                     break;
                 case SQUARE:
+                    sample = getSquareSample(osc->data->square);
                     if (osc->data->square->isOutput == 1) {
-                        out += getSquareSample(osc->data->square);
-                    }
-                    else {
-                        getSquareSample(osc->data->square);
+                        out += sample;
                     }
                     break;
                 case WAVETABLE:
+                    sample = getWavetableSample(osc->data->wavetable);
                     if (osc->data->wavetable->isOutput == 1) {
-                        out += getWavetableSample(osc->data->wavetable);
-                    }
-                    else {
-                        getWavetableSample(osc->data->wavetable);
+                        out += sample;
                     }
                     break;
+                case TRIANGLE:
+                    sample = getTriangleSample(osc->data->triangle);
+                    if (osc->data->triangle->isOutput == 1) {
+                        out += sample;
+                    }
                 default:
                     break;
             }
@@ -183,6 +196,8 @@ float *getSampleSourceSamplePtr(SampleSource *ss) {
                 return osc->data->square->sample;
             case WAVETABLE:
                 return osc->data->wavetable->sample;
+            case TRIANGLE:
+                return osc->data->triangle->sample;
             default:
                 return NULL;
         }

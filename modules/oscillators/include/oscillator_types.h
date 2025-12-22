@@ -86,7 +86,7 @@ typedef struct TerrainOscillator {
 } TerrainOscillator;
 
 typedef enum OscillatorType {
-    WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE
+    WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE, TERRAIN
 } OscillatorType;
 
 typedef union OscillatorData {
