@@ -1,4 +1,4 @@
-#include "../include/rack.h"
+#include "core/include/rack.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/oscillators/include/sawtooth.h"
 #include "modules/oscillators/include/sine.h"

@@ -1,4 +1,4 @@
-#include "../include/triangle.h"
+#include "oscillators/include/triangle.h"
 #include <stdlib.h>
 
 TriangleOscillator* createTriangleOscillator(float* frequency, float frequencyMultiplier,char *name, int sampleRate, int isOutput, int isCV) {

@@ -1,4 +1,4 @@
-#include "../include/terrain.h"
+#include "oscillators/include/terrain.h"
 
 float getTerrainSample(TerrainOscillator* terrainOscillator) {
     float out = 0;

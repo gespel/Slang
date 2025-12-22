@@ -1,7 +1,7 @@
 //
 // Created by sten on 16.07.25.
 //
-#include "../include/sine.h"
+#include "oscillators/include/sine.h"
 #include <stdio.h>
 
 float getSineSample(SineOscillator* oscillator) {
