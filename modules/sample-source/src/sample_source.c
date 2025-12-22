@@ -1,4 +1,4 @@
-#include "../include/sample_source.h"
+#include "sample-source/include/sample_source.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type) {
     SampleSource *out = malloc(sizeof(SampleSource));

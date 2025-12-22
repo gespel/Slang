@@ -2,7 +2,6 @@
 // Created by sten on 16.07.25.
 //
 #include "oscillators/include/sine.h"
-#include <stdio.h>
 
 float getSineSample(SineOscillator* oscillator) {
     //printf("freq: %f freqMul: %f\n", oscillator->frequency[0], oscillator->frequencyMultiplier);

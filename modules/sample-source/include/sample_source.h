@@ -1,8 +1,8 @@
 #pragma once
-#include "../../oscillators/include/oscillator_types.h"
-#include "../../stepsequencer/include/stepsequencer_types.h"
-#include "../../stepsequencer/include/stepsequencer.h"
-#include "../../oscillators/include/oscillator.h"
+#include "modules/oscillators/include/oscillator_types.h"
+#include "modules/stepsequencer/include/stepsequencer_types.h"
+#include "modules/stepsequencer/include/stepsequencer.h"
+#include "modules/oscillators/include/oscillator.h"
 
 typedef enum SampleSourceType {
     OSCILLATOR,

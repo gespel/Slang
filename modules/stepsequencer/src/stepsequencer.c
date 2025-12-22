@@ -1,11 +1,10 @@
 //
 // Created by Sten on 24.07.2025.
 //
-#include "../include/stepsequencer.h"
+#include "stepsequencer/include/stepsequencer.h"
 
 #include <stdlib.h>
 #include <strings.h>
-#include <stdio.h>
 
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps) {
     StepSequencer *seq = malloc(sizeof(StepSequencer));
