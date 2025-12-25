@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "slang-lib.h"
+#include <string>
 
 //==============================================================================
 /*
@@ -27,7 +28,8 @@ public:
 private:
     //==============================================================================
     // Your private member variables go here...
-
+    SlangInterpreter* interpreter;
+    SlangBufferCore* sbc;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
 };

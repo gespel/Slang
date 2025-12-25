@@ -1,4 +1,5 @@
 #include "MainComponent.h"
+#include "core/include/buffer_core.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -30,12 +31,13 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    char* p = "x = 1 + 2; y = x * 3;";
+    std::string p = "a = 3; b = 2; c = truesineosc(220);";
     int length;
 
-    Token* tokens = tokenize(p, &length);
-    SlangInterpreter* interpreter = createSlangInterpreter(tokens, length);
+    Token* tokens = tokenize((char*)p.c_str(), &length);
+    interpreter = createSlangInterpreter(tokens, length);
     interpret(interpreter);
+    sbc = createBufferCore(interpreter, sampleRate, 32);
     // This function will be called when the audio device is started, or when
     // its settings (i.e. sample rate, block size, etc) are changed.
 
@@ -53,7 +55,14 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 
     // Right now we are not producing any data, in which case we need to clear the buffer
     // (to prevent the output of random noise)
-    bufferToFill.clearActiveBufferRegion();
+    float* buffer = renderBuffer(sbc);
+    auto outL = bufferToFill.buffer->getWritePointer(0);
+    auto outR = bufferToFill.buffer->getWritePointer(1);
+
+    for (int sample = 0; sample < bufferToFill.numSamples; sample++) {
+        outL[sample] = buffer[sample];
+        outR[sample] = buffer[sample];
+    }
 }
 
 void MainComponent::releaseResources()
