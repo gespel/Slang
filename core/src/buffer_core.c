@@ -2,6 +2,7 @@
 // Created by Sten on 07.06.2025.
 //
 #include "core/include/buffer_core.h"
+#include "include/rack.h"
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int bufferSize) {
     SlangBufferCore* bufferCore = malloc(sizeof(SlangBufferCore));
@@ -34,8 +35,10 @@ float* renderBuffer(SlangBufferCore* sbc) {
     
     float* out = malloc(sizeof(float) * sbc->bufferSize);
     for (int sample = 0; sample < sbc->bufferSize; sample++) {
-        out[sample] = getSample(rack);
+        float s = getSample(rack);
+        //printf("%f\n", s);
+        out[sample] = s;
     }
     sbc->buffer = out;
-    return sbc->buffer;
+    return out;
 }

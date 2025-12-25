@@ -3,6 +3,7 @@
 #include <JuceHeader.h>
 #include "slang-lib.h"
 #include <string>
+#include <iostream>
 
 //==============================================================================
 /*

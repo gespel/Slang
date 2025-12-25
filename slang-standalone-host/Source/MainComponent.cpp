@@ -1,5 +1,7 @@
 #include "MainComponent.h"
 #include "core/include/buffer_core.h"
+#include <ostream>
+#include <string>
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -31,13 +33,14 @@ MainComponent::~MainComponent()
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    std::string p = "a = 3; b = 2; c = truesineosc(220);";
+    std::string p = "a = 3; b = 2; c = sawtoothosc(220);";
     int length;
-
+    std::cout << samplesPerBlockExpected << " blocksize expected" << std::endl;
     Token* tokens = tokenize((char*)p.c_str(), &length);
     interpreter = createSlangInterpreter(tokens, length);
+    sbc = createBufferCore(interpreter, (int)sampleRate, samplesPerBlockExpected);
     interpret(interpreter);
-    sbc = createBufferCore(interpreter, sampleRate, 32);
+
     // This function will be called when the audio device is started, or when
     // its settings (i.e. sample rate, block size, etc) are changed.
 
@@ -60,6 +63,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
     auto outR = bufferToFill.buffer->getWritePointer(1);
 
     for (int sample = 0; sample < bufferToFill.numSamples; sample++) {
+        //std::cout << buffer[sample] << std::endl;
         outL[sample] = buffer[sample];
         outR[sample] = buffer[sample];
     }
