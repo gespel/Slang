@@ -2,6 +2,7 @@
 // Created by Sten on 28.06.2025.
 //
 #include "core/include/parser.h"
+#include "include/tools.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqptr, float* frequency_multiplier, int* is_output, int *is_cv) {
     char* freq_token = getToken(si, *i).value;
@@ -106,7 +107,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
-        printf("is output %d is cv: %d\n", *is_output, *is_cv);
+        LOGDEBUG("is output %d is cv: %d", *is_output, *is_cv);
 	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);

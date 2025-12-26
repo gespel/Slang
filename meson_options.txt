@@ -1,6 +1,6 @@
 # meson_options.txt
 option('slang_debug',
   type : 'boolean',
-  value : false,
+  value : true,
   description : 'Enable SLANG_DEBUG'
 )

@@ -3,6 +3,7 @@
 //
 #include "core/include/buffer_core.h"
 #include "include/rack.h"
+#include "include/tools.h"
 
 SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int bufferSize) {
     SlangBufferCore* bufferCore = malloc(sizeof(SlangBufferCore));
@@ -15,6 +16,9 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int buff
     setSampleRateForAllOscillators(bufferCore->interpreter->main_rack, sampleRate);
     si->sampleRate = sampleRate;
     si->bufferSize = bufferSize;
+
+    LOGINFO("Creating Slang Buffer Core with a sample rate of %i and a buffer size of %i", sampleRate, bufferSize);
+
     return bufferCore;
 }
 

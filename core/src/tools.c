@@ -1,4 +1,5 @@
 #include "core/include/tools.h"
+#include "modules/oscillators/include/oscillator_types.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
     char buffer[30];
@@ -18,7 +19,7 @@ void printDebugMessage(SlangLogLevel ll, char* message) {
         case DBG: prefix = "\033[95mDEBUG\033[0m"; break;
         case INFO: prefix = "\033[92mINFO\033[0m"; break;
         case WARN: prefix = "\033[93mWARNING\033[0m"; break;
-        //case ERR: prefix = "\033[91mERROR\033[0m"; break;
+        case ERR: prefix = "\033[91mERROR\033[0m"; break;
     }
 
     printf("[Slang] \033[34m%s\033[0m - %s: %s\n", buffer, prefix, message);
@@ -92,6 +93,11 @@ void printAllOscillators(SlangInterpreter* si) {
                     break;
                 case SQUARE:
                     LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", o->data->square->name, o->data->square->frequency[0], o->data->square->volume);
+                    break;
+                case TRIANGLE:
+                    LOGINFO("TriangleOscillator %s: %lf Hz and %lf volume-multiplier", o->data->triangle->name, o->data->triangle->frequency[0], o->data->triangle->volume);
+                    break;
+                case TERRAIN:
                     break;
             }
         }
