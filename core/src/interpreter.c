@@ -1,4 +1,6 @@
 #include "core/include/interpreter.h"
+#include "include/core_types.h"
+#include "include/tools.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -155,10 +157,7 @@ float interpret(SlangInterpreter* si) {
 
     int i;
     for(i = si->last_token_index; i < numTokens; i++) {
-        if(tokens[i].tt == IDENTIFIER) {
-            parseExpression(si, &i);
-        }
-        else if (tokens[i].tt == NUMBER) {
+        if(tokens[i].tt == IDENTIFIER || tokens[i].tt == NUMBER) {
             parseExpression(si, &i);
         }
         else if(tokens[i].tt == FUNCTION) {
@@ -167,9 +166,7 @@ float interpret(SlangInterpreter* si) {
         else if(getToken(si, i).tt == RETURN) {
             consume(&i, tokens[i], RETURN);
             float out1 = l3_expression(si, &i);
-            #ifdef SLANG_DEBUG
             LOGDEBUG("Returning now! Value: %lf", out1);
-            #endif
             return out1;
         }
         else if(getToken(si, i).tt == SEMICOLON) {
@@ -185,7 +182,7 @@ float interpret(SlangInterpreter* si) {
                 consume(&i, tokens[i], BRACKETRIGHT);
             }
             else {
-                printf("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d\n", si->openBrackets);
+                LOGERROR("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d", si->openBrackets);
                 exit(-1);
             }
         }
