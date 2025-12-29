@@ -13,6 +13,7 @@ typedef struct Filter {
 
 typedef struct LowPassFilter {
     float *cutoff;
+    float cutoffMultiplier;
     float dt;
     float RC;
     float alpha;

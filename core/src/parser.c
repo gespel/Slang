@@ -2,6 +2,7 @@
 // Created by Sten on 28.06.2025.
 //
 #include "core/include/parser.h"
+#include "include/core_types.h"
 #include "include/tools.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqptr, float* frequency_multiplier, int* is_output, int *is_cv) {
@@ -342,18 +343,37 @@ void parseFilter(SlangInterpreter* si, int* i) {
         LOGERROR("Filter type not recognized!");
     }
     consume(i, getToken(si, *i), PARANTHESISLEFT);
-    if (getToken(si, *i).tt == NUMBER) {
-        float *cutoff = malloc(sizeof(float));
-        cutoff[0] = l3_expression(si, i);
-        consume(i, getToken(si, *i), PARANTHESISRIGHT);
-        LowPassFilter* filter = createLowPassFilter(cutoff, si->sampleRate);
+
+    float *freqptr = malloc(sizeof(float));
+    float frequency_multiplier = 1;
+    if (getToken(si, *i).tt == NUMBER || getToken(si, *i).tt == IDENTIFIER) {
+        char* freq_token = getToken(si, *i).value;
+        if(getSampleSource(si->main_rack, freq_token) != NULL) {
+            consume(i, getToken(si, *i), IDENTIFIER);
+            LOGINFO("Using token %s as frequency input", freq_token);
+            SampleSource *ss = getSampleSource(si->main_rack, freq_token);
+            LOGINFO("Found sample source with type %d", ss->type);
+            freqptr = getSampleSourceSamplePtr(ss);
+            LOGINFO("Using sample source %f as frequency input", *freqptr);
+            if(getToken(si, *i).tt == MULTIPLY) {
+                consume(i, getToken(si, *i), MULTIPLY);
+                frequency_multiplier = l3_expression(si, i);
+            }
+            consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        }
+        else {
+            freqptr[0] = l3_expression(si, i);
+            consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        }
+        LowPassFilter* filter = createLowPassFilter(freqptr, si->sampleRate);
+        filter->cutoffMultiplier = frequency_multiplier;
         Filter *f = malloc(sizeof(Filter));
         f->type = LOWPASSFILTER;
         f->filter = filter;
         addFilter(si->main_rack, f);
-        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", cutoff[0]);
+        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freqptr[0]);
     }
-    else if (getToken(si, *i).tt == IDENTIFIER) {
+    /*else if (getToken(si, *i).tt == IDENTIFIER) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
@@ -371,7 +391,5 @@ void parseFilter(SlangInterpreter* si, int* i) {
         modifier->modifier = f;
         addModifierToSampleSource(si->main_rack, name, modifier);
         LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, *cutoff);
-    }
-
-    
+    }*/
 }
