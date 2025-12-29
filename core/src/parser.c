@@ -346,12 +346,12 @@ void parseFilter(SlangInterpreter* si, int* i) {
         float *cutoff = malloc(sizeof(float));
         cutoff[0] = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
-        LowPassFilter* filter = createLowPassFilter(cutoff[0], si->sampleRate);
+        LowPassFilter* filter = createLowPassFilter(cutoff, si->sampleRate);
         Filter *f = malloc(sizeof(Filter));
         f->type = LOWPASSFILTER;
         f->filter = filter;
         addFilter(si->main_rack, f);
-        LOGINFO("Creating a LOWPASSFILTER with cutoff %f", cutoff[0]);
+        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", cutoff[0]);
     }
     else if (getToken(si, *i).tt == IDENTIFIER) {
         char* name = getToken(si, *i).value;
@@ -362,7 +362,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
 
 
-        LowPassFilter *filter = createLowPassFilter(cutoff[0], si->sampleRate);
+        LowPassFilter *filter = createLowPassFilter(cutoff, si->sampleRate);
         Filter *f = malloc(sizeof(Filter));
         f->type = LOWPASSFILTER;
         f->filter = filter;

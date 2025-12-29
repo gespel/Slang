@@ -12,7 +12,7 @@ typedef struct Filter {
 
 
 typedef struct LowPassFilter {
-    float cutoff;
+    float *cutoff;
     float dt;
     float RC;
     float alpha;
