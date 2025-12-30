@@ -79,6 +79,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     if (getToken(si, *i).tt == WAVEOSC) {
         consume(i, getToken(si, *i), WAVEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
+        int argumentIndex = *i;
         char* waveName = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
@@ -91,7 +92,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
 		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
-            SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+            SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
             addSampleSource(si->main_rack, sampleSource);
 
             LOGINFO("Creating a WAVEOSC with %f Hz and name %s", osc->frequency[0], osc->name);
@@ -105,6 +106,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 	if (getToken(si, *i).tt == SAWOSC) {
 		consume(i, getToken(si, *i), SAWOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
+        int argumentIndex = *i;
 
         parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
@@ -113,7 +115,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s", osc->frequency[0], osc->name);
@@ -122,14 +124,14 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
-
+        int argumentIndex = *i;
         parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
 		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency[0], osc->name);
@@ -137,6 +139,8 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     if (getToken(si, *i).tt == TRUESINEOSC) {
         consume(i, getToken(si, *i), TRUESINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
+
+        int argumentIndex = *i;
 
         parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
 
@@ -277,6 +281,7 @@ void parseExpression(SlangInterpreter* si, int* i) {
 void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     consume(i, getToken(si, *i), STEPSEQ);
     consume(i, getToken(si, *i), PARANTHESISLEFT);
+    int argumentIndex = *i;
     float *speed = malloc(sizeof(float));
     float *sequence = malloc(sizeof(float) * 128);
     int sequence_len = 0;
@@ -300,7 +305,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     consume(i, getToken(si, *i), NUMBER);
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
     StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
-    SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER);
+    SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex);
     addSampleSource(si->main_rack, sampleSource);
 
 

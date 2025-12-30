@@ -71,4 +71,3 @@ void setInput(SlangInterpreter* si, int nr, float *value);
 
 int checkLogic(SlangInterpreter* si, int* i);
 
-

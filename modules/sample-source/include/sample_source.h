@@ -15,6 +15,7 @@ typedef struct SampleSource {
     SampleSourceType type;
     void **modifier;
     int numModifiers;
+    int argumentIndex;
 } SampleSource;
 
-SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type);
+SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex);

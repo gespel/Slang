@@ -1,6 +1,7 @@
 #include "core/include/interpreter.h"
 #include "include/core_types.h"
 #include "include/tools.h"
+#include "modules/sample-source/include/sample_source.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -489,7 +490,6 @@ int checkLogic(SlangInterpreter* si, int* i) {
     }
     return 0;
 }
-
 
 #ifdef __cplusplus
 }
