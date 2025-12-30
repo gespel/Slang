@@ -110,6 +110,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->main_rack = createRack(&out->sampleRate, &out->bufferSize);
     out->functions_length = 0;
     out->vars_length = 0;
+    out->interpretedCount = 0;
     return out;
 }
 
@@ -151,6 +152,7 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
 
 float interpret(SlangInterpreter* si) {
     printDebugMessage(INFO, "Interpreter started!");
+    si->interpretedCount += 1;
     //printAllVariables(si);
     int numTokens = si->numTokens;
     Token* tokens = si->tokens;

@@ -17,6 +17,10 @@ SlangBufferCore* createBufferCore(SlangInterpreter* si, int sampleRate, int buff
     si->sampleRate = sampleRate;
     si->bufferSize = bufferSize;
 
+    if (si->interpretedCount > 0) {
+        LOGERROR("Do not create the BufferCore AFTER you interpreted the tokens!");
+        exit(-1);
+    }
     LOGINFO("Creating Slang Buffer Core with a sample rate of %i and a buffer size of %i", sampleRate, bufferSize);
 
     return bufferCore;
