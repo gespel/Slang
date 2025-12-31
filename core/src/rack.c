@@ -1,4 +1,5 @@
 #include "core/include/rack.h"
+#include "include/interpreter.h"
 #include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/oscillators/include/sawtooth.h"
@@ -6,7 +7,9 @@
 #include "modules/oscillators/include/square.h"
 #include "modules/oscillators/include/triangle.h"
 #include "modules/oscillators/include/wavetable.h"
+#include "modules/sample-source/include/sample_source.h"
 #include <string.h>
+#include <sys/types.h>
 
 Rack* createRack(int* sampleRate, int* bufferSize) {
     Rack* rack = malloc(sizeof(Rack));
@@ -96,6 +99,9 @@ float getSample(Rack* rack) {
     float out = 0.f;
     float sample = 0.f;
     //printf("Number of sample sources: %d\n", rack->numSampleSources);
+
+    updateSampleSources(rack);
+    
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
@@ -179,6 +185,45 @@ SampleSource *getSampleSource(Rack* rack, char* name) {
         }
     }
     return NULL;
+}
+
+void updateSampleSources(Rack *rack) {
+    for (int i = 0; i < rack->numSampleSources; i++) {
+        SampleSource* ss = rack->sampleSources[i];
+        if (ss->type == OSCILLATOR) {
+            Oscillator *osc = (Oscillator *) ss->sampleSource;
+            int ti = ss->argumentIndex;
+            float freq = l3_expression(rack->interpreter, &ti);
+            switch (osc->type) {
+                case SINE:
+                    SineOscillator* so = osc->data->sine;
+                    so->frequency = freq;
+                    break;
+                case SAWTOOTH:
+                    SawtoothOscillator* wo = osc->data->sawtooth;
+                    //printf("%f\n", wo->frequency);
+                    wo->frequency = freq;
+                    break;
+                case SQUARE:
+                    SquareOscillator* qo = osc->data->square;
+                    qo->frequency = freq; 
+                    break;
+                case WAVETABLE:
+                    WavetableOscillator* ao = osc->data->wavetable;
+                    ao->frequency = freq;
+                    break;
+                case TRIANGLE:
+                    TriangleOscillator* to = osc->data->triangle;
+                    to->frequency = freq;
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (ss->type == STEPSEQUENCER) {
+            StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+        }
+    }
 }
 
 void addSampleSource(Rack* rack, SampleSource* input) {

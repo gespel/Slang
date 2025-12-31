@@ -6,6 +6,8 @@
 #define CORE_TYPES_H
 #include "../../modules/modules.h"
 
+typedef struct SlangInterpreter SlangInterpreter;
+
 typedef enum SlangLogLevel {
     DBG,
     INFO,
@@ -84,6 +86,7 @@ typedef struct Rack {
     int numSampleSources;
     Filter **filters;
     int numFilters;
+    SlangInterpreter* interpreter;
 } Rack;
 
 typedef struct SlangInterpreter {

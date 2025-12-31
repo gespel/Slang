@@ -13,6 +13,8 @@ SampleSource *getSampleSource(Rack* rack, char* name);
 
 float getSampleSourceSample(SampleSource *ss);
 
+void updateSampleSources(Rack* rack);
+
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
 void addOscillator(Rack* rack, Oscillator* input);

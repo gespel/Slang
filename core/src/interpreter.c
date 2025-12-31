@@ -1,5 +1,6 @@
 #include "core/include/interpreter.h"
 #include "include/core_types.h"
+#include "include/rack.h"
 #include "include/tools.h"
 #include "modules/sample-source/include/sample_source.h"
 
@@ -109,6 +110,7 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->openBrackets = 0;
     out->last_token_index = 0;
     out->main_rack = createRack(&out->sampleRate, &out->bufferSize);
+    out->main_rack->interpreter = out;
     out->functions_length = 0;
     out->vars_length = 0;
     out->interpretedCount = 0;
@@ -145,9 +147,9 @@ Function* getFunctionByName(SlangInterpreter* si, char* name) {
             return si->functions[i];
         }
     }
-#ifdef SLANG_DEBUG
+/*#ifdef SLANG_DEBUG
     LOGDEBUG("Function %s was not found!", name);
-#endif
+#endif*/
     return NULL;
 }
 
@@ -276,6 +278,10 @@ float terminal(SlangInterpreter* si, int* i) {
                        
                 free(function_interpreter);
             }
+            else if(getSampleSource(si->main_rack, si->tokens[*i].value)) {
+                SampleSource* ss = getSampleSource(si->main_rack, si->tokens[*i].value);
+                out = getSampleSourceSample(ss);
+            }
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
@@ -331,7 +337,7 @@ float terminal(SlangInterpreter* si, int* i) {
             generalError("Terminal expected NUMBER or IDENTIFIER");
             exit(-1);
     }
-    LOGDEBUG("Terminal: %lf", out);
+    //LOGDEBUG("Terminal: %lf", out);
     return out;
 }
 
@@ -348,7 +354,7 @@ float l3_expression(SlangInterpreter* si, int* i) {
                 left -= l2_expression(si, i);  // <-- korrekt!
                 break;
             default:
-                LOGDEBUG("l3 Returning left: %lf", left);
+                //LOGDEBUG("l3 Returning left: %lf", left);
                 return left;
         }
     }
@@ -367,16 +373,16 @@ float l2_expression(SlangInterpreter* si, int* i) {
                 left /= l1_expression(si, i);  // <-- korrekt!
                 break;
             default:
-                LOGDEBUG("l2 Returning left: %lf", left);
+                //LOGDEBUG("l2 Returning left: %lf", left);
                 return left;
         }
     }
 }
 
 float l1_expression(SlangInterpreter* si, int* i) {
-    printDebugMessage(DBG, "Called expression");
-    //printDebugMessage(tokenTypeToString(s->tokens[*i].tt));
-    //printDebugMessage(s->tokens[*i].value);
+    //printDebugMessage(DBG, "Called expression");
+    //printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
+    //printDebugMessage(DBG, si->tokens[*i].value);
     float left;
     if(si->tokens[*i].tt == PARANTHESISLEFT) {
         //printDebugMessage("Hit parantheses!");
@@ -388,7 +394,7 @@ float l1_expression(SlangInterpreter* si, int* i) {
         //printDebugMessage("No parantheses. Regular left...");
         left = terminal(si, i);
     }
-    LOGDEBUG("l1 Returning left: %lf", left);
+    //LOGDEBUG("l1 Returning left: %lf", left);
     return left;
 }
 

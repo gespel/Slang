@@ -1,1 +1,2 @@
-s = sawtoothosc(220);
+a = sawtoothosc(30);
+s = sawtoothosc(a * 220);

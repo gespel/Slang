@@ -7,7 +7,7 @@
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     char* freq_token = getToken(si, *i).value;
-    if(getSampleSource(si->main_rack, freq_token) != NULL) {
+    /*if(getSampleSource(si->main_rack, freq_token) != NULL) {
         consume(i, getToken(si, *i), IDENTIFIER);
         LOGINFO("Using token %s as frequency input", freq_token);
         SampleSource *ss = getSampleSource(si->main_rack, freq_token);
@@ -44,7 +44,12 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
     else {
         *freqptr = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    }*/
+    *freqptr = 0;
+    while(getToken(si, *i).tt != PARANTHESISRIGHT) {
+        (*i)++;
     }
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
     if (getToken(si, *i).tt == MINUS) {
         consume(i, getToken(si, *i), MINUS);
         *is_output = 0;
@@ -100,7 +105,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
-        LOGDEBUG("is output %d is cv: %d", *is_output, *is_cv);
+        LOGDEBUG("is output %d is cv: %d and init freq: %f", *is_output, *is_cv, freq);
 	    SawtoothOscillator *osc = createSawtoothOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
@@ -108,7 +113,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
-        LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s", osc->frequency, osc->name);
+        LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s (argument index %d)", osc->frequency, osc->name, argumentIndex);
 	}
 
     if(getToken(si, *i).tt == SINEOSC) {
