@@ -8,7 +8,7 @@
 #include "oscillator_types.h"
 
 
-SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput, int isCV);
+SquareOscillator *createSquareOscillator(float frequency, char* name, int sampleRate, int isOutput, int isCV);
 
 float getSquareSample(SquareOscillator* oscillator);
 

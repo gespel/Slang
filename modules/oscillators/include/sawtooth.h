@@ -8,6 +8,6 @@
 
 float getSawtoothSample(SawtoothOscillator* oscillator);
 
-SawtoothOscillator *createSawtoothOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput, int isCV);
+SawtoothOscillator *createSawtoothOscillator(float frequency, char* name, int sampleRate, int isOutput, int isCV);
 
 #endif //SAWTOOTH_H

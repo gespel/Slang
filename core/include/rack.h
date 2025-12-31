@@ -11,7 +11,7 @@ void *getOscillator(Rack* rack, char* name);
 
 SampleSource *getSampleSource(Rack* rack, char* name);
 
-float *getSampleSourceSamplePtr(SampleSource *ss);
+float getSampleSourceSample(SampleSource *ss);
 
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 

@@ -186,7 +186,7 @@ void addSampleSource(Rack* rack, SampleSource* input) {
     rack->numSampleSources = rack->numSampleSources + 1;
 }
 
-float *getSampleSourceSamplePtr(SampleSource *ss) {
+float getSampleSourceSample(SampleSource *ss) {
     if (ss->type == OSCILLATOR) {
         Oscillator *osc = (Oscillator *) ss->sampleSource;
         switch (osc->type) {
@@ -201,14 +201,14 @@ float *getSampleSourceSamplePtr(SampleSource *ss) {
             case TRIANGLE:
                 return osc->data->triangle->sample;
             default:
-                return NULL;
+                return 0;
         }
     }
     else if (ss->type == STEPSEQUENCER) {
         StepSequencer *seq = (StepSequencer *) ss->sampleSource;
-        return &seq->sample;
+        return seq->sample;
     }
-    return NULL;
+    return 0;
 }
 
 void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {

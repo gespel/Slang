@@ -4,8 +4,7 @@
 #include "oscillators/include/wavetable.h"
 
 WavetableOscillator* createWavetableOscillator(
-    float* frequency,
-    float frequencyMultiplier,
+    float frequency,
     char* name,
     float* waveTable,
     int wavetableLength,
@@ -15,7 +14,6 @@ WavetableOscillator* createWavetableOscillator(
 
     WavetableOscillator* out = malloc(sizeof(WavetableOscillator));
     out->frequency = frequency;
-    out->frequencyMultiplier = frequencyMultiplier;
     out->name = name;
     out->waveTable = waveTable;
     out->wavetableLength = wavetableLength;
@@ -23,8 +21,7 @@ WavetableOscillator* createWavetableOscillator(
     out->isOutput = isOutput;
     out->index = 0;
     out->isCV = isCV;
-    out->sample = malloc(sizeof(float));
-    out->sample[0] = 0.0;
+    out->sample = 0.0;
     return out;
 }
 float getWavetableSample(WavetableOscillator* oscillator) {
@@ -32,16 +29,16 @@ float getWavetableSample(WavetableOscillator* oscillator) {
         oscillator->index = 0;
     }
     float out = oscillator->waveTable[oscillator->index];
-    float temp = (float)oscillator->frequency[0] / 10;
+    float temp = (float)oscillator->frequency / 10;
     int n = (temp - floor(temp) > 0.5) ? ceil(temp) : floor(temp);
     oscillator->index += n;
-    oscillator->sample[0] = out;
+    oscillator->sample = out;
     //printf("isCV: %d isOutput: %d\n", oscillator->isCV, oscillator->isOutput);
     if (oscillator->isCV == 1) {
-        oscillator->sample[0] = oscillator->sample[0] + 1.0;
+        oscillator->sample = oscillator->sample + 1.0;
     }
     if (oscillator->isOutput == 1) {
-        return oscillator->sample[0];
+        return oscillator->sample;
     }
     else {
         return 0.0;

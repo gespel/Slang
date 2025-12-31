@@ -3,40 +3,38 @@
 //
 #include "oscillators/include/square.h"
 
-SquareOscillator *createSquareOscillator(float* frequency, float frequencyMultiplier, char* name, int sampleRate, int isOutput, int isCV) {
+SquareOscillator *createSquareOscillator(float frequency, char* name, int sampleRate, int isOutput, int isCV) {
     SquareOscillator* oscillator = malloc(sizeof(SquareOscillator));
     oscillator->frequency = frequency;
-    oscillator->frequencyMultiplier = frequencyMultiplier;
     oscillator->name = name;
     oscillator->sampleRate = sampleRate;
     oscillator->isCV = isCV;
     oscillator->isOutput = isOutput;
-    oscillator->sample = malloc(sizeof (float));
-    oscillator->sample[0] = 0;
+    oscillator->sample = 0;
     oscillator->index = 0;
     return oscillator;
 }
 
 float getSquareSample(SquareOscillator* oscillator) {
     float out = 0;
-    if (oscillator->index >= (oscillator->sampleRate / oscillator->frequency[0])) {
+    if (oscillator->index >= (oscillator->sampleRate / oscillator->frequency)) {
         oscillator->index = 0;
     }
 
-    if (oscillator->index >= ((float)oscillator->sampleRate/oscillator->frequency[0]) / 2) {
+    if (oscillator->index >= ((float)oscillator->sampleRate/oscillator->frequency) / 2) {
         out = 1;
     }
     else {
         out = -1;
     }
-    oscillator->sample[0] = out;
+    oscillator->sample = out;
     oscillator->index++;
 
     if (oscillator->isCV == 1) {
-        oscillator->sample[0] = oscillator->sample[0] + 1.0;
+        oscillator->sample = oscillator->sample + 1.0;
     }
     if (oscillator->isOutput == 1) {
-        return oscillator->sample[0];
+        return oscillator->sample;
     }
     else {
         return 0.0;

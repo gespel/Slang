@@ -17,7 +17,7 @@
 
 float getWavetableSample(WavetableOscillator* oscillator);
 
-WavetableOscillator* createWavetableOscillator(float* frequency, float frequencyMultiplier, char* name, float* waveTable, int wavetableLength, int sampleRate, int isOutput, int isCV);
+WavetableOscillator* createWavetableOscillator(float frequency, char* name, float* waveTable, int wavetableLength, int sampleRate, int isOutput, int isCV);
 
 float* loadWavetableByName(char* name);
 

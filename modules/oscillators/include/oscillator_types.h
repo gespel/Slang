@@ -6,9 +6,8 @@
 #define OSCILLATOR_TYPES_H
 
 typedef struct WavetableOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     int index;
     int wavetableLength;
@@ -20,9 +19,8 @@ typedef struct WavetableOscillator {
 } WavetableOscillator;
 
 typedef struct SawtoothOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     float phase;
     int sampleRate;
@@ -32,9 +30,8 @@ typedef struct SawtoothOscillator {
 } SawtoothOscillator;
 
 typedef struct SquareOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     float phase;
     int sampleRate;
@@ -45,9 +42,8 @@ typedef struct SquareOscillator {
 } SquareOscillator;
 
 typedef struct SineOscillator {
-    float* frequency;
-    float* sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     float phase;
     int sampleRate;
@@ -57,9 +53,8 @@ typedef struct SineOscillator {
 } SineOscillator;
 
 typedef struct TriangleOscillator {
-    float *frequency;
-    float *sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     float phase;
     int sampleRate;
@@ -69,9 +64,8 @@ typedef struct TriangleOscillator {
 } TriangleOscillator;
 
 typedef struct TerrainOscillator {
-    float *frequency;
-    float *sample;
-    float frequencyMultiplier;
+    float frequency;
+    float sample;
     float volume;
     float phase;
     int sampleRate;

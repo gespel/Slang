@@ -5,19 +5,15 @@
 #include "include/core_types.h"
 #include "include/tools.h"
 
-void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqptr, float* frequency_multiplier, int* is_output, int *is_cv) {
+void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     char* freq_token = getToken(si, *i).value;
     if(getSampleSource(si->main_rack, freq_token) != NULL) {
         consume(i, getToken(si, *i), IDENTIFIER);
         LOGINFO("Using token %s as frequency input", freq_token);
         SampleSource *ss = getSampleSource(si->main_rack, freq_token);
         LOGINFO("Found sample source with type %d", ss->type);
-        *freqptr = getSampleSourceSamplePtr(ss);
-        LOGINFO("Using sample source %f as frequency input", **freqptr);
-        if(getToken(si, *i).tt == MULTIPLY) {
-            consume(i, getToken(si, *i), MULTIPLY);
-            frequency_multiplier[0] = l3_expression(si, i);
-        }
+        *freqptr = getSampleSourceSample(ss);
+        LOGINFO("Using sample source %f as frequency input", *freqptr);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
 
@@ -26,31 +22,27 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqpt
         switch(index) {
             case 0:
                 consume(i, getToken(si, *i), INPUTA);
-                *freqptr = si->inputs[0];
+                freqptr = si->inputs[0];
                 break;
             case 1:
                 consume(i, getToken(si, *i), INPUTB);
-                *freqptr = si->inputs[1];
+                freqptr = si->inputs[1];
                 break;
             case 2:
                 consume(i, getToken(si, *i), INPUTC);
-                *freqptr = si->inputs[2];
+                freqptr = si->inputs[2];
                 break;
             case 3:
                 consume(i, getToken(si, *i), INPUTD);
-                *freqptr = si->inputs[3];
+                freqptr = si->inputs[3];
                 break;
             default:
                 break;
         }
-        if(getToken(si, *i).tt == MULTIPLY) {
-            consume(i, getToken(si, *i), MULTIPLY);
-            frequency_multiplier[0] = l3_expression(si, i);
-        }
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
     else {
-        (*freqptr)[0] = l3_expression(si, i);
+        *freqptr = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }
     if (getToken(si, *i).tt == MINUS) {
@@ -70,8 +62,7 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float** freqpt
 }
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name) {
-    float* freqptr = malloc(sizeof(float));
-    float frequency_multiplier = 1.0;
+    float freq = 0;
     int* is_output = malloc(sizeof(int));
     int* is_cv = malloc(sizeof(int));
     is_output[0] = 1;
@@ -84,18 +75,17 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
 		float *wt = loadWavetableByName(waveName);
 
 		if(wt != NULL) {
-			//WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, getWavetableByName(waveName), 4800, 48000, *is_output);
-		    WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
+		    WavetableOscillator* osc = createWavetableOscillator(freq, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
             SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
             addSampleSource(si->main_rack, sampleSource);
 
-            LOGINFO("Creating a WAVEOSC with %f Hz and name %s", osc->frequency[0], osc->name);
+            LOGINFO("Creating a WAVEOSC with %f Hz and name %s", osc->frequency, osc->name);
 		}
 		else {
 			LOGERROR("could not find given wavetable %s", waveName);
@@ -108,33 +98,33 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         consume(i, getToken(si, *i), PARANTHESISLEFT);
         int argumentIndex = *i;
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
         LOGDEBUG("is output %d is cv: %d", *is_output, *is_cv);
-	    SawtoothOscillator *osc = createSawtoothOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
+	    SawtoothOscillator *osc = createSawtoothOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
-        LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s", osc->frequency[0], osc->name);
+        LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s", osc->frequency, osc->name);
 	}
 
     if(getToken(si, *i).tt == SINEOSC) {
         consume(i, getToken(si, *i), SINEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
         int argumentIndex = *i;
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
-		WavetableOscillator* osc = createWavetableOscillator(freqptr, frequency_multiplier, name, sine_wave, 4800, si->sampleRate, *is_output, *is_cv);
+		WavetableOscillator* osc = createWavetableOscillator(freq, name, sine_wave, 4800, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
-        LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency[0], osc->name);
+        LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
     }
     if (getToken(si, *i).tt == TRUESINEOSC) {
         consume(i, getToken(si, *i), TRUESINEOSC);
@@ -142,43 +132,47 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         int argumentIndex = *i;
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
-        SineOscillator *osc = createSineOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
+        SineOscillator *osc = createSineOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, SINE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
-        LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency[0], osc->name);
+        LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
     }
     if (getToken(si, *i).tt == TRIANGLEOSC) {
         consume(i, getToken(si, *i), TRIANGLEOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        int argumentIndex = *i;
 
-        TriangleOscillator *osc = createTriangleOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
+
+        TriangleOscillator *osc = createTriangleOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, TRIANGLE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
 
-        LOGINFO("Creating a TRIANGLEOSC with %f Hz and name %s", osc->frequency[0], osc->name);
+        LOGINFO("Creating a TRIANGLEOSC with %f Hz and name %s", osc->frequency, osc->name);
     }
     if (getToken(si, *i).tt == SQUAREOSC) {
         consume(i, getToken(si, *i), SQUAREOSC);
         consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        int argumentIndex = *i;
 
-        SquareOscillator *osc = createSquareOscillator(freqptr, frequency_multiplier, name, si->sampleRate, *is_output, *is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
+
+        SquareOscillator *osc = createSquareOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, SQUARE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
     }
     if (getToken(si, *i).tt == TERRAINOSC) {
@@ -187,7 +181,7 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         //char* terrainName = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
         consume(i, getToken(si, *i), COMMA);
-        parseOscillatorSuffixArguments(si, i, &freqptr, &frequency_multiplier, is_output, is_cv);
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
         //TODO: implement terrain oscillator creation
     }
@@ -349,7 +343,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
     }
     consume(i, getToken(si, *i), PARANTHESISLEFT);
 
-    float *freqptr = malloc(sizeof(float));
+    float freq = 0;
     float frequency_multiplier = 1;
     if (getToken(si, *i).tt == NUMBER || getToken(si, *i).tt == IDENTIFIER) {
         char* freq_token = getToken(si, *i).value;
@@ -358,25 +352,21 @@ void parseFilter(SlangInterpreter* si, int* i) {
             LOGINFO("Using token %s as frequency input", freq_token);
             SampleSource *ss = getSampleSource(si->main_rack, freq_token);
             LOGINFO("Found sample source with type %d", ss->type);
-            freqptr = getSampleSourceSamplePtr(ss);
-            LOGINFO("Using sample source %f as frequency input", *freqptr);
-            if(getToken(si, *i).tt == MULTIPLY) {
-                consume(i, getToken(si, *i), MULTIPLY);
-                frequency_multiplier = l3_expression(si, i);
-            }
+            freq = getSampleSourceSample(ss);
+            LOGINFO("Using sample source %f as frequency input", freq);
             consume(i, getToken(si, *i), PARANTHESISRIGHT);
         }
         else {
-            freqptr[0] = l3_expression(si, i);
+            freq = l3_expression(si, i);
             consume(i, getToken(si, *i), PARANTHESISRIGHT);
         }
-        LowPassFilter* filter = createLowPassFilter(freqptr, si->sampleRate);
+        LowPassFilter* filter = createLowPassFilter(&freq, si->sampleRate);
         filter->cutoffMultiplier = frequency_multiplier;
         Filter *f = malloc(sizeof(Filter));
         f->type = LOWPASSFILTER;
         f->filter = filter;
         addFilter(si->main_rack, f);
-        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freqptr[0]);
+        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freq);
     }
     /*else if (getToken(si, *i).tt == IDENTIFIER) {
         char* name = getToken(si, *i).value;

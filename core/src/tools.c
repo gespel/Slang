@@ -83,19 +83,19 @@ void printAllOscillators(SlangInterpreter* si) {
             Oscillator *o = (Oscillator*) si->main_rack->sampleSources[i]->sampleSource;
             switch (o->type) {
                 case SINE:
-                    LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sine->name, o->data->sine->frequency[0], o->data->sine->volume);
+                    LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sine->name, o->data->sine->frequency, o->data->sine->volume);
                     break;
                 case WAVETABLE:
-                    LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", o->data->wavetable->name, o->data->wavetable->frequency[0], o->data->wavetable->volume);
+                    LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", o->data->wavetable->name, o->data->wavetable->frequency, o->data->wavetable->volume);
                     break;
                 case SAWTOOTH:
-                    LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sawtooth->name, o->data->sawtooth->frequency[0], o->data->sawtooth->volume);
+                    LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sawtooth->name, o->data->sawtooth->frequency, o->data->sawtooth->volume);
                     break;
                 case SQUARE:
-                    LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", o->data->square->name, o->data->square->frequency[0], o->data->square->volume);
+                    LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", o->data->square->name, o->data->square->frequency, o->data->square->volume);
                     break;
                 case TRIANGLE:
-                    LOGINFO("TriangleOscillator %s: %lf Hz and %lf volume-multiplier", o->data->triangle->name, o->data->triangle->frequency[0], o->data->triangle->volume);
+                    LOGINFO("TriangleOscillator %s: %lf Hz and %lf volume-multiplier", o->data->triangle->name, o->data->triangle->frequency, o->data->triangle->volume);
                     break;
                 case TERRAIN:
                     break;
