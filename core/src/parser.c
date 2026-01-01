@@ -3,6 +3,7 @@
 //
 #include "core/include/parser.h"
 #include "include/core_types.h"
+#include "include/interpreter.h"
 #include "include/tools.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
@@ -349,6 +350,12 @@ void parseFilter(SlangInterpreter* si, int* i) {
     consume(i, getToken(si, *i), PARANTHESISLEFT);
 
     int argumentIndex = *i;
+
+    while (getToken(si, *i).tt != PARANTHESISRIGHT) {
+        (*i) += 1;
+    }
+
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
 
     float freq = 0;
     

@@ -102,6 +102,7 @@ float getSample(Rack* rack) {
     //printf("Number of sample sources: %d\n", rack->numSampleSources);
 
     updateSampleSources(rack);
+    updateFilters(rack);
     
     for (int i = 0; i < rack->numSampleSources; i++) {
         if (rack->sampleSources[i]->type == STEPSEQUENCER) {
