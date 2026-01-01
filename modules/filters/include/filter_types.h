@@ -8,12 +8,12 @@ typedef enum {
 typedef struct Filter {
     FilterType type;
     void *filter;
+    int argumentIndex;
 } Filter;
 
 
 typedef struct LowPassFilter {
-    float *cutoff;
-    float cutoffMultiplier;
+    float cutoff;
     float dt;
     float RC;
     float alpha;

@@ -1,5 +1,6 @@
 #include "core/include/rack.h"
 #include "include/interpreter.h"
+#include "modules/filters/include/filter_types.h"
 #include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/oscillators/include/sawtooth.h"
@@ -222,6 +223,23 @@ void updateSampleSources(Rack *rack) {
         }
         else if (ss->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+        }
+    }
+}
+
+void updateFilters(Rack *rack) {
+    for (int i = 0; i < rack->numFilters; i++) {
+        Filter* filter = rack->filters[i];
+        int ti = filter->argumentIndex;
+        float freq = l3_expression(rack->interpreter, &ti);
+
+        switch (filter->type) {
+            case LOWPASSFILTER:
+                LowPassFilter* lp = filter->filter;
+                updateCoefficients(lp, freq, rack->sampleRate[0]);
+                break;
+            case HIGHPASSFILTER:
+                break;
         }
     }
 }
