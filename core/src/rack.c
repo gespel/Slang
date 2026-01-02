@@ -198,9 +198,8 @@ void updateSampleSources(Rack *rack) {
         SampleSource* ss = rack->sampleSources[i];
         if (ss->type == OSCILLATOR) {
             Oscillator *osc = (Oscillator *) ss->sampleSource;
-            int *ti = malloc(sizeof(int));
-            *ti = ss->argumentIndex;
-            float freq = l3_expression(rack->interpreter, ti);
+            int ti = ss->argumentIndex;
+            float freq = l3_expression(rack->interpreter, &ti);
             //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE: {
