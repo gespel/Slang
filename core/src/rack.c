@@ -154,7 +154,7 @@ float getSample(Rack* rack) {
             Modifier *modifier = sampleSource->modifier[j];
             
             switch (modifier->type) {
-                case FILTER:
+                case FILTER: {
                     Filter *f = modifier->modifier;
                     if (f->type == LOWPASSFILTER) {
                         LowPassFilter *lp = f->filter;
@@ -162,8 +162,10 @@ float getSample(Rack* rack) {
                         out = processLowPassSample(lp, out);
                     }
                     break;
-                case BITCRUSHER:
+                }
+                case BITCRUSHER: {
                     break;
+                }
             } 
         }
 
@@ -201,33 +203,39 @@ void updateSampleSources(Rack *rack) {
             float freq = l3_expression(rack->interpreter, ti);
             //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
-                case SINE:
+                case SINE: {
                     SineOscillator* so = osc->data->sine;
                     so->frequency = freq;
                     break;
-                case SAWTOOTH:
+                }
+                case SAWTOOTH: {
                     SawtoothOscillator* wo = osc->data->sawtooth;
                     //printf("%f\n", wo->frequency);
                     wo->frequency = freq;
                     break;
-                case SQUARE:
+                }
+                case SQUARE: {
                     SquareOscillator* qo = osc->data->square;
                     qo->frequency = freq; 
                     break;
-                case WAVETABLE:
+                }
+                case WAVETABLE: {
                     WavetableOscillator* ao = osc->data->wavetable;
                     ao->frequency = freq;
                     break;
-                case TRIANGLE:
+                }
+                case TRIANGLE: {
                     TriangleOscillator* to = osc->data->triangle;
                     to->frequency = freq;
                     break;
-                default:
+                }
+                default: {
                     break;
+                }
             }
         }
         else if (ss->type == STEPSEQUENCER) {
-            StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+            //StepSequencer *seq = (StepSequencer *) ss->sampleSource;
         }
     }
 }
@@ -239,12 +247,14 @@ void updateFilters(Rack *rack) {
         float freq = l3_expression(rack->interpreter, &ti);
 
         switch (filter->type) {
-            case LOWPASSFILTER:
+            case LOWPASSFILTER: {
                 LowPassFilter* lp = filter->filter;
                 updateCoefficients(lp, freq, rack->sampleRate[0]);
                 break;
-            case HIGHPASSFILTER:
+            }
+            case HIGHPASSFILTER: {
                 break;
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
 #include "include/tools.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
-    char* freq_token = getToken(si, *i).value;
+    //char* freq_token = getToken(si, *i).value;
     /*if(getSampleSource(si->main_rack, freq_token) != NULL) {
         consume(i, getToken(si, *i), IDENTIFIER);
         LOGINFO("Using token %s as frequency input", freq_token);
