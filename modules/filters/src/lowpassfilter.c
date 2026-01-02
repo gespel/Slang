@@ -13,8 +13,8 @@ void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate) {
     filter->cutoff = cutoff;
     filter->sampleRate = sampleRate;
     recalculateFilterCoefficients(filter);
-    filter->currentInput = 0.0f;
-    filter->currentOutput = 0.0f;
+    //filter->currentInput = 0.0f;
+    //filter->currentOutput = 0.0f;
 }
 
 void recalculateFilterCoefficients(LowPassFilter* filter) {
