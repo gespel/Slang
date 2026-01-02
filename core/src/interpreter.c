@@ -334,7 +334,7 @@ float terminal(SlangInterpreter* si, int* i) {
             out = (float)rInt;
             break;
         default:
-            generalError("Terminal expected NUMBER or IDENTIFIER");
+            LOGERROR("Terminal expected NUMBER or IDENTIFIER got %s", tokenTypeToString(si->tokens[*i].tt));
             exit(-1);
     }
     //LOGDEBUG("Terminal: %lf", out);

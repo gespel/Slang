@@ -10,3 +10,4 @@ slang
 .vs
 *.DS_Store
 .cache
+slang-standalone-host
