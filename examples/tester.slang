@@ -1,2 +1,3 @@
 a = sawtoothosc(100)+;
-s = sawtoothosc(a * 110 + 110);
+s = sawtoothosc(20);
+lowpassfilter(110);
