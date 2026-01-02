@@ -1,5 +1,6 @@
 #include "core/include/rack.h"
 #include "include/interpreter.h"
+#include "include/tools.h"
 #include "modules/filters/include/filter_types.h"
 #include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
@@ -9,6 +10,7 @@
 #include "modules/oscillators/include/triangle.h"
 #include "modules/oscillators/include/wavetable.h"
 #include "modules/sample-source/include/sample_source.h"
+#include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
 
@@ -194,8 +196,10 @@ void updateSampleSources(Rack *rack) {
         SampleSource* ss = rack->sampleSources[i];
         if (ss->type == OSCILLATOR) {
             Oscillator *osc = (Oscillator *) ss->sampleSource;
-            int ti = ss->argumentIndex;
-            float freq = l3_expression(rack->interpreter, &ti);
+            int *ti = malloc(sizeof(int));
+            *ti = ss->argumentIndex;
+            float freq = l3_expression(rack->interpreter, ti);
+            LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE:
                     SineOscillator* so = osc->data->sine;
