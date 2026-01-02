@@ -36,7 +36,7 @@ void copyInterpreter(SlangInterpreter* src, SlangInterpreter* dst) {
 }
 
 int consume(int* i, Token token, TokenType expected) {
-    LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
+    //LOGDEBUG("Consuming %s now. (Expecting %s): %s", tokenTypeToString(token.tt), tokenTypeToString(expected), token.value);
     if(token.tt == expected) {
         (*i)++;
         return 1;
@@ -280,7 +280,7 @@ float terminal(SlangInterpreter* si, int* i) {
                 SampleSource* ss = getSampleSource(si->main_rack, si->tokens[*i].value);
                 out = getSampleSourceSample(ss);
                 consume(i, si->tokens[*i], IDENTIFIER);
-                LOGDEBUG("Retrieved sample from oscillator: %f", out);
+                //LOGDEBUG("Retrieved sample from oscillator: %f", out);
             }
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
@@ -354,7 +354,7 @@ float l3_expression(SlangInterpreter* si, int* i) {
                 left -= l2_expression(si, i);  // <-- korrekt!
                 break;
             default:
-                LOGDEBUG("l3 Returning left: %lf", left);
+                //LOGDEBUG("l3 Returning left: %lf", left);
                 return left;
         }
     }
@@ -373,7 +373,7 @@ float l2_expression(SlangInterpreter* si, int* i) {
                 left /= l1_expression(si, i);  // <-- korrekt!
                 break;
             default:
-                LOGDEBUG("l2 Returning left: %lf", left);
+                //LOGDEBUG("l2 Returning left: %lf", left);
                 return left;
         }
     }
@@ -394,7 +394,7 @@ float l1_expression(SlangInterpreter* si, int* i) {
         //printDebugMessage("No parantheses. Regular left...");
         left = terminal(si, i);
     }
-    LOGDEBUG("l1 Returning left: %lf", left);
+    //LOGDEBUG("l1 Returning left: %lf", left);
     return left;
 }
 

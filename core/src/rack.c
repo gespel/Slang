@@ -199,7 +199,7 @@ void updateSampleSources(Rack *rack) {
             int *ti = malloc(sizeof(int));
             *ti = ss->argumentIndex;
             float freq = l3_expression(rack->interpreter, ti);
-            LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
+            //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE:
                     SineOscillator* so = osc->data->sine;
