@@ -115,6 +115,8 @@ float getSample(Rack* rack) {
             getStepSequencerSample(seq);
         }
         else if (rack->sampleSources[i]->type == OSCILLATOR) {
+            out += getSampleSourceSample(rack->sampleSources[i]);
+            
             Oscillator *osc = (Oscillator *) rack->sampleSources[i]->sampleSource;
             switch (osc->type) {
                 case SINE:

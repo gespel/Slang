@@ -53,6 +53,7 @@ float getSampleSourceSample(SampleSource *ss) {
     }
     else if (ss->type == STEPSEQUENCER) {
         StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+        getStepSequencerSample(seq);
         return seq->sample;
     }
     return out;
