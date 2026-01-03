@@ -11,8 +11,6 @@ void *getOscillator(Rack* rack, char* name);
 
 SampleSource *getSampleSource(Rack* rack, char* name);
 
-float getSampleSourceSample(SampleSource *ss);
-
 void updateSampleSources(Rack* rack);
 
 void updateFilters(Rack* rack);

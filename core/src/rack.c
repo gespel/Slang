@@ -1,6 +1,7 @@
 #include "core/include/rack.h"
 #include "include/interpreter.h"
 //#include "include/tools.h"
+#include "include/tools.h"
 #include "modules/filters/include/filter_types.h"
 #include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
@@ -107,7 +108,8 @@ float getSample(Rack* rack) {
     updateFilters(rack);
     
     for (int i = 0; i < rack->numSampleSources; i++) {
-        if (rack->sampleSources[i]->type == STEPSEQUENCER) {
+        out += getSampleSourceSample(rack->sampleSources[i]);
+        /*if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
             //LOGINFO("Adding step sequencer sample: %f", seq->sample);
             getStepSequencerSample(seq);
@@ -167,7 +169,7 @@ float getSample(Rack* rack) {
                     break;
                 }
             } 
-        }
+        }*/
 
     }
     for (int i = 0; i < rack->numFilters; i++) {
@@ -244,7 +246,7 @@ void updateFilters(Rack *rack) {
         Filter* filter = rack->filters[i];
         int ti = filter->argumentIndex;
         float freq = l3_expression(rack->interpreter, &ti);
-
+        //LOGDEBUG("updated filter freq %f", freq);
         switch (filter->type) {
             case LOWPASSFILTER: {
                 LowPassFilter* lp = filter->filter;
@@ -261,31 +263,6 @@ void updateFilters(Rack *rack) {
 void addSampleSource(Rack* rack, SampleSource* input) {
     rack->sampleSources[rack->numSampleSources] = input;
     rack->numSampleSources = rack->numSampleSources + 1;
-}
-
-float getSampleSourceSample(SampleSource *ss) {
-    if (ss->type == OSCILLATOR) {
-        Oscillator *osc = (Oscillator *) ss->sampleSource;
-        switch (osc->type) {
-            case SINE:
-                return osc->data->sine->sample;
-            case SAWTOOTH:
-                return osc->data->sawtooth->sample;
-            case SQUARE:
-                return osc->data->square->sample;
-            case WAVETABLE:
-                return osc->data->wavetable->sample;
-            case TRIANGLE:
-                return osc->data->triangle->sample;
-            default:
-                return 0;
-        }
-    }
-    else if (ss->type == STEPSEQUENCER) {
-        StepSequencer *seq = (StepSequencer *) ss->sampleSource;
-        return seq->sample;
-    }
-    return 0;
 }
 
 void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {

@@ -1,4 +1,5 @@
 #pragma once
+//#include "include/rack.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/stepsequencer/include/stepsequencer_types.h"
 #include "modules/stepsequencer/include/stepsequencer.h"
@@ -19,3 +20,5 @@ typedef struct SampleSource {
 } SampleSource;
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex);
+
+float getSampleSourceSample(SampleSource *ss);
