@@ -19,6 +19,8 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
 void addOscillator(Rack* rack, Oscillator* input);
 
+int getNumOscillators(Rack* rack);
+
 void addStepSequencer(Rack* rack, StepSequencer* input);
 
 void addSampleSource(Rack* rack, SampleSource* input);
@@ -28,5 +30,7 @@ void addFilter(Rack* rack, Filter* input);
 void addModifierToSampleSource(Rack *rack, char *name, void *modifier);
 
 float getSample(Rack* rack);
+
+float normalizeSample(float sample, int numOscillators);
 
 #endif

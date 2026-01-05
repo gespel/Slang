@@ -99,6 +99,16 @@ void addOscillator(Rack* rack, Oscillator* input) {
     rack->numOscillators = rack->numOscillators + 1;
 }
 
+int getNumOscillators(Rack* rack) {
+    int out = 0;
+    for (int i = 0; i < rack->numSampleSources; i++) {
+        if (rack->sampleSources[i]->type == OSCILLATOR) {
+            out += 1;
+        }
+    }
+    return out;
+}
+
 float getSample(Rack* rack) {
     float out = 0.f;
     float sample = 0.f;
@@ -184,7 +194,7 @@ float getSample(Rack* rack) {
         
     }
 
-    return out;
+    return normalizeSample(out, getNumOscillators(rack));
 }
 
 SampleSource *getSampleSource(Rack* rack, char* name) {
@@ -279,4 +289,8 @@ void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {
 void addFilter(Rack* rack, Filter* input) {
     rack->filters[rack->numFilters] = input;
     rack->numFilters = rack->numFilters + 1;
+}
+
+float normalizeSample(float sample, int numOscillators) {
+    return sample / numOscillators;
 }
