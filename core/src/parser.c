@@ -46,10 +46,10 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
         *freqptr = l3_expression(si, i);
         consume(i, getToken(si, *i), PARANTHESISRIGHT);
     }*/
-    *freqptr = 0;
-    while(getToken(si, *i).tt != PARANTHESISRIGHT) {
+    *freqptr = l3_expression(si, i);
+    /*while(getToken(si, *i).tt != PARANTHESISRIGHT) {
         (*i)++;
-    }
+    }*/
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
     if (getToken(si, *i).tt == MINUS) {
         consume(i, getToken(si, *i), MINUS);
