@@ -118,7 +118,12 @@ float getSample(Rack* rack) {
     updateFilters(rack);
     
     for (int i = 0; i < rack->numSampleSources; i++) {
-        out += getSampleSourceSample(rack->sampleSources[i]);
+        sample = getSampleSourceSample(rack->sampleSources[i]);
+        //printSampleSourceType(rack->sampleSources[i]);
+        //LOGDEBUG("sample: %f", sample);
+        if (rack->sampleSources[i]->type != STEPSEQUENCER) {
+            out += sample;
+        }
         /*if (rack->sampleSources[i]->type == STEPSEQUENCER) {
             StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
             //LOGINFO("Adding step sequencer sample: %f", seq->sample);

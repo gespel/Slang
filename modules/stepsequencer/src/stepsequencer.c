@@ -20,7 +20,7 @@ StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int 
 
 float getStepSequencerSample(StepSequencer *seq) {
     //printf("sample rate: %d, speed: %d, num steps: %d\n", seq->sampleRate, seq->speed, seq->numSteps);
-    float step_duration = (float)48000/ (float)(seq->numSteps);
+    float step_duration = (float)seq->sampleRate/ (float)(seq->numSteps);
     //printf("Step duration: %f, step index: %d, index: %d", step_duration, seq->stepIndex, seq->index);
     if ((float)seq->stepIndex >= step_duration) {
         seq->stepIndex = 0;

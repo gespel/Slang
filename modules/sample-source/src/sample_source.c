@@ -1,4 +1,5 @@
 #include "sample-source/include/sample_source.h"
+#include "core/include/tools.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
     SampleSource *out = malloc(sizeof(SampleSource));
@@ -25,7 +26,7 @@ float getSampleSourceSample(SampleSource *ss) {
                 break;
             case SAWTOOTH:
                 sample = getSawtoothSample(osc->data->sawtooth);
-                printf("%f\n", sample);
+                //printf("%f\n", sample);
                 if (osc->data->sawtooth->isOutput == 1) {
                     out += sample;
                 }
@@ -54,7 +55,17 @@ float getSampleSourceSample(SampleSource *ss) {
     else if (ss->type == STEPSEQUENCER) {
         StepSequencer *seq = (StepSequencer *) ss->sampleSource;
         getStepSequencerSample(seq);
+        //printf("%f\n", seq->sample);
         return seq->sample;
     }
     return out;
+}
+
+void printSampleSourceType(SampleSource *ss) {
+    if (ss->type == STEPSEQUENCER) {
+        LOGDEBUG("STEPSEQUENCER");
+    }
+    else if (ss->type == OSCILLATOR) {
+        LOGDEBUG("OSCILLATOR");
+    }
 }
