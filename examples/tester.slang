@@ -2,7 +2,7 @@ a = 3;
 b = 2; 
 s = stepsequencer([1, 2, 3, 4], 1); 
 ss = stepsequencer([2, 8, 16, 32], 1); 
-c = sawtoothosc(s * 110); 
+c = sawtoothosc(s * 110 * a); 
 d = sawtoothosc(1)+; 
 //lowpassfilter(ss * 55); 
 e = sawtoothosc(s * 55); 

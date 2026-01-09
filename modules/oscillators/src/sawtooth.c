@@ -17,7 +17,7 @@ float getSawtoothSample(SawtoothOscillator* oscillator) {
     }
     float freq = oscillator->frequency;
     oscillator->sample = oscillator->sample + (freq / oscillator->sampleRate);
-    return oscillator->sample;
+    return oscillator->sample * oscillator->volume;
 }
 
 SawtoothOscillator *createSawtoothOscillator(float frequency, char* name, int sampleRate, int isOutput, int isCV) {
@@ -28,5 +28,6 @@ SawtoothOscillator *createSawtoothOscillator(float frequency, char* name, int sa
     oscillator->isOutput = isOutput;
     oscillator->sample = 0;
     oscillator->isCV = isCV;
+    oscillator->volume = 1;
     return oscillator;
 }

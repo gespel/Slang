@@ -16,7 +16,7 @@ float getSineSample(SineOscillator* oscillator) {
         oscillator->sample = oscillator->sample + 1.0;
     }
     if (oscillator->isOutput == 1) {
-        return oscillator->sample;
+        return oscillator->sample * oscillator->volume;
     }
     else {
         return 0.0;
@@ -32,5 +32,6 @@ SineOscillator *createSineOscillator(float frequency, char* name, int sampleRate
     osc->phase = 0.f;
     osc->sampleRate = sampleRate;
     osc->isCV = isCV;
+    osc->volume = 1;
     return osc;
 }

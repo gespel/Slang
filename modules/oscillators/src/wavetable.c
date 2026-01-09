@@ -22,6 +22,7 @@ WavetableOscillator* createWavetableOscillator(
     out->index = 0;
     out->isCV = isCV;
     out->sample = 0.0;
+    out->volume = 1;
     return out;
 }
 float getWavetableSample(WavetableOscillator* oscillator) {

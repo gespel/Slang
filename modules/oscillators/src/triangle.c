@@ -11,6 +11,7 @@ TriangleOscillator* createTriangleOscillator(float frequency, char *name, int sa
     osc->isOutput = isOutput;
     osc->isCV = isCV;
     osc->sample = 0.f;
+    osc->volume = 1;
     return osc;
 }
 

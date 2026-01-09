@@ -12,6 +12,7 @@ SquareOscillator *createSquareOscillator(float frequency, char* name, int sample
     oscillator->isOutput = isOutput;
     oscillator->sample = 0;
     oscillator->index = 0;
+    oscillator->volume = 1;
     return oscillator;
 }
 
@@ -34,7 +35,7 @@ float getSquareSample(SquareOscillator* oscillator) {
         oscillator->sample = oscillator->sample + 1.0;
     }
     if (oscillator->isOutput == 1) {
-        return oscillator->sample;
+        return oscillator->sample * oscillator->volume;
     }
     else {
         return 0.0;
