@@ -53,13 +53,15 @@ int main(int argc, char **argv) {
 
         printf("%d tokens!\n", length);
         SlangInterpreter* main_interpreter = createSlangInterpreter(tokens, length);
-        printAllFunctions(main_interpreter);
-        printAllVariables(main_interpreter);
-        printAllOscillators(main_interpreter);
+        
 
         SlangBufferCore* sbc = createBufferCore(main_interpreter, 48000, 512);
 
         interpret(main_interpreter);
+
+        printAllFunctions(main_interpreter);
+        printAllVariables(main_interpreter);
+        printAllOscillators(main_interpreter);
 
 		while (live_render_active == 1) {
 			float* buf = renderBuffer(sbc);
