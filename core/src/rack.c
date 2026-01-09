@@ -219,7 +219,7 @@ void updateSampleSources(Rack *rack) {
             Oscillator *osc = (Oscillator *) ss->sampleSource;
             int ti = ss->argumentIndex;
             float freq = l3_expression(rack->interpreter, &ti);
-            //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
+            LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE: {
                     SineOscillator* so = osc->data->sine;
@@ -228,7 +228,7 @@ void updateSampleSources(Rack *rack) {
                 }
                 case SAWTOOTH: {
                     SawtoothOscillator* wo = osc->data->sawtooth;
-                    //printf("%f\n", wo->frequency);
+                    LOGDEBUG("new frequency %f", wo->frequency);
                     wo->frequency = freq;
                     break;
                 }
