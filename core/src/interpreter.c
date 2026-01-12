@@ -1,7 +1,7 @@
 #include "core/include/interpreter.h"
-#include "include/core_types.h"
-#include "include/rack.h"
-#include "include/tools.h"
+#include "core/include/core_types.h"
+#include "core/include/rack.h"
+#include "core/include/tools.h"
 #include "modules/sample-source/include/sample_source.h"
 
 #ifdef __cplusplus

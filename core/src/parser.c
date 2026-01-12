@@ -2,9 +2,9 @@
 // Created by Sten on 28.06.2025.
 //
 #include "core/include/parser.h"
-#include "include/core_types.h"
-#include "include/interpreter.h"
-#include "include/tools.h"
+#include "core/include/core_types.h"
+#include "core/include/interpreter.h"
+#include "core/include/tools.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;
