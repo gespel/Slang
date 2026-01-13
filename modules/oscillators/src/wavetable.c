@@ -62,7 +62,7 @@ float* loadWavetableByName(char* name) {
         return NULL; 
     }
 
-    while (getline(&line, &len, fp) != -1) {
+    /*while (getline(&line, &len, fp) != -1) {
         // BOM entfernen falls vorhanden
         if ((unsigned char)line[0] == 0xEF) line += 3;
 
@@ -76,7 +76,7 @@ float* loadWavetableByName(char* name) {
         }
 
         out[i++] = (float)val;
-    }
+    }*/
 
     free(line);
     fclose(fp);
