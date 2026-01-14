@@ -51,19 +51,6 @@ filter_headers = [
     'modules/filters/include/filter_types.h',
 ]
 
-slang_modules = static_library(
-  'slang_modules',
-  data_sources + data_headers +
-  osc_sources + osc_headers +
-  step_sources + step_headers +
-  sample_source_sources + sample_source_headers +
-  filter_sources + filter_headers,
-  include_directories: include_directories('modules/'),
-  dependencies: [],
-  link_args: ['-lm'], 
-  install: true
-)
-
 core_headers = [
     'core/include/buffer_core.h',
     'core/include/core_types.h',
@@ -85,13 +72,17 @@ core_sources = [
     'core/src/tools.c',
 ]
 
-slang_core = static_library(
+slang_lib = shared_library(
   'slang',
-  core_sources + core_headers,
-  include_directories: include_directories('core/'),
-  link_with: slang_modules,
+  core_sources + core_headers +
+  data_sources + data_headers +
+  osc_sources + osc_headers +
+  step_sources + step_headers +
+  sample_source_sources + sample_source_headers +
+  filter_sources + filter_headers,
+  include_directories: include_directories('core/', 'modules/'),
   dependencies: [],
-  link_args: ['-lm'], 
+  link_args: ['-lm'],
   install: true
 )
 
@@ -99,7 +90,7 @@ tester_exe = executable(
   'tester',
   'tester.c',
   include_directories: include_directories('core/', 'modules/'),
-  link_with: [slang_core, slang_modules],
+  link_with: slang_lib,
   dependencies: [],
   link_args: ['-lm'], 
 )
@@ -107,6 +98,6 @@ tester_exe = executable(
 slang_exe = executable(
     'slang',
     'slang.c',
-    link_with: [slang_core, slang_modules],
+    link_with: slang_lib,
     link_args: ['-lm']
 )
