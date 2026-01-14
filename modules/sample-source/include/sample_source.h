@@ -21,6 +21,8 @@ typedef struct SampleSource {
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex);
 
+float getSampleSourceOutputSample(SampleSource *ss);
+
 float getSampleSourceSample(SampleSource *ss);
 
 void printSampleSourceType(SampleSource* ss);

@@ -12,7 +12,7 @@ SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceTyp
     return out;
 }
 
-float getSampleSourceSample(SampleSource *ss) {
+float getSampleSourceOutputSample(SampleSource *ss) {
     float out = 0;
     float sample = 0;
     if (ss->type == OSCILLATOR) {
@@ -51,6 +51,45 @@ float getSampleSourceSample(SampleSource *ss) {
             default:
                 break;
         }
+    }
+    else if (ss->type == STEPSEQUENCER) {
+        StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+        getStepSequencerSample(seq);
+        //printf("%f\n", seq->sample);
+        return seq->sample;
+    }
+    return out;
+}
+
+float getSampleSourceSample(SampleSource *ss) {
+    float out = 0;
+    float sample = 0;
+    if (ss->type == OSCILLATOR) {
+        Oscillator *osc = (Oscillator *) ss->sampleSource;
+        switch (osc->type) {
+            case SINE:
+                sample = getSineSample(osc->data->sine);
+
+                break;
+            case SAWTOOTH:
+                sample = getSawtoothSample(osc->data->sawtooth);
+                //printf("%f\n", sample);
+
+                break;
+            case SQUARE:
+                sample = getSquareSample(osc->data->square);
+
+                break;
+            case WAVETABLE:
+                sample = getWavetableSample(osc->data->wavetable);
+
+                break;
+            case TRIANGLE:
+                sample = getTriangleSample(osc->data->triangle);
+            default:
+                break;
+        }
+        out += sample;
     }
     else if (ss->type == STEPSEQUENCER) {
         StepSequencer *seq = (StepSequencer *) ss->sampleSource;
