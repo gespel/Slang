@@ -33,8 +33,7 @@ jobs:
         name: build-artifact
         path: |
           slang
-          build/libslang.a
-          build/libslang_modules.a
+          build/libslang.so
       
   test:
     needs: build
