@@ -199,7 +199,7 @@ void updateFilters(Rack *rack) {
         Filter* filter = rack->filters[i];
         int ti = filter->argumentIndex;
         float freq = l3_expression(rack->interpreter, &ti);
-        LOGDEBUG("updated filter freq %f", freq);
+        //LOGDEBUG("updated filter freq %f", freq);
         switch (filter->type) {
             case LOWPASSFILTER: {
                 LowPassFilter* lp = filter->filter;

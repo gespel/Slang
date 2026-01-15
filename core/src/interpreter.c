@@ -280,7 +280,7 @@ float terminal(SlangInterpreter* si, int* i) {
                 SampleSource* ss = getSampleSource(si->main_rack, si->tokens[*i].value);
                 out = getSampleSourceSample(ss);
                 consume(i, si->tokens[*i], IDENTIFIER);
-                LOGDEBUG("Retrieved sample from oscillator: %f", out);
+                //LOGDEBUG("Retrieved sample from oscillator: %f", out);
             }
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
