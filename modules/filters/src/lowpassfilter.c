@@ -1,4 +1,4 @@
-#include "../include/lowpassfilter.h"
+#include "modules/filters/include/lowpassfilter.h"
 #include "filters/include/filter_types.h"
 #include <stdlib.h>
 
