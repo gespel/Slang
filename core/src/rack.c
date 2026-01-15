@@ -134,8 +134,8 @@ float getSample(Rack* rack) {
             out = processLowPassSample(lp, out);
         }
     }
-
-    return normalizeSample(out, getNumOscillators(rack));
+    return out;
+    //return normalizeSample(out, getNumOscillators(rack));
 }
 
 SampleSource *getSampleSource(Rack* rack, char* name) {
