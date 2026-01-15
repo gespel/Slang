@@ -124,79 +124,15 @@ float getSample(Rack* rack) {
         if (rack->sampleSources[i]->type != STEPSEQUENCER) {
             out += sample;
         }
-        /*if (rack->sampleSources[i]->type == STEPSEQUENCER) {
-            StepSequencer *seq = (StepSequencer *) rack->sampleSources[i]->sampleSource;
-            //LOGINFO("Adding step sequencer sample: %f", seq->sample);
-            getStepSequencerSample(seq);
-        }
-        else if (rack->sampleSources[i]->type == OSCILLATOR) {
-            out += getSampleSourceSample(rack->sampleSources[i]);
-            
-            Oscillator *osc = (Oscillator *) rack->sampleSources[i]->sampleSource;
-            switch (osc->type) {
-                case SINE:
-                    sample = getSineSample(osc->data->sine);
-                    if (osc->data->sine->isOutput == 1) {
-                        out += sample;
-                    }
-                    break;
-                case SAWTOOTH:
-                    sample = getSawtoothSample(osc->data->sawtooth);
-                    if (osc->data->sawtooth->isOutput == 1) {
-                        out += sample;
-                    }
-                    break;
-                case SQUARE:
-                    sample = getSquareSample(osc->data->square);
-                    if (osc->data->square->isOutput == 1) {
-                        out += sample;
-                    }
-                    break;
-                case WAVETABLE:
-                    sample = getWavetableSample(osc->data->wavetable);
-                    if (osc->data->wavetable->isOutput == 1) {
-                        out += sample;
-                    }
-                    break;
-                case TRIANGLE:
-                    sample = getTriangleSample(osc->data->triangle);
-                    if (osc->data->triangle->isOutput == 1) {
-                        out += sample;
-                    }
-                default:
-                    break;
-            }
-        }
-
-        for (int j = 0; j < rack->sampleSources[i]->numModifiers; j++) {
-            SampleSource *sampleSource = rack->sampleSources[i];
-            Modifier *modifier = sampleSource->modifier[j];
-            
-            switch (modifier->type) {
-                case FILTER: {
-                    Filter *f = modifier->modifier;
-                    if (f->type == LOWPASSFILTER) {
-                        LowPassFilter *lp = f->filter;
-                        recalculateFilterCoefficients(lp);
-                        out = processLowPassSample(lp, out);
-                    }
-                    break;
-                }
-                case BITCRUSHER: {
-                    break;
-                }
-            } 
-        }*/
-
     }
+
     for (int i = 0; i < rack->numFilters; i++) {
         Filter *filter = rack->filters[i];
         if (filter->type == LOWPASSFILTER) {
             LowPassFilter *lp = (LowPassFilter *) filter->filter;
-            recalculateFilterCoefficients(lp);
+            //recalculateFilterCoefficients(lp);
             out = processLowPassSample(lp, out);
         }
-        
     }
 
     return normalizeSample(out, getNumOscillators(rack));

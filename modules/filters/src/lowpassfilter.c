@@ -10,6 +10,9 @@ LowPassFilter* createLowPassFilter(float cutoff, int sampleRate) {
 }
 
 void updateCoefficients(LowPassFilter* filter, float cutoff, int sampleRate) {
+    if (cutoff == 0) {
+        cutoff = 1;
+    } 
     filter->cutoff = cutoff;
     filter->sampleRate = sampleRate;
     recalculateFilterCoefficients(filter);
