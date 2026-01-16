@@ -11,7 +11,7 @@
 #include "modules/oscillators/include/triangle.h"
 #include "modules/oscillators/include/wavetable.h"
 #include "modules/sample-source/include/sample_source.h"
-#include "stepsequencer/include/stepsequencer.h"
+#include "modules/stepsequencer/include/stepsequencer.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
