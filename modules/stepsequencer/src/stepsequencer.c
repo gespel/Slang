@@ -15,22 +15,25 @@ StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int 
     seq->sample = 0;
     seq->index = 0;
     seq->stepIndex = 0;
+    seq->stepsDuration = (float)seq->sampleRate * 60 / (float)(seq->speed);
     return seq;
 }
 
-float getStepSequencerSample(StepSequencer *seq) {
+void tickStepSequencer(StepSequencer *seq) {
     //printf("sample rate: %d, speed: %d, num steps: %d\n", seq->sampleRate, seq->speed, seq->numSteps);
-    float step_duration = (float)seq->sampleRate/ (float)(seq->numSteps);
     //printf("Step duration: %f, step index: %d, index: %d", step_duration, seq->stepIndex, seq->index);
-    if ((float)seq->stepIndex >= step_duration) {
+    if ((float)seq->stepIndex >= (float)seq->stepsDuration) {
         seq->stepIndex = 0;
         seq->index += 1;
     }
     if (seq->index >= seq->numSteps) {
         seq->index = 0;
     }
-    seq->stepIndex += 1 * seq->speed;
+    seq->stepIndex += 1;
     seq->sample = seq->steps[seq->index];
+}
+
+float getStepSequencerSample(StepSequencer *seq) {
     return seq->steps[seq->index];
 }
 

@@ -15,20 +15,22 @@ TriangleOscillator* createTriangleOscillator(float frequency, char *name, int sa
     return osc;
 }
 
-float getTriangleSample(TriangleOscillator* osc) {
-    float freq = osc->frequency;
-    float increment = freq / osc->sampleRate;
-    osc->phase += increment;
-    if (osc->phase >= 1.f) {
-        osc->phase -= 1.f;
+void tickTriangleOscillator(TriangleOscillator *oscillator) {
+    float freq = oscillator->frequency;
+    float increment = freq / oscillator->sampleRate;
+    oscillator->phase += increment;
+    if (oscillator->phase >= 1.f) {
+        oscillator->phase -= 1.f;
     }
-    if (osc->phase < 0.25f) {
-        osc->sample = osc->phase * 4.f;
-    } else if (osc->phase < 0.75f) {
-        osc->sample = 2.f - (osc->phase * 4.f);
+    if (oscillator->phase < 0.25f) {
+        oscillator->sample = oscillator->phase * 4.f;
+    } else if (oscillator->phase < 0.75f) {
+        oscillator->sample = 2.f - (oscillator->phase * 4.f);
     } else {
-        osc->sample = (osc->phase * 4.f) - 4.f;
+        oscillator->sample = (oscillator->phase * 4.f) - 4.f;
     }
+}
 
+float getTriangleSample(TriangleOscillator* osc) {
     return osc->sample;
 }

@@ -8,5 +8,6 @@ typedef struct StepSequencer {
     float sample;
     int index;
     int stepIndex;
+    int stepsDuration;
 } StepSequencer;
 #endif //STEPSEQUENCER_TYPES_H

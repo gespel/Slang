@@ -11,6 +11,7 @@
 #include "modules/oscillators/include/triangle.h"
 #include "modules/oscillators/include/wavetable.h"
 #include "modules/sample-source/include/sample_source.h"
+#include "stepsequencer/include/stepsequencer.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -160,17 +161,20 @@ void updateSampleSources(Rack *rack) {
                 case SINE: {
                     SineOscillator* so = osc->data->sine;
                     so->frequency = freq;
+                    tickSineOscillator(so);
                     break;
                 }
                 case SAWTOOTH: {
                     SawtoothOscillator* wo = osc->data->sawtooth;
                     //LOGDEBUG("new frequency %f", wo->frequency);
                     wo->frequency = freq;
+                    tickSawtoothOscillator(wo);
                     break;
                 }
                 case SQUARE: {
                     SquareOscillator* qo = osc->data->square;
                     qo->frequency = freq; 
+                    tickSquareOscillator(qo);
                     break;
                 }
                 case WAVETABLE: {
@@ -181,6 +185,7 @@ void updateSampleSources(Rack *rack) {
                 case TRIANGLE: {
                     TriangleOscillator* to = osc->data->triangle;
                     to->frequency = freq;
+                    tickTriangleOscillator(to);
                     break;
                 }
                 default: {
@@ -189,7 +194,8 @@ void updateSampleSources(Rack *rack) {
             }
         }
         else if (ss->type == STEPSEQUENCER) {
-            //StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+            StepSequencer *seq = (StepSequencer *) ss->sampleSource;
+            tickStepSequencer(seq);
         }
     }
 }

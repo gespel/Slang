@@ -16,7 +16,7 @@ SquareOscillator *createSquareOscillator(float frequency, char* name, int sample
     return oscillator;
 }
 
-float getSquareSample(SquareOscillator* oscillator) {
+void tickSquareOscillator(SquareOscillator *oscillator) {
     float out = 0;
     if (oscillator->index >= (oscillator->sampleRate / oscillator->frequency)) {
         oscillator->index = 0;
@@ -30,7 +30,9 @@ float getSquareSample(SquareOscillator* oscillator) {
     }
     oscillator->sample = out;
     oscillator->index++;
+}
 
+float getSquareSample(SquareOscillator* oscillator) {
     if (oscillator->isCV == 1) {
         oscillator->sample = oscillator->sample + 1.0;
     }

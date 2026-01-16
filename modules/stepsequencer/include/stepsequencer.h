@@ -8,6 +8,7 @@
 
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps);
 
+void tickStepSequencer(StepSequencer* seq);
 float getStepSequencerSample(StepSequencer *seq);
 
 #endif //STEPSEQUENCER_H
