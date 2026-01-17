@@ -1,10 +1,10 @@
 a = 3; 
 b = 2; 
-s = stepsequencer([1, 2, 3, 4], 120); 
-ss = stepsequencer([2, 8, 16, 32], 120); 
+s = stepsequencer([3, 2.5, 1, 6], 220); 
+ss = stepsequencer([2, 8, 16, 32], 220); 
 c = sawtoothosc(s * 110 * a); 
-d = sawtoothosc(1)+; 
-lowpassfilter(ss * 55); 
+d = sawtoothosc(8)+; 
+lowpassfilter(d * ss * 55); 
 e = sawtoothosc(s * 55); 
-f = sawtoothosc(s * 219); 
-g = sawtoothosc(s * 223);
+f = sawtoothosc(s * 109); 
+g = sawtoothosc(s * 111);
