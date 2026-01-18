@@ -351,13 +351,9 @@ void parseFilter(SlangInterpreter* si, int* i) {
 
     int argumentIndex = *i;
 
-    while (getToken(si, *i).tt != PARANTHESISRIGHT) {
-        (*i) += 1;
-    }
+    float freq = l3_expression(si, i);
 
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
-
-    float freq = 0;
     
     LowPassFilter* filter = createLowPassFilter(freq, si->sampleRate);
     Filter *f = malloc(sizeof(Filter));
