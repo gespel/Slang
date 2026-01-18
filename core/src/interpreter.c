@@ -231,9 +231,7 @@ float terminal(SlangInterpreter* si, int* i) {
                 while(si->tokens[*i].tt != PARANTHESISRIGHT) {
                     
                     arguments[arg_counter] = terminal(si, i);
-                    #ifdef SLANG_DEBUG
                     LOGDEBUG("argument: %lf", arguments[arg_counter]);
-                    #endif
                     arg_counter++;
                     if(si->tokens[*i].tt != PARANTHESISRIGHT) {
                         consume(i, si->tokens[*i], COMMA);
@@ -241,16 +239,11 @@ float terminal(SlangInterpreter* si, int* i) {
                 }
                 
                 if(arg_counter != f->vars_length) {
-                    printDebugMessage(ERR, "Number of function call is not equal to function definition!");
+                    LOGERROR("Number of function call is not equal to function definition!");
                     exit(-1);
                 }
                 
                 consume(i, si->tokens[*i], PARANTHESISRIGHT);
-
-                /*SlangInterpreter* function_interpreter = malloc(sizeof(SlangInterpreter));
-                
-                function_interpreter->tokens = f->function_tokens;
-                function_interpreter->numTokens = f->function_tokens_length;*/
 
 				SlangInterpreter *function_interpreter = createSlangInterpreter(f->function_tokens, f->function_tokens_length);
                 
@@ -269,9 +262,9 @@ float terminal(SlangInterpreter* si, int* i) {
                 function_interpreter->functions_length = si->functions_length;
                 printAllFunctions(function_interpreter);
                 printAllVariables(function_interpreter);
-                function_interpreter->main_rack = si->main_rack;
-                si->sampleRate = function_interpreter->sampleRate;
-                si->bufferSize = function_interpreter->bufferSize;
+                //function_interpreter->main_rack = si->main_rack;
+                //si->sampleRate = function_interpreter->sampleRate;
+                //si->bufferSize = function_interpreter->bufferSize;
                 out = interpret(function_interpreter);
                        
                 free(function_interpreter);
