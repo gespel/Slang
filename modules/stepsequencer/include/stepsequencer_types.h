@@ -9,5 +9,6 @@ typedef struct StepSequencer {
     int index;
     int stepIndex;
     int stepsDuration;
+    int trigger;
 } StepSequencer;
 #endif //STEPSEQUENCER_TYPES_H
