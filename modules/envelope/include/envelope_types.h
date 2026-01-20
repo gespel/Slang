@@ -8,10 +8,20 @@ typedef struct EnvelopeGenerator {
 } EnvelopeGenerator;
 
 typedef struct LinearEnvelopeGenerator {
+    float attack;
+    int numSamplesAttack;
+    float decay;
+    int numSamplesDecay;
+    float sustain;
+    int numSamplesSustain;
+    float release;
+    int numSamplesRelease;
     float sample;
     float volume;
-    float phase;
+    float index;
+    int state;
     int sampleRate;
+    int fullNumSamples;
     char* name;
 } LinearEnvelopeGenerator;
 

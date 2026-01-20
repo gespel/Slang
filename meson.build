@@ -50,6 +50,15 @@ filter_headers = [
     'modules/filters/include/lowpassfilter.h',
     'modules/filters/include/filter_types.h',
 ]
+envelope_sources = [
+    'modules/envelope/src/envelope.c',
+    'modules/envelope/src/linenvelope.c',
+]
+envelope_headers = [
+    'modules/envelope/include/envelope_types.h',
+    'modules/envelope/include/envelope.h',
+    'modules/envelope/include/linenvelope.h',
+]
 
 core_headers = [
     'core/include/buffer_core.h',
@@ -79,7 +88,8 @@ slang_lib = shared_library(
   osc_sources + osc_headers +
   step_sources + step_headers +
   sample_source_sources + sample_source_headers +
-  filter_sources + filter_headers,
+  filter_sources + filter_headers +
+  envelope_sources + envelope_headers,
   include_directories: include_directories('core/', 'modules/'),
   dependencies: [],
   link_args: ['-lm'],
