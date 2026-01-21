@@ -39,25 +39,37 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
         if (envelope->index > envelope->numSamplesAttack) {
             envelope->state = 1;
         }
-        envelope->sample = envelope->sample + (envelope->index / envelope->numSamplesAttack);
+        envelope->sample = envelope->sample + 
+            (envelope->index / envelope->numSamplesAttack);
     }
     else if (envelope->state == 1) {
-        if (envelope->index > envelope->numSamplesAttack + envelope->numSamplesDecay) {
+        if (envelope->index > envelope->numSamplesAttack + 
+                envelope->numSamplesDecay) {
             envelope->state = 2;            
         }
-        envelope->sample = envelope->sample - ((envelope->index - envelope->numSamplesAttack) / envelope->numSamplesDecay) * 0.3;
+        envelope->sample = envelope->sample - 
+            ((envelope->index - envelope->numSamplesAttack) / 
+            envelope->numSamplesDecay) * 0.3;
     }
     else if (envelope->state == 2) {
-        if (envelope->index > envelope->numSamplesAttack + envelope->numSamplesDecay + envelope->numSamplesSustain) {
+        if (envelope->index > envelope->numSamplesAttack + 
+                envelope->numSamplesDecay + 
+                envelope->numSamplesSustain) {
             envelope->state = 3;            
-            envelope->tmp = envelope->sample;
+            envelope->tmp = envelope->sample * 
+                ((envelope->index - envelope->numSamplesAttack - envelope->numSamplesDecay - envelope->numSamplesSustain) / 
+                envelope->numSamplesRelease
+            );
         }
     }
     else if (envelope->state == 3) {
-        if (envelope->index > envelope->numSamplesAttack + envelope->numSamplesDecay + envelope->numSamplesSustain + envelope->numSamplesDecay) {
+        if (envelope->index > envelope->numSamplesAttack + 
+                envelope->numSamplesDecay + 
+                envelope->numSamplesSustain + 
+                envelope->numSamplesDecay) {
             envelope->state = -1;
         }
-        envelope->sample = envelope->sample - (envelope->tmp);
+        envelope->sample = envelope->sample - envelope->tmp;
     }
     envelope->index += 1;
 }
