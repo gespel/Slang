@@ -5,7 +5,8 @@
 //#define LIBRARY
 #ifndef LIBRARY
 
-int main() {
+
+void testInterpreter() {
     char a[] = "x = 3; y = 2; z = (x + y) * 2; fn test() {yx = 6; return yx;} re = test(3, 2); asd = 15; if(test() == 5) {it = 15;}";
     //char a[] = "x = 3;";
 
@@ -20,6 +21,19 @@ int main() {
     printAllFunctions(main_interpreter);
     printAllVariables(main_interpreter);
     free(main_interpreter); 
+}
+
+void testEnvelopeGenerator() {
+    LinearEnvelopeGenerator* lin = createLinearEnvelopeGenerator("test", 48, 0.1, 0.1, 1, 0.2);
+    triggerLinearEnvelopeGenerator(lin);
+    for(int i = 0; i < 74; i++) {
+        printf("%f\n", getLinearEnvelopeGeneratorSample(lin));
+        tickLinearEnvelopeGenerator(lin);
+    }
+}
+
+int main() {
+    testEnvelopeGenerator();
     
     return 0;
 }

@@ -1,5 +1,6 @@
 #include "modules/envelope/include/linenvelope.h"
 #include "stdlib.h"
+#include "stdio.h"
 #include <asm-generic/errno.h>
 
 LinearEnvelopeGenerator* createLinearEnvelopeGenerator(char* name, int sampleRate, float attack, float decay, float sustain, float release) {
@@ -32,11 +33,13 @@ float getLinearEnvelopeGeneratorSample(LinearEnvelopeGenerator *envelope) {
 void triggerLinearEnvelopeGenerator(LinearEnvelopeGenerator* envelope) {
     envelope->index = 0;
     envelope->state = 0;
+    printf("Switching to state attack!\n");
 }
 
 void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     if (envelope->state == 0) {
         if (envelope->index > envelope->numSamplesAttack) {
+            printf("Switching to state decay!\n");
             envelope->state = 1;
         }
         envelope->sample = envelope->sample + 
@@ -45,6 +48,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     else if (envelope->state == 1) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay) {
+            printf("Switching to state sustain!\n");
             envelope->state = 2;            
         }
         envelope->sample = envelope->sample - 
@@ -55,6 +59,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain) {
+            printf("Switching to state release!\n");        
             envelope->state = 3;            
             envelope->tmp = envelope->sample * 
                 ((envelope->index - 
@@ -70,6 +75,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain + 
                 envelope->numSamplesRelease) {
+            printf("Switching to state inactive!\n");
             envelope->state = -1;
         }
         envelope->sample = envelope->sample - envelope->tmp;

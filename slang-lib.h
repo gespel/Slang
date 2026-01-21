@@ -18,6 +18,7 @@ extern "C" {
 #include "core/include/variable.h"
 #include "modules/oscillators/include/oscillator.h"
 #include "modules/data/include/binaryData.h"
+#include "modules/envelope/include/linenvelope.h"
 
 #ifdef __cplusplus
 }

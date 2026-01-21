@@ -101,7 +101,6 @@ tester_exe = executable(
   'tester.c',
   include_directories: include_directories('core/', 'modules/'),
   link_with: slang_lib,
-  dependencies: [],
   link_args: ['-lm'], 
 )
 
