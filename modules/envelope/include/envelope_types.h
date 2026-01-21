@@ -1,3 +1,4 @@
+#pragma once
 typedef enum EnvelopeType {
     LINENVELOPE, EXPENVELOPE
 } EnvelopeType;
@@ -22,6 +23,7 @@ typedef struct LinearEnvelopeGenerator {
     int state;
     int sampleRate;
     int fullNumSamples;
+    float tmp;
     char* name;
 } LinearEnvelopeGenerator;
 

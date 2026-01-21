@@ -50,10 +50,14 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     else if (envelope->state == 2) {
         if (envelope->index > envelope->numSamplesAttack + envelope->numSamplesDecay + envelope->numSamplesSustain) {
             envelope->state = 3;            
+            envelope->tmp = envelope->sample;
         }
     }
     else if (envelope->state == 3) {
-        
+        if (envelope->index > envelope->numSamplesAttach + envelope->numSamplesDecay + envelope->numSamplesSustain + envelope->numSamplesDecay) {
+            envelope->state = -1;
+        }
+        envelope->sample = envelope->sample - (envelope->tmp);
     }
     envelope->index += 1;
 }
