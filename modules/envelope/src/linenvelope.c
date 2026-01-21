@@ -69,8 +69,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain + 
-                envelope->numSamplesRelease
-            ) {
+                envelope->numSamplesRelease) {
             envelope->state = -1;
         }
         envelope->sample = envelope->sample - envelope->tmp;
