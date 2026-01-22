@@ -5,6 +5,10 @@
 #include "core/include/core_types.h"
 #include "core/include/interpreter.h"
 #include "core/include/tools.h"
+#include "modules/envelope/include/envelope_types.h"
+#include "modules/envelope/include/linenvelope.h"
+#include "modules/envelope/include/envelope.h"
+#include "sample-source/include/sample_source.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;
@@ -394,6 +398,7 @@ void parseFilter(SlangInterpreter* si, int* i) {
 void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     consume(i, getToken(si, *i), LINENVELOPEGENERATORTOKEN);
     consume(i, getToken(si, *i), PARANTHESISLEFT);
+    int argumentIndex = *i;
     float attack = l3_expression(si, i);
     consume(i, getToken(si, *i), COMMA);
     float decay = l3_expression(si,  i);
@@ -402,4 +407,8 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     consume(i, getToken(si, *i), COMMA);
     float release = l3_expression(si, i);
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
+
+    LinearEnvelopeGenerator* linearEnvelopeGenerator = createLinearEnvelopeGenerator(name, si->sampleRate, attack, decay, sustain, release);
+    EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE);
+    SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, );
 }
