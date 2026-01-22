@@ -39,35 +39,27 @@ void triggerLinearEnvelopeGenerator(LinearEnvelopeGenerator* envelope) {
 void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     if (envelope->state == 0) {
         if (envelope->index > envelope->numSamplesAttack) {
-            printf("Switching to state decay!\n");
+            printf("Switching to state decay! Last sample: %f\n", envelope->sample);
             envelope->state = 1;
         }
         envelope->sample = envelope->sample + 
-            (envelope->index / envelope->numSamplesAttack);
+            (1 / (float)envelope->numSamplesAttack);
     }
     else if (envelope->state == 1) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay) {
-            printf("Switching to state sustain!\n");
+            printf("Switching to state sustain! Last sample: %f\n", envelope->sample);
             envelope->state = 2;            
         }
-        envelope->sample = envelope->sample - 
-            ((envelope->index - envelope->numSamplesAttack) / 
-            envelope->numSamplesDecay) * 0.3;
+        envelope->sample = envelope->sample - (1 / (float)envelope->numSamplesDecay) * 0.3;
     }
     else if (envelope->state == 2) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain) {
-            printf("Switching to state release!\n");        
+            printf("Switching to state release! Last sample: %f\n", envelope->sample);        
             envelope->state = 3;            
-            envelope->tmp = envelope->sample * 
-                ((envelope->index - 
-                    envelope->numSamplesAttack - 
-                    envelope->numSamplesDecay - 
-                    envelope->numSamplesSustain) / 
-                envelope->numSamplesRelease
-            );
+            envelope->tmp = envelope->sample;
         }
     }
     else if (envelope->state == 3) {
@@ -75,10 +67,10 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain + 
                 envelope->numSamplesRelease) {
-            printf("Switching to state inactive!\n");
+            printf("Switching to state inactive! Last sample: %f\n", envelope->sample);
             envelope->state = -1;
         }
-        envelope->sample = envelope->sample - envelope->tmp;
+        envelope->sample = envelope->sample - envelope->tmp * (1 / (float)envelope->numSamplesRelease);
     }
     envelope->index += 1;
 }

@@ -24,10 +24,10 @@ void testInterpreter() {
 }
 
 void testEnvelopeGenerator() {
-    LinearEnvelopeGenerator* lin = createLinearEnvelopeGenerator("test", 48, 0.1, 0.1, 1, 0.2);
+    LinearEnvelopeGenerator* lin = createLinearEnvelopeGenerator("test", 48000, 0.1, 0.1, 1, 0.2);
     triggerLinearEnvelopeGenerator(lin);
-    for(int i = 0; i < 74; i++) {
-        printf("%f\n", getLinearEnvelopeGeneratorSample(lin));
+    for(int i = 0; i < 74000; i++) {
+        //printf("%f\n", getLinearEnvelopeGeneratorSample(lin));
         tickLinearEnvelopeGenerator(lin);
     }
 }
