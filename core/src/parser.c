@@ -254,6 +254,13 @@ void parseExpression(SlangInterpreter* si, int* i) {
     
         parseStepSequencer(si, i, name);
     }
+    else if (getToken(si, (*i)+1).tt == ASSIGN && getToken(si, (*i)+2).tt == LINENVELOPEGENERATORTOKEN) {
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), ASSIGN);
+
+        parseEnvelopeGenerator(si, i, name);
+    }
     else if(getToken(si, (*i)+1).tt == ASSIGN) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), IDENTIFIER);
@@ -382,4 +389,17 @@ void parseFilter(SlangInterpreter* si, int* i) {
         addModifierToSampleSource(si->main_rack, name, modifier);
         LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, *cutoff);
     }*/
+}
+
+void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
+    consume(i, getToken(si, *i), LINENVELOPEGENERATORTOKEN);
+    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    float attack = l3_expression(si, i);
+    consume(i, getToken(si, *i), COMMA);
+    float decay = l3_expression(si,  i);
+    consume(i, getToken(si, *i), COMMA);
+    float sustain = l3_expression(si, i);
+    consume(i, getToken(si, *i), COMMA);
+    float release = l3_expression(si, i);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT);
 }

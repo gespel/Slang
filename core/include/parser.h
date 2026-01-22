@@ -17,4 +17,6 @@ void parseExpression(SlangInterpreter* si, int* i);
 
 void parseIf(SlangInterpreter* si, int* i);
 
+void parseEnvelopeGenerator(SlangInterpreter* si, int* i, char* name);
+
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv);

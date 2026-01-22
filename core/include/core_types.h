@@ -5,6 +5,7 @@
 #ifndef CORE_TYPES_H
 #define CORE_TYPES_H
 #include "../../modules/modules.h"
+#include "modules/envelope/include/envelope_types.h"
 
 typedef struct SlangInterpreter SlangInterpreter;
 
@@ -49,6 +50,7 @@ typedef enum TokenType {
     RANDOMINT,
     LOWPASSFILTERTOKEN,
     HIGHPASSFILTERTOKEN,
+    LINENVELOPEGENERATORTOKEN,
     STEPSEQ,
     INPUTA,
     INPUTB,
@@ -84,6 +86,8 @@ typedef struct Rack {
     int numStepSequencers;
     SampleSource **sampleSources;
     int numSampleSources;
+    EnvelopeGenerator **envelopeGenerators;
+    int numEnvelopeGenerators;
     Filter **filters;
     int numFilters;
     SlangInterpreter* interpreter;

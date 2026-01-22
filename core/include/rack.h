@@ -1,5 +1,6 @@
 #ifndef SLANG_RACK_H
 #define SLANG_RACK_H
+#include "modules/envelope/include/envelope_types.h"
 #include "modules/modules.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,6 +25,8 @@ int getNumOscillators(Rack* rack);
 void addStepSequencer(Rack* rack, StepSequencer* input);
 
 void addSampleSource(Rack* rack, SampleSource* input);
+
+void addEnvelopeGenerator(Rack* rack, EnvelopeGenerator* input);
 
 void addFilter(Rack* rack, Filter* input);
 

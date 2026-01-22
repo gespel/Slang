@@ -1,5 +1,7 @@
 #include <ctype.h>
+#include <string.h>
 #include "core/include/tokenizer.h"
+#include "include/core_types.h"
 
 //
 // Created by sten on 11.06.24.
@@ -245,6 +247,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "randomint") == 0) {
                 out[x].tt = RANDOMINT;
             }
+            else if(strcmp(value, "linenvelope") == 0) {
+                out[x].tt = LINENVELOPEGENERATORTOKEN;
+            }
         }
     } 
 }
@@ -368,6 +373,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case RANDOMINT:
         out = "RandomInt";
+        break;
+    case LINENVELOPEGENERATORTOKEN:
+        out = "LinearEnvelopeGenerator";
         break;
     default:
         out = "Unknown";

@@ -233,6 +233,11 @@ void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {
     }
 }
 
+void addEnvelopeGenerator(Rack *rack, EnvelopeGenerator *input) {
+    rack->envelopeGenerators[rack->numEnvelopeGenerators] = input;
+    rack->numEnvelopeGenerators = rack->numEnvelopeGenerators + 1;
+}
+
 void addFilter(Rack* rack, Filter* input) {
     rack->filters[rack->numFilters] = input;
     rack->numFilters = rack->numFilters + 1;

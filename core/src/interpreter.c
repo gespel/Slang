@@ -2,7 +2,9 @@
 #include "core/include/core_types.h"
 #include "core/include/rack.h"
 #include "core/include/tools.h"
+#include "include/parser.h"
 #include "modules/sample-source/include/sample_source.h"
+#include <time.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -191,6 +193,9 @@ float interpret(SlangInterpreter* si) {
         }
         else if (getToken(si, i).tt == LOWPASSFILTERTOKEN || getToken(si, i).tt == HIGHPASSFILTERTOKEN) {
             parseFilter(si, &i);
+        }
+        else if (getToken(si, i).tt == LINENVELOPEGENERATORTOKEN) {
+            parseEnvelopeGenerator(si, &i, NULL);
         }
         else if (isOscillator(getToken(si, i))) {
             parseOscillators(si, &i, NULL);
