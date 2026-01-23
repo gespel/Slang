@@ -1,8 +1,8 @@
-ss = stepsequencer([1, 2, 3, 4], 240); 
+ss = stepsequencer([1, 1.2, 1.33333, 1.5, 1.6, 1.5, 1.3333, 1.2, 1], 240); 
 lin = linenvelope(ss, 0.001, 0.05, 0.001, 0.25);
 c = sawtoothosc(ss * 110); 
 e = sawtoothosc(ss * 55); 
 f = sawtoothosc(ss * 109); 
 g = sawtoothosc(ss * 111);
-lowpassfilter(2000 * lin);
-lowpassfilter(2000 * lin);
+lowpassfilter(1500 * lin);
+lowpassfilter(1500 * lin);
