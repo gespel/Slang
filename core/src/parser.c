@@ -5,6 +5,7 @@
 #include "core/include/core_types.h"
 #include "core/include/interpreter.h"
 #include "core/include/tools.h"
+#include "include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
 #include "modules/envelope/include/linenvelope.h"
 #include "modules/envelope/include/envelope.h"
@@ -410,5 +411,9 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
 
     LinearEnvelopeGenerator* linearEnvelopeGenerator = createLinearEnvelopeGenerator(name, si->sampleRate, attack, decay, sustain, release);
     EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE);
-    SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, );
+    SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, argumentIndex);
+
+    addSampleSource(si->main_rack, sampleSource);
+
+    LOGINFO("Adding LINEARENVELOPEGENERATOR to samples sources with name %s!", name);
 }

@@ -1,5 +1,6 @@
 #include "sample-source/include/sample_source.h"
 #include "core/include/tools.h"
+#include "envelope/include/envelope_types.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
     SampleSource *out = malloc(sizeof(SampleSource));
@@ -96,6 +97,10 @@ float getSampleSourceSample(SampleSource *ss) {
         getStepSequencerSample(seq);
         //printf("%f\n", seq->sample);
         return seq->sample;
+    }
+    else if (ss->type == ENVELOPEGENERATOR) {
+        LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)ss->sampleSource;
+        return lin->sample;
     }
     return out;
 }
