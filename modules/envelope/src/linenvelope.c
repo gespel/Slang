@@ -31,8 +31,15 @@ float getLinearEnvelopeGeneratorSample(LinearEnvelopeGenerator *envelope) {
 }
 
 void triggerLinearEnvelopeGenerator(LinearEnvelopeGenerator* envelope) {
+    /*if (envelope->state == -1) {
+        envelope->index = 0;
+        envelope->state = 0;
+        envelope->sample = 0;
+        printf("Switching to state attack!\n");
+    }*/
     envelope->index = 0;
     envelope->state = 0;
+    envelope->sample = 0;
     printf("Switching to state attack!\n");
 }
 

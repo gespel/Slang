@@ -99,7 +99,9 @@ float getSampleSourceSample(SampleSource *ss) {
         return seq->sample;
     }
     else if (ss->type == ENVELOPEGENERATOR) {
-        LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)ss->sampleSource;
+        EnvelopeGenerator* env = (EnvelopeGenerator*)ss->sampleSource;
+        LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)env->envelope;
+        //printf("%f\n", lin->sample);
         return lin->sample;
     }
     return out;

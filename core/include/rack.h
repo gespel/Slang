@@ -28,8 +28,6 @@ void addStepSequencer(Rack* rack, StepSequencer* input);
 
 void addSampleSource(Rack* rack, SampleSource* input);
 
-void addEnvelopeGenerator(Rack* rack, EnvelopeGenerator* input);
-
 void addFilter(Rack* rack, Filter* input);
 
 void addModifierToSampleSource(Rack *rack, char *name, void *modifier);

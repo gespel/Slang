@@ -120,7 +120,7 @@ float getSample(Rack* rack) {
 
     updateSampleSources(rack);
     updateFilters(rack);
-        
+
     for (int i = 0; i < rack->numSampleSources; i++) {
         sample = getSampleSourceOutputSample(rack->sampleSources[i]);
         //printSampleSourceType(rack->sampleSources[i]);
@@ -201,8 +201,7 @@ void updateSampleSources(Rack *rack) {
             tickStepSequencer(seq);
         }
         else if (ss->type == ENVELOPEGENERATOR) {
-            SampleSource* ssou = (SampleSource*) ss->sampleSource;
-            EnvelopeGenerator* env = (EnvelopeGenerator*)ssou->sampleSource;
+            EnvelopeGenerator* env = (EnvelopeGenerator*)ss->sampleSource;
             LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)env->envelope;
             StepSequencer* step = env->triggerSequencer;
             if (step->trigger == 1) {
@@ -260,10 +259,6 @@ void addModifierToSampleSource(Rack *rack, char *name, void *modifier) {
     }
 }
 
-void addEnvelopeGenerator(Rack *rack, EnvelopeGenerator *input) {
-    rack->envelopeGenerators[rack->numEnvelopeGenerators] = input;
-    rack->numEnvelopeGenerators = rack->numEnvelopeGenerators + 1;
-}
 
 void addFilter(Rack* rack, Filter* input) {
     rack->filters[rack->numFilters] = input;
