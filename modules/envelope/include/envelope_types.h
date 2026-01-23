@@ -1,4 +1,5 @@
 #pragma once
+#include "modules/stepsequencer/include/stepsequencer_types.h"
 typedef enum EnvelopeType {
     LINENVELOPE, EXPENVELOPE
 } EnvelopeType;
@@ -6,6 +7,7 @@ typedef enum EnvelopeType {
 typedef struct EnvelopeGenerator {
     void* envelope;
     EnvelopeType type;
+    StepSequencer *triggerSequencer;
 } EnvelopeGenerator;
 
 typedef struct LinearEnvelopeGenerator {

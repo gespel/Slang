@@ -400,6 +400,9 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     consume(i, getToken(si, *i), LINENVELOPEGENERATORTOKEN);
     consume(i, getToken(si, *i), PARANTHESISLEFT);
     int argumentIndex = *i;
+    char* stepSequencerName = getToken(si, *i).value;
+    consume(i, getToken(si, *i), IDENTIFIER);
+    consume(i, getToken(si, *i), COMMA);
     float attack = l3_expression(si, i);
     consume(i, getToken(si, *i), COMMA);
     float decay = l3_expression(si,  i);
@@ -410,7 +413,7 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     consume(i, getToken(si, *i), PARANTHESISRIGHT);
 
     LinearEnvelopeGenerator* linearEnvelopeGenerator = createLinearEnvelopeGenerator(name, si->sampleRate, attack, decay, sustain, release);
-    EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE);
+    EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE, getSampleSource(si->main_rack, stepSequencerName)->sampleSource);
     SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, argumentIndex);
 
     addSampleSource(si->main_rack, sampleSource);

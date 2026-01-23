@@ -16,6 +16,8 @@ void updateSampleSources(Rack* rack);
 
 void updateFilters(Rack* rack);
 
+void updateEnvelopeGenerators(Rack* rack);
+
 void setSampleRateForAllOscillators(Rack* rack, int sampleRate);
 
 void addOscillator(Rack* rack, Oscillator* input);

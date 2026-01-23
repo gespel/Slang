@@ -2,6 +2,8 @@
 #include "core/include/interpreter.h"
 //#include "include/tools.h"
 #include "core/include/tools.h"
+#include "envelope/include/envelope_types.h"
+#include "envelope/include/linenvelope.h"
 #include "modules/filters/include/filter_types.h"
 #include "modules/filters/include/lowpassfilter.h"
 #include "modules/oscillators/include/oscillator_types.h"
@@ -12,6 +14,7 @@
 #include "modules/oscillators/include/wavetable.h"
 #include "modules/sample-source/include/sample_source.h"
 #include "modules/stepsequencer/include/stepsequencer.h"
+#include "stepsequencer/include/stepsequencer_types.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -117,7 +120,7 @@ float getSample(Rack* rack) {
 
     updateSampleSources(rack);
     updateFilters(rack);
-    
+        
     for (int i = 0; i < rack->numSampleSources; i++) {
         sample = getSampleSourceOutputSample(rack->sampleSources[i]);
         //printSampleSourceType(rack->sampleSources[i]);
@@ -197,6 +200,16 @@ void updateSampleSources(Rack *rack) {
             StepSequencer *seq = (StepSequencer *) ss->sampleSource;
             tickStepSequencer(seq);
         }
+        else if (ss->type == ENVELOPEGENERATOR) {
+            SampleSource* ssou = (SampleSource*) ss->sampleSource;
+            EnvelopeGenerator* env = (EnvelopeGenerator*)ssou->sampleSource;
+            LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)env->envelope;
+            StepSequencer* step = env->triggerSequencer;
+            if (step->trigger == 1) {
+                triggerLinearEnvelopeGenerator(lin);
+            }
+            tickLinearEnvelopeGenerator(lin);
+        }
     }
 }
 
@@ -215,6 +228,20 @@ void updateFilters(Rack *rack) {
             case HIGHPASSFILTER: {
                 break;
             }
+        }
+    }
+}
+
+void updateEnvelopeGenerators(Rack *rack) {
+    for (int i = 0; i < rack->numEnvelopeGenerators; i++) {
+        EnvelopeGenerator* env = rack->envelopeGenerators[i];
+
+        switch (env->type) {
+            case LINENVELOPE:
+                
+                break;
+            case EXPENVELOPE:
+                break;
         }
     }
 }
