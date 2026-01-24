@@ -40,13 +40,13 @@ void triggerLinearEnvelopeGenerator(LinearEnvelopeGenerator* envelope) {
     envelope->index = 0;
     envelope->state = 0;
     envelope->sample = 0;
-    printf("Switching to state attack!\n");
+    //printf("Switching to state attack!\n");
 }
 
 void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     if (envelope->state == 0) {
         if (envelope->index > envelope->numSamplesAttack) {
-            printf("Switching to state decay! Last sample: %f\n", envelope->sample);
+            //printf("Switching to state decay! Last sample: %f\n", envelope->sample);
             envelope->state = 1;
         }
         envelope->sample = envelope->sample + 
@@ -55,7 +55,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
     else if (envelope->state == 1) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay) {
-            printf("Switching to state sustain! Last sample: %f\n", envelope->sample);
+            //printf("Switching to state sustain! Last sample: %f\n", envelope->sample);
             envelope->state = 2;            
         }
         envelope->sample = envelope->sample - (1 / (float)envelope->numSamplesDecay) * 0.3;
@@ -64,7 +64,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
         if (envelope->index > envelope->numSamplesAttack + 
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain) {
-            printf("Switching to state release! Last sample: %f\n", envelope->sample);        
+            //printf("Switching to state release! Last sample: %f\n", envelope->sample);        
             envelope->state = 3;            
             envelope->tmp = envelope->sample;
         }
@@ -74,7 +74,7 @@ void tickLinearEnvelopeGenerator(LinearEnvelopeGenerator *envelope) {
                 envelope->numSamplesDecay + 
                 envelope->numSamplesSustain + 
                 envelope->numSamplesRelease) {
-            printf("Switching to state inactive! Last sample: %f\n", envelope->sample);
+            //printf("Switching to state inactive! Last sample: %f\n", envelope->sample);
             envelope->state = -1;
         }
         envelope->sample = envelope->sample - envelope->tmp * (1 / (float)envelope->numSamplesRelease);
