@@ -83,19 +83,19 @@ void printAllOscillators(SlangInterpreter* si) {
             Oscillator *o = (Oscillator*) si->main_rack->sampleSources[i]->sampleSource;
             switch (o->type) {
                 case SINE:
-                    LOGINFO("SineOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sine->name, o->data->sine->frequency, o->data->sine->volume);
+                    LOGINFO("\033[95mSineOscillator\033[0m %s", o->data->sine->name);
                     break;
                 case WAVETABLE:
-                    LOGINFO("WavetableOscillator %s: %lf Hz and %lf volume-multiplier", o->data->wavetable->name, o->data->wavetable->frequency, o->data->wavetable->volume);
+                    LOGINFO("\033[95mWavetableOscillator\033[0m %s", o->data->wavetable->name);
                     break;
                 case SAWTOOTH:
-                    LOGINFO("SawtoothOscillator %s: %lf Hz and %lf volume-multiplier", o->data->sawtooth->name, o->data->sawtooth->frequency, o->data->sawtooth->volume);
+                    LOGINFO("\033[95mSawtoothOscillator\033[0m %s", o->data->sawtooth->name);
                     break;
                 case SQUARE:
-                    LOGINFO("SquareOscillator %s: %lf Hz and %lf volume-multiplier", o->data->square->name, o->data->square->frequency, o->data->square->volume);
+                    LOGINFO("\033[95mSquareOscillator\033[0m %s", o->data->square->name);
                     break;
                 case TRIANGLE:
-                    LOGINFO("TriangleOscillator %s: %lf Hz and %lf volume-multiplier", o->data->triangle->name, o->data->triangle->frequency, o->data->triangle->volume);
+                    LOGINFO("\033[95mTriangleOscillator\033[0m %s", o->data->triangle->name);
                     break;
                 case TERRAIN:
                     break;
