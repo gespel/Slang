@@ -13,6 +13,7 @@ float getTerrainSample(TerrainOscillator* terrainOscillator) {
 }
 
 float** loadTerrainByName(char* terrainName) {
+#ifndef SLANGONIC
     int x = 128;
 
     setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
@@ -34,7 +35,7 @@ float** loadTerrainByName(char* terrainName) {
         return NULL; 
     }
 
-    /*while ((read = getline(&line, &len, fp)) != -1) {
+    while ((read = getline(&line, &len, fp)) != -1) {
         printf("Retrieved line of length %zu:\n", read);
         //printf("%s", line);
         char* pch;
@@ -43,9 +44,10 @@ float** loadTerrainByName(char* terrainName) {
             printf("%s\n", pch);
             pch = strtok(NULL, " ,;");
         }
-    }*/
+    }
 
     free(line);
     fclose(fp);
     return out;
+#endif
 }
