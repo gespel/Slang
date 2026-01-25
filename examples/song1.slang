@@ -1,0 +1,11 @@
+ss = stepsequencer([1, 1.5, 1.33333, 1.5,  1.6, 1.5, 1.3333, 1.2], 80); 
+lin = linenvelope(ss, 1, 0.05, 0.001, 3);
+c = truesineosc(ss * 110); 
+e = truesineosc(55); 
+f = truesineosc(ss * 110.2); 
+g = truesineosc(ss * 220);
+gg = truesineosc(440);
+ggg = truesineosc(ss * 660);
+top = truesineosc(330);
+lowpassfilter(1000 * lin);
+lowpassfilter(1000 * lin);
