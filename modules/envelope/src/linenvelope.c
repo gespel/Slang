@@ -1,7 +1,7 @@
 #include "modules/envelope/include/linenvelope.h"
 #include "stdlib.h"
 #include "stdio.h"
-#include <asm-generic/errno.h>
+//#include <asm-generic/errno.h>
 
 LinearEnvelopeGenerator* createLinearEnvelopeGenerator(char* name, int sampleRate, float attack, float decay, float sustain, float release) {
     LinearEnvelopeGenerator* out = malloc(sizeof(LinearEnvelopeGenerator));
