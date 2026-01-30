@@ -108,6 +108,13 @@ slang_lib = shared_library(
   install: true
 )
 
+# Expose includes for parent project
+slang_inc = include_directories('core/include', 'modules', '.')
+slang_dep = declare_dependency(
+  link_with: slang_lib,
+  include_directories: slang_inc
+)
+
 tester_exe = executable(
   'tester',
   'tester.c',
