@@ -1,5 +1,5 @@
 #include "envelope_types.h"
-#include "stepsequencer/include/stepsequencer_types.h"
+#include "modules/stepsequencer/include/stepsequencer_types.h"
 
 EnvelopeGenerator* createEnvelopeGenerator(void* envelopeGenerator, EnvelopeType type, StepSequencer* triggerSequencer);
 

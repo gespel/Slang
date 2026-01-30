@@ -1,7 +1,7 @@
 //
 // Created by sten on 16.07.25.
 //
-#include "oscillators/include/square.h"
+#include "modules/oscillators/include/square.h"
 
 SquareOscillator *createSquareOscillator(float frequency, char* name, int sampleRate, int isOutput, int isCV) {
     SquareOscillator* oscillator = malloc(sizeof(SquareOscillator));

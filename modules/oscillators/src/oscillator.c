@@ -1,8 +1,8 @@
 //
 // Created by Sten on 20.07.2025.
 //
-#include "oscillators/include/oscillator.h"
-#include "oscillators/include/oscillator_types.h"
+#include "modules/oscillators/include/oscillator.h"
+#include "modules/oscillators/include/oscillator_types.h"
 
 Oscillator *createOscillator(void* data, OscillatorType type) {
     Oscillator *o = malloc(sizeof(Oscillator));

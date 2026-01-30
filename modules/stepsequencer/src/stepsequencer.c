@@ -1,7 +1,7 @@
 //
 // Created by Sten on 24.07.2025.
 //
-#include "stepsequencer/include/stepsequencer.h"
+#include "modules/stepsequencer/include/stepsequencer.h"
 
 #include <stdlib.h>
 #include <strings.h>

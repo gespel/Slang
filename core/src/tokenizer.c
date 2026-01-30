@@ -1,7 +1,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "core/include/tokenizer.h"
-#include "include/core_types.h"
+#include "core/include/core_types.h"
 
 //
 // Created by sten on 11.06.24.

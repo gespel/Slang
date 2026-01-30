@@ -2,7 +2,7 @@
 #include "core/include/core_types.h"
 #include "core/include/rack.h"
 #include "core/include/tools.h"
-#include "include/parser.h"
+#include "core/include/parser.h"
 #include "modules/sample-source/include/sample_source.h"
 #include <time.h>
 

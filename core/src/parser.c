@@ -5,11 +5,11 @@
 #include "core/include/core_types.h"
 #include "core/include/interpreter.h"
 #include "core/include/tools.h"
-#include "include/rack.h"
+#include "core/include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
 #include "modules/envelope/include/linenvelope.h"
 #include "modules/envelope/include/envelope.h"
-#include "sample-source/include/sample_source.h"
+#include "modules/sample-source/include/sample_source.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;

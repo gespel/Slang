@@ -1,7 +1,7 @@
 //
 // Created by Sten on 13.07.2025.
 //
-#include "oscillators/include/wavetable.h"
+#include "modules/oscillators/include/wavetable.h"
 
 WavetableOscillator* createWavetableOscillator(
     float frequency,

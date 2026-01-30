@@ -1,6 +1,6 @@
-#include "sample-source/include/sample_source.h"
+#include "modules/sample-source/include/sample_source.h"
 #include "core/include/tools.h"
-#include "envelope/include/envelope_types.h"
+#include "modules/envelope/include/envelope_types.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
     SampleSource *out = malloc(sizeof(SampleSource));

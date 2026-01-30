@@ -1,7 +1,7 @@
 //
 // Created by sten on 16.07.25.
 //
-#include "oscillators/include/sawtooth.h"
+#include "modules/oscillators/include/sawtooth.h"
 #include <stdlib.h>
 
 float getSawtoothSample(SawtoothOscillator* oscillator) {

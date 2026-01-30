@@ -1,5 +1,5 @@
 #include "modules/filters/include/lowpassfilter.h"
-#include "filters/include/filter_types.h"
+#include "modules/filters/include/filter_types.h"
 #include <stdlib.h>
 
 LowPassFilter* createLowPassFilter(float cutoff, int sampleRate) {
