@@ -26,7 +26,9 @@ void tickStepSequencer(StepSequencer *seq) {
     if ((float)seq->stepIndex >= (float)seq->stepsDuration) {
         seq->stepIndex = 0;
         seq->index += 1;
-        seq->trigger = 1;
+        if (seq->sample != 0.0f) {
+            seq->trigger = 1;
+        }
     }
     else {
         seq->trigger = 0;
