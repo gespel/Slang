@@ -5,6 +5,11 @@ if slang_debug
     add_project_arguments('-DSLANG_DEBUG', language: 'c')
 endif
 
+slangonic = get_option('slangonic')
+if slangonic
+    add_project_arguments('-DSLANGONIC', language: 'c')
+endif
+
 osc_sources = [
     'modules/oscillators/src/oscillator.c',
     'modules/oscillators/src/sine.c',
