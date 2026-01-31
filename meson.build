@@ -1,8 +1,20 @@
 project('slang', 'c', version: '1.0.1')
 
+# Enable POSIX functions like getline()
+if host_machine.system() == 'darwin'
+    add_project_arguments('-D_DARWIN_C_SOURCE', language: 'c')
+else
+    add_project_arguments('-D_GNU_SOURCE', language: 'c')
+endif
+
 slang_debug = get_option('slang_debug')
 if slang_debug
     add_project_arguments('-DSLANG_DEBUG', language: 'c')
+endif
+
+slangonic = get_option('slangonic')
+if slangonic
+    add_project_arguments('-DSLANGONIC', language: 'c')
 endif
 
 osc_sources = [
@@ -94,6 +106,13 @@ slang_lib = shared_library(
   dependencies: [],
   link_args: ['-lm'],
   install: true
+)
+
+# Expose includes for parent project
+slang_inc = include_directories('core/include', 'modules', '.')
+slang_dep = declare_dependency(
+  link_with: slang_lib,
+  include_directories: slang_inc
 )
 
 tester_exe = executable(

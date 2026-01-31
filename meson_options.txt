@@ -4,3 +4,9 @@ option('slang_debug',
   value : true,
   description : 'Enable SLANG_DEBUG'
 )
+
+option('slangonic',
+  type : 'boolean',
+  value : false,
+  description : 'Enable SLANGONIC'
+)
