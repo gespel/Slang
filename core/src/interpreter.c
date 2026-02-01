@@ -45,7 +45,7 @@ int consume(int* i, Token token, TokenType expected) {
     }
     else {
         LOGERROR("WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD (Value: %s)\n", tokenTypeToString(expected), tokenTypeToString(token.tt), token.value);
-        exit(-1);
+        //exit(-1);
         return 0;
     }
 }
@@ -60,7 +60,7 @@ int peek(Token token, TokenType expected) {
     }
     else {
         LOGERROR("WRONG TOKEN! EXPECTED \"%s\" GOT \"%s\" INSTEAD\n", tokenTypeToString(expected), tokenTypeToString(token.tt));
-        exit(-1);
+        //exit(-1);
         return 0;
     }
 }
@@ -284,7 +284,8 @@ float terminal(SlangInterpreter* si, int* i) {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
                     LOGERROR("%s Variable is unkown!", si->tokens[*i].value);
-                    exit(-1);
+                    return 0;
+                    //exit(-1);
                 }
                 out = tvar->value;
                 inc(i);
@@ -333,6 +334,7 @@ float terminal(SlangInterpreter* si, int* i) {
             break;
         default:
             LOGERROR("Terminal expected NUMBER or IDENTIFIER got %s", tokenTypeToString(si->tokens[*i].tt));
+            return 0;
             exit(-1);
     }
     //LOGDEBUG("Terminal: %lf", out);
