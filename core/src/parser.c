@@ -10,6 +10,9 @@
 #include "modules/envelope/include/linenvelope.h"
 #include "modules/envelope/include/envelope.h"
 #include "modules/sample-source/include/sample_source.h"
+#include "oscillators/include/oscillator.h"
+#include "oscillators/include/oscillator_types.h"
+#include "oscillators/include/random.h"
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;
@@ -153,6 +156,23 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
+    }
+    if (getToken(si, *i).tt == RANDOMOSC) {
+        consume(i, getToken(si, *i), RANDOMOSC);
+        consume(i, getToken(si, *i), PARANTHESISLEFT);
+        int argumentIndex = -1;
+
+        parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
+
+        RandomOscillator *osc = createRandomOscillator(name, *is_output, *is_cv);
+
+        Oscillator *o = createOscillator(osc, RANDOM_OSC_TYPE);
+
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+
+        addSampleSource(si->main_rack, sampleSource);
+
+        LOGINFO("Creating RANDOMOSC with name %s", osc->name);
     }
     if (getToken(si, *i).tt == TRIANGLEOSC) {
         consume(i, getToken(si, *i), TRIANGLEOSC);
