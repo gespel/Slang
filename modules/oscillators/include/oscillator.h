@@ -7,6 +7,7 @@
 #include "sine.h"
 #include "square.h"
 #include "triangle.h"
+#include "random.h"
 #include "oscillator_types.h"
 
 

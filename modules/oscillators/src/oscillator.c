@@ -25,6 +25,12 @@ Oscillator *createOscillator(void* data, OscillatorType type) {
             o->type = SAWTOOTH;
             break;
         case TRIANGLE:
+            o->data->triangle = data;
+            o->type = TRIANGLE;
+            break;
+        case RANDOM_OSC_TYPE:
+            o->data->random = data;
+            o->type = RANDOM_OSC_TYPE;
             break;
         case TERRAIN:
             break;

@@ -49,6 +49,11 @@ float getSampleSourceOutputSample(SampleSource *ss) {
                 if (osc->data->triangle->isOutput == 1) {
                     out += sample;
                 }
+            case RANDOM_OSC_TYPE:
+                sample = getRandomSample(osc->data->random);
+                if (osc->data->random->isOutput == 1) {
+                    out += sample;
+                }
             default:
                 break;
         }
@@ -87,6 +92,10 @@ float getSampleSourceSample(SampleSource *ss) {
                 break;
             case TRIANGLE:
                 sample = getTriangleSample(osc->data->triangle);
+                break;
+            case RANDOM_OSC_TYPE:
+                sample = getRandomSample(osc->data->random);
+                break;
             default:
                 break;
         }

@@ -12,6 +12,7 @@
 #include "modules/oscillators/include/square.h"
 #include "modules/oscillators/include/triangle.h"
 #include "modules/oscillators/include/wavetable.h"
+#include "modules/oscillators/include/random.h"
 #include "modules/sample-source/include/sample_source.h"
 #include "modules/stepsequencer/include/stepsequencer.h"
 #include "stepsequencer/include/stepsequencer_types.h"
@@ -66,6 +67,11 @@ void *getOscillator(Rack* rack, char* name) {
                     return rack->oscillators[i]->data->triangle;
                 }
                 break;
+            case RANDOM_OSC_TYPE:
+                if (strcmp(rack->oscillators[i]->data->random->name, name) == 0) {
+                    return rack->oscillators[i]->data->random;
+                }
+                break;
             case TERRAIN:
                 break;
         }
@@ -90,6 +96,8 @@ void setSampleRateForAllOscillators(Rack* rack, int sampleRate) {
                 break;
             case TRIANGLE:
                 rack->oscillators[i]->data->triangle->sampleRate = sampleRate;
+                break;
+            case RANDOM_OSC_TYPE:
                 break;
             case TERRAIN:
                 break;
@@ -158,7 +166,12 @@ void updateSampleSources(Rack *rack) {
         if (ss->type == OSCILLATOR) {
             Oscillator *osc = (Oscillator *) ss->sampleSource;
             int ti = ss->argumentIndex;
-            float freq = l3_expression(rack->interpreter, &ti);
+
+            float freq = 0;
+            if (ti > 0) {
+                freq = l3_expression(rack->interpreter, &ti);
+            }
+            
             //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE: {
@@ -189,6 +202,11 @@ void updateSampleSources(Rack *rack) {
                     TriangleOscillator* to = osc->data->triangle;
                     to->frequency = freq;
                     tickTriangleOscillator(to);
+                    break;
+                }
+                case RANDOM_OSC_TYPE: {
+                    RandomOscillator* ro = osc->data->random;
+                    tickRandomOscillator(ro);
                     break;
                 }
                 default: {

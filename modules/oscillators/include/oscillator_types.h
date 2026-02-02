@@ -98,7 +98,7 @@ typedef union OscillatorData {
     SquareOscillator* square;
     TriangleOscillator* triangle;
     TerrainOscillator* terrain;
-
+    RandomOscillator* random;
 } OscillatorData;
 
 typedef struct Oscillator {

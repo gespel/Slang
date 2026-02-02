@@ -97,6 +97,9 @@ void printAllOscillators(SlangInterpreter* si) {
                 case TRIANGLE:
                     LOGINFO("\033[95mTriangleOscillator\033[0m %s", o->data->triangle->name);
                     break;
+                case RANDOM_OSC_TYPE:
+                    LOGINFO("\033[95mRandomOscillator\033[0m %s", o->data->random->name);
+                    break;
                 case TERRAIN:
                     break;
             }
