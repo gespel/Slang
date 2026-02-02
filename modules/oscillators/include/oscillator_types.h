@@ -79,8 +79,16 @@ typedef struct TerrainOscillator {
     int isCV;
 } TerrainOscillator;
 
+typedef struct RandomOscillator {
+    float sample;
+    float volume;
+    char* name;
+    int isOutput;
+    int isCV;
+} RandomOscillator;
+
 typedef enum OscillatorType {
-    WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE, TERRAIN
+    WAVETABLE, SQUARE, SAWTOOTH, SINE, TRIANGLE, TERRAIN, RANDOM_OSC_TYPE
 } OscillatorType;
 
 typedef union OscillatorData {
@@ -90,6 +98,7 @@ typedef union OscillatorData {
     SquareOscillator* square;
     TriangleOscillator* triangle;
     TerrainOscillator* terrain;
+
 } OscillatorData;
 
 typedef struct Oscillator {

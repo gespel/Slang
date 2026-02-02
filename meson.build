@@ -25,6 +25,7 @@ osc_sources = [
     'modules/oscillators/src/triangle.c',
     'modules/oscillators/src/terrain.c',
     'modules/oscillators/src/wavetable.c',
+    'modules/oscillators/src/random.c',
 ]
 osc_headers = [
     'modules/oscillators/include/oscillator.h',
@@ -35,6 +36,7 @@ osc_headers = [
     'modules/oscillators/include/terrain.h',
     'modules/oscillators/include/wavetable.h',
     'modules/oscillators/include/oscillator_types.h',
+    'modules/oscillators/include/random.h',
 ]
 data_sources = [
     'modules/data/src/binaryData.c',
