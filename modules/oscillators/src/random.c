@@ -16,5 +16,5 @@ float getRandomSample(RandomOscillator* oscillator) {
 }
 
 void tickRandomOscillator(RandomOscillator* oscillator) {
-    oscillator->sample = (float)rand() / (float)(RAND_MAX) * oscillator->volume;
+    oscillator->sample = ((float)rand() / (float)(RAND_MAX) * oscillator->volume * 2) - 1;
 }
