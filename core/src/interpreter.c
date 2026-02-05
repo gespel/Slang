@@ -162,39 +162,39 @@ float interpret(SlangInterpreter* si) {
 
     int i;
     for(i = si->last_token_index; i < numTokens; i++) {
-        if(tokens[i].tt == IDENTIFIER || tokens[i].tt == NUMBER) {
+        if(tokens[i].tt == IDENTIFIER_TOKEN_T || tokens[i].tt == NUMBER_TOKEN_T) {
             parseExpression(si, &i);
         }
-        else if(tokens[i].tt == FUNCTION) {
+        else if(tokens[i].tt == FUNCTION_TOKEN_T) {
             parseFunction(si, &i);
         }
-        else if(getToken(si, i).tt == RETURN) {
-            consume(&i, tokens[i], RETURN);
+        else if(getToken(si, i).tt == RETURN_TOKEN_T) {
+            consume(&i, tokens[i], RETURN_TOKEN_T);
             float out1 = l3_expression(si, &i);
             LOGDEBUG("Returning now! Value: %lf", out1);
             return out1;
         }
-        else if(getToken(si, i).tt == SEMICOLON) {
-            consume(&i, tokens[i], SEMICOLON);
+        else if(getToken(si, i).tt == SEMICOLON_TOKEN_T) {
+            consume(&i, tokens[i], SEMICOLON_TOKEN_T);
             printDebugMessage(DBG, "Empty line.");
         } 
-        else if(getToken(si, i).tt == IF) {
+        else if(getToken(si, i).tt == IF_TOKEN_T) {
             parseIf(si, &i);
         }
-        else if(getToken(si, i).tt == BRACKETRIGHT) {
+        else if(getToken(si, i).tt == BRACKETRIGHT_TOKEN_T) {
             if((si->openBrackets) > 0) {
                 (si->openBrackets)--;
-                consume(&i, tokens[i], BRACKETRIGHT);
+                consume(&i, tokens[i], BRACKETRIGHT_TOKEN_T);
             }
             else {
                 LOGERROR("[ERROR] CLOSING BRACKET IS UNEXPECTED! Current openBrackets = %d", si->openBrackets);
                 exit(-1);
             }
         }
-        else if (getToken(si, i).tt == LOWPASSFILTERTOKEN || getToken(si, i).tt == HIGHPASSFILTERTOKEN) {
+        else if (getToken(si, i).tt == LOWPASSFILTERTOKEN_TOKEN_T || getToken(si, i).tt == HIGHPASSFILTERTOKEN_TOKEN_T) {
             parseFilter(si, &i);
         }
-        else if (getToken(si, i).tt == LINENVELOPEGENERATORTOKEN) {
+        else if (getToken(si, i).tt == LINENVELOPEGENERATORTOKEN_TOKEN_T) {
             parseEnvelopeGenerator(si, &i, NULL);
         }
         else if (isOscillator(getToken(si, i))) {
@@ -215,11 +215,11 @@ float terminal(SlangInterpreter* si, int* i) {
     //printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
     float out;
     switch(si->tokens[*i].tt) {
-        case NUMBER:
+        case NUMBER_TOKEN_T:
             out = atof(si->tokens[*i].value);
             inc(i);
             break;
-        case IDENTIFIER:
+        case IDENTIFIER_TOKEN_T:
             if(getFunctionByName(si, si->tokens[*i].value)) {
                 Function* f = getFunctionByName(si, si->tokens[*i].value);
                 if(f == NULL) {
@@ -227,19 +227,19 @@ float terminal(SlangInterpreter* si, int* i) {
                     exit(-1);
                 }
                 
-                consume(i, si->tokens[*i], IDENTIFIER);
-                consume(i, si->tokens[*i], PARANTHESISLEFT);
+                consume(i, si->tokens[*i], IDENTIFIER_TOKEN_T);
+                consume(i, si->tokens[*i], PARANTHESISLEFT_TOKEN_T);
                 
                 float* arguments = malloc(sizeof(float) * 512);
                 int arg_counter = 0;
                 
-                while(si->tokens[*i].tt != PARANTHESISRIGHT) {
+                while(si->tokens[*i].tt != PARANTHESISRIGHT_TOKEN_T) {
                     
                     arguments[arg_counter] = terminal(si, i);
                     LOGDEBUG("argument: %lf", arguments[arg_counter]);
                     arg_counter++;
-                    if(si->tokens[*i].tt != PARANTHESISRIGHT) {
-                        consume(i, si->tokens[*i], COMMA);
+                    if(si->tokens[*i].tt != PARANTHESISRIGHT_TOKEN_T) {
+                        consume(i, si->tokens[*i], COMMA_TOKEN_T);
                     }
                 }
                 
@@ -248,7 +248,7 @@ float terminal(SlangInterpreter* si, int* i) {
                     exit(-1);
                 }
                 
-                consume(i, si->tokens[*i], PARANTHESISRIGHT);
+                consume(i, si->tokens[*i], PARANTHESISRIGHT_TOKEN_T);
 
 				SlangInterpreter *function_interpreter = createSlangInterpreter(f->function_tokens, f->function_tokens_length);
                 
@@ -277,7 +277,7 @@ float terminal(SlangInterpreter* si, int* i) {
             else if(getSampleSource(si->main_rack, si->tokens[*i].value)) {
                 SampleSource* ss = getSampleSource(si->main_rack, si->tokens[*i].value);
                 out = getSampleSourceSample(ss);
-                consume(i, si->tokens[*i], IDENTIFIER);
+                consume(i, si->tokens[*i], IDENTIFIER_TOKEN_T);
                 //LOGDEBUG("Retrieved sample from oscillator: %f", out);
             }
             else {
@@ -291,44 +291,44 @@ float terminal(SlangInterpreter* si, int* i) {
                 inc(i);
             }
             break;
-        case NOTEMARKER:
-            consume(i, si->tokens[*i], NOTEMARKER);
+        case NOTEMARKER_TOKEN_T:
+            consume(i, si->tokens[*i], NOTEMARKER_TOKEN_T);
             out = noteNameToFrequency(si->tokens[*i].value);
-            consume(i, si->tokens[*i], IDENTIFIER);
+            consume(i, si->tokens[*i], IDENTIFIER_TOKEN_T);
             break;
-        case INPUTA:
+        case INPUTA_TOKEN_T:
             out = si->inputs[0][0];
             break;
-        case INPUTB:
+        case INPUTB_TOKEN_T:
             out = si->inputs[1][0];
             break;
-        case INPUTC:
+        case INPUTC_TOKEN_T:
             out = si->inputs[2][0];
             break;
-        case INPUTD:
+        case INPUTD_TOKEN_T:
             out = si->inputs[3][0];
             break;
-        case RANDOM:
-            consume(i, si->tokens[*i], RANDOM);
-            consume(i, si->tokens[*i], PARANTHESISLEFT);
+        case RANDOM_TOKEN_T:
+            consume(i, si->tokens[*i], RANDOM_TOKEN_T);
+            consume(i, si->tokens[*i], PARANTHESISLEFT_TOKEN_T);
             float lowerFloatBound = atof(si->tokens[*i].value);
-            consume(i, si->tokens[*i], NUMBER);
-            consume(i, si->tokens[*i], COMMA);
+            consume(i, si->tokens[*i], NUMBER_TOKEN_T);
+            consume(i, si->tokens[*i], COMMA_TOKEN_T);
             float upperFloatBound = atof(si->tokens[*i].value);
-            consume(i, si->tokens[*i], NUMBER);
-            consume(i, si->tokens[*i], PARANTHESISRIGHT);
+            consume(i, si->tokens[*i], NUMBER_TOKEN_T);
+            consume(i, si->tokens[*i], PARANTHESISRIGHT_TOKEN_T);
             float rFloat = randomFloat(lowerFloatBound, upperFloatBound);
             out = rFloat;
             break;
-        case RANDOMINT:
-            consume(i, si->tokens[*i], RANDOMINT);
-            consume(i, si->tokens[*i], PARANTHESISLEFT);
+        case RANDOMINT_TOKEN_T:
+            consume(i, si->tokens[*i], RANDOMINT_TOKEN_T);
+            consume(i, si->tokens[*i], PARANTHESISLEFT_TOKEN_T);
             int lowerIntBound = atoi(si->tokens[*i].value);
-            consume(i, si->tokens[*i], NUMBER);
-            consume(i, si->tokens[*i], COMMA);
+            consume(i, si->tokens[*i], NUMBER_TOKEN_T);
+            consume(i, si->tokens[*i], COMMA_TOKEN_T);
             int upperIntBound = atoi(si->tokens[*i].value);
-            consume(i, si->tokens[*i], NUMBER);
-            consume(i, si->tokens[*i], PARANTHESISRIGHT);
+            consume(i, si->tokens[*i], NUMBER_TOKEN_T);
+            consume(i, si->tokens[*i], PARANTHESISRIGHT_TOKEN_T);
             int rInt = randomInt(lowerIntBound, upperIntBound);
             out = (float)rInt;
             break;
@@ -345,12 +345,12 @@ float l3_expression(SlangInterpreter* si, int* i) {
     float left = l2_expression(si, i);
     while (1) {
         switch(getToken(si, *i).tt) {
-            case PLUS:
-                consume(i, si->tokens[*i], PLUS);
+            case PLUS_TOKEN_T:
+                consume(i, si->tokens[*i], PLUS_TOKEN_T);
                 left += l2_expression(si, i);  // <-- korrekt!
                 break;
-            case MINUS:
-                consume(i, si->tokens[*i], MINUS);
+            case MINUS_TOKEN_T:
+                consume(i, si->tokens[*i], MINUS_TOKEN_T);
                 left -= l2_expression(si, i);  // <-- korrekt!
                 break;
             default:
@@ -364,12 +364,12 @@ float l2_expression(SlangInterpreter* si, int* i) {
     float left = l1_expression(si, i);
     while (1) {
         switch(getToken(si, *i).tt) {
-            case MULTIPLY:
-                consume(i, si->tokens[*i], MULTIPLY);
+            case MULTIPLY_TOKEN_T:
+                consume(i, si->tokens[*i], MULTIPLY_TOKEN_T);
                 left *= l1_expression(si, i);  // <-- korrekt!
                 break;
-            case DIVIDE:
-                consume(i, si->tokens[*i], DIVIDE);
+            case DIVIDE_TOKEN_T:
+                consume(i, si->tokens[*i], DIVIDE_TOKEN_T);
                 left /= l1_expression(si, i);  // <-- korrekt!
                 break;
             default:
@@ -384,11 +384,11 @@ float l1_expression(SlangInterpreter* si, int* i) {
     //printDebugMessage(DBG, tokenTypeToString(si->tokens[*i].tt));
     //printDebugMessage(DBG, si->tokens[*i].value);
     float left;
-    if(si->tokens[*i].tt == PARANTHESISLEFT) {
+    if(si->tokens[*i].tt == PARANTHESISLEFT_TOKEN_T) {
         //printDebugMessage("Hit parantheses!");
-        consume(i, si->tokens[*i], PARANTHESISLEFT);
+        consume(i, si->tokens[*i], PARANTHESISLEFT_TOKEN_T);
         left = l3_expression(si, i);
-        consume(i, si->tokens[*i], PARANTHESISRIGHT); 
+        consume(i, si->tokens[*i], PARANTHESISRIGHT_TOKEN_T); 
     }
     else {
         //printDebugMessage("No parantheses. Regular left...");
@@ -411,30 +411,30 @@ char* getInterpreterStatusString(SlangInterpreter* si) {
 }
 
 int isOscillator(Token token) {
-    if (token.tt == SEMICOLON || token.tt == SAWOSC || token.tt == TRUESINEOSC || token.tt == WAVEOSC || token.tt == SINEOSC || token.tt == SQUAREOSC || token.tt == TRIANGLEOSC || token.tt == TERRAINOSC || token.tt == RANDOMOSC) {
+    if (token.tt == SEMICOLON_TOKEN_T || token.tt == SAWOSC_TOKEN_T || token.tt == TRUESINEOSC_TOKEN_T || token.tt == WAVEOSC_TOKEN_T || token.tt == SINEOSC_TOKEN_T || token.tt == SQUAREOSC_TOKEN_T || token.tt == TRIANGLEOSC_TOKEN_T || token.tt == TERRAINOSC_TOKEN_T || token.tt == RANDOMOSC_TOKEN_T) {
         return 1;
     }
     return 0;
 }
 
 int isInput(Token token) {
-    if (token.tt == INPUTA || token.tt == INPUTB || token.tt == INPUTC || token.tt == INPUTD) {
+    if (token.tt == INPUTA_TOKEN_T || token.tt == INPUTB_TOKEN_T || token.tt == INPUTC_TOKEN_T || token.tt == INPUTD_TOKEN_T) {
         return 1;
     }
     return 0;
 }
 
 int getInputIndex(Token token) {
-    if (token.tt == INPUTA) {
+    if (token.tt == INPUTA_TOKEN_T) {
         return 0;
     }
-    if (token.tt == INPUTB) {
+    if (token.tt == INPUTB_TOKEN_T) {
         return 1;
     }
-    if (token.tt == INPUTC) {
+    if (token.tt == INPUTC_TOKEN_T) {
         return 2;
     }
-    if (token.tt == INPUTD) {
+    if (token.tt == INPUTD_TOKEN_T) {
         return 3;
     }
     return -1;
@@ -449,17 +449,17 @@ int checkLogic(SlangInterpreter* si, int* i) {
 
     int operand = 0;
 
-    if (getToken(si, *i).tt == ASSIGN) {
+    if (getToken(si, *i).tt == ASSIGN_TOKEN_T) {
         operand = 1;
-        consume(i, si->tokens[*i], ASSIGN);
+        consume(i, si->tokens[*i], ASSIGN_TOKEN_T);
     }
-    else if (getToken(si, *i).tt == SMALLER) {
+    else if (getToken(si, *i).tt == SMALLER_TOKEN_T) {
         operand = 2;
-        consume(i, si->tokens[*i], SMALLER);
+        consume(i, si->tokens[*i], SMALLER_TOKEN_T);
     }
-    else if (getToken(si, *i).tt == GREATER) {
+    else if (getToken(si, *i).tt == GREATER_TOKEN_T) {
         operand = 3;
-        consume(i, si->tokens[*i], GREATER);
+        consume(i, si->tokens[*i], GREATER_TOKEN_T);
     }
     else {
         LOGERROR("MALFORMED LOGIC STATEMENT.");

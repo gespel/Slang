@@ -17,55 +17,55 @@
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;
     /*if(getSampleSource(si->main_rack, freq_token) != NULL) {
-        consume(i, getToken(si, *i), IDENTIFIER);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
         LOGINFO("Using token %s as frequency input", freq_token);
         SampleSource *ss = getSampleSource(si->main_rack, freq_token);
         LOGINFO("Found sample source with type %d", ss->type);
         *freqptr = getSampleSourceSample(ss);
         LOGINFO("Using sample source %f as frequency input", *freqptr);
-        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
     }
 
     else if (getInputIndex(getToken(si, *i)) != -1) {
         int index = getInputIndex(getToken(si, *i));
         switch(index) {
             case 0:
-                consume(i, getToken(si, *i), INPUTA);
+                consume(i, getToken(si, *i), INPUTA_TOKEN_T);
                 freqptr = si->inputs[0];
                 break;
             case 1:
-                consume(i, getToken(si, *i), INPUTB);
+                consume(i, getToken(si, *i), INPUTB_TOKEN_T);
                 freqptr = si->inputs[1];
                 break;
             case 2:
-                consume(i, getToken(si, *i), INPUTC);
+                consume(i, getToken(si, *i), INPUTC_TOKEN_T);
                 freqptr = si->inputs[2];
                 break;
             case 3:
-                consume(i, getToken(si, *i), INPUTD);
+                consume(i, getToken(si, *i), INPUTD_TOKEN_T);
                 freqptr = si->inputs[3];
                 break;
             default:
                 break;
         }
-        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
     }
     else {
         *freqptr = l3_expression(si, i);
-        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
     }*/
     *freqptr = l3_expression(si, i);
-    /*while(getToken(si, *i).tt != PARANTHESISRIGHT) {
+    /*while(getToken(si, *i).tt != PARANTHESISRIGHT_TOKEN_T) {
         (*i)++;
     }*/
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
-    if (getToken(si, *i).tt == MINUS) {
-        consume(i, getToken(si, *i), MINUS);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
+    if (getToken(si, *i).tt == MINUS_TOKEN_T) {
+        consume(i, getToken(si, *i), MINUS_TOKEN_T);
         *is_output = 0;
         *is_cv = 0;
     }
-    else if (getToken(si, *i).tt == PLUS) {
-        consume(i, getToken(si, *i), PLUS);
+    else if (getToken(si, *i).tt == PLUS_TOKEN_T) {
+        consume(i, getToken(si, *i), PLUS_TOKEN_T);
         *is_cv = 1;
         *is_output = 0;
     }
@@ -81,13 +81,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
     int* is_cv = malloc(sizeof(int));
     is_output[0] = 1;
 
-    if (getToken(si, *i).tt == WAVEOSC) {
-        consume(i, getToken(si, *i), WAVEOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == WAVEOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), WAVEOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
         int argumentIndex = *i;
         char* waveName = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), COMMA_TOKEN_T);
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
@@ -107,9 +107,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
     }
 
-	if (getToken(si, *i).tt == SAWOSC) {
-		consume(i, getToken(si, *i), SAWOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+	if (getToken(si, *i).tt == SAWOSC_TOKEN_T) {
+		consume(i, getToken(si, *i), SAWOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
         int argumentIndex = *i;
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
@@ -125,9 +125,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s (argument index %d)", osc->frequency, osc->name, argumentIndex);
 	}
 
-    if(getToken(si, *i).tt == SINEOSC) {
-        consume(i, getToken(si, *i), SINEOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if(getToken(si, *i).tt == SINEOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), SINEOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
         int argumentIndex = *i;
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
@@ -140,9 +140,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
     }
-    if (getToken(si, *i).tt == TRUESINEOSC) {
-        consume(i, getToken(si, *i), TRUESINEOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == TRUESINEOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), TRUESINEOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
         int argumentIndex = *i;
 
@@ -157,9 +157,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
     }
-    if (getToken(si, *i).tt == RANDOMOSC) {
-        consume(i, getToken(si, *i), RANDOMOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == RANDOMOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), RANDOMOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
         int argumentIndex = -1;
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
@@ -174,9 +174,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating RANDOMOSC with name %s", osc->name);
     }
-    if (getToken(si, *i).tt == TRIANGLEOSC) {
-        consume(i, getToken(si, *i), TRIANGLEOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == TRIANGLEOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), TRIANGLEOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
         int argumentIndex = *i;
 
@@ -191,9 +191,9 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         LOGINFO("Creating a TRIANGLEOSC with %f Hz and name %s", osc->frequency, osc->name);
     }
-    if (getToken(si, *i).tt == SQUAREOSC) {
-        consume(i, getToken(si, *i), SQUAREOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == SQUAREOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), SQUAREOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
         int argumentIndex = *i;
 
@@ -206,12 +206,12 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
         addSampleSource(si->main_rack, sampleSource);
     }
-    if (getToken(si, *i).tt == TERRAINOSC) {
-        consume(i, getToken(si, *i), TERRAINOSC);
-        consume(i, getToken(si, *i), PARANTHESISLEFT);
+    if (getToken(si, *i).tt == TERRAINOSC_TOKEN_T) {
+        consume(i, getToken(si, *i), TERRAINOSC_TOKEN_T);
+        consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
         //char* terrainName = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), COMMA_TOKEN_T);
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
         //TODO: implement terrain oscillator creation
@@ -221,38 +221,38 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 
 void parseFunction(SlangInterpreter* si, int* i) {
-    consume(i, getToken(si, *i), FUNCTION);
+    consume(i, getToken(si, *i), FUNCTION_TOKEN_T);
     printDebugMessage(INFO, "Function definition found!");
 
     char* fnName = NULL;
 
-    if(peek(getToken(si, *i), IDENTIFIER)) {
+    if(peek(getToken(si, *i), IDENTIFIER_TOKEN_T)) {
         printDebugMessage(DBG, "Function name:");
         printDebugMessage(DBG, getToken(si, *i).value);
         fnName = getToken(si, *i).value;
     }
-    consume(i, getToken(si, *i), IDENTIFIER);
-    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+    consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
     char** var_names = malloc(sizeof(char)*1024);
     int vars_length = 0;
 
-    while(getToken(si, *i).tt != PARANTHESISRIGHT) {
+    while(getToken(si, *i).tt != PARANTHESISRIGHT_TOKEN_T) {
         var_names[vars_length] = getToken(si, *i).value;
         printDebugMessage(INFO, var_names[vars_length]);
-        consume(i, getToken(si, *i), IDENTIFIER);
-        if(getToken(si, *i).tt != PARANTHESISRIGHT) {
-            consume(i, getToken(si, *i), COMMA);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        if(getToken(si, *i).tt != PARANTHESISRIGHT_TOKEN_T) {
+            consume(i, getToken(si, *i), COMMA_TOKEN_T);
         }
         vars_length++;
     }
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
-    consume(i, getToken(si, *i), BRACKETLEFT);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
+    consume(i, getToken(si, *i), BRACKETLEFT_TOKEN_T);
 
     Token* function_tokens = malloc(sizeof(Token) * 8192);
     int numFunctionTokens = 0;
 
-    while(getToken(si, *i).tt != BRACKETRIGHT) {
+    while(getToken(si, *i).tt != BRACKETRIGHT_TOKEN_T) {
         function_tokens[numFunctionTokens] = getToken(si, *i);
         inc(i);
         numFunctionTokens++;
@@ -261,35 +261,35 @@ void parseFunction(SlangInterpreter* si, int* i) {
     LOGINFO("Creating function: %s with %d argmuents", fnName, vars_length);
 
     addFunction(si, createFunction(fnName, function_tokens, numFunctionTokens, var_names, vars_length));
-    consume(i, getToken(si, *i), BRACKETRIGHT);
+    consume(i, getToken(si, *i), BRACKETRIGHT_TOKEN_T);
 }
 
 void parseExpression(SlangInterpreter* si, int* i) {
-    if(getToken(si, (*i)+1).tt == ASSIGN && isOscillator(getToken(si, (*i)+2)) == 1) {
+    if(getToken(si, (*i)+1).tt == ASSIGN_TOKEN_T && isOscillator(getToken(si, (*i)+2)) == 1) {
         char *name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), ASSIGN);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), ASSIGN_TOKEN_T);
 
         parseOscillators(si, i, name);
     }
-    else if (getToken(si, (*i)+1).tt == ASSIGN && getToken(si, (*i)+2).tt == STEPSEQ) {
+    else if (getToken(si, (*i)+1).tt == ASSIGN_TOKEN_T && getToken(si, (*i)+2).tt == STEPSEQ_TOKEN_T) {
         char *name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), ASSIGN);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), ASSIGN_TOKEN_T);
     
         parseStepSequencer(si, i, name);
     }
-    else if (getToken(si, (*i)+1).tt == ASSIGN && getToken(si, (*i)+2).tt == LINENVELOPEGENERATORTOKEN) {
+    else if (getToken(si, (*i)+1).tt == ASSIGN_TOKEN_T && getToken(si, (*i)+2).tt == LINENVELOPEGENERATORTOKEN_TOKEN_T) {
         char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), ASSIGN);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), ASSIGN_TOKEN_T);
 
         parseEnvelopeGenerator(si, i, name);
     }
-    else if(getToken(si, (*i)+1).tt == ASSIGN) {
+    else if(getToken(si, (*i)+1).tt == ASSIGN_TOKEN_T) {
         char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), ASSIGN);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), ASSIGN_TOKEN_T);
         float value = l3_expression(si, i);
 
         if(getVariableByName(si, name) != NULL) {
@@ -307,35 +307,35 @@ void parseExpression(SlangInterpreter* si, int* i) {
         float value = l3_expression(si, i);
         printf("%lf\n", value);
     }
-    consume(i, getToken(si, *i), SEMICOLON);
+    consume(i, getToken(si, *i), SEMICOLON_TOKEN_T);
 }
 
 void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
-    consume(i, getToken(si, *i), STEPSEQ);
-    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    consume(i, getToken(si, *i), STEPSEQ_TOKEN_T);
+    consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
     int argumentIndex = *i;
     float *speed = malloc(sizeof(float));
     float *sequence = malloc(sizeof(float) * 128);
     int sequence_len = 0;
 
-    consume(i, getToken(si, *i), SQUAREBRACKETLEFT);
-    while (getToken(si, *i).tt != SQUAREBRACKETRIGHT) {
+    consume(i, getToken(si, *i), SQUAREBRACKETLEFT_TOKEN_T);
+    while (getToken(si, *i).tt != SQUAREBRACKETRIGHT_TOKEN_T) {
         float value = atof(getToken(si, *i).value);
-        consume(i, getToken(si, *i), NUMBER);
+        consume(i, getToken(si, *i), NUMBER_TOKEN_T);
         sequence[sequence_len] = value;
         sequence_len++;
 
-        if (getToken(si, *i).tt == SQUAREBRACKETRIGHT) {
+        if (getToken(si, *i).tt == SQUAREBRACKETRIGHT_TOKEN_T) {
             break;
         }
-        consume(i, getToken(si, *i), COMMA);
+        consume(i, getToken(si, *i), COMMA_TOKEN_T);
     }
-    consume(i, getToken(si, *i), SQUAREBRACKETRIGHT);
-    consume(i, getToken(si, *i), COMMA);
+    consume(i, getToken(si, *i), SQUAREBRACKETRIGHT_TOKEN_T);
+    consume(i, getToken(si, *i), COMMA_TOKEN_T);
 
     speed[0] = atof(getToken(si, *i).value);
-    consume(i, getToken(si, *i), NUMBER);
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    consume(i, getToken(si, *i), NUMBER_TOKEN_T);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
     StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
     SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex);
     addSampleSource(si->main_rack, sampleSource);
@@ -345,20 +345,20 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
 }
 
 void parseIf(SlangInterpreter* si, int* i) {
-    consume(i, getToken(si, *i), IF);
-    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    consume(i, getToken(si, *i), IF_TOKEN_T);
+    consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
     printDebugMessage(DBG, "IF call found! Evaluating now!");
 
     int l = checkLogic(si, i);
 
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
-    consume(i, getToken(si, *i), BRACKETLEFT);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
+    consume(i, getToken(si, *i), BRACKETLEFT_TOKEN_T);
     int nrbr = si->openBrackets;
     si->openBrackets++;
     if (l == 0) {
         while (si->openBrackets > nrbr) {
-            if (getToken(si, *i).tt == BRACKETRIGHT) {
+            if (getToken(si, *i).tt == BRACKETRIGHT_TOKEN_T) {
                 si->openBrackets--;
             }
             i++;
@@ -368,24 +368,24 @@ void parseIf(SlangInterpreter* si, int* i) {
 
 void parseFilter(SlangInterpreter* si, int* i) {
     //int filter_type = -1;
-    if(getToken(si, *i).tt == LOWPASSFILTERTOKEN) {
-        consume(i, getToken(si, *i), LOWPASSFILTERTOKEN);
+    if(getToken(si, *i).tt == LOWPASSFILTERTOKEN_TOKEN_T) {
+        consume(i, getToken(si, *i), LOWPASSFILTERTOKEN_TOKEN_T);
         //filter_type = 1;
     }
-    else if(getToken(si, *i).tt == HIGHPASSFILTERTOKEN) {
-        consume(i, getToken(si, *i), HIGHPASSFILTERTOKEN);
+    else if(getToken(si, *i).tt == HIGHPASSFILTERTOKEN_TOKEN_T) {
+        consume(i, getToken(si, *i), HIGHPASSFILTERTOKEN_TOKEN_T);
         //filter_type = 2;
     }
     else {
         LOGERROR("Filter type not recognized!");
     }
-    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
 
     int argumentIndex = *i;
 
     float freq = l3_expression(si, i);
 
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
     
     LowPassFilter* filter = createLowPassFilter(freq, si->sampleRate);
     Filter *f = malloc(sizeof(Filter));
@@ -395,13 +395,13 @@ void parseFilter(SlangInterpreter* si, int* i) {
     addFilter(si->main_rack, f);
     LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freq);
     
-    /*else if (getToken(si, *i).tt == IDENTIFIER) {
+    /*else if (getToken(si, *i).tt == IDENTIFIER_TOKEN_T) {
         char* name = getToken(si, *i).value;
-        consume(i, getToken(si, *i), IDENTIFIER);
-        consume(i, getToken(si, *i), COMMA);
+        consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+        consume(i, getToken(si, *i), COMMA_TOKEN_T);
         float *cutoff = malloc(sizeof(float));
         cutoff[0] = l3_expression(si, i);
-        consume(i, getToken(si, *i), PARANTHESISRIGHT);
+        consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
 
 
         LowPassFilter *filter = createLowPassFilter(cutoff, si->sampleRate);
@@ -417,20 +417,20 @@ void parseFilter(SlangInterpreter* si, int* i) {
 }
 
 void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
-    consume(i, getToken(si, *i), LINENVELOPEGENERATORTOKEN);
-    consume(i, getToken(si, *i), PARANTHESISLEFT);
+    consume(i, getToken(si, *i), LINENVELOPEGENERATORTOKEN_TOKEN_T);
+    consume(i, getToken(si, *i), PARANTHESISLEFT_TOKEN_T);
     int argumentIndex = *i;
     char* stepSequencerName = getToken(si, *i).value;
-    consume(i, getToken(si, *i), IDENTIFIER);
-    consume(i, getToken(si, *i), COMMA);
+    consume(i, getToken(si, *i), IDENTIFIER_TOKEN_T);
+    consume(i, getToken(si, *i), COMMA_TOKEN_T);
     float attack = l3_expression(si, i);
-    consume(i, getToken(si, *i), COMMA);
+    consume(i, getToken(si, *i), COMMA_TOKEN_T);
     float decay = l3_expression(si,  i);
-    consume(i, getToken(si, *i), COMMA);
+    consume(i, getToken(si, *i), COMMA_TOKEN_T);
     float sustain = l3_expression(si, i);
-    consume(i, getToken(si, *i), COMMA);
+    consume(i, getToken(si, *i), COMMA_TOKEN_T);
     float release = l3_expression(si, i);
-    consume(i, getToken(si, *i), PARANTHESISRIGHT);
+    consume(i, getToken(si, *i), PARANTHESISRIGHT_TOKEN_T);
 
     LinearEnvelopeGenerator* linearEnvelopeGenerator = createLinearEnvelopeGenerator(name, si->sampleRate, attack, decay, sustain, release);
     EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE, getSampleSource(si->main_rack, stepSequencerName)->sampleSource);
