@@ -49,104 +49,104 @@ Token* tokenize(char* input, int* length) {
                 }
                 j--;
 
-                temp.tt = IDENTIFIER_TOKEN_T;
+                temp.tt = TOKEN_IDENTIFIER;
                 temp.value = ns;
                 //printf("Tokenzier registered identifier: %s\n", ns);
             }
             else if(tokenString[j] == ';') {
-                temp.tt = SEMICOLON_TOKEN_T;
+                temp.tt = TOKEN_SEMICOLON;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '=') {
-                temp.tt = ASSIGN_TOKEN_T;
+                temp.tt = TOKEN_ASSIGN;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '(') {
                 //printf("Opening PARANTHESISLEFT found!\n");
-                temp.tt = PARANTHESISLEFT_TOKEN_T;
+                temp.tt = TOKEN_PARANTHESISLEFT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == ')') {
-                temp.tt = PARANTHESISRIGHT_TOKEN_T;
+                temp.tt = TOKEN_PARANTHESISRIGHT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '{') {
-                temp.tt = BRACKETLEFT_TOKEN_T;
+                temp.tt = TOKEN_BRACKETLEFT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '}') {
-                temp.tt = BRACKETRIGHT_TOKEN_T;
+                temp.tt = TOKEN_BRACKETRIGHT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '[') {
-                temp.tt = SQUAREBRACKETLEFT_TOKEN_T;
+                temp.tt = TOKEN_SQUAREBRACKETLEFT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == ']') {
-                temp.tt = SQUAREBRACKETRIGHT_TOKEN_T;
+                temp.tt = TOKEN_SQUAREBRACKETRIGHT;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '+') {
-                temp.tt = PLUS_TOKEN_T;
+                temp.tt = TOKEN_PLUS;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '-') {
-                temp.tt = MINUS_TOKEN_T;
+                temp.tt = TOKEN_MINUS;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '*') {
-                temp.tt = MULTIPLY_TOKEN_T;
+                temp.tt = TOKEN_MULTIPLY;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '/') {
-                temp.tt = DIVIDE_TOKEN_T;
+                temp.tt = TOKEN_DIVIDE;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
 
             }
             else if(tokenString[j] == '>') {
-                temp.tt = GREATER_TOKEN_T;
+                temp.tt = TOKEN_GREATER;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == '<') {
-                temp.tt = SMALLER_TOKEN_T;
+                temp.tt = TOKEN_SMALLER;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if(tokenString[j] == ',') {
-                temp.tt = COMMA_TOKEN_T;
+                temp.tt = TOKEN_COMMA;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
             }
             else if (tokenString[j] == '$') {
-                temp.tt = NOTEMARKER_TOKEN_T;
+                temp.tt = TOKEN_NOTEMARKER;
                 tmpString[0] = tokenString[j];
                 tmpString[1] = '\0';
                 temp.value = tmpString;
@@ -163,7 +163,7 @@ Token* tokenize(char* input, int* length) {
                 }
                 j--;
 
-                temp.tt = NUMBER_TOKEN_T;
+                temp.tt = TOKEN_NUMBER;
                 temp.value = ns;
                 //printf("Parsed number: %s\n", ns);
             }
@@ -182,79 +182,79 @@ Token* tokenize(char* input, int* length) {
 
 void tokenizeStrings(Token* out, int numTokens) {
     for(int x = 0; x < numTokens; x++) {
-        if(out[x].tt == IDENTIFIER_TOKEN_T) {
+        if(out[x].tt == TOKEN_IDENTIFIER) {
             char* value = out[x].value;
             if(strcmp(value, "fn") == 0) {
-                out[x].tt = FUNCTION_TOKEN_T;
+                out[x].tt = TOKEN_FUNCTION;
             }
             else if(strcmp(value, "for") == 0) {
-                out[x].tt = FOR_TOKEN_T;
+                out[x].tt = TOKEN_FOR;
             }
             else if(strcmp(value, "if") == 0) {
-                out[x].tt = IF_TOKEN_T;
+                out[x].tt = TOKEN_IF;
             }
             else if(strcmp(value, "return") == 0) {
-                out[x].tt = RETURN_TOKEN_T;
+                out[x].tt = TOKEN_RETURN;
             }
             else if(strcmp(value, "while") == 0) {
-                out[x].tt = WHILE_TOKEN_T;
+                out[x].tt = TOKEN_WHILE;
             }
             else if(strcmp(value, "sineosc") == 0) {
-                out[x].tt = SINEOSC_TOKEN_T;
+                out[x].tt = TOKEN_SINEOSC;
             }
             else if(strcmp(value, "sawtoothosc") == 0) {
-                out[x].tt = SAWOSC_TOKEN_T;
+                out[x].tt = TOKEN_SAWOSC;
             }
             else if(strcmp(value, "wavetableosc") == 0) {
-                out[x].tt = WAVEOSC_TOKEN_T;
+                out[x].tt = TOKEN_WAVEOSC;
             }
 			else if(strcmp(value, "truesineosc") == 0) {
-				out[x].tt = TRUESINEOSC_TOKEN_T;
+				out[x].tt = TOKEN_TRUESINEOSC;
 			}
             else if (strcmp(value, "squareosc") == 0) {
-                out[x].tt = SQUAREOSC_TOKEN_T;
+                out[x].tt = TOKEN_SQUAREOSC;
             }
             else if (strcmp(value, "triangleosc") == 0) {
-                out[x].tt = TRIANGLEOSC_TOKEN_T;
+                out[x].tt = TOKEN_TRIANGLEOSC;
             }
             else if (strcmp(value, "randomosc") == 0) {
-                out[x].tt = RANDOMOSC_TOKEN_T;
+                out[x].tt = TOKEN_RANDOMOSC;
             }
             else if (strcmp(value, "terrainosc") == 0) {
-                out[x].tt = TERRAINOSC_TOKEN_T;
+                out[x].tt = TOKEN_TERRAINOSC;
             }
             else if(strcmp(value, "lowpassfilter") == 0) {
-                out[x].tt = LOWPASSFILTERTOKEN_TOKEN_T;
+                out[x].tt = TOKEN_LOWPASSFILTER;
             }
             else if(strcmp(value, "highpassfilter") == 0) {
-                out[x].tt = HIGHPASSFILTERTOKEN_TOKEN_T;
+                out[x].tt = TOKEN_HIGHPASSFILTER;
             }
             else if(strcmp(value, "inputa") == 0) {
-                out[x].tt = INPUTA_TOKEN_T;
+                out[x].tt = TOKEN_INPUTA;
             }
             else if(strcmp(value, "inputb") == 0) {
-                out[x].tt = INPUTB_TOKEN_T;
+                out[x].tt = TOKEN_INPUTB;
             }
             else if(strcmp(value, "inputc") == 0) {
-                out[x].tt = INPUTC_TOKEN_T;
+                out[x].tt = TOKEN_INPUTC;
             }
             else if(strcmp(value, "inputd") == 0) {
-                out[x].tt = INPUTD_TOKEN_T;
+                out[x].tt = TOKEN_INPUTD;
             }
             else if(strcmp(value, "MAIN") == 0) {
-                out[x].tt = MAIN_TOKEN_T;
+                out[x].tt = TOKEN_MAIN;
             }
             else if(strcmp(value, "stepsequencer") == 0) {
-                out[x].tt = STEPSEQ_TOKEN_T;
+                out[x].tt = TOKEN_STEPSEQ;
             }
             else if(strcmp(value, "random") == 0) {
-                out[x].tt = RANDOM_TOKEN_T;
+                out[x].tt = TOKEN_RANDOM;
             }
             else if(strcmp(value, "randomint") == 0) {
-                out[x].tt = RANDOMINT_TOKEN_T;
+                out[x].tt = TOKEN_RANDOMINT;
             }
             else if(strcmp(value, "linenvelope") == 0) {
-                out[x].tt = LINENVELOPEGENERATORTOKEN_TOKEN_T;
+                out[x].tt = TOKEN_LINENVELOPE;
             }
         }
     } 
@@ -263,127 +263,127 @@ void tokenizeStrings(Token* out, int numTokens) {
 char* tokenTypeToString(TokenType input) {
     char* out;
     switch (input) {
-    case IDENTIFIER_TOKEN_T:
+    case TOKEN_IDENTIFIER:
         out = "Identifier";
         break;
-    case NUMBER_TOKEN_T:
+    case TOKEN_NUMBER:
         out = "Number";
         break;
-    case FUNCTION_TOKEN_T:
+    case TOKEN_FUNCTION:
         out = "Function";
         break;
-    case SEMICOLON_TOKEN_T:
+    case TOKEN_SEMICOLON:
         out = "Semicolon";
         break;
-    case BRACKETLEFT_TOKEN_T:
+    case TOKEN_BRACKETLEFT:
         out = "Bracketsleft";    
         break;
-    case BRACKETRIGHT_TOKEN_T:
+    case TOKEN_BRACKETRIGHT:
         out = "Bracketright";    
         break;
-    case PARANTHESISLEFT_TOKEN_T:
+    case TOKEN_PARANTHESISLEFT:
         out = "Paranthesisleft";    
         break;
-    case PARANTHESISRIGHT_TOKEN_T:
+    case TOKEN_PARANTHESISRIGHT:
         out = "Paranthesisright";    
         break;
-    case SQUAREBRACKETLEFT_TOKEN_T:
+    case TOKEN_SQUAREBRACKETLEFT:
         out = "Squarebracketleft";
         break;
-    case SQUAREBRACKETRIGHT_TOKEN_T:
+    case TOKEN_SQUAREBRACKETRIGHT:
         out = "Squarebracketright";
         break;
-    case ASSIGN_TOKEN_T:
+    case TOKEN_ASSIGN:
         out = "Assign";
         break;
-    case PLUS_TOKEN_T:
+    case TOKEN_PLUS:
         out = "Plus";
         break;
-    case MINUS_TOKEN_T:
+    case TOKEN_MINUS:
         out = "Minus";
         break;
-    case MULTIPLY_TOKEN_T:
+    case TOKEN_MULTIPLY:
         out = "Multiply";
         break;
-    case DIVIDE_TOKEN_T:
+    case TOKEN_DIVIDE:
         out = "Divide";
         break;
-    case FOR_TOKEN_T:
+    case TOKEN_FOR:
         out = "For";
         break;
-    case IF_TOKEN_T:
+    case TOKEN_IF:
         out = "If";
         break;
-    case COMMA_TOKEN_T:
+    case TOKEN_COMMA:
         out = "Comma";
         break;
-    case WHILE_TOKEN_T:
+    case TOKEN_WHILE:
         out = "While";
         break;
-    case SAWOSC_TOKEN_T:
+    case TOKEN_SAWOSC:
         out = "SawtoothOscillator";
         break;
-    case SINEOSC_TOKEN_T:
+    case TOKEN_SINEOSC:
         out = "SineOscillator";
         break;
-    case WAVEOSC_TOKEN_T:
+    case TOKEN_WAVEOSC:
         out = "WaveOscillator";
         break;
-	case TRUESINEOSC_TOKEN_T:
+	case TOKEN_TRUESINEOSC:
 		out = "TruesineOscillator";
 		break;
-    case SQUAREOSC_TOKEN_T:
+    case TOKEN_SQUAREOSC:
         out = "SquareOscillator";
         break;
-    case TRIANGLEOSC_TOKEN_T:
+    case TOKEN_TRIANGLEOSC:
         out = "TriangleOscillator";
         break;
-    case TERRAINOSC_TOKEN_T:
+    case TOKEN_TERRAINOSC:
         out = "TerrainOscillator";
         break;
-    case STEPSEQ_TOKEN_T:
+    case TOKEN_STEPSEQ:
         out = "StepSequencer";
         break;
-    case LOWPASSFILTERTOKEN_TOKEN_T:
+    case TOKEN_LOWPASSFILTER:
         out = "LowpassFilter";
         break;
-    case HIGHPASSFILTERTOKEN_TOKEN_T:
+    case TOKEN_HIGHPASSFILTER:
         out = "HighpassFilter";
         break;
-    case RANDOMOSC_TOKEN_T:
+    case TOKEN_RANDOMOSC:
         out = "RandomOscillator";
         break;
-    case RETURN_TOKEN_T:
+    case TOKEN_RETURN:
         out = "Return";
         break;
-    case SMALLER_TOKEN_T:
+    case TOKEN_SMALLER:
         out = "Smaller";
         break;
-    case GREATER_TOKEN_T:
+    case TOKEN_GREATER:
         out = "Greater";
         break;
-    case INPUTA_TOKEN_T:
+    case TOKEN_INPUTA:
         out = "InputA";
         break;
-    case INPUTB_TOKEN_T:
+    case TOKEN_INPUTB:
         out = "InputB";
         break;
-    case INPUTC_TOKEN_T:
+    case TOKEN_INPUTC:
         out = "InputC";
         break;
-    case INPUTD_TOKEN_T:
+    case TOKEN_INPUTD:
         out = "InputD";
         break;
-    case NOTEMARKER_TOKEN_T:
+    case TOKEN_NOTEMARKER:
         out = "Notemarker";
         break;
-    case RANDOM_TOKEN_T:
+    case TOKEN_RANDOM:
         out = "Random";
         break;
-    case RANDOMINT_TOKEN_T:
+    case TOKEN_RANDOMINT:
         out = "RandomInt";
         break;
-    case LINENVELOPEGENERATORTOKEN_TOKEN_T:
+    case TOKEN_LINENVELOPE:
         out = "LinearEnvelopeGenerator";
         break;
     default:
