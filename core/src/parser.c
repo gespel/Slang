@@ -380,20 +380,26 @@ void parseFilter(SlangInterpreter* si, int* i) {
         LOGERROR("Filter type not recognized!");
     }
     consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
-
-    int argumentIndex = *i;
-
-    float freq = l3_expression(si, i);
-
-    consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
     
-    LowPassFilter* filter = createLowPassFilter(freq, si->sampleRate);
-    Filter *f = malloc(sizeof(Filter));
-    f->type = LOWPASSFILTER;
-    f->filter = filter;
-    f->argumentIndex = argumentIndex;
-    addFilter(si->main_rack, f);
-    LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freq);
+    if(getToken(si, *i).tt == TOKEN_MAIN) {
+        consume(i, getToken(si, *i), TOKEN_MAIN);
+        consume(i, getToken(si, *i), TOKEN_COMMA);
+        int argumentIndex = *i;
+
+        float freq = l3_expression(si, i);
+
+        consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+        
+        LowPassFilter* filter = createLowPassFilter(freq, si->sampleRate);
+        Filter *f = malloc(sizeof(Filter));
+        f->type = LOWPASSFILTER;
+        f->filter = filter;
+        f->argumentIndex = argumentIndex;
+        addFilter(si->main_rack, f);
+        LOGINFO("Creating a LOWPASSFILTER on main bus with cutoff %f", freq);
+    }
+
+    
     
     /*else if (getToken(si, *i).tt == TOKEN_IDENTIFIER) {
         char* name = getToken(si, *i).value;
