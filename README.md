@@ -52,7 +52,7 @@ The `examples/` directory includes several demo scripts to help you get started:
 
 ## Integrate Interpreter
 The Slang interpreter can be very easily integrated into existing C/C++ projects.
-To do that include the `slang-lib.h` header and link against the compiled Slang library at `build/libslang.a`. Here's a simple example of how to initialize the interpreter:
+To do that include the `slang-lib.h` header and link against the compiled Slang library at `build/libslang.so`. Here's a simple example of how to initialize the interpreter:
 
 ```c
 #include "slang-lib.h"
