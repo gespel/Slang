@@ -27,3 +27,5 @@ float getSampleSourceOutputSample(SampleSource *ss);
 float getSampleSourceSample(SampleSource *ss);
 
 void printSampleSourceType(SampleSource* ss);
+
+void addModifierToSampleSource(SampleSource* ss, void* modifier);

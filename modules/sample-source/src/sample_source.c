@@ -1,5 +1,6 @@
 #include "modules/sample-source/include/sample_source.h"
 #include "core/include/tools.h"
+#include "include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
@@ -64,6 +65,9 @@ float getSampleSourceOutputSample(SampleSource *ss) {
         //printf("%f\n", seq->sample);
         return seq->sample;
     }
+
+    for (int i = 0; i < ss->numModifiers; )
+
     return out;
 }
 
@@ -123,4 +127,9 @@ void printSampleSourceType(SampleSource *ss) {
     else if (ss->type == OSCILLATOR) {
         LOGDEBUG("OSCILLATOR");
     }
+}
+
+void addModifierToSampleSource(SampleSource *ss, void *modifier) {
+    ss->modifier[ss->numModifiers] = modifier;
+    ss->numModifiers += 1;
 }

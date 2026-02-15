@@ -1,0 +1,19 @@
+#include "modules/filters/include/filter.h"
+#include "filters/include/filter_types.h"
+#include "filters/include/lowpassfilter.h"
+#include "stdlib.h"
+
+Filter *createFilter(void* filter, FilterType type) {
+    Filter *out = malloc(sizeof(Filter));
+    out->filter = filter;
+    out->type = type;
+}
+
+float processFilterSample(Filter *filter, float sample) {
+    if (filter->type == LOWPASSFILTER) {
+        return processLowPassSample(filter->filter, sample);
+    }
+    else if (filter->type == HIGHPASSFILTER) {
+        
+    }
+}
