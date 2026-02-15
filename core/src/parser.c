@@ -6,13 +6,16 @@
 #include "core/include/interpreter.h"
 #include "core/include/tools.h"
 #include "core/include/rack.h"
+#include "modules/modifier/include/modifier_types.h"
+#include "modules/modifier/include/modifier.h"
 #include "modules/envelope/include/envelope_types.h"
 #include "modules/envelope/include/linenvelope.h"
 #include "modules/envelope/include/envelope.h"
 #include "modules/sample-source/include/sample_source.h"
-#include "oscillators/include/oscillator.h"
-#include "oscillators/include/oscillator_types.h"
-#include "oscillators/include/random.h"
+#include "modules/oscillators/include/oscillator.h"
+#include "modules/oscillators/include/oscillator_types.h"
+#include "modules/oscillators/include/random.h"
+#include <time.h>
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
     //char* freq_token = getToken(si, *i).value;
@@ -401,25 +404,31 @@ void parseFilter(SlangInterpreter* si, int* i) {
 
     
     
-    /*else if (getToken(si, *i).tt == TOKEN_IDENTIFIER) {
+    else if (getToken(si, *i).tt == TOKEN_IDENTIFIER) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), TOKEN_IDENTIFIER);
         consume(i, getToken(si, *i), TOKEN_COMMA);
-        float *cutoff = malloc(sizeof(float));
-        cutoff[0] = l3_expression(si, i);
+
+        int argumentIndex = *i;
+        float freq = l3_expression(si, i);
         consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
 
 
-        LowPassFilter *filter = createLowPassFilter(cutoff, si->sampleRate);
+        LowPassFilter *filter = createLowPassFilter(freq, si->sampleRate);
         Filter *f = malloc(sizeof(Filter));
         f->type = LOWPASSFILTER;
         f->filter = filter;
-        Modifier *modifier = malloc(sizeof(Modifier));
-        modifier->type = FILTER;
-        modifier->modifier = f;
-        addModifierToSampleSource(si->main_rack, name, modifier);
-        LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, *cutoff);
-    }*/
+        f->argumentIndex = argumentIndex;
+        Modifier *modifier = createModifier(f, FILTER);
+
+        SampleSource *ss = getSampleSource(si->main_rack, name);
+        if (ss == NULL) {
+            LOGERROR("Unable to find SampleSource %s to add Filter", name);
+        }
+        addModifierToSampleSource(ss, modifier);
+
+        LOGINFO("Creating a LOWPASSFILTER for the sample source %s with cutoff %f", name, freq);
+    }
 }
 
 void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
