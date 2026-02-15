@@ -57,8 +57,17 @@ sample_source_sources = [
 sample_source_headers = [
     'modules/sample-source/include/sample_source.h',
 ]
+modifier_source_sources = [
+    'modules/modifier/src/modifier.c',
+]
+modifier_source_headers = [
+    'modules/modifier/include/modifier_types.h',
+    'modules/modifier/include/modifier.h',
+
+]
 filter_sources = [
     'modules/filters/src/lowpassfilter.c',
+    'modules/filters/src/filter.c',
 ]
 filter_headers = [
     'modules/filters/include/lowpassfilter.h',
@@ -102,6 +111,7 @@ slang_lib = shared_library(
   osc_sources + osc_headers +
   step_sources + step_headers +
   sample_source_sources + sample_source_headers +
+  modifier_source_sources + modifier_source_headers +
   filter_sources + filter_headers +
   envelope_sources + envelope_headers,
   include_directories: include_directories('core/', 'modules/'),

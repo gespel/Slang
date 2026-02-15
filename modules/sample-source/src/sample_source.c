@@ -1,6 +1,7 @@
 #include "modules/sample-source/include/sample_source.h"
+#include "modules/modifier/include/modifier.h"
 #include "core/include/tools.h"
-#include "include/rack.h"
+#include "core/include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
@@ -66,7 +67,10 @@ float getSampleSourceOutputSample(SampleSource *ss) {
         return seq->sample;
     }
 
-    for (int i = 0; i < ss->numModifiers; )
+    for (int i = 0; i < ss->numModifiers; i++) {
+        Modifier *modifier = ss->modifier[i];
+        out = applyModifier(modifier, out);
+    }
 
     return out;
 }
@@ -117,6 +121,12 @@ float getSampleSourceSample(SampleSource *ss) {
         //printf("%f\n", lin->sample);
         return lin->sample;
     }
+
+    for (int i = 0; i < ss->numModifiers; i++) {
+        Modifier *modifier = ss->modifier[i];
+        out = applyModifier(modifier, out);
+    }
+
     return out;
 }
 

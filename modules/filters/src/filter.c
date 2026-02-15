@@ -7,6 +7,7 @@ Filter *createFilter(void* filter, FilterType type) {
     Filter *out = malloc(sizeof(Filter));
     out->filter = filter;
     out->type = type;
+    return out;
 }
 
 float processFilterSample(Filter *filter, float sample) {
@@ -16,4 +17,5 @@ float processFilterSample(Filter *filter, float sample) {
     else if (filter->type == HIGHPASSFILTER) {
         
     }
+    return 0.0f;
 }
