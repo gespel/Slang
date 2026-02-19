@@ -10,14 +10,11 @@ Reverb *createReverb(void *reverb, ReverbType type) {
     return out;
 }
 
-float getReverbSample(Reverb *reverb, float sample) {
+float applyReverb(Reverb *reverb, float sample) {
     if (reverb->type == SPRINGREVERB) {
-
+        return 0;
     }
-}
-
-void tickReverb(Reverb *reverb) {
-    if (reverb->type == SPRINGREVERB) {
-        tickSpringReverb(reverb->reverb);
+    else {
+        return 0;
     }
 }

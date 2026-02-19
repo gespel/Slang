@@ -4,8 +4,6 @@
 
 SpringReverb *createSpringReverb();
 
-float getSpringReverbSample(SpringReverb *reverb, float sample);
-
-void tickSpringReverb(SpringReverb *reverb);
+float applySpringReverb(SpringReverb *reverb, float sample);
 
 #endif

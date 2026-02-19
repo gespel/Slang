@@ -4,8 +4,6 @@
 
 Reverb *createReverb(void *reverb, ReverbType type);
 
-float getReverbSample(Reverb *reverb, float sample);
-
-void tickReverb(Reverb *reverb);
+float applyReverb(Reverb *reverb, float sample);
 
 #endif
