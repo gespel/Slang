@@ -256,6 +256,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "linenvelope") == 0) {
                 out[x].tt = TOKEN_LINENVELOPE;
             }
+            else if(strcmp(value, "springreverb") == 0) {
+                out[x].tt = TOKEN_SPRINGREVERB;
+            }
         }
     } 
 }
@@ -385,6 +388,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case TOKEN_LINENVELOPE:
         out = "LinearEnvelopeGenerator";
+        break;
+    case TOKEN_SPRINGREVERB:
+        out = "SpringReverb";
         break;
     default:
         out = "Unknown";
