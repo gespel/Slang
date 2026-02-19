@@ -1,6 +1,4 @@
 #include "modules/reverb/include/reverb.h"
-#include "reverb/include/reverb_types.h"
-#include "reverb/include/springreverb.h"
 #include "stdlib.h"
 
 Reverb *createReverb(void *reverb, ReverbType type) {
