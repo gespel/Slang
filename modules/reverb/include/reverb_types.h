@@ -10,6 +10,18 @@ typedef struct Reverb {
 } Reverb;
 
 typedef struct SpringReverb {
+    float *comb[4];
+    int combSize[4];
+    int combIdx[4];
+    int sampleRate;
 
+    /* Allpass filter */
+    float *allpass;
+    int allpassSize;
+    int allpassIdx;
+
+    float feedback;   // comb feedback (decay)
+    float apGain;     // allpass gain (diffusion)
+    float mix;      
 } SpringReverb;
 #endif // REVERB_TYPES_H

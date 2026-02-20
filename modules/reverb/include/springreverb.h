@@ -2,7 +2,7 @@
 #define SPRING_REVERB_H
 #include "modules/reverb/include/reverb_types.h"
 
-SpringReverb *createSpringReverb();
+SpringReverb *createSpringReverb(int sampleRate);
 
 float applySpringReverb(SpringReverb *reverb, float sample);
 
