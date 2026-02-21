@@ -3,6 +3,8 @@
 
 SpringReverb *createSpringReverb(int sampleRate) {
     SpringReverb *out = malloc(sizeof(SpringReverb));
+    out->sampleRate = sampleRate;
+    
     int combDelays[4] = {
         sampleRate * 0.0297f,
         sampleRate * 0.0371f,
@@ -22,9 +24,9 @@ SpringReverb *createSpringReverb(int sampleRate) {
     out->allpass = calloc(out->allpassSize, sizeof(float));
 
     /* Parameters */
-    out->feedback = 0.78f;   // decay time
-    out->apGain   = 0.7f;    // diffusion
-    out->mix      = 0.35f;   // dry/wet
+    out->feedback = 0.5f;    // reduced decay time for stability
+    out->apGain   = 0.5f;    // reduced diffusion for stability
+    out->mix      = 0.3f;    // dry/wet
 
     return out;
 }
@@ -37,24 +39,19 @@ float applySpringReverb(SpringReverb *reverb, float sample) {
         float y = reverb->comb[i][reverb->combIdx[i]];
         reverb->comb[i][reverb->combIdx[i]] = sample + y * reverb->feedback;
 
-        reverb->combIdx[i]++;
-        if (reverb->combIdx[i] >= reverb->combSize[i])
-            reverb->combIdx[i] = 0;
-
+        reverb->combIdx[i] = (reverb->combIdx[i] + 1) % reverb->combSize[i];
         combSum += y;
     }
 
-    /* Allpass diffusion */
-    float apOut = reverb->allpass[reverb->allpassIdx];
-    float apIn  = combSum + apOut * reverb->apGain;
+    /* Allpass diffusion - corrected implementation */
+    float delayOut = reverb->allpass[reverb->allpassIdx];
+    float input = combSum * 0.25f; // scale down parallel comb sum
+    
+    float apOut = -reverb->apGain * input + delayOut;
+    reverb->allpass[reverb->allpassIdx] = input + reverb->apGain * delayOut;
 
-    float wet = -combSum + apOut;
-    reverb->allpass[reverb->allpassIdx] = apIn;
-
-    reverb->allpassIdx++;
-    if (reverb->allpassIdx >= reverb->allpassSize)
-        reverb->allpassIdx = 0;
+    reverb->allpassIdx = (reverb->allpassIdx + 1) % reverb->allpassSize;
 
     /* Dry / Wet mix */
-    return sample * (1.0f - reverb->mix) + wet * reverb->mix;
+    return sample * (1.0f - reverb->mix) + apOut * reverb->mix;
 }
