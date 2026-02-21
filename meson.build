@@ -82,6 +82,15 @@ envelope_headers = [
     'modules/envelope/include/envelope.h',
     'modules/envelope/include/linenvelope.h',
 ]
+reverb_sources = [
+    'modules/reverb/src/reverb.c',
+    'modules/reverb/src/springreverb.c'
+]
+reverb_headers = [
+    'modules/reverb/include/reverb_types.h',
+    'modules/reverb/include/reverb.h',
+    'modules/reverb/include/springreverb.h'
+]
 
 core_headers = [
     'core/include/buffer_core.h',
@@ -113,7 +122,8 @@ slang_lib = shared_library(
   sample_source_sources + sample_source_headers +
   modifier_source_sources + modifier_source_headers +
   filter_sources + filter_headers +
-  envelope_sources + envelope_headers,
+  envelope_sources + envelope_headers +
+  reverb_sources + reverb_headers,
   include_directories: include_directories('core/', 'modules/'),
   dependencies: [],
   link_args: ['-lm'],

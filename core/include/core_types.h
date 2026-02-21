@@ -4,8 +4,9 @@
 
 #ifndef CORE_TYPES_H
 #define CORE_TYPES_H
-#include "../../modules/modules.h"
+#include "modules/modules.h"
 #include "modules/envelope/include/envelope_types.h"
+#include "modules/reverb/include/reverb_types.h"
 
 typedef struct SlangInterpreter SlangInterpreter;
 
@@ -93,6 +94,8 @@ typedef struct Rack {
     int numEnvelopeGenerators;
     Filter **filters;
     int numFilters;
+    Reverb **reverbs;
+    int numReverb;
     SlangInterpreter* interpreter;
 } Rack;
 

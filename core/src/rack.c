@@ -14,7 +14,8 @@
 #include "modules/oscillators/include/random.h"
 #include "modules/sample-source/include/sample_source.h"
 #include "modules/stepsequencer/include/stepsequencer.h"
-#include "stepsequencer/include/stepsequencer_types.h"
+#include "modules/stepsequencer/include/stepsequencer_types.h"
+#include "modules/reverb/include/reverb.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -145,6 +146,12 @@ float getSample(Rack* rack) {
             out = processLowPassSample(lp, out);
         }
     }
+
+    for (int i = 0; i < rack->numReverb; i++) {
+        Reverb *reverb = rack->reverbs[i];
+        out = applyReverb(reverb, sample);
+    }
+
     return out;
     //return normalizeSample(out, getNumOscillators(rack));
 }
@@ -270,6 +277,11 @@ void addSampleSource(Rack* rack, SampleSource* input) {
 void addFilter(Rack* rack, Filter* input) {
     rack->filters[rack->numFilters] = input;
     rack->numFilters = rack->numFilters + 1;
+}
+
+void addReverb(Rack *rack, Reverb *input) {
+    rack->reverbs[rack->numReverb] = input;
+    rack->numReverb += 1;
 }
 
 float normalizeSample(float sample, int numOscillators) {

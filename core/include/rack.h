@@ -30,6 +30,8 @@ void addSampleSource(Rack* rack, SampleSource* input);
 
 void addFilter(Rack* rack, Filter* input);
 
+void addReverb(Rack* rack, Reverb* input);
+
 float getSample(Rack* rack);
 
 float normalizeSample(float sample, int numOscillators);

@@ -15,6 +15,8 @@
 #include "modules/oscillators/include/oscillator.h"
 #include "modules/oscillators/include/oscillator_types.h"
 #include "modules/oscillators/include/random.h"
+#include "modules/reverb/include/springreverb.h"
+#include "modules/reverb/include/reverb.h"
 #include <time.h>
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
@@ -454,4 +456,14 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     addSampleSource(si->main_rack, sampleSource);
 
     LOGINFO("Adding LINEARENVELOPEGENERATOR to samples sources with name %s!", name);
+}
+
+void parseReverb(SlangInterpreter *si, int *i) {
+    consume(i, getToken(si, *i), TOKEN_SPRINGREVERB);
+    consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
+    consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+
+    SpringReverb* spring = createSpringReverb(si->sampleRate);
+    Reverb* reverb = createReverb(spring, SPRINGREVERB);
+    
 }
