@@ -465,5 +465,8 @@ void parseReverb(SlangInterpreter *si, int *i) {
 
     SpringReverb* spring = createSpringReverb(si->sampleRate);
     Reverb* reverb = createReverb(spring, SPRINGREVERB);
-    
+
+    addReverb(si->main_rack, reverb);
+
+    LOGINFO("Creating Reverb!");
 }
