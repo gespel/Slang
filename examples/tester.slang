@@ -4,5 +4,5 @@ c = sawtoothosc(ss * 110);
 e = sawtoothosc(ss * 55); 
 f = sawtoothosc(ss * 110.2); 
 g = sawtoothosc(ss * 220);
-lowpassfilter(1500 * lin);
-lowpassfilter(1500 * lin);
+lowpassfilter(MAIN, 1500 * lin);
+lowpassfilter(MAIN, 1500 * lin);
