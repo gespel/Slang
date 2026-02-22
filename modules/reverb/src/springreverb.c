@@ -1,5 +1,6 @@
 #include "modules/reverb/include/springreverb.h"
 #include "stdlib.h"
+#include "stdio.h"
 
 SpringReverb *createSpringReverb(int sampleRate) {
     SpringReverb *out = malloc(sizeof(SpringReverb));
@@ -51,6 +52,7 @@ float applySpringReverb(SpringReverb *reverb, float sample) {
     reverb->allpass[reverb->allpassIdx] = input + reverb->apGain * delayOut;
 
     reverb->allpassIdx = (reverb->allpassIdx + 1) % reverb->allpassSize;
+    //printf("in reverb\n");
 
     /* Dry / Wet mix */
     return sample * (1.0f - reverb->mix) + apOut * reverb->mix;

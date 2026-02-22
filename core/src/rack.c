@@ -156,9 +156,10 @@ float getSample(Rack* rack) {
         }
     }
 
+    //LOGDEBUG("Number of reverbs: %d", rack->numReverb);
     for (int i = 0; i < rack->numReverb; i++) {
         Reverb *reverb = rack->reverbs[i];
-        out = applyReverb(reverb, sample);
+        out = applyReverb(reverb, out);
     }
 
     return out;

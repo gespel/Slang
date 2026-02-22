@@ -63,6 +63,7 @@ int main(int argc, char **argv) {
         printAllVariables(main_interpreter);
         printAllOscillators(main_interpreter);
 
+        printf("Starting rendering loop if activated.\n");
 		while (live_render_active == 1) {
 			float* buf = renderBuffer(sbc);
         	printAudioBuffer(buf, 512);
