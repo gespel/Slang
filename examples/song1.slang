@@ -7,5 +7,5 @@ g = truesineosc(ss * 220);
 gg = truesineosc(440);
 ggg = truesineosc(ss * 660);
 top = truesineosc(330);
-lowpassfilter(1000 * lin);
-lowpassfilter(1000 * lin);
+lowpassfilter(MAIN, 1000 * lin);
+lowpassfilter(MAIN, 1000 * lin);

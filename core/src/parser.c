@@ -465,10 +465,12 @@ void parseReverb(SlangInterpreter *si, int *i) {
     consume(i, getToken(si, *i), TOKEN_COMMA);
     float feedback = l3_expression(si, i);
     consume(i, getToken(si, *i), TOKEN_COMMA);
+    float diffusion = l3_expression(si, i);
+    consume(i, getToken(si, *i), TOKEN_COMMA);
     float drywet = l3_expression(si, i);
     consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
 
-    SpringReverb* spring = createSpringReverb(size, feedback, drywet, si->sampleRate);
+    SpringReverb* spring = createSpringReverb(size, feedback, diffusion, drywet, si->sampleRate);
     Reverb* reverb = createReverb(spring, SPRINGREVERB);
 
     addReverb(si->main_rack, reverb);

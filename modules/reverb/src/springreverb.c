@@ -1,8 +1,8 @@
 #include "modules/reverb/include/springreverb.h"
 #include "stdlib.h"
-#include "stdio.h"
+//#include "stdio.h"
 
-SpringReverb *createSpringReverb(float allpassSize, float feedback, float drywet, int sampleRate) {
+SpringReverb *createSpringReverb(float allpassSize, float feedback, float diffusion, float drywet, int sampleRate) {
     SpringReverb *out = malloc(sizeof(SpringReverb));
     out->sampleRate = sampleRate;
     
@@ -26,7 +26,7 @@ SpringReverb *createSpringReverb(float allpassSize, float feedback, float drywet
 
     /* Parameters */
     out->feedback = feedback;    // reduced decay time for stability
-    out->apGain   = 0.6f;    // reduced diffusion for stability
+    out->apGain   = diffusion;    // reduced diffusion for stability
     out->mix      = drywet;    // dry/wet
 
     return out;
