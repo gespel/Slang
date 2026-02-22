@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 
-SpringReverb *createSpringReverb(int sampleRate) {
+SpringReverb *createSpringReverb(float allpassSize, float feedback, float drywet, int sampleRate) {
     SpringReverb *out = malloc(sizeof(SpringReverb));
     out->sampleRate = sampleRate;
     
@@ -27,7 +27,7 @@ SpringReverb *createSpringReverb(int sampleRate) {
     /* Parameters */
     out->feedback = 0.9f;    // reduced decay time for stability
     out->apGain   = 0.6f;    // reduced diffusion for stability
-    out->mix      = 0.7f;    // dry/wet
+    out->mix      = 0.3f;    // dry/wet
 
     return out;
 }

@@ -3,4 +3,4 @@ lin = linenvelope(ss, 0.001, 0.05, 0.001, 0.25);
 c = sawtoothosc(ss * 110); 
 lowpassfilter(MAIN, 1500 * lin);
 
-springreverb();
+springreverb(0.05, 0.7, 0.3);
