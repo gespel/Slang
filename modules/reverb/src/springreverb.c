@@ -20,14 +20,14 @@ SpringReverb *createSpringReverb(int sampleRate) {
     }
 
     /* Allpass delay */
-    out->allpassSize = sampleRate * 0.005f; // ~5ms
+    out->allpassSize = sampleRate * 0.05f; // ~5ms
     out->allpassIdx = 0;
     out->allpass = calloc(out->allpassSize, sizeof(float));
 
     /* Parameters */
-    out->feedback = 0.8f;    // reduced decay time for stability
-    out->apGain   = 0.5f;    // reduced diffusion for stability
-    out->mix      = 0.3f;    // dry/wet
+    out->feedback = 0.9f;    // reduced decay time for stability
+    out->apGain   = 0.6f;    // reduced diffusion for stability
+    out->mix      = 0.7f;    // dry/wet
 
     return out;
 }
