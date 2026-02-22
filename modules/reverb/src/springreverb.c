@@ -25,7 +25,7 @@ SpringReverb *createSpringReverb(int sampleRate) {
     out->allpass = calloc(out->allpassSize, sizeof(float));
 
     /* Parameters */
-    out->feedback = 0.5f;    // reduced decay time for stability
+    out->feedback = 0.8f;    // reduced decay time for stability
     out->apGain   = 0.5f;    // reduced diffusion for stability
     out->mix      = 0.3f;    // dry/wet
 
