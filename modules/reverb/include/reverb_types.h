@@ -10,24 +10,24 @@ typedef struct Reverb {
 } Reverb;
 
 typedef struct SpringReverb {
-    float *comb[4];
-    int combSize[4];
-    int combIdx[4];
-    float combDamping[4];  // damping per comb
+    float *comb[8];       // more combs for denser reverb
+    int combSize[8];
+    int combIdx[8];
+    float combDamping[8];
     int sampleRate;
 
-    /* Allpass filters (cascade) */
-    float *allpass[3];
-    int allpassSize[3];
-    int allpassIdx[3];
+    /* Early reflections */
+    float *earlyReflections[6];
+    int earlySize[6];
+    int earlyIdx[6];
 
-    /* Modulation (spring wobble) */
-    float lfoPhase[4];
-    float lfoRate[4];
-    float modDepth;
+    /* Allpass filters (cascade) */
+    float *allpass[4];
+    int allpassSize[4];
+    int allpassIdx[4];
     
     /* Previous sample for damping */
-    float prevCombOut[4];
+    float prevCombOut[8];
 
     float feedback;   // comb feedback (decay)
     float apGain;     // allpass gain (diffusion)
