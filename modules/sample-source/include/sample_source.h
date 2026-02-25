@@ -18,9 +18,10 @@ typedef struct SampleSource {
     void **modifier;
     int numModifiers;
     int argumentIndex;
+    int dynamicArguments;
 } SampleSource;
 
-SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex);
+SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex, int dynamicArguments);
 
 float getSampleSourceOutputSample(SampleSource *ss);
 

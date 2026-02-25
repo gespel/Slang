@@ -98,10 +98,12 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
 		float *wt = loadWavetableByName(waveName);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
 		if(wt != NULL) {
 		    WavetableOscillator* osc = createWavetableOscillator(freq, name, loadWavetableByName(waveName), 4800, si->sampleRate, *is_output, *is_cv);
 		    Oscillator *o = createOscillator(osc, WAVETABLE);
-            SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+            SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
             addSampleSource(si->main_rack, sampleSource);
 
             LOGINFO("Creating a WAVEOSC with %f Hz and name %s", osc->frequency, osc->name);
@@ -119,12 +121,14 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
         LOGDEBUG("is output %d is cv: %d and init freq: %f", *is_output, *is_cv, freq);
 	    SawtoothOscillator *osc = createSawtoothOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
 	    Oscillator *o = createOscillator(osc, SAWTOOTH);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SAWTOOTHOSC with %f Hz and name %s (argument index %d)", osc->frequency, osc->name, argumentIndex);
@@ -136,11 +140,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
         int argumentIndex = *i;
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
 		WavetableOscillator* osc = createWavetableOscillator(freq, name, sine_wave, 4800, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, WAVETABLE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
@@ -153,11 +159,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
         SineOscillator *osc = createSineOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
 		Oscillator *o = createOscillator(osc, SINE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a SINESYNTH with %f Hz and name %s", osc->frequency, osc->name);
@@ -169,11 +177,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
         RandomOscillator *osc = createRandomOscillator(name, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, RANDOM_OSC_TYPE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
 
         addSampleSource(si->main_rack, sampleSource);
 
@@ -187,11 +197,13 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
         TriangleOscillator *osc = createTriangleOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, TRIANGLE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
         LOGINFO("Creating a TRIANGLEOSC with %f Hz and name %s", osc->frequency, osc->name);
@@ -204,20 +216,25 @@ void parseOscillators(SlangInterpreter* si, int* i, char *name) {
 
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
 
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
         SquareOscillator *osc = createSquareOscillator(freq, name, si->sampleRate, *is_output, *is_cv);
 
         Oscillator *o = createOscillator(osc, SQUARE);
 
-        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex);
+        SampleSource *sampleSource = createSampleSource(name, o, OSCILLATOR, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
     }
     if (getToken(si, *i).tt == TOKEN_TERRAINOSC) {
         consume(i, getToken(si, *i), TOKEN_TERRAINOSC);
         consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
         //char* terrainName = getToken(si, *i).value;
+        //int argumentIndex = *i;
         consume(i, getToken(si, *i), TOKEN_IDENTIFIER);
         consume(i, getToken(si, *i), TOKEN_COMMA);
         parseOscillatorSuffixArguments(si, i, &freq, is_output, is_cv);
+
+        //int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
         //TODO: implement terrain oscillator creation
     }
@@ -341,8 +358,11 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     speed[0] = atof(getToken(si, *i).value);
     consume(i, getToken(si, *i), TOKEN_NUMBER);
     consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+
+    int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
     StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
-    SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex);
+    SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex, containsIdent);
     addSampleSource(si->main_rack, sampleSource);
 
 
@@ -449,9 +469,11 @@ void parseEnvelopeGenerator(SlangInterpreter *si, int *i, char* name) {
     float release = l3_expression(si, i);
     consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
 
+    int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
     LinearEnvelopeGenerator* linearEnvelopeGenerator = createLinearEnvelopeGenerator(name, si->sampleRate, attack, decay, sustain, release);
     EnvelopeGenerator* envelopeGenerator = createEnvelopeGenerator(linearEnvelopeGenerator, LINENVELOPE, getSampleSource(si->main_rack, stepSequencerName)->sampleSource);
-    SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, argumentIndex);
+    SampleSource* sampleSource = createSampleSource(name, envelopeGenerator, ENVELOPEGENERATOR, argumentIndex, containsIdent);
 
     addSampleSource(si->main_rack, sampleSource);
 

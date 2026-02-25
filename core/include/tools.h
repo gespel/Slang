@@ -59,3 +59,5 @@ float noteNameToFrequency(char *name);
 float randomFloat(float min, float max);
 
 int randomInt(int min, int max);
+
+int containsIdentifier(Token *tokens, int index);

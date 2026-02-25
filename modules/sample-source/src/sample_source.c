@@ -4,7 +4,7 @@
 #include "core/include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
 
-SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex) {
+SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex, int dynamicArguments) {
     SampleSource *out = malloc(sizeof(SampleSource));
     out->name = name;
     out->sampleSource = sampleSource;
@@ -12,6 +12,7 @@ SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceTyp
     out->numModifiers = 0;
     out->modifier = malloc(8192);
     out->argumentIndex = argumentIndex;
+    out->dynamicArguments = dynamicArguments;
     return out;
 }
 

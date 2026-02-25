@@ -80,25 +80,32 @@ void printAllOscillators(SlangInterpreter* si) {
             continue;
         }
         if (si->main_rack->sampleSources[i]->type == OSCILLATOR) {
-            Oscillator *o = (Oscillator*) si->main_rack->sampleSources[i]->sampleSource;
+            SampleSource *s = si->main_rack->sampleSources[i];
+            int dynamic = s->dynamicArguments;
+            char dynamicStar[1] = "";
+            if (dynamic == 1) {
+                dynamicStar[0] = '*';
+            }
+
+            Oscillator *o = (Oscillator*) s->sampleSource;
             switch (o->type) {
                 case SINE:
-                    LOGINFO("\033[95mSineOscillator\033[0m %s", o->data->sine->name);
+                    LOGINFO("\033[95mSineOscillator\033[0m %s%s", o->data->sine->name, dynamicStar);
                     break;
                 case WAVETABLE:
-                    LOGINFO("\033[95mWavetableOscillator\033[0m %s", o->data->wavetable->name);
+                    LOGINFO("\033[95mWavetableOscillator\033[0m %s%s", o->data->wavetable->name, dynamicStar);
                     break;
                 case SAWTOOTH:
-                    LOGINFO("\033[95mSawtoothOscillator\033[0m %s", o->data->sawtooth->name);
+                    LOGINFO("\033[95mSawtoothOscillator\033[0m %s%s", o->data->sawtooth->name, dynamicStar);
                     break;
                 case SQUARE:
-                    LOGINFO("\033[95mSquareOscillator\033[0m %s", o->data->square->name);
+                    LOGINFO("\033[95mSquareOscillator\033[0m %s%s", o->data->square->name, dynamicStar);
                     break;
                 case TRIANGLE:
-                    LOGINFO("\033[95mTriangleOscillator\033[0m %s", o->data->triangle->name);
+                    LOGINFO("\033[95mTriangleOscillator\033[0m %s%s", o->data->triangle->name, dynamicStar);
                     break;
                 case RANDOM_OSC_TYPE:
-                    LOGINFO("\033[95mRandomOscillator\033[0m %s", o->data->random->name);
+                    LOGINFO("\033[95mRandomOscillator\033[0m %s%s", o->data->random->name, dynamicStar);
                     break;
                 case TERRAIN:
                     break;
@@ -167,4 +174,17 @@ float randomFloat(float min, float max) {
 int randomInt(int min, int max) {
     srand((unsigned) time(NULL));
     return min + rand() % (max - min + 1);
+}
+
+int containsIdentifier(Token *tokens, int index) {
+    int i = index;
+
+    while (tokens[i].tt != TOKEN_COMMA && tokens[i].tt != TOKEN_PARANTHESISRIGHT) {
+        if (tokens[i].tt == TOKEN_IDENTIFIER) {
+            LOGINFO("Found identifier %s", tokens[i].value);
+            return 1;
+        }
+        i += 1;
+    }
+    return 0;
 }
