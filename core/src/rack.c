@@ -183,40 +183,63 @@ void updateSampleSources(Rack *rack) {
             Oscillator *osc = (Oscillator *) ss->sampleSource;
             int ti = ss->argumentIndex;
 
-            float freq = 0;
-            if (ti > 0) {
-                freq = l3_expression(rack->interpreter, &ti);
+            if (ti > 0 && ss->dynamicArguments == 1) {
+                float freq = l3_expression(rack->interpreter, &ti);
+                switch (osc->type) {
+                    case SINE: {
+                        SineOscillator* so = osc->data->sine;
+                        so->frequency = freq;
+                        break;
+                    }
+                    case SAWTOOTH: {
+                        SawtoothOscillator* wo = osc->data->sawtooth;
+                        //LOGDEBUG("new frequency %f", wo->frequency);
+                        wo->frequency = freq;
+                        break;
+                    }
+                    case SQUARE: {
+                        SquareOscillator* qo = osc->data->square;
+                        qo->frequency = freq; 
+                        break;
+                    }
+                    case WAVETABLE: {
+                        WavetableOscillator* ao = osc->data->wavetable;
+                        ao->frequency = freq;
+                        break;
+                    }
+                    case TRIANGLE: {
+                        TriangleOscillator* to = osc->data->triangle;
+                        to->frequency = freq;
+                        break;
+                    }
+                    default:
+                        break;
+                }
             }
             
             //LOGDEBUG("SampleSource id: %d Calculated new frequency: %f", i, freq);
             switch (osc->type) {
                 case SINE: {
                     SineOscillator* so = osc->data->sine;
-                    so->frequency = freq;
                     tickSineOscillator(so);
                     break;
                 }
                 case SAWTOOTH: {
                     SawtoothOscillator* wo = osc->data->sawtooth;
                     //LOGDEBUG("new frequency %f", wo->frequency);
-                    wo->frequency = freq;
                     tickSawtoothOscillator(wo);
                     break;
                 }
                 case SQUARE: {
                     SquareOscillator* qo = osc->data->square;
-                    qo->frequency = freq; 
                     tickSquareOscillator(qo);
                     break;
                 }
                 case WAVETABLE: {
-                    WavetableOscillator* ao = osc->data->wavetable;
-                    ao->frequency = freq;
                     break;
                 }
                 case TRIANGLE: {
                     TriangleOscillator* to = osc->data->triangle;
-                    to->frequency = freq;
                     tickTriangleOscillator(to);
                     break;
                 }
