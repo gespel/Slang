@@ -1,6 +1,6 @@
 #include "modules/filters/include/filter.h"
-#include "filters/include/filter_types.h"
-#include "filters/include/lowpassfilter.h"
+#include "modules/filters/include/filter_types.h"
+#include "modules/filters/include/lowpassfilter.h"
 #include "stdlib.h"
 
 Filter *createFilter(void* filter, FilterType type) {

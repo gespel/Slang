@@ -29,13 +29,13 @@ float** loadTerrainByName(char* terrainName) {
     char path[512];
     snprintf(path, 512, "%s/%s.sterrain", TERRAIN_FILE_PATH, terrainName);
 
-    FILE *fp = fopen(path, "r");
+    /*FILE *fp = fopen(path, "r");
     if (!fp) { 
         perror("fopen"); 
         return NULL; 
-    }
+    }*/
 
-    while ((read = getline(&line, &len, fp)) != -1) {
+    /*while ((read = getline(&line, &len, fp)) != -1) {
         printf("Retrieved line of length %zu:\n", read);
         //printf("%s", line);
         char* pch;
@@ -44,10 +44,10 @@ float** loadTerrainByName(char* terrainName) {
             printf("%s\n", pch);
             pch = strtok(NULL, " ,;");
         }
-    }
+    }*/
 
     free(line);
-    fclose(fp);
+    //fclose(fp);
     return out;
 #endif
 }

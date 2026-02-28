@@ -57,13 +57,13 @@ float* loadWavetableByName(char* name) {
     char path[1024];
     snprintf(path, 1024, "%s/%s.swave", WAVETABLE_FILE_PATH, name);
 
-    FILE *fp = fopen(path, "r");
+    /*FILE *fp = fopen(path, "r");
     if (!fp) { 
         perror("fopen"); 
         return NULL; 
-    }
+    }*/
 
-    while (getline(&line, &len, fp) != -1) {
+    /*while (getline(&line, &len, fp) != -1) {
         // BOM entfernen falls vorhanden
         if ((unsigned char)line[0] == 0xEF) line += 3;
 
@@ -77,10 +77,10 @@ float* loadWavetableByName(char* name) {
         }
 
         out[i++] = (float)val;
-    }
+    }*/
 
     free(line);
-    fclose(fp);
+    //fclose(fp);
     return out;
 #endif
 }
