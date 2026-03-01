@@ -36,4 +36,6 @@ float getSample(Rack* rack);
 
 float normalizeSample(float sample, int numOscillators);
 
+float applySoftClipping(float sample);
+
 #endif

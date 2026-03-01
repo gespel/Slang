@@ -120,6 +120,10 @@ void addOscillator(Rack* rack, Oscillator* input) {
     rack->numOscillators = rack->numOscillators + 1;
 }
 
+float applySoftClipping(float sample) {
+    return 2 / 3.14159 * atan(sample);
+}
+
 int getNumOscillators(Rack* rack) {
     int out = 0;
     for (int i = 0; i < rack->numSampleSources; i++) {
@@ -162,7 +166,9 @@ float getSample(Rack* rack) {
         out = applyReverb(reverb, out);
     }
 
-    return out;
+
+
+    return applySoftClipping(out);
     //return normalizeSample(out, getNumOscillators(rack));
 }
 
