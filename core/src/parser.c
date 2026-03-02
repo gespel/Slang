@@ -308,6 +308,13 @@ void parseExpression(SlangInterpreter* si, int* i) {
 
         parseEnvelopeGenerator(si, i, name);
     }
+    else if (getToken(si, (*i)+1).tt == TOKEN_ASSIGN && getToken(si, (*i)+2).tt == TOKEN_RANDOMSTEPSEQ) {
+        char* name = getToken(si, *i).value;
+        consume(i, getToken(si, *i), TOKEN_IDENTIFIER);
+        consume(i, getToken(si, *i), TOKEN_ASSIGN);
+
+        parseStepSequencer(si, i, name);
+    }
     else if(getToken(si, (*i)+1).tt == TOKEN_ASSIGN) {
         char* name = getToken(si, *i).value;
         consume(i, getToken(si, *i), TOKEN_IDENTIFIER);
@@ -333,40 +340,45 @@ void parseExpression(SlangInterpreter* si, int* i) {
 }
 
 void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
-    consume(i, getToken(si, *i), TOKEN_STEPSEQ);
-    consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
-    int argumentIndex = *i;
-    float *speed = malloc(sizeof(float));
-    float *sequence = malloc(sizeof(float) * 128);
-    int sequence_len = 0;
-
-    consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETLEFT);
-    while (getToken(si, *i).tt != TOKEN_SQUAREBRACKETRIGHT) {
-        float value = atof(getToken(si, *i).value);
-        consume(i, getToken(si, *i), TOKEN_NUMBER);
-        sequence[sequence_len] = value;
-        sequence_len++;
-
-        if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
-            break;
-        }
-        consume(i, getToken(si, *i), TOKEN_COMMA);
+    if (getToken(si, *i).tt == TOKEN_RANDOMSTEPSEQ) {
+        consume(i, getToken(si, *i), TOKEN_RANDOMSTEPSEQ);
     }
-    consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETRIGHT);
-    consume(i, getToken(si, *i), TOKEN_COMMA);
+    else {
+        consume(i, getToken(si, *i), TOKEN_STEPSEQ);
+        consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
+        int argumentIndex = *i;
+        float *speed = malloc(sizeof(float));
+        float *sequence = malloc(sizeof(float) * 128);
+        int sequence_len = 0;
 
-    speed[0] = atof(getToken(si, *i).value);
-    consume(i, getToken(si, *i), TOKEN_NUMBER);
-    consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETLEFT);
+        while (getToken(si, *i).tt != TOKEN_SQUAREBRACKETRIGHT) {
+            float value = atof(getToken(si, *i).value);
+            consume(i, getToken(si, *i), TOKEN_NUMBER);
+            sequence[sequence_len] = value;
+            sequence_len++;
 
-    int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+            if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
+                break;
+            }
+            consume(i, getToken(si, *i), TOKEN_COMMA);
+        }
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETRIGHT);
+        consume(i, getToken(si, *i), TOKEN_COMMA);
 
-    StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
-    SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex, containsIdent);
-    addSampleSource(si->main_rack, sampleSource);
+        speed[0] = atof(getToken(si, *i).value);
+        consume(i, getToken(si, *i), TOKEN_NUMBER);
+        consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
+        StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
+        SampleSource *sampleSource = createSampleSource(name, step, STEPSEQUENCER, argumentIndex, containsIdent);
+        addSampleSource(si->main_rack, sampleSource);
 
 
-    LOGINFO("Creating a STEPSEQUENCER with speed %f and name %s", speed[0], name);
+        LOGINFO("Creating a STEPSEQUENCER with speed %f and name %s", speed[0], name);
+    }    
 }
 
 void parseIf(SlangInterpreter* si, int* i) {

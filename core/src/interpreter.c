@@ -425,6 +425,13 @@ int isOscillator(Token token) {
     return 0;
 }
 
+int isStepSequencer(Token token) {
+    if (token.tt == TOKEN_STEPSEQ || token.tt == TOKEN_RANDOMSTEPSEQ) {
+        return 1;
+    }
+    return 0;
+}
+
 int isInput(Token token) {
     if (token.tt == TOKEN_INPUTA || token.tt == TOKEN_INPUTB || token.tt == TOKEN_INPUTC || token.tt == TOKEN_INPUTD) {
         return 1;

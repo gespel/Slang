@@ -67,6 +67,8 @@ char* getInterpreterStatusString(SlangInterpreter* si);
 
 int isOscillator(Token token);
 
+int isStepSequencer(Token token);
+
 void setInput(SlangInterpreter* si, int nr, float *value);
 
 int checkLogic(SlangInterpreter* si, int* i);

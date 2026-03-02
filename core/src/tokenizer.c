@@ -247,6 +247,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "stepsequencer") == 0) {
                 out[x].tt = TOKEN_STEPSEQ;
             }
+            else if(strcmp(value, "randomstepsequencer") == 0) {
+                out[x].tt = TOKEN_RANDOMSTEPSEQ;
+            }
             else if(strcmp(value, "random") == 0) {
                 out[x].tt = TOKEN_RANDOM;
             }
@@ -391,6 +394,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case TOKEN_SPRINGREVERB:
         out = "SpringReverb";
+        break;
+    case TOKEN_RANDOMSTEPSEQ:
+        out = "RandomStepSequencer";
         break;
     default:
         out = "Unknown";
