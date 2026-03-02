@@ -263,6 +263,10 @@ void updateSampleSources(Rack *rack) {
             StepSequencer *seq = (StepSequencer *) ss->sampleSource;
             tickStepSequencer(seq);
         }
+        else if (ss->type == RANDOMSTEPSEQUENCER) {
+            RandomStepSequencer *seq = (RandomStepSequencer *) ss->sampleSource;
+            tickRandomStepSequencer(seq);
+        }
         else if (ss->type == ENVELOPEGENERATOR) {
             EnvelopeGenerator* env = (EnvelopeGenerator*)ss->sampleSource;
             LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)env->envelope;

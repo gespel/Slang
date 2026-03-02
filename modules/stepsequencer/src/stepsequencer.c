@@ -77,7 +77,7 @@ void tickRandomStepSequencer(RandomStepSequencer* seq) {
     seq->stepIndex += 1;
     seq->sample = seq->steps[seq->index];
     if (seq->sample!= 0.0f && switched == 1) {
-        seq->trigger = 1;
+        seq->trigger = pseudoRandom(seq->probabilities[seq->index]);
     }
 }
 

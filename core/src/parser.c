@@ -342,6 +342,52 @@ void parseExpression(SlangInterpreter* si, int* i) {
 void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
     if (getToken(si, *i).tt == TOKEN_RANDOMSTEPSEQ) {
         consume(i, getToken(si, *i), TOKEN_RANDOMSTEPSEQ);
+        consume(i, getToken(si, *i), TOKEN_PARANTHESISLEFT);
+        int argumentIndex = *i;
+        float *speed = malloc(sizeof(float));
+        float *sequence = malloc(sizeof(float) * 128);
+        float *probabilities = malloc(sizeof(float) * 128);
+        int sequence_len = 0;
+
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETLEFT);
+        while (getToken(si, *i).tt != TOKEN_SQUAREBRACKETRIGHT) {
+            float value = atof(getToken(si, *i).value);
+            consume(i, getToken(si, *i), TOKEN_NUMBER);
+            sequence[sequence_len] = value;
+            sequence_len++;
+
+            if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
+                break;
+            }
+            consume(i, getToken(si, *i), TOKEN_COMMA);
+        }
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETRIGHT);
+        consume(i, getToken(si, *i), TOKEN_COMMA);
+
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETLEFT);
+        while (getToken(si, *i).tt != TOKEN_SQUAREBRACKETRIGHT) {
+            float value = atof(getToken(si, *i).value);
+            consume(i, getToken(si, *i), TOKEN_NUMBER);
+            probabilities[sequence_len] = value;
+            sequence_len++;
+
+            if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
+                break;
+            }
+            consume(i, getToken(si, *i), TOKEN_COMMA);
+        }
+        consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETRIGHT);
+        consume(i, getToken(si, *i), TOKEN_COMMA);
+
+        speed[0] = atof(getToken(si, *i).value);
+        consume(i, getToken(si, *i), TOKEN_NUMBER);
+        consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+
+        int containsIdent = containsIdentifier(si->tokens, argumentIndex);
+
+        RandomStepSequencer *step = createRandomStepSequencer(si->sampleRate, speed[0], sequence, probabilities, sequence_len);
+        SampleSource *sampleSource = createSampleSource(name, step, RANDOMSTEPSEQUENCER, argumentIndex, containsIdent);
+        addSampleSource(si->main_rack, sampleSource);
     }
     else {
         consume(i, getToken(si, *i), TOKEN_STEPSEQ);

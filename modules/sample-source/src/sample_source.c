@@ -122,6 +122,11 @@ float getSampleSourceSample(SampleSource *ss) {
         //printf("%f\n", lin->sample);
         return lin->sample;
     }
+    else if(ss->type == RANDOMSTEPSEQUENCER) {
+        RandomStepSequencer* seq = (RandomStepSequencer*)ss->sampleSource;
+        getRandomStepSequencerSample(seq);
+        return seq->sample;
+    }
 
     for (int i = 0; i < ss->numModifiers; i++) {
         Modifier *modifier = ss->modifier[i];
