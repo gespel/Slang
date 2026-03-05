@@ -369,7 +369,6 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
             float value = atof(getToken(si, *i).value);
             consume(i, getToken(si, *i), TOKEN_NUMBER);
             probabilities[sequence_len] = value;
-            sequence_len++;
 
             if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
                 break;
@@ -388,6 +387,8 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
         RandomStepSequencer *step = createRandomStepSequencer(si->sampleRate, speed[0], sequence, probabilities, sequence_len);
         SampleSource *sampleSource = createSampleSource(name, step, RANDOMSTEPSEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
+
+        LOGINFO("Creating a RANDOMSTEPSEQUENCER with speed %f and name %s", speed[0], name);
     }
     else {
         consume(i, getToken(si, *i), TOKEN_STEPSEQ);
