@@ -6,6 +6,11 @@
 #define STEPSEQUENCER_H
 #include "stepsequencer_types.h"
 
+Sequencer *createSequencer(void *sequencer, StepSequencerType type);
+void tickSequencer(Sequencer *sequencer);
+float getSequencerSample(Sequencer *sequencer);
+int getTrigger(Sequencer *sequencer);
+
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps);
 RandomStepSequencer *createRandomStepSequencer(int sampleRate, int speed, float *steps, float *probabilities, int numSteps);
 

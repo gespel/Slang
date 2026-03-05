@@ -24,7 +24,7 @@ void addOscillator(Rack* rack, Oscillator* input);
 
 int getNumOscillators(Rack* rack);
 
-void addStepSequencer(Rack* rack, StepSequencer* input);
+void addStepSequencer(Rack* rack, Sequencer* input);
 
 void addSampleSource(Rack* rack, SampleSource* input);
 

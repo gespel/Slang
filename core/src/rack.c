@@ -29,8 +29,8 @@ Rack* createRack(int* sampleRate, int* bufferSize) {
     memset(rack->oscillators, 0, sizeof(Oscillator*) * 128);
     rack->numOscillators = 0;
 
-    rack->stepSequencers = malloc(sizeof(StepSequencer*) * 128);
-    memset(rack->stepSequencers, 0, sizeof(StepSequencer*) * 128);
+    rack->stepSequencers = malloc(sizeof(Sequencer*) * 128);
+    memset(rack->stepSequencers, 0, sizeof(Sequencer*) * 128);
     rack->numStepSequencers = 0;
 
     rack->sampleSources = malloc(sizeof(SampleSource*) * 128);
@@ -259,19 +259,14 @@ void updateSampleSources(Rack *rack) {
                 }
             }
         }
-        else if (ss->type == STEPSEQUENCER) {
-            StepSequencer *seq = (StepSequencer *) ss->sampleSource;
-            tickStepSequencer(seq);
-        }
-        else if (ss->type == RANDOMSTEPSEQUENCER) {
-            RandomStepSequencer *seq = (RandomStepSequencer *) ss->sampleSource;
-            tickRandomStepSequencer(seq);
+        else if (ss->type == SEQUENCER) {
+            tickSequencer((Sequencer*)ss->sampleSource);
         }
         else if (ss->type == ENVELOPEGENERATOR) {
             EnvelopeGenerator* env = (EnvelopeGenerator*)ss->sampleSource;
             LinearEnvelopeGenerator* lin = (LinearEnvelopeGenerator*)env->envelope;
-            StepSequencer* step = env->triggerSequencer;
-            if (step->trigger == 1) {
+            Sequencer* step = env->triggerSequencer;
+            if (getTrigger(step) == 1) {
                 triggerLinearEnvelopeGenerator(lin);
             }
             tickLinearEnvelopeGenerator(lin);

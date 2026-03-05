@@ -7,9 +7,8 @@
 
 typedef enum SampleSourceType {
     OSCILLATOR,
-    STEPSEQUENCER,
+    SEQUENCER,
     ENVELOPEGENERATOR,
-    RANDOMSTEPSEQUENCER,
 } SampleSourceType;
 
 typedef struct SampleSource {

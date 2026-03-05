@@ -7,6 +7,35 @@
 #include <strings.h>
 #include <stdio.h>
 
+Sequencer *createSequencer(void *sequencer, StepSequencerType type) {
+    Sequencer *s = malloc(sizeof(Sequencer));
+    s->type = type;
+    s->sequencer = sequencer;
+    return s;
+}
+void tickSequencer(Sequencer *sequencer) {
+    switch (sequencer->type) {
+        case STEPSEQUENCER:
+            tickStepSequencer((StepSequencer*)sequencer->sequencer);
+            break;
+        case RANDOMSTEPSEQUENCER:
+            tickRandomStepSequencer((RandomStepSequencer*)sequencer->sequencer);
+            break;
+        default:
+            break;
+    }
+}
+float getSequencerSample(Sequencer *sequencer) {
+    switch (sequencer->type) {
+        case STEPSEQUENCER:
+            return getStepSequencerSample((StepSequencer*)sequencer->sequencer);
+        case RANDOMSTEPSEQUENCER:
+            return getRandomStepSequencerSample((RandomStepSequencer*)sequencer->sequencer);
+        default:
+            return 0.f;
+    }
+}
+
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps) {
     StepSequencer *seq = malloc(sizeof(StepSequencer));
     seq->sampleRate = sampleRate;
@@ -88,10 +117,21 @@ float getRandomStepSequencerSample(RandomStepSequencer *seq) {
     return seq->steps[seq->index];
 }
 
+int getTrigger(Sequencer *sequencer) {
+    switch (sequencer->type) {
+        case STEPSEQUENCER:
+            return ((StepSequencer*)sequencer->sequencer)->trigger;
+        case RANDOMSTEPSEQUENCER:
+            return ((RandomStepSequencer*)sequencer->sequencer)->trigger;
+        default:
+            return 0;
+    }
+}
+
 int pseudoRandom(float probability) {
     float r = (float)rand() / (float)RAND_MAX;
     printf("Random value: %f, probability: %f\n", r, probability);
-    if (r < probability) {
+    if (r > probability) {
         printf("Triggering step!\n");
         return 1;
     }

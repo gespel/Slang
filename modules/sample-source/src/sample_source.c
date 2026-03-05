@@ -111,10 +111,19 @@ float getSampleSourceSample(SampleSource *ss) {
         out += sample;
     }
     else if (ss->type == STEPSEQUENCER) {
-        StepSequencer *seq = (StepSequencer *) ss->sampleSource;
-        getStepSequencerSample(seq);
+        Sequencer *seq = (Sequencer *) ss->sampleSource;
+        if (seq->type == STEPSEQUENCER) {
+            StepSequencer *s = (StepSequencer *) seq->sequencer;
+            getStepSequencerSample(s);
+            return s->sample;
+        }
+        else if (seq->type == RANDOMSTEPSEQUENCER) {
+            RandomStepSequencer *s = (RandomStepSequencer *) seq->sequencer;
+            getRandomStepSequencerSample(s);
+            return s->sample;
+        }
         //printf("%f\n", seq->sample);
-        return seq->sample;
+
     }
     else if (ss->type == ENVELOPEGENERATOR) {
         EnvelopeGenerator* env = (EnvelopeGenerator*)ss->sampleSource;
@@ -122,12 +131,6 @@ float getSampleSourceSample(SampleSource *ss) {
         //printf("%f\n", lin->sample);
         return lin->sample;
     }
-    else if(ss->type == RANDOMSTEPSEQUENCER) {
-        RandomStepSequencer* seq = (RandomStepSequencer*)ss->sampleSource;
-        getRandomStepSequencerSample(seq);
-        return seq->sample;
-    }
-
     for (int i = 0; i < ss->numModifiers; i++) {
         Modifier *modifier = ss->modifier[i];
         out = applyModifier(modifier, out);

@@ -1,5 +1,16 @@
 #ifndef STEPSEQUENCER_TYPES_H
 #define STEPSEQUENCER_TYPES_H
+
+typedef enum StepSequencerType {
+    STEPSEQUENCER,
+    RANDOMSTEPSEQUENCER,
+} StepSequencerType;
+
+typedef struct Sequencer {
+    StepSequencerType type;
+    void *sequencer;
+} Sequencer;
+
 typedef struct StepSequencer {
     int sampleRate;
     int speed;

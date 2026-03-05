@@ -88,7 +88,7 @@ typedef struct Rack {
     int* bufferSize;
     Oscillator** oscillators;
     int numOscillators;
-    StepSequencer** stepSequencers;
+    Sequencer** stepSequencers;
     int numStepSequencers;
     SampleSource **sampleSources;
     int numSampleSources;
