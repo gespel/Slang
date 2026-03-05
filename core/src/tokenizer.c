@@ -262,6 +262,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "springreverb") == 0) {
                 out[x].tt = TOKEN_SPRINGREVERB;
             }
+            else if(strcmp(value, "volume") == 0) {
+                out[x].tt = TOKEN_VOLUME;
+            }
         }
     } 
 }
@@ -379,6 +382,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case TOKEN_INPUTD:
         out = "InputD";
+        break;
+    case TOKEN_VOLUME:
+        out = "Volume";
         break;
     case TOKEN_NOTEMARKER:
         out = "Notemarker";
