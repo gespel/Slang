@@ -87,10 +87,13 @@ float getRandomStepSequencerSample(RandomStepSequencer *seq) {
 
 int pseudoRandom(float probability) {
     float r = (float)rand() / (float)RAND_MAX;
+    printf("Random value: %f, probability: %f\n", r, probability);
     if (r < probability) {
+        printf("Triggering step!\n");
         return 1;
     }
     else {
+        printf("Not triggering step.\n");
         return 0;
     }
 }
