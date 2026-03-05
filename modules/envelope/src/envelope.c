@@ -2,7 +2,7 @@
 #include "stdlib.h"
 #include "modules/stepsequencer/include/stepsequencer_types.h"
 
-EnvelopeGenerator* createEnvelopeGenerator(void* envelopeGenerator, EnvelopeType type, StepSequencer* triggerSequencer) {
+EnvelopeGenerator* createEnvelopeGenerator(void* envelopeGenerator, EnvelopeType type, Sequencer* triggerSequencer) {
     EnvelopeGenerator* out = malloc(sizeof(EnvelopeGenerator));
 
     out->envelope = envelopeGenerator;

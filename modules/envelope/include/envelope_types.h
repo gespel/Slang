@@ -7,7 +7,7 @@ typedef enum EnvelopeType {
 typedef struct EnvelopeGenerator {
     void* envelope;
     EnvelopeType type;
-    StepSequencer *triggerSequencer;
+    Sequencer *triggerSequencer;
 } EnvelopeGenerator;
 
 typedef struct LinearEnvelopeGenerator {
