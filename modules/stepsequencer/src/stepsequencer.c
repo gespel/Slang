@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <strings.h>
+#include <stdio.h>
 
 StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps) {
     StepSequencer *seq = malloc(sizeof(StepSequencer));
@@ -77,7 +78,9 @@ void tickRandomStepSequencer(RandomStepSequencer* seq) {
     seq->stepIndex += 1;
     seq->sample = seq->steps[seq->index];
     if (seq->sample!= 0.0f && switched == 1) {
-        seq->trigger = pseudoRandom(seq->probabilities[seq->index]);
+        int pr = pseudoRandom(seq->probabilities[seq->index]);
+        printf("Step %d, probability: %f, random value: %d\n", seq->index, seq->probabilities[seq->index], pr);
+        seq->trigger = pr;
     }
 }
 
