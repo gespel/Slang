@@ -370,6 +370,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
             float value = atof(getToken(si, *i).value);
             consume(i, getToken(si, *i), TOKEN_NUMBER);
             probabilities[probIndex] = value;
+            LOGINFO("Parsed probability %f", probabilities[probIndex]);
             probIndex++;
             if (getToken(si, *i).tt == TOKEN_SQUAREBRACKETRIGHT) {
                 break;
