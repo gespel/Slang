@@ -61,11 +61,11 @@ float getSampleSourceOutputSample(SampleSource *ss) {
                 break;
         }
     }
-    else if (ss->type == STEPSEQUENCER) {
-        StepSequencer *seq = (StepSequencer *) ss->sampleSource;
-        getStepSequencerSample(seq);
+    else if (ss->type == SEQUENCER) {
+        Sequencer *seq = (Sequencer *) ss->sampleSource;
+        float sample = getSequencerSample(seq);
         //printf("%f\n", seq->sample);
-        return seq->sample;
+        return sample;
     }
 
     for (int i = 0; i < ss->numModifiers; i++) {
@@ -110,7 +110,7 @@ float getSampleSourceSample(SampleSource *ss) {
         }
         out += sample;
     }
-    else if (ss->type == STEPSEQUENCER) {
+    else if (ss->type == SEQUENCER) {
         Sequencer *seq = (Sequencer *) ss->sampleSource;
         if (seq->type == STEPSEQUENCER) {
             StepSequencer *s = (StepSequencer *) seq->sequencer;
@@ -142,6 +142,9 @@ float getSampleSourceSample(SampleSource *ss) {
 void printSampleSourceType(SampleSource *ss) {
     if (ss->type == STEPSEQUENCER) {
         LOGDEBUG("STEPSEQUENCER");
+    }
+    else if (ss->type == SEQUENCER) {
+        LOGDEBUG("SEQUENCER");
     }
     else if (ss->type == OSCILLATOR) {
         LOGDEBUG("OSCILLATOR");

@@ -145,7 +145,7 @@ float getSample(Rack* rack) {
     for (int i = 0; i < rack->numSampleSources; i++) {
         sample = getSampleSourceOutputSample(rack->sampleSources[i]);
         //printSampleSourceType(rack->sampleSources[i]);
-        //LOGDEBUG("sample: %f", sample);
+        LOGDEBUG("sample: %f", sample);
         if (rack->sampleSources[i]->type != STEPSEQUENCER) {
             out += sample;
         }
@@ -199,7 +199,7 @@ void updateSampleSources(Rack *rack) {
                     }
                     case SAWTOOTH: {
                         SawtoothOscillator* wo = osc->data->sawtooth;
-                        //LOGDEBUG("new frequency %f", wo->frequency);
+                        LOGDEBUG("new frequency %f", wo->frequency);
                         wo->frequency = freq;
                         break;
                     }

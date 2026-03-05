@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
 
 	if (( pTmp = getenv( "SLANG_LIVE_RENDER" )) != NULL ) {
   		if (pTmp[0] == '1') {
+            printf("SLANG_LIVE_RENDER is set to %s. Starting live rendering loop after interpretation.\n", pTmp);
 			live_render_active = 1;
 		}
 
