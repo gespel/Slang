@@ -18,8 +18,8 @@ float** loadTerrainByName(char* terrainName) {
 
     setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
-    size_t read;
-    size_t len;
+    //size_t read;
+    //size_t len;
     float** out = malloc(sizeof(float*) * 128);
     
     for(int i = 0; i < x; i++) {

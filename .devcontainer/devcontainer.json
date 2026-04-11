@@ -4,5 +4,12 @@
 	"build": {
 		"context": "..",
 		"dockerfile": "../Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"llvm-vs-code-extensions.vscode-clangd"
+			]
+		}
 	}
 }

@@ -50,8 +50,8 @@ float* loadWavetableByName(char* name) {
 #ifndef SLANGONIC
     setlocale(LC_NUMERIC, "C");  // <-- das ist der Schlüssel
     char *line = NULL;
-    size_t len = 0;
-    int i = 0;
+    //size_t len = 0;
+    //int i = 0;
     float* out = malloc(sizeof(float) * 4800);
 
     char path[1024];

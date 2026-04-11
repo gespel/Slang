@@ -5,7 +5,7 @@ RUN pacman -Sy --noconfirm \
       cmake \
       make \
       automake \
-      gcc \
+      clang \
       git \
 #      linux-headers \
       bash \
