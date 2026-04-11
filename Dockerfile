@@ -9,19 +9,10 @@ RUN pacman -Sy --noconfirm \
       git \
 #      linux-headers \
       bash \
-      meson 
+      meson zsh
 
-# Arbeitsverzeichnis setzen
-WORKDIR /app
+RUN chsh -s /bin/zsh
 
-# Projekt kopieren
-COPY . .
-
-# Build
-RUN meson setup build
-RUN ninja -C build
-
-# Testskript ausführbar machen
-RUN chmod +x test.sh
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 ENTRYPOINT ["sleep", "infinity"]

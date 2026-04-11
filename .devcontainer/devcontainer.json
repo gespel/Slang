@@ -1,0 +1,8 @@
+
+{
+	"name": "SlangDev",
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	}
+}
