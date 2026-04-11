@@ -140,10 +140,7 @@ float getSampleSourceSample(SampleSource *ss) {
 }
 
 void printSampleSourceType(SampleSource *ss) {
-    if (ss->type == STEPSEQUENCER) {
-        LOGDEBUG("STEPSEQUENCER");
-    }
-    else if (ss->type == SEQUENCER) {
+    if (ss->type == SEQUENCER) {
         LOGDEBUG("SEQUENCER");
     }
     else if (ss->type == OSCILLATOR) {
