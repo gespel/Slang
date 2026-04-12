@@ -78,6 +78,7 @@ float getSampleSourceOutputSample(SampleSource *ss) {
 }
 
 float getSampleSourceSample(SampleSource *ss) {
+    LOGDEBUG("Get SampleSource called!");
     float out = 0;
     float sample = 0;
     if (ss->type == OSCILLATOR) {
