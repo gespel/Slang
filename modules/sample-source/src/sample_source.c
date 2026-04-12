@@ -24,6 +24,7 @@ float getSampleSourceOutputSample(SampleSource *ss) {
         switch (osc->type) {
             case SINE:
                 sample = getSineSample(osc->data->sine);
+                LOGDEBUG("SineSample: %f", sample);
                 if (osc->data->sine->isOutput == 1) {
                     out += sample;
                 }

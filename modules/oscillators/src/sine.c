@@ -17,7 +17,7 @@ void tickSineOscillator(SineOscillator *oscillator) {
 float getSineSample(SineOscillator* oscillator) {
     //printf("freq: %f freqMul: %f\n", oscillator->frequency[0], oscillator->frequencyMultiplier);
     if (oscillator->isCV == 1) {
-        oscillator->sample = oscillator->sample + 1.0;
+        oscillator->sample = oscillator->sample + 1.0 * oscillator->volume;
     }
     if (oscillator->isOutput == 1) {
         return oscillator->sample * oscillator->volume;
