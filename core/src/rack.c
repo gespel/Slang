@@ -194,13 +194,11 @@ void updateSampleSources(Rack *rack) {
                 switch (osc->type) {
                     case SINE: {
                         SineOscillator* so = osc->data->sine;
-                        LOGDEBUG("new frequency %f", so->frequency);
                         so->frequency = freq;
                         break;
                     }
                     case SAWTOOTH: {
                         SawtoothOscillator* wo = osc->data->sawtooth;
-                        //LOGDEBUG("new frequency %f", wo->frequency);
                         wo->frequency = freq;
                         break;
                     }
@@ -228,7 +226,6 @@ void updateSampleSources(Rack *rack) {
             switch (osc->type) {
                 case SINE: {
                     SineOscillator* so = osc->data->sine;
-                    LOGINFO("Ticking SineOscillator %s! Sample: %f", so->name, so->sample);
                     tickSineOscillator(so);
                     break;
                 }

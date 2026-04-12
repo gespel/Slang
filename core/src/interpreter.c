@@ -286,14 +286,12 @@ float terminal(SlangInterpreter* si, int* i) {
                 SampleSource* ss = getSampleSource(si->main_rack, si->tokens[*i].value);
                 out = getSampleSourceSample(ss);
                 consume(i, si->tokens[*i], TOKEN_IDENTIFIER);
-                //LOGDEBUG("Retrieved sample from oscillator: %f", out);
             }
             else {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
                     LOGERROR("%s Variable is unkown!", si->tokens[*i].value);
                     return 0;
-                    //exit(-1);
                 }
                 out = tvar->value;
                 inc(i);

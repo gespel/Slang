@@ -24,7 +24,6 @@ float getSampleSourceOutputSample(SampleSource *ss) {
         switch (osc->type) {
             case SINE:
                 sample = getSineSample(osc->data->sine);
-                LOGDEBUG("SineSample: %f", sample);
                 if (osc->data->sine->isOutput == 1) {
                     out += sample;
                 }
@@ -78,7 +77,6 @@ float getSampleSourceOutputSample(SampleSource *ss) {
 }
 
 float getSampleSourceSample(SampleSource *ss) {
-    LOGDEBUG("Get SampleSource called!");
     float out = 0;
     float sample = 0;
     if (ss->type == OSCILLATOR) {
@@ -86,7 +84,6 @@ float getSampleSourceSample(SampleSource *ss) {
         switch (osc->type) {
             case SINE:
                 sample = getSineSample(osc->data->sine);
-                LOGINFO("Terminal Sample: %f", sample);
                 break;
             case SAWTOOTH:
                 sample = getSawtoothSample(osc->data->sawtooth);
@@ -108,6 +105,7 @@ float getSampleSourceSample(SampleSource *ss) {
                 sample = getRandomSample(osc->data->random);
                 break;
             default:
+                LOGERROR("Unkown oscillator type!");
                 break;
         }
         out += sample;
