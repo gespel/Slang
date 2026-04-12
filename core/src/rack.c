@@ -194,6 +194,7 @@ void updateSampleSources(Rack *rack) {
                 switch (osc->type) {
                     case SINE: {
                         SineOscillator* so = osc->data->sine;
+                        LOGDEBUG("new frequency %f", so->frequency);
                         so->frequency = freq;
                         break;
                     }
