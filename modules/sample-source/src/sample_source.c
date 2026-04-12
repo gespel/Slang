@@ -85,7 +85,7 @@ float getSampleSourceSample(SampleSource *ss) {
         switch (osc->type) {
             case SINE:
                 sample = getSineSample(osc->data->sine);
-
+                LOGINFO("Terminal Sample: %f", sample);
                 break;
             case SAWTOOTH:
                 sample = getSawtoothSample(osc->data->sawtooth);
