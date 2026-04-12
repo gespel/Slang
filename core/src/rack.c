@@ -227,6 +227,7 @@ void updateSampleSources(Rack *rack) {
             switch (osc->type) {
                 case SINE: {
                     SineOscillator* so = osc->data->sine;
+                    LOGINFO("Ticking SineOscillator %s! Sample: %f", so->name, so->sample);
                     tickSineOscillator(so);
                     break;
                 }
