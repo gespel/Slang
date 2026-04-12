@@ -2,7 +2,7 @@
 // Created by sten on 16.07.25.
 //
 #include "modules/oscillators/include/sine.h"
-#include "stdlib.h"
+#include "stdio.h"
 
 void tickSineOscillator(SineOscillator *oscillator) {
     float freq = oscillator->frequency;
