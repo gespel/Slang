@@ -19,9 +19,12 @@ void tickRandomStepSequencer(RandomStepSequencer* seq) {
     seq->stepIndex += 1;
     seq->sample = seq->steps[seq->index];
     if (seq->sample!= 0.0f && switched == 1) {
+        printf("======================\n");
         int pr = pseudoRandom(seq->probabilities[seq->index]);
         printf("Step %d, probability: %f, random value: %d\n", seq->index, seq->probabilities[seq->index], pr);
         seq->trigger = pr;
+        printf("======================\n");
+
     }
 }
 
