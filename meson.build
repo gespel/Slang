@@ -46,10 +46,12 @@ data_headers = [
 ]
 step_sources = [
     'modules/stepsequencer/src/stepsequencer.c',
+    'modules/stepsequencer/src/randomstepsequencer.c',
 ]
 step_headers = [
     'modules/stepsequencer/include/stepsequencer.h',
     'modules/stepsequencer/include/stepsequencer_types.h',
+    'modules/stepsequencer/include/randomstepsequencer.h',
 ]
 sample_source_sources = [   
     'modules/sample-source/src/sample_source.c',

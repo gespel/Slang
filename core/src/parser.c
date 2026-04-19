@@ -17,6 +17,7 @@
 #include "modules/oscillators/include/random.h"
 #include "modules/reverb/include/springreverb.h"
 #include "modules/reverb/include/reverb.h"
+#include "modules/stepsequencer/include/randomstepsequencer.h"
 #include <time.h>
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {

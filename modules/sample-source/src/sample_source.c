@@ -3,6 +3,7 @@
 #include "core/include/tools.h"
 #include "core/include/rack.h"
 #include "modules/envelope/include/envelope_types.h"
+#include "modules/stepsequencer/include/randomstepsequencer.h"
 
 SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceType type, int argumentIndex, int dynamicArguments) {
     SampleSource *out = malloc(sizeof(SampleSource));
