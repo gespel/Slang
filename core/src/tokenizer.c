@@ -256,6 +256,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "randomint") == 0) {
                 out[x].tt = TOKEN_RANDOMINT;
             }
+            else if(strcmp(value, "randomnote") == 0) {
+                out[x].tt = TOKEN_RANDOMNOTE;
+            }
             else if(strcmp(value, "linenvelope") == 0) {
                 out[x].tt = TOKEN_LINENVELOPE;
             }
@@ -403,6 +406,9 @@ char* tokenTypeToString(TokenType input) {
         break;
     case TOKEN_RANDOMSTEPSEQ:
         out = "RandomStepSequencer";
+        break;
+    case TOKEN_RANDOMNOTE:
+        out = "RandomNote";
         break;
     default:
         out = "Unknown";
