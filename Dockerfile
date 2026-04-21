@@ -1,15 +1,15 @@
 FROM archlinux:latest
 
 # Pakete installieren
-RUN pacman -Sy --noconfirm \
+RUN pacman -Sy --noconfirm archlinux-keyring && \
+    pacman -Sy --noconfirm \
       cmake \
       make \
       automake \
       clang \
       git \
-#      linux-headers \
-      bash \
-      meson zsh
+      meson \
+      zsh
 
 RUN chsh -s /bin/zsh
 
