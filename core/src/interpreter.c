@@ -338,6 +338,10 @@ float terminal(SlangInterpreter* si, int* i) {
             int rInt = randomInt(lowerIntBound, upperIntBound);
             out = (float)rInt;
             break;
+        case TOKEN_RANDOMNOTE:
+            consume(i, si->tokens[*i], TOKEN_RANDOMNOTE);
+            out = randomNoteMultiplier();
+            break;
         default:
             LOGERROR("Terminal expected NUMBER or IDENTIFIER got %s", tokenTypeToString(si->tokens[*i].tt));
             return 0;

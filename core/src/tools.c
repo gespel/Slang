@@ -176,6 +176,11 @@ int randomInt(int min, int max) {
     return min + rand() % (max - min + 1);
 }
 
+float randomNoteMultiplier() {
+    float randomIndex = 1.0 + (rand() % 12);
+    return pow(2, randomIndex / 12);
+}
+
 int containsIdentifier(Token *tokens, int index) {
     int i = index;
 

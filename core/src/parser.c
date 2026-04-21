@@ -352,8 +352,9 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
 
         consume(i, getToken(si, *i), TOKEN_SQUAREBRACKETLEFT);
         while (getToken(si, *i).tt != TOKEN_SQUAREBRACKETRIGHT) {
-            float value = atof(getToken(si, *i).value);
-            consume(i, getToken(si, *i), TOKEN_NUMBER);
+            float value = l3_expression(si, i);
+            //float value = atof(getToken(si, *i).value);
+            //consume(i, getToken(si, *i), TOKEN_NUMBER);
             sequence[sequence_len] = value;
             sequence_len++;
 

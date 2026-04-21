@@ -6,7 +6,7 @@
 #include <string.h>
 #ifndef SLANG_TOKENIZER_H
 #define SLANG_TOKENIZER_H
-#include "core_types.h"
+#include "core/include/core_types.h"
 
 Token* tokenize(char* input, int* length);
 
