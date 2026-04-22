@@ -340,7 +340,14 @@ float terminal(SlangInterpreter* si, int* i) {
             break;
         case TOKEN_RANDOMNOTE:
             consume(i, si->tokens[*i], TOKEN_RANDOMNOTE);
-            out = randomNoteMultiplier();
+            consume(i, si->tokens[*i], TOKEN_PARANTHESISLEFT);
+            int lowerNoteBound = atoi(si->tokens[*i].value);
+            consume(i, si->tokens[*i], TOKEN_NUMBER);
+            consume(i, si->tokens[*i], TOKEN_COMMA);
+            int upperNoteBound = atoi(si->tokens[*i].value);
+            consume(i, si->tokens[*i], TOKEN_NUMBER);
+            consume(i, si->tokens[*i], TOKEN_PARANTHESISRIGHT);
+            out = randomNoteMultiplier(lowerNoteBound, upperNoteBound);
             break;
         default:
             LOGERROR("Terminal expected NUMBER or IDENTIFIER got %s", tokenTypeToString(si->tokens[*i].tt));

@@ -60,6 +60,6 @@ float randomFloat(float min, float max);
 
 int randomInt(int min, int max);
 
-float randomNoteMultiplier();
+float randomNoteMultiplier(int min, int max);
 
 int containsIdentifier(Token *tokens, int index);

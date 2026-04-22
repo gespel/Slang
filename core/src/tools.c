@@ -176,8 +176,8 @@ int randomInt(int min, int max) {
     return min + rand() % (max - min + 1);
 }
 
-float randomNoteMultiplier() {
-    float randomIndex = 1.0 + (rand() % 12);
+float randomNoteMultiplier(int min, int max) {
+    float randomIndex = min + (rand() % (max - min + 1));
     return pow(2, randomIndex / 12);
 }
 
