@@ -564,3 +564,21 @@ void parseReverb(SlangInterpreter *si, int *i) {
 
     LOGINFO("Creating Reverb!");
 }
+
+void parseVolume(SlangInterpreter *si, int *i) {
+    consume(i, getToken(si, *i), TOKEN_VOLUME);
+    consume(i, getToken(si,  *i), TOKEN_PARANTHESISLEFT);
+
+    char* sampleSourceName = getToken(si, *i).value;
+    SampleSource* ss = getSampleSource(si->main_rack, sampleSourceName);
+    consume(i, getToken(si, *i), TOKEN_IDENTIFIER);
+
+    consume(i, getToken(si, *i), TOKEN_COMMA);
+    float newVolume = atof(getToken(si, *i).value);
+
+    consume(i, getToken(si, *i), TOKEN_NUMBER);
+    consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
+
+    LOGINFO("Setting volume for sampleSource %s to %f", ss->name, ss->volume);
+    ss->volume = newVolume;
+}

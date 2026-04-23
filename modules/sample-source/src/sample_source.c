@@ -14,6 +14,7 @@ SampleSource* createSampleSource(char* name, void *sampleSource, SampleSourceTyp
     out->modifier = malloc(8192);
     out->argumentIndex = argumentIndex;
     out->dynamicArguments = dynamicArguments;
+    out->volume = 1.f;
     return out;
 }
 
@@ -74,7 +75,7 @@ float getSampleSourceOutputSample(SampleSource *ss) {
         out = applyModifier(modifier, out);
     }
 
-    return out;
+    return out * ss->volume;
 }
 
 float getSampleSourceSample(SampleSource *ss) {
@@ -137,7 +138,7 @@ float getSampleSourceSample(SampleSource *ss) {
         out = applyModifier(modifier, out);
     }
 
-    return out;
+    return out * ss->volume;
 }
 
 void printSampleSourceType(SampleSource *ss) {

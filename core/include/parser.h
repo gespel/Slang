@@ -22,3 +22,5 @@ void parseEnvelopeGenerator(SlangInterpreter* si, int* i, char* name);
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv);
 
 void parseReverb(SlangInterpreter* si, int* i);
+
+void parseVolume(SlangInterpreter* si, int* i);

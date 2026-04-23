@@ -197,6 +197,9 @@ float interpret(SlangInterpreter* si) {
         else if (getToken(si, i).tt == TOKEN_SPRINGREVERB) {
             parseReverb(si, &i);
         }
+        else if (getToken(si, i).tt == TOKEN_VOLUME) {
+            parseVolume(si, &i);
+        }
         else if (getToken(si, i).tt == TOKEN_LINENVELOPE) {
             parseEnvelopeGenerator(si, &i, NULL);
         }
