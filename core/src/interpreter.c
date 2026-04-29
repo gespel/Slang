@@ -306,16 +306,16 @@ float terminal(SlangInterpreter* si, int* i) {
             consume(i, si->tokens[*i], TOKEN_IDENTIFIER);
             break;
         case TOKEN_INPUTA:
-            out = si->inputs[0][0];
+            out = *si->inputs[0];
             break;
         case TOKEN_INPUTB:
-            out = si->inputs[1][0];
+            out = *si->inputs[1];
             break;
         case TOKEN_INPUTC:
-            out = si->inputs[2][0];
+            out = *si->inputs[2];
             break;
         case TOKEN_INPUTD:
-            out = si->inputs[3][0];
+            out = *si->inputs[3];
             break;
         case TOKEN_RANDOM:
             consume(i, si->tokens[*i], TOKEN_RANDOM);
