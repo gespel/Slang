@@ -1,4 +1,5 @@
 #include "core/include/tools.h"
+#include "include/core_types.h"
 #include "modules/oscillators/include/oscillator_types.h"
 
 void printDebugMessage(SlangLogLevel ll, char* message) {
@@ -185,7 +186,7 @@ int containsIdentifier(Token *tokens, int index) {
     int i = index;
 
     while (tokens[i].tt != TOKEN_COMMA && tokens[i].tt != TOKEN_PARANTHESISRIGHT) {
-        if (tokens[i].tt == TOKEN_IDENTIFIER) {
+        if (tokens[i].tt == TOKEN_IDENTIFIER || tokens[i].tt == TOKEN_INPUTA || tokens[i].tt == TOKEN_INPUTB || tokens[i].tt == TOKEN_INPUTC || tokens[i].tt == TOKEN_INPUTD) {
             LOGINFO("Found identifier %s", tokens[i].value);
             return 1;
         }
