@@ -114,6 +114,16 @@ SlangInterpreter* createSlangInterpreter(Token* tokens, size_t numTokens) {
     out->functions_length = 0;
     out->vars_length = 0;
     out->interpretedCount = 0;
+
+    out->inputs[0] = malloc(sizeof(int));
+    *out->inputs[0] = 1; 
+    out->inputs[1] = malloc(sizeof(int));
+    *out->inputs[1] = 1; 
+    out->inputs[2] = malloc(sizeof(int));
+    *out->inputs[2] = 1; 
+    out->inputs[3] = malloc(sizeof(int));
+    *out->inputs[3] = 1; 
+
     return out;
 }
 
@@ -307,15 +317,19 @@ float terminal(SlangInterpreter* si, int* i) {
             break;
         case TOKEN_INPUTA:
             out = *si->inputs[0];
+            consume(i, si->tokens[*i], TOKEN_INPUTA);
             break;
         case TOKEN_INPUTB:
             out = *si->inputs[1];
+            consume(i, si->tokens[*i], TOKEN_INPUTB);
             break;
         case TOKEN_INPUTC:
             out = *si->inputs[2];
+            consume(i, si->tokens[*i], TOKEN_INPUTC);
             break;
         case TOKEN_INPUTD:
             out = *si->inputs[3];
+            consume(i, si->tokens[*i], TOKEN_INPUTD);
             break;
         case TOKEN_RANDOM:
             consume(i, si->tokens[*i], TOKEN_RANDOM);

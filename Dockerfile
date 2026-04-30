@@ -9,7 +9,8 @@ RUN pacman -Sy --noconfirm archlinux-keyring && \
       clang \
       git \
       meson \
-      zsh
+      zsh \
+      gdb
 
 RUN chsh -s /bin/zsh
 
