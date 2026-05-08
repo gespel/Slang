@@ -304,6 +304,7 @@ float terminal(SlangInterpreter* si, int* i) {
                 Variable* tvar = getVariableByName(si, si->tokens[*i].value);
                 if(tvar == NULL) {
                     LOGERROR("%s Variable is unkown!", si->tokens[*i].value);
+                    consume(i, si->tokens[*i], TOKEN_IDENTIFIER);
                     return 0;
                 }
                 out = tvar->value;

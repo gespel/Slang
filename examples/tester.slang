@@ -6,3 +6,5 @@ f = sawtoothosc(ss * 110.2);
 g = sawtoothosc(ss * 220);
 lowpassfilter(MAIN, 1500 * lin);
 lowpassfilter(MAIN, 1500 * lin);
+
+h = sawtoothosc(sten);
