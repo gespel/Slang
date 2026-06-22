@@ -419,6 +419,18 @@ char* tokenTypeToString(TokenType input) {
     case TOKEN_RANDOMNOTE:
         out = "RandomNote";
         break;
+    case TOKEN_AS:
+        out = "As";
+        break;
+    case TOKEN_SRC_CV:
+        out = "CV output";
+        break;
+    case TOKEN_SRC_MUTE:
+        out = "mute output";
+        break;
+    case TOKEN_SRC_AUDIO:
+        out = "audio output";
+        break;
     default:
         out = "Unknown";
         break;

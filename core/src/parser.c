@@ -65,20 +65,28 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
         (*i)++;
     }*/
     consume(i, getToken(si, *i), TOKEN_PARANTHESISRIGHT);
-    if (getToken(si, *i).tt == TOKEN_MINUS) {
-        consume(i, getToken(si, *i), TOKEN_MINUS);
-        *is_output = 0;
-        *is_cv = 0;
+    if (getToken(si, *i).tt == TOKEN_AS) {
+        consume(i, getToken(si, *i), TOKEN_AS);
+        if (getToken(si, *i).tt == TOKEN_SRC_MUTE) {
+            consume(i, getToken(si, *i), TOKEN_SRC_MUTE);
+            *is_output = 0;
+            *is_cv = 0;
+        }
+        else if (getToken(si, *i).tt == TOKEN_SRC_CV) {
+            consume(i, getToken(si, *i), TOKEN_SRC_CV);
+            *is_cv = 1;
+            *is_output = 0;
+        }
+        else if (getToken(si, *i).tt == TOKEN_SRC_AUDIO) {
+            consume(i, getToken(si, *i), TOKEN_SRC_AUDIO);
+        }
+        else {
+            *is_output = 1;
+            *is_cv = 0;
+        }
+        
     }
-    else if (getToken(si, *i).tt == TOKEN_PLUS) {
-        consume(i, getToken(si, *i), TOKEN_PLUS);
-        *is_cv = 1;
-        *is_output = 0;
-    }
-    else {
-        *is_output = 1;
-        *is_cv = 0;
-    }
+    
 }
 
 void parseOscillators(SlangInterpreter* si, int* i, char *name) {
