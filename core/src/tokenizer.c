@@ -268,6 +268,15 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "volume") == 0) {
                 out[x].tt = TOKEN_VOLUME;
             }
+            else if(strcmp(value, "cv") == 0) {
+                out[x].tt = TOKEN_SRC_CV;
+            }
+            else if(strcmp(value, "mute") == 0) {
+                out[x].tt = TOKEN_SRC_MUTE;
+            }
+            else if(strcmp(value, "audio") == 0) {
+                out[x].tt = TOKEN_SRC_AUDIO;
+            }
         }
     } 
 }

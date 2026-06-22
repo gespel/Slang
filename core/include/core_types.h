@@ -64,6 +64,10 @@ typedef enum TokenType {
     TOKEN_NOTEMARKER,
     TOKEN_SPRINGREVERB,
     TOKEN_VOLUME,
+    TOKEN_AS,
+    TOKEN_SRC_CV,
+    TOKEN_SRC_MUTE,
+    TOKEN_SRC_AUDIO,
 } TokenType;
 
 typedef struct Token {
