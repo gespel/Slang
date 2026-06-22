@@ -208,7 +208,7 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "wavetableosc") == 0) {
                 out[x].tt = TOKEN_WAVEOSC;
             }
-			else if(strcmp(value, "truesineosc") == 0) {
+            else if(strcmp(value, "truesineosc") == 0) {
 				out[x].tt = TOKEN_TRUESINEOSC;
 			}
             else if (strcmp(value, "squareosc") == 0) {
@@ -267,6 +267,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             }
             else if(strcmp(value, "volume") == 0) {
                 out[x].tt = TOKEN_VOLUME;
+            }
+            else if(strcmp(value, "as") == 0) {
+                out[x].tt = TOKEN_AS;
             }
             else if(strcmp(value, "cv") == 0) {
                 out[x].tt = TOKEN_SRC_CV;

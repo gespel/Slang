@@ -218,7 +218,7 @@ float interpret(SlangInterpreter* si) {
         }
         else {
             if (i > 3) {
-                LOGERROR("Wrong token exception! %s%s%s", si->tokens[i-2].value, si->tokens[i-1].value, si->tokens[i].value);
+                LOGERROR("Wrong token exception! %s %s %s <-", si->tokens[i-2].value, si->tokens[i-1].value, si->tokens[i].value);
             }
             else {
                 LOGERROR("Wrong token exception! Type: %s Value: %s", tokenTypeToString(si->tokens[i].tt), si->tokens[i].value);
