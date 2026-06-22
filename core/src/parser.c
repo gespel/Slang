@@ -79,12 +79,13 @@ void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr
         }
         else if (getToken(si, *i).tt == TOKEN_SRC_AUDIO) {
             consume(i, getToken(si, *i), TOKEN_SRC_AUDIO);
-        }
-        else {
             *is_output = 1;
             *is_cv = 0;
         }
-        
+    }
+    else {
+        *is_output = 1;
+        *is_cv = 0;
     }
     
 }
