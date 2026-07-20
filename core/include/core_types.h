@@ -68,6 +68,7 @@ typedef enum TokenType {
     TOKEN_SRC_CV,
     TOKEN_SRC_MUTE,
     TOKEN_SRC_AUDIO,
+    TOKEN_DAW_TRIGGER,
 } TokenType;
 
 typedef struct Token {

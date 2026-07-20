@@ -280,6 +280,9 @@ void tokenizeStrings(Token* out, int numTokens) {
             else if(strcmp(value, "audio") == 0) {
                 out[x].tt = TOKEN_SRC_AUDIO;
             }
+            else if(strcmp(value, "dawtrigger") == 0) {
+                out[x].tt = TOKEN_DAW_TRIGGER;
+            }
         }
     } 
 }
@@ -434,6 +437,8 @@ char* tokenTypeToString(TokenType input) {
     case TOKEN_SRC_AUDIO:
         out = "audio output";
         break;
+    case TOKEN_DAW_TRIGGER:
+        out = "DAW trigger";
     default:
         out = "Unknown";
         break;
