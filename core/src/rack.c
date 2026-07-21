@@ -44,6 +44,7 @@ Rack* createRack(int* sampleRate, int* bufferSize) {
     rack->reverbs = malloc(sizeof(Reverb*) * 128);
     memset(rack->reverbs, 0, sizeof(Reverb*) * 128);
     rack->numReverb = 0;
+    rack->global_trigger = 0;
 
     return rack;
 }
@@ -323,4 +324,13 @@ void addReverb(Rack *rack, Reverb *input) {
 
 float normalizeSample(float sample, int numOscillators) {
     return sample / numOscillators;
+}
+
+void triggerGlobalTrigger(Rack* rack) {
+    if(rack->global_trigger == 0) {
+        rack->global_trigger = 1;
+    }
+    else {
+        rack->global_trigger = 0;
+    }
 }

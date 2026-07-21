@@ -105,6 +105,7 @@ typedef struct Rack {
     Reverb **reverbs;
     int numReverb;
     SlangInterpreter* interpreter;
+    int global_trigger;
 } Rack;
 
 typedef struct SlangInterpreter {

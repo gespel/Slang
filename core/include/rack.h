@@ -38,4 +38,6 @@ float normalizeSample(float sample, int numOscillators);
 
 float applySoftClipping(float sample);
 
+void triggerGlobalTrigger(Rack* rack);
+
 #endif
