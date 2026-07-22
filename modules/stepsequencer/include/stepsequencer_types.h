@@ -1,6 +1,11 @@
 #ifndef STEPSEQUENCER_TYPES_H
 #define STEPSEQUENCER_TYPES_H
 
+typedef enum SequencerSyncType {
+    DAWSYNC,
+    STANDALONE,
+} SequencerSyncType;
+
 typedef enum StepSequencerType {
     STEPSEQUENCER,
     RANDOMSTEPSEQUENCER,
@@ -9,6 +14,7 @@ typedef enum StepSequencerType {
 typedef struct Sequencer {
     StepSequencerType type;
     void *sequencer;
+    SequencerSyncType syncType;
 } Sequencer;
 
 typedef struct StepSequencer {
