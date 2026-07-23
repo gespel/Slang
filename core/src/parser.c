@@ -18,6 +18,7 @@
 #include "modules/reverb/include/springreverb.h"
 #include "modules/reverb/include/reverb.h"
 #include "modules/stepsequencer/include/randomstepsequencer.h"
+#include "stepsequencer/include/stepsequencer_types.h"
 #include <time.h>
 
 void parseOscillatorSuffixArguments(SlangInterpreter* si, int* i, float* freqptr, int* is_output, int *is_cv) {
@@ -398,7 +399,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
         int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
         RandomStepSequencer *step = createRandomStepSequencer(si->sampleRate, speed[0], sequence, probabilities, sequence_len);
-        Sequencer *sequencer = createSequencer(step, RANDOMSTEPSEQUENCER);
+        Sequencer *sequencer = createSequencer(step, RANDOMSTEPSEQUENCER, STANDALONE);
         SampleSource *sampleSource = createSampleSource(name, sequencer, SEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -434,7 +435,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
         int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
         StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
-        Sequencer *sequencer = createSequencer(step, STEPSEQUENCER);
+        Sequencer *sequencer = createSequencer(step, STEPSEQUENCER, STANDALONE);
         SampleSource *sampleSource = createSampleSource(name, sequencer, SEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 

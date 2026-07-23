@@ -3,15 +3,17 @@
 //
 #include "modules/stepsequencer/include/stepsequencer.h"
 #include "modules/stepsequencer/include/randomstepsequencer.h"
+#include "stepsequencer/include/stepsequencer_types.h"
 
 #include <stdlib.h>
 #include <strings.h>
 #include <stdio.h>
 
-Sequencer *createSequencer(void *sequencer, StepSequencerType type) {
+Sequencer *createSequencer(void *sequencer, StepSequencerType type, SequencerSyncType syncType) {
     Sequencer *s = malloc(sizeof(Sequencer));
     s->type = type;
     s->sequencer = sequencer;
+    s->syncType = syncType;
     return s;
 }
 void tickSequencer(Sequencer *sequencer) {

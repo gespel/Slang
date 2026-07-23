@@ -6,7 +6,7 @@
 #define STEPSEQUENCER_H
 #include "stepsequencer_types.h"
 
-Sequencer *createSequencer(void *sequencer, StepSequencerType type);
+Sequencer *createSequencer(void *sequencer, StepSequencerType type, SequencerSyncType syncType);
 void tickSequencer(Sequencer *sequencer);
 float getSequencerSample(Sequencer *sequencer);
 int getTrigger(Sequencer *sequencer);
