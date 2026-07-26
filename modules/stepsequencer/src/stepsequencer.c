@@ -87,7 +87,6 @@ void tickStepSequencer(StepSequencer *seq) {
             seq->trigger = 0;
         }
     }
-    
 }
 
 float getStepSequencerSample(StepSequencer *seq) {
