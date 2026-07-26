@@ -55,25 +55,39 @@ StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int 
 }
 
 void tickStepSequencer(StepSequencer *seq) {
-    //printf("sample rate: %d, speed: %d, num steps: %d\n", seq->sampleRate, seq->speed, seq->numSteps);
-    //printf("Step duration: %f, step index: %d, index: %d", step_duration, seq->stepIndex, seq->index);
-    int switched = 0;
-    if ((float)seq->stepIndex >= (float)seq->stepsDuration) {
-        seq->stepIndex = 0;
-        seq->index += 1;
-        switched = 1;
+    if (seq->syncType == STANDALONE) {
+        int switched = 0;
+        if ((float)seq->stepIndex >= (float)seq->stepsDuration) {
+            seq->stepIndex = 0;
+            seq->index += 1;
+            switched = 1;
+        }
+        else {
+            seq->trigger = 0;
+        }
+        if (seq->index >= seq->numSteps) {
+            seq->index = 0;
+        }
+        seq->stepIndex += 1;
+        seq->sample = seq->steps[seq->index];
+        if (seq->sample!= 0.0f && switched == 1) {
+            seq->trigger = 1;
+        }
     }
-    else {
-        seq->trigger = 0;
+    else if (seq->syncType == DAWSYNC) {
+        if (*(seq->rackTrigger) == 1) {
+            seq->trigger = 1;
+            seq->index += 1;
+            if (seq->index >= seq->numSteps) {
+                seq->index = 0;
+            }
+            seq->sample = seq->steps[seq->index];
+        }
+        else {
+            seq->trigger = 0;
+        }
     }
-    if (seq->index >= seq->numSteps) {
-        seq->index = 0;
-    }
-    seq->stepIndex += 1;
-    seq->sample = seq->steps[seq->index];
-    if (seq->sample!= 0.0f && switched == 1) {
-        seq->trigger = 1;
-    }
+    
 }
 
 float getStepSequencerSample(StepSequencer *seq) {
