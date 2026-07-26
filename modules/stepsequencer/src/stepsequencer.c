@@ -9,11 +9,10 @@
 #include <strings.h>
 #include <stdio.h>
 
-Sequencer *createSequencer(void *sequencer, StepSequencerType type, SequencerSyncType syncType) {
+Sequencer *createSequencer(void *sequencer, StepSequencerType type) {
     Sequencer *s = malloc(sizeof(Sequencer));
     s->type = type;
     s->sequencer = sequencer;
-    s->syncType = syncType;
     return s;
 }
 void tickSequencer(Sequencer *sequencer) {

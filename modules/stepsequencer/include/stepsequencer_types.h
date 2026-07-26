@@ -14,7 +14,6 @@ typedef enum StepSequencerType {
 typedef struct Sequencer {
     StepSequencerType type;
     void *sequencer;
-    SequencerSyncType syncType;
 } Sequencer;
 
 typedef struct StepSequencer {
@@ -27,6 +26,8 @@ typedef struct StepSequencer {
     int stepIndex;
     int stepsDuration;
     int trigger;
+    int *rackTrigger;
+    SequencerSyncType syncType;
 } StepSequencer;
 
 typedef struct RandomStepSequencer {
@@ -40,6 +41,8 @@ typedef struct RandomStepSequencer {
     int stepIndex;
     int stepsDuration;
     int trigger;
+    int *rackTrigger;
+    SequencerSyncType syncType;
 } RandomStepSequencer;
 
 #endif //STEPSEQUENCER_TYPES_H

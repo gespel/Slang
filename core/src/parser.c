@@ -399,7 +399,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
         int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
         RandomStepSequencer *step = createRandomStepSequencer(si->sampleRate, speed[0], sequence, probabilities, sequence_len);
-        Sequencer *sequencer = createSequencer(step, RANDOMSTEPSEQUENCER, STANDALONE);
+        Sequencer *sequencer = createSequencer(step, RANDOMSTEPSEQUENCER);
         SampleSource *sampleSource = createSampleSource(name, sequencer, SEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
@@ -435,7 +435,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
         int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
         StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
-        Sequencer *sequencer = createSequencer(step, STEPSEQUENCER, STANDALONE);
+        Sequencer *sequencer = createSequencer(step, STEPSEQUENCER);
         SampleSource *sampleSource = createSampleSource(name, sequencer, SEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
 
