@@ -434,7 +434,7 @@ void parseStepSequencer(SlangInterpreter* si, int* i, char* name) {
 
         int containsIdent = containsIdentifier(si->tokens, argumentIndex);
 
-        StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len);
+        StepSequencer *step = createStepSequencer(si->sampleRate, speed[0], sequence, sequence_len, &si->main_rack->global_trigger, DAWSYNC);
         Sequencer *sequencer = createSequencer(step, STEPSEQUENCER);
         SampleSource *sampleSource = createSampleSource(name, sequencer, SEQUENCER, argumentIndex, containsIdent);
         addSampleSource(si->main_rack, sampleSource);
