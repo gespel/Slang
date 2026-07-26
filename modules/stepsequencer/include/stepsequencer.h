@@ -11,7 +11,7 @@ void tickSequencer(Sequencer *sequencer);
 float getSequencerSample(Sequencer *sequencer);
 int getTrigger(Sequencer *sequencer);
 
-StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps);
+StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps, int *rackTrigger, SequencerSyncType syncType);
 
 void tickStepSequencer(StepSequencer* seq);
 float getStepSequencerSample(StepSequencer *seq);

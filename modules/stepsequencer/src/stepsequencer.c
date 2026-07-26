@@ -38,7 +38,7 @@ float getSequencerSample(Sequencer *sequencer) {
     }
 }
 
-StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps) {
+StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int numSteps, int *rackTrigger, SequencerSyncType syncType) {
     StepSequencer *seq = malloc(sizeof(StepSequencer));
     seq->sampleRate = sampleRate;
     seq->speed = speed;
@@ -49,6 +49,8 @@ StepSequencer *createStepSequencer(int sampleRate, int speed, float *steps, int 
     seq->stepIndex = 0;
     seq->trigger = 0;
     seq->stepsDuration = (float)seq->sampleRate * 60 / (float)(seq->speed);
+    seq->rackTrigger = rackTrigger;
+    seq->syncType = syncType;
     return seq;
 }
 
